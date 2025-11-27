@@ -1,190 +1,144 @@
-<!-- Current Advisors (Optional) -->
+<!-- Business Information Section -->
+<div class="ap-form-section">
+  <h2>Business Information (if self-employed)</h2>
+  <div class="ap-form-grid ap-form-grid-2">
+    <div>
+      <label for="businessName">Business Name</label>
+      <input id="businessName" type="text" value="Example Business" />
+    </div>
+    <div>
+      <label for="businessAddress">Business Address</label>
+      <input id="businessAddress" type="text" value="123 Business St." />
+    </div>
+    <div>
+      <label for="businessCity">City</label>
+      <input id="businessCity" type="text" value="Business City" />
+    </div>
+    <div>
+      <label for="businessState">State</label>
+      <input id="businessState" type="text" value="IL" />
+    </div>
+    <div>
+      <label for="businessZip">Zip Code</label>
+      <input id="businessZip" type="text" value="60007" />
+    </div>
+    <div>
+      <label for="yearsInBusiness">Years in Business</label>
+      <input id="yearsInBusiness" type="number" value="10" />
+    </div>
+  </div>
+</div>
+
+<!-- Personal Information Section -->
+<div class="ap-form-section">
+  <h2>Personal Information</h2>
+  <div class="ap-form-grid ap-form-grid-2">
+    <div>
+      <label for="clientName">Client Name</label>
+      <input id="clientName" type="text" value="Mark Example" />
+    </div>
+    <div>
+      <label for="spouseName">Spouse Name</label>
+      <input id="spouseName" type="text" value="Mary Example" />
+    </div>
+    <div>
+      <label for="homeAddress">Home Address</label>
+      <input id="homeAddress" type="text" value="123 Roselle Road" />
+    </div>
+    <div>
+      <label for="city">City</label>
+      <input id="city" type="text" value="Roselle" />
+    </div>
+    <div>
+      <label for="hisCellNumber">His Cell Number</label>
+      <input id="hisCellNumber" type="tel" value="847-592-5405" />
+    </div>
+    <div>
+      <label for="bestEmail">Best Email Address</label>
+      <input id="bestEmail" type="email" value="john@AmericaPlanning.com" />
+    </div>
+    <div>
+      <label for="herCellNumber">Her Cell Number</label>
+      <input id="herCellNumber" type="tel" value="847592-5405" />
+    </div>
+  </div>
+</div>
+
+<!-- Children (Estate Planning Purposes) Section -->
+<div class="ap-form-section">
+  <h2>Children (Estate Planning Purposes)</h2>
+  <div class="ap-form-grid ap-form-grid-2">
+    <div>
+      <label for="childrenName">Name</label>
+      <input id="childrenName" type="text" value="John Jr." />
+    </div>
+    <div>
+      <label for="childrenAge">Age</label>
+      <input id="childrenAge" type="number" value="5" />
+    </div>
+  </div>
+</div>
+
+<!-- Current Advisors Section -->
 <div class="ap-form-section">
   <h2>Current Advisors (Optional)</h2>
   <div class="ap-form-grid ap-form-grid-2">
     <div>
       <label for="accountantName">Accountant – Advisor Name</label>
-      <input id="accountantName" type="text" />
+      <input id="accountantName" type="text" value="Mr. Shmo" />
     </div>
     <div>
-      <label for="accountantFirm">Accountant – Firm Name &amp; Telephone</label>
-      <input id="accountantFirm" type="text" />
+      <label for="accountantFirm">Firm Name &amp; Telephone</label>
+      <input id="accountantFirm" type="text" value="Shmo & Associates, 847-123-4567" />
     </div>
     <div>
       <label for="attorneyName">Attorney – Advisor Name</label>
-      <input id="attorneyName" type="text" />
+      <input id="attorneyName" type="text" value="Jane Doe" />
     </div>
     <div>
-      <label for="attorneyFirm">Attorney – Firm Name &amp; Telephone</label>
-      <input id="attorneyFirm" type="text" />
+      <label for="attorneyFirm">Firm Name &amp; Telephone</label>
+      <input id="attorneyFirm" type="text" value="Doe Law, 847-765-4321" />
     </div>
     <div>
-      <label for="advisorName">Financial Advisor – Advisor Name</label>
-      <input id="advisorName" type="text" />
+      <label for="financialAdvisorName">Financial Advisor – Advisor Name</label>
+      <input id="financialAdvisorName" type="text" value="John Smith" />
     </div>
     <div>
-      <label for="advisorFirm">Financial Advisor – Firm Name &amp; Telephone</label>
-      <input id="advisorFirm" type="text" />
+      <label for="financialAdvisorFirm">Firm Name &amp; Telephone</label>
+      <input id="financialAdvisorFirm" type="text" value="Smith Wealth Management, 847-555-6789" />
     </div>
   </div>
 </div>
 
-<!-- Retirement Timing -->
+<!-- Assets Section (Investments, Savings, etc.) -->
 <div class="ap-form-section">
-  <h2>Retirement Timing</h2>
+  <h2>Assets Section</h2>
   <div class="ap-form-grid ap-form-grid-3">
     <div>
-      <label for="plannedRetAgeHis">Planned Retirement Age (His)</label>
-      <input id="plannedRetAgeHis" type="number" inputmode="decimal" />
+      <label for="investment1">Investment Account 1</label>
+      <input id="investment1" type="text" value="401(k) - Vanguard" />
     </div>
     <div>
-      <label for="plannedRetAgeHer">Planned Retirement Age (Her)</label>
-      <input id="plannedRetAgeHer" type="number" inputmode="decimal" />
+      <label for="investment1Balance">Balance ($)</label>
+      <input id="investment1Balance" type="number" value="100000" />
     </div>
     <div>
-      <label for="planDate">Plan Date</label>
-      <input id="planDate" type="date" />
+      <label for="investment2">Investment Account 2</label>
+      <input id="investment2" type="text" value="IRA - Fidelity" />
     </div>
     <div>
-      <label for="alreadyRetiredYearHis">If Already Retired – His Year</label>
-      <input id="alreadyRetiredYearHis" type="number" inputmode="decimal" />
+      <label for="investment2Balance">Balance ($)</label>
+      <input id="investment2Balance" type="number" value="50000" />
     </div>
     <div>
-      <label for="alreadyRetiredYearHer">If Already Retired – Her Year</label>
-      <input id="alreadyRetiredYearHer" type="number" inputmode="decimal" />
+      <label for="savings1">Savings Account 1</label>
+      <input id="savings1" type="text" value="Checking - Wells Fargo" />
+    </div>
+    <div>
+      <label for="savings1Balance">Balance ($)</label>
+      <input id="savings1Balance" type="number" value="12000" />
     </div>
   </div>
 </div>
 
-<!-- Estate Planning & Insurance -->
-<div class="ap-form-section">
-  <h2>Estate Planning &amp; Insurance</h2>
-  <div class="ap-form-grid ap-form-grid-3">
-    <div>
-      <label for="haveWill">Do You Have a Will? (Yes/No)</label>
-      <input id="haveWill" type="text" />
-    </div>
-    <div>
-      <label for="willYear">Will – Year Completed</label>
-      <input id="willYear" type="number" inputmode="decimal" />
-    </div>
-    <div>
-      <label for="haveTrust">Do You Have a Trust? (Yes/No)</label>
-      <input id="haveTrust" type="text" />
-    </div>
-
-    <div>
-      <label for="haveFPOA">Financial Power of Attorney (Yes/No)</label>
-      <input id="haveFPOA" type="text" />
-    </div>
-    <div>
-      <label for="haveMPOA">Medical Power of Attorney (Yes/No)</label>
-      <input id="haveMPOA" type="text" />
-    </div>
-    <div>
-      <label for="mpoaFiled">Is MPOA Electronically Filed? (Yes/No)</label>
-      <input id="mpoaFiled" type="text" />
-    </div>
-
-    <div>
-      <label for="termLifeHis">Term Life Insurance (His) – Amount</label>
-      <input id="termLifeHis" type="number" inputmode="decimal" />
-    </div>
-    <div>
-      <label for="termLifeHer">Term Life Insurance (Her) – Amount</label>
-      <input id="termLifeHer" type="number" inputmode="decimal" />
-    </div>
-    <div>
-      <label for="totalLifeIns">Total Life Insurance – Him &amp; Her</label>
-      <input id="totalLifeIns" type="number" inputmode="decimal" />
-    </div>
-  </div>
-
-  <div style="margin-top:10px;">
-    <label for="estateNotes">Estate / Insurance Notes</label>
-    <textarea id="estateNotes" rows="2" style="width:100%;"></textarea>
-  </div>
-</div>
-
-<!-- Residences & Real Estate Investments -->
-<div class="ap-form-section">
-  <h2>Residences & Real Estate Investments</h2>
-  <div class="ap-form-grid ap-form-grid-2">
-    <div>
-      <label for="primaryResidenceOwned">Primary Residence – Owned/Rented</label>
-      <input id="primaryResidenceOwned" type="text" />
-    </div>
-    <div>
-      <label for="primaryResidenceValue">Primary Residence – Approx. Value</label>
-      <input id="primaryResidenceValue" type="number" inputmode="decimal" />
-    </div>
-    <div>
-      <label for="primaryResidenceMortgage">Primary Residence – Mortgage Amount</label>
-      <input id="primaryResidenceMortgage" type="number" inputmode="decimal" />
-    </div>
-    <div>
-      <label for="primaryResidencePayment">Primary Residence – Monthly Payment</label>
-      <input id="primaryResidencePayment" type="number" inputmode="decimal" />
-    </div>
-
-    <div>
-      <label for="secondaryResidenceOwned">2nd Home / Rental – Owned/Rented</label>
-      <input id="secondaryResidenceOwned" type="text" />
-    </div>
-    <div>
-      <label for="secondaryResidenceValue">2nd Home / Rental – Approx. Value</label>
-      <input id="secondaryResidenceValue" type="number" inputmode="decimal" />
-    </div>
-    <div>
-      <label for="secondaryResidenceMortgage">2nd Home / Rental – Mortgage Amount</label>
-      <input id="secondaryResidenceMortgage" type="number" inputmode="decimal" />
-    </div>
-    <div>
-      <label for="secondaryResidencePayment">2nd Home / Rental – Monthly Payment</label>
-      <input id="secondaryResidencePayment" type="number" inputmode="decimal" />
-    </div>
-  </div>
-</div>
-
-<!-- Current Portfolio – Investment Accounts (C – Red) -->
-<div class="ap-form-section">
-  <h2>Current Portfolio – Investment Accounts (C – Red)</h2>
-  <p class="ap-help">Typical examples: IRAs, 401(k)s, 403(b)s, brokerage accounts.</p>
-  <div class="ap-form-grid ap-form-grid-3">
-    <div>
-      <label for="account1Name">Account 1 – Name / Description</label>
-      <input id="account1Name" type="text" />
-    </div>
-    <div>
-      <label for="account1Owner">His/Her/Both</label>
-      <input id="account1Owner" type="text" />
-    </div>
-    <div>
-      <label for="account1Balance">Balance ($)</label>
-      <input id="account1Balance" type="number" inputmode="decimal" />
-    </div>
-    <div>
-      <label for="account1Notes">Notes</label>
-      <input id="account1Notes" type="text" />
-    </div>
-
-    <div>
-      <label for="account2Name">Account 2 – Name / Description</label>
-      <input id="account2Name" type="text" />
-    </div>
-    <div>
-      <label for="account2Owner">His/Her/Both</label>
-      <input id="account2Owner" type="text" />
-    </div>
-    <div>
-      <label for="account2Balance">Balance ($)</label>
-      <input id="account2Balance" type="number" inputmode="decimal" />
-    </div>
-    <div>
-      <label for="account2Notes">Notes</label>
-      <input id="account2Notes" type="text" />
-    </div>
-  </div>
-</div>
-
-<!-- Additional sections like Savings / Checking / CU, Annuities, etc. will follow in a similar structure -->
+<!-- Additional sections like Annuities, Life Insurance, etc., would follow a similar structure. -->
