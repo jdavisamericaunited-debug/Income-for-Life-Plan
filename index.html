@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Desktop-focused; rotate tip can stay or be ignored on desktop -->
+  <!-- Mobile rotate tip -->
   <div id="ap-rotate-tip">
     Turn phone sideways for easy viewing.
   </div>
@@ -49,20 +49,19 @@
         </button>
       </nav>
 
-      <!-- STEP 1: CLIENT GOALS & DATA (modeled from Excel sheet) -->
+      <!-- STEP 1: CLIENT GOALS & DATA -->
       <section id="step-client" class="ap-card">
         <h1>Client Goals &amp; Data</h1>
         <p class="ap-intro">
-          This page mirrors your Excel <strong>Client Goals &amp; Data</strong> worksheet:
-          business info, personal details, advisors, estate planning, real estate, accounts,
-          income, and goals. These values feed the rest of the Income-for-Life Plan.
+          This page mirrors your full Excel <strong>Client Goals &amp; Data</strong> worksheet.
+          Capture everything needed to build the Income-for-Life Plan before moving to Assets, Inputs, and Plans.
         </p>
 
         <form id="client-form">
           <!-- Business Information -->
           <div class="ap-form-section">
             <h2>Business Information (if Self-Employed)</h2>
-            <div class="ap-form-grid ap-form-grid-2">
+            <div class="ap-form-grid ap-form-grid-3">
               <div>
                 <label for="businessName">Business Name (if self-employed)</label>
                 <input id="businessName" type="text" />
@@ -72,13 +71,11 @@
                 <input id="businessYears" type="number" inputmode="decimal" />
               </div>
             </div>
-            <div class="ap-form-grid ap-form-grid-2">
+            <div class="ap-form-grid ap-form-grid-3">
               <div>
                 <label for="businessAddress">Business Address</label>
                 <input id="businessAddress" type="text" />
               </div>
-            </div>
-            <div class="ap-form-grid ap-form-grid-3">
               <div>
                 <label for="businessCity">City</label>
                 <input id="businessCity" type="text" />
@@ -89,7 +86,7 @@
               </div>
               <div>
                 <label for="businessZip">Zip Code</label>
-                <input id="businessZip" type="text" />
+                <input id="businessZip" type="text" inputmode="numeric" />
               </div>
             </div>
           </div>
@@ -97,42 +94,37 @@
           <!-- Personal Information -->
           <div class="ap-form-section">
             <h2>Personal Information</h2>
-            <div class="ap-form-grid ap-form-grid-3">
+            <div class="ap-form-grid ap-form-grid-2">
               <div>
-                <label for="clientName">His Name</label>
+                <label for="clientName">Client Name (His)</label>
                 <input id="clientName" type="text" />
+              </div>
+              <div>
+                <label for="spouseName">Spouse Name (Her)</label>
+                <input id="spouseName" type="text" />
               </div>
               <div>
                 <label for="clientBirthDate">His Birth Date</label>
                 <input id="clientBirthDate" type="date" />
               </div>
               <div>
-                <label for="clientAge">His Age</label>
-                <input id="clientAge" type="number" inputmode="decimal" />
-              </div>
-
-              <div>
-                <label for="spouseName">Her Name</label>
-                <input id="spouseName" type="text" />
-              </div>
-              <div>
                 <label for="spouseBirthDate">Her Birth Date</label>
                 <input id="spouseBirthDate" type="date" />
+              </div>
+              <div>
+                <label for="clientAge">His Age</label>
+                <input id="clientAge" type="number" inputmode="decimal" />
               </div>
               <div>
                 <label for="spouseAge">Her Age</label>
                 <input id="spouseAge" type="number" inputmode="decimal" />
               </div>
             </div>
-
             <div class="ap-form-grid ap-form-grid-2">
               <div>
                 <label for="homeAddress">Home Address</label>
                 <input id="homeAddress" type="text" />
               </div>
-            </div>
-
-            <div class="ap-form-grid ap-form-grid-3">
               <div>
                 <label for="homeCity">City</label>
                 <input id="homeCity" type="text" />
@@ -143,18 +135,15 @@
               </div>
               <div>
                 <label for="homeZip">Zip Code</label>
-                <input id="homeZip" type="text" />
+                <input id="homeZip" type="text" inputmode="numeric" />
               </div>
-            </div>
-
-            <div class="ap-form-grid ap-form-grid-3">
               <div>
                 <label for="hisCell">His Cell Number</label>
-                <input id="hisCell" type="text" />
+                <input id="hisCell" type="tel" />
               </div>
               <div>
                 <label for="herCell">Her Cell Number</label>
-                <input id="herCell" type="text" />
+                <input id="herCell" type="tel" />
               </div>
               <div>
                 <label for="bestEmail">Best Email Address</label>
@@ -163,33 +152,48 @@
             </div>
           </div>
 
-          <!-- Advisor / Plan Info -->
-          <div class="ap-form-section">
-            <h2>Advisor / Plan Information</h2>
-            <div class="ap-form-grid ap-form-grid-3">
-              <div>
-                <label for="advisorName">Advisor (Prepared By)</label>
-                <input id="advisorName" type="text" />
-              </div>
-              <div>
-                <label for="planDate">Plan Date</label>
-                <input id="planDate" type="date" />
-              </div>
-              <div>
-                <label for="planNotes">Plan Notes (Optional)</label>
-                <input id="planNotes" type="text" />
-              </div>
-            </div>
-          </div>
-
           <!-- Children -->
           <div class="ap-form-section">
             <h2>Children (Estate Planning Purposes)</h2>
-            <p class="ap-help">
-              In Excel this is a small table for each child. You can list
-              names, ages, number of their children, and any notes here.
-            </p>
-            <textarea id="childrenNotes" rows="3"></textarea>
+            <p class="ap-help">List each child, their age, and number of their children.</p>
+            <div class="ap-table-wrapper">
+              <table class="ap-table">
+                <thead>
+                  <tr>
+                    <th>Child</th>
+                    <th>Age</th>
+                    <th># of Their Children</th>
+                    <th>Notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input id="child1Name" type="text" /></td>
+                    <td><input id="child1Age" type="number" inputmode="decimal" /></td>
+                    <td><input id="child1Grandkids" type="number" inputmode="decimal" /></td>
+                    <td><input id="child1Notes" type="text" /></td>
+                  </tr>
+                  <tr>
+                    <td><input id="child2Name" type="text" /></td>
+                    <td><input id="child2Age" type="number" inputmode="decimal" /></td>
+                    <td><input id="child2Grandkids" type="number" inputmode="decimal" /></td>
+                    <td><input id="child2Notes" type="text" /></td>
+                  </tr>
+                  <tr>
+                    <td><input id="child3Name" type="text" /></td>
+                    <td><input id="child3Age" type="number" inputmode="decimal" /></td>
+                    <td><input id="child3Grandkids" type="number" inputmode="decimal" /></td>
+                    <td><input id="child3Notes" type="text" /></td>
+                  </tr>
+                  <tr>
+                    <td><input id="child4Name" type="text" /></td>
+                    <td><input id="child4Age" type="number" inputmode="decimal" /></td>
+                    <td><input id="child4Grandkids" type="number" inputmode="decimal" /></td>
+                    <td><input id="child4Notes" type="text" /></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
 
           <!-- Current Advisors -->
@@ -213,12 +217,12 @@
                 <input id="attorneyFirm" type="text" />
               </div>
               <div>
-                <label for="finAdvisorName">Financial Advisor – Advisor Name</label>
-                <input id="finAdvisorName" type="text" />
+                <label for="advisorName">Financial Advisor – Advisor Name</label>
+                <input id="advisorName" type="text" />
               </div>
               <div>
-                <label for="finAdvisorFirm">Financial Advisor – Firm Name &amp; Telephone</label>
-                <input id="finAdvisorFirm" type="text" />
+                <label for="advisorFirm">Financial Advisor – Firm Name &amp; Telephone</label>
+                <input id="advisorFirm" type="text" />
               </div>
             </div>
           </div>
@@ -226,7 +230,7 @@
           <!-- Retirement Timing -->
           <div class="ap-form-section">
             <h2>Retirement Timing</h2>
-            <div class="ap-form-grid ap-form-grid-4">
+            <div class="ap-form-grid ap-form-grid-3">
               <div>
                 <label for="plannedRetAgeHis">Planned Retirement Age (His)</label>
                 <input id="plannedRetAgeHis" type="number" inputmode="decimal" />
@@ -236,12 +240,16 @@
                 <input id="plannedRetAgeHer" type="number" inputmode="decimal" />
               </div>
               <div>
-                <label for="alreadyRetiredYearHis">If Already Retired: His Year</label>
+                <label for="alreadyRetiredYearHis">If Already Retired – His Year</label>
                 <input id="alreadyRetiredYearHis" type="number" inputmode="decimal" />
               </div>
               <div>
-                <label for="alreadyRetiredYearHer">If Already Retired: Her Year</label>
+                <label for="alreadyRetiredYearHer">If Already Retired – Her Year</label>
                 <input id="alreadyRetiredYearHer" type="number" inputmode="decimal" />
+              </div>
+              <div>
+                <label for="planDate">Plan Date</label>
+                <input id="planDate" type="date" />
               </div>
             </div>
           </div>
@@ -249,31 +257,30 @@
           <!-- Estate Planning & Insurance -->
           <div class="ap-form-section">
             <h2>Estate Planning &amp; Insurance</h2>
-            <div class="ap-form-grid ap-form-grid-4">
+            <div class="ap-form-grid ap-form-grid-3">
               <div>
-                <label for="haveWill">Do You Have a Will?</label>
-                <input id="haveWill" type="text" placeholder="Yes / No" />
+                <label for="haveWill">Do You Have a Will? (Yes/No)</label>
+                <input id="haveWill" type="text" />
               </div>
               <div>
                 <label for="willYear">Will – Year Completed</label>
                 <input id="willYear" type="number" inputmode="decimal" />
               </div>
               <div>
-                <label for="finPOA">Financial Power of Attorney?</label>
-                <input id="finPOA" type="text" placeholder="Yes / No" />
+                <label for="haveFPOA">Financial Power of Attorney (Yes/No)</label>
+                <input id="haveFPOA" type="text" />
               </div>
               <div>
-                <label for="medPOA">Medical Power of Attorney?</label>
-                <input id="medPOA" type="text" placeholder="Yes / No" />
-              </div>
-
-              <div>
-                <label for="mpoaEfiled">Is MPOA Electronically Filed?</label>
-                <input id="mpoaEfiled" type="text" placeholder="Yes / No" />
+                <label for="haveMPOA">Medical Power of Attorney (Yes/No)</label>
+                <input id="haveMPOA" type="text" />
               </div>
               <div>
-                <label for="haveTrust">Do You Have a Trust?</label>
-                <input id="haveTrust" type="text" placeholder="Yes / No" />
+                <label for="mpoaFiled">Is MPOA Electronically Filed? (Yes/No)</label>
+                <input id="mpoaFiled" type="text" />
+              </div>
+              <div>
+                <label for="haveTrust">Do You Have a Trust? (Yes/No)</label>
+                <input id="haveTrust" type="text" />
               </div>
               <div>
                 <label for="trustYear">Trust – Year Completed</label>
@@ -295,15 +302,21 @@
                 <input id="totalLifeIns" type="number" inputmode="decimal" />
               </div>
             </div>
+
+            <div>
+              <label for="estateNotes">Estate / Insurance Notes</label>
+              <textarea id="estateNotes" rows="2"></textarea>
+            </div>
           </div>
 
-          <!-- Residences and Real Estate Investments -->
+          <!-- Residences & Real Estate -->
           <div class="ap-form-section">
-            <h2>Residences &amp; Real Estate</h2>
-            <div class="ap-form-grid ap-form-grid-4">
+            <h2>Residences &amp; Real Estate Investments</h2>
+            <h3>Primary Residence</h3>
+            <div class="ap-form-grid ap-form-grid-3">
               <div>
-                <label for="primaryOwnRent">Primary Residence – Owned/Rented</label>
-                <input id="primaryOwnRent" type="text" placeholder="Owned / Rented" />
+                <label for="primaryStatus">Primary Residence – Owned/Rented</label>
+                <input id="primaryStatus" type="text" />
               </div>
               <div>
                 <label for="primaryValue">Primary Residence – Approx. Value</label>
@@ -314,13 +327,16 @@
                 <input id="primaryMortgage" type="number" inputmode="decimal" />
               </div>
               <div>
-                <label for="primaryMonthlyPayment">Primary Residence – Monthly Payment</label>
-                <input id="primaryMonthlyPayment" type="number" inputmode="decimal" />
+                <label for="primaryPayment">Primary Residence – Monthly Payment</label>
+                <input id="primaryPayment" type="number" inputmode="decimal" />
               </div>
+            </div>
 
+            <h3>Secondary Residence / Rental</h3>
+            <div class="ap-form-grid ap-form-grid-3">
               <div>
-                <label for="secondaryOwnRent">2nd Home / Rental – Owned/Rented</label>
-                <input id="secondaryOwnRent" type="text" placeholder="Owned / Rented" />
+                <label for="secondaryStatus">2nd Home / Rental – Owned/Rented</label>
+                <input id="secondaryStatus" type="text" />
               </div>
               <div>
                 <label for="secondaryValue">2nd Home / Rental – Approx. Value</label>
@@ -331,329 +347,211 @@
                 <input id="secondaryMortgage" type="number" inputmode="decimal" />
               </div>
               <div>
-                <label for="secondaryMonthlyPayment">2nd Home / Rental – Monthly Payment</label>
-                <input id="secondaryMonthlyPayment" type="number" inputmode="decimal" />
+                <label for="secondaryPayment">2nd Home / Rental – Monthly Payment</label>
+                <input id="secondaryPayment" type="number" inputmode="decimal" />
               </div>
             </div>
           </div>
 
-          <!-- Current Portfolio (Investments C – Red) -->
+          <!-- Investment Accounts (C – Red) -->
           <div class="ap-form-section">
             <h2>Current Portfolio – Investment Accounts (C – Red)</h2>
-            <p class="ap-help">
-              Mirror of the Excel table: account name/description, owner, qualified vs non-qualified, and balance.
-            </p>
-            <div class="ap-form-grid ap-form-grid-4">
-              <!-- Row 1 -->
-              <div>
-                <label for="inv1Name">Investment 1 – Name / Description</label>
-                <input id="inv1Name" type="text" />
-              </div>
-              <div>
-                <label for="inv1Owner">Investment 1 – His/Her/Both</label>
-                <input id="inv1Owner" type="text" />
-              </div>
-              <div>
-                <label for="inv1Type">Investment 1 – Qualified / Non-Qualified</label>
-                <input id="inv1Type" type="text" />
-              </div>
-              <div>
-                <label for="inv1Balance">Investment 1 – Balance</label>
-                <input id="inv1Balance" type="number" inputmode="decimal" />
-              </div>
-
-              <!-- Row 2 -->
-              <div>
-                <label for="inv2Name">Investment 2 – Name / Description</label>
-                <input id="inv2Name" type="text" />
-              </div>
-              <div>
-                <label for="inv2Owner">Investment 2 – His/Her/Both</label>
-                <input id="inv2Owner" type="text" />
-              </div>
-              <div>
-                <label for="inv2Type">Investment 2 – Qualified / Non-Qualified</label>
-                <input id="inv2Type" type="text" />
-              </div>
-              <div>
-                <label for="inv2Balance">Investment 2 – Balance</label>
-                <input id="inv2Balance" type="number" inputmode="decimal" />
-              </div>
-
-              <!-- Row 3 -->
-              <div>
-                <label for="inv3Name">Investment 3 – Name / Description</label>
-                <input id="inv3Name" type="text" />
-              </div>
-              <div>
-                <label for="inv3Owner">Investment 3 – His/Her/Both</label>
-                <input id="inv3Owner" type="text" />
-              </div>
-              <div>
-                <label for="inv3Type">Investment 3 – Qualified / Non-Qualified</label>
-                <input id="inv3Type" type="text" />
-              </div>
-              <div>
-                <label for="inv3Balance">Investment 3 – Balance</label>
-                <input id="inv3Balance" type="number" inputmode="decimal" />
-              </div>
-
-              <!-- Row 4 -->
-              <div>
-                <label for="inv4Name">Investment 4 – Name / Description</label>
-                <input id="inv4Name" type="text" />
-              </div>
-              <div>
-                <label for="inv4Owner">Investment 4 – His/Her/Both</label>
-                <input id="inv4Owner" type="text" />
-              </div>
-              <div>
-                <label for="inv4Type">Investment 4 – Qualified / Non-Qualified</label>
-                <input id="inv4Type" type="text" />
-              </div>
-              <div>
-                <label for="inv4Balance">Investment 4 – Balance</label>
-                <input id="inv4Balance" type="number" inputmode="decimal" />
-              </div>
-
-              <!-- Row 5 -->
-              <div>
-                <label for="inv5Name">Investment 5 – Name / Description</label>
-                <input id="inv5Name" type="text" />
-              </div>
-              <div>
-                <label for="inv5Owner">Investment 5 – His/Her/Both</label>
-                <input id="inv5Owner" type="text" />
-              </div>
-              <div>
-                <label for="inv5Type">Investment 5 – Qualified / Non-Qualified</label>
-                <input id="inv5Type" type="text" />
-              </div>
-              <div>
-                <label for="inv5Balance">Investment 5 – Balance</label>
-                <input id="inv5Balance" type="number" inputmode="decimal" />
-              </div>
+            <p class="ap-help">Typical examples: IRAs, 401(k)s, 403(b)s, brokerage accounts.</p>
+            <div class="ap-table-wrapper">
+              <table class="ap-table">
+                <thead>
+                  <tr>
+                    <th>Account Name / Description</th>
+                    <th>His/Her/Both</th>
+                    <th>Qualified / Non-Qualified</th>
+                    <th>Balance ($)</th>
+                    <th>Notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input id="inv1Name" type="text" /></td>
+                    <td><input id="inv1Owner" type="text" /></td>
+                    <td><input id="inv1Type" type="text" /></td>
+                    <td><input id="inv1Balance" type="number" inputmode="decimal" /></td>
+                    <td><input id="inv1Notes" type="text" /></td>
+                  </tr>
+                  <tr>
+                    <td><input id="inv2Name" type="text" /></td>
+                    <td><input id="inv2Owner" type="text" /></td>
+                    <td><input id="inv2Type" type="text" /></td>
+                    <td><input id="inv2Balance" type="number" inputmode="decimal" /></td>
+                    <td><input id="inv2Notes" type="text" /></td>
+                  </tr>
+                  <tr>
+                    <td><input id="inv3Name" type="text" /></td>
+                    <td><input id="inv3Owner" type="text" /></td>
+                    <td><input id="inv3Type" type="text" /></td>
+                    <td><input id="inv3Balance" type="number" inputmode="decimal" /></td>
+                    <td><input id="inv3Notes" type="text" /></td>
+                  </tr>
+                  <tr>
+                    <td><input id="inv4Name" type="text" /></td>
+                    <td><input id="inv4Owner" type="text" /></td>
+                    <td><input id="inv4Type" type="text" /></td>
+                    <td><input id="inv4Balance" type="number" inputmode="decimal" /></td>
+                    <td><input id="inv4Notes" type="text" /></td>
+                  </tr>
+                  <tr>
+                    <td><input id="inv5Name" type="text" /></td>
+                    <td><input id="inv5Owner" type="text" /></td>
+                    <td><input id="inv5Type" type="text" /></td>
+                    <td><input id="inv5Balance" type="number" inputmode="decimal" /></td>
+                    <td><input id="inv5Notes" type="text" /></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
 
           <!-- Savings / Checking / Credit Union (A – Yellow) -->
           <div class="ap-form-section">
-            <h2>Savings, Checking &amp; Credit Union (A – Yellow)</h2>
-            <div class="ap-form-grid ap-form-grid-3">
-              <!-- Row 1 -->
-              <div>
-                <label for="sav1Desc">Account 1 – Description</label>
-                <input id="sav1Desc" type="text" />
-              </div>
-              <div>
-                <label for="sav1Owner">Account 1 – His/Her/Both</label>
-                <input id="sav1Owner" type="text" />
-              </div>
-              <div>
-                <label for="sav1Balance">Account 1 – Balance</label>
-                <input id="sav1Balance" type="number" inputmode="decimal" />
-              </div>
-
-              <!-- Row 2 -->
-              <div>
-                <label for="sav2Desc">Account 2 – Description</label>
-                <input id="sav2Desc" type="text" />
-              </div>
-              <div>
-                <label for="sav2Owner">Account 2 – His/Her/Both</label>
-                <input id="sav2Owner" type="text" />
-              </div>
-              <div>
-                <label for="sav2Balance">Account 2 – Balance</label>
-                <input id="sav2Balance" type="number" inputmode="decimal" />
-              </div>
-
-              <!-- Row 3 -->
-              <div>
-                <label for="sav3Desc">Account 3 – Description</label>
-                <input id="sav3Desc" type="text" />
-              </div>
-              <div>
-                <label for="sav3Owner">Account 3 – His/Her/Both</label>
-                <input id="sav3Owner" type="text" />
-              </div>
-              <div>
-                <label for="sav3Balance">Account 3 – Balance</label>
-                <input id="sav3Balance" type="number" inputmode="decimal" />
-              </div>
-
-              <!-- Row 4 -->
-              <div>
-                <label for="sav4Desc">Account 4 – Description</label>
-                <input id="sav4Desc" type="text" />
-              </div>
-              <div>
-                <label for="sav4Owner">Account 4 – His/Her/Both</label>
-                <input id="sav4Owner" type="text" />
-              </div>
-              <div>
-                <label for="sav4Balance">Account 4 – Balance</label>
-                <input id="sav4Balance" type="number" inputmode="decimal" />
-              </div>
-
-              <!-- Row 5 -->
-              <div>
-                <label for="sav5Desc">Account 5 – Description</label>
-                <input id="sav5Desc" type="text" />
-              </div>
-              <div>
-                <label for="sav5Owner">Account 5 – His/Her/Both</label>
-                <input id="sav5Owner" type="text" />
-              </div>
-              <div>
-                <label for="sav5Balance">Account 5 – Balance</label>
-                <input id="sav5Balance" type="number" inputmode="decimal" />
-              </div>
+            <h2>Savings / Checking / Credit Union (A – Yellow)</h2>
+            <div class="ap-table-wrapper">
+              <table class="ap-table">
+                <thead>
+                  <tr>
+                    <th>Account Description</th>
+                    <th>His/Her/Both</th>
+                    <th>Current Balance</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input id="sav1Desc" type="text" /></td>
+                    <td><input id="sav1Owner" type="text" /></td>
+                    <td><input id="sav1Balance" type="number" inputmode="decimal" /></td>
+                  </tr>
+                  <tr>
+                    <td><input id="sav2Desc" type="text" /></td>
+                    <td><input id="sav2Owner" type="text" /></td>
+                    <td><input id="sav2Balance" type="number" inputmode="decimal" /></td>
+                  </tr>
+                  <tr>
+                    <td><input id="sav3Desc" type="text" /></td>
+                    <td><input id="sav3Owner" type="text" /></td>
+                    <td><input id="sav3Balance" type="number" inputmode="decimal" /></td>
+                  </tr>
+                  <tr>
+                    <td><input id="sav4Desc" type="text" /></td>
+                    <td><input id="sav4Owner" type="text" /></td>
+                    <td><input id="sav4Balance" type="number" inputmode="decimal" /></td>
+                  </tr>
+                  <tr>
+                    <td><input id="sav5Desc" type="text" /></td>
+                    <td><input id="sav5Owner" type="text" /></td>
+                    <td><input id="sav5Balance" type="number" inputmode="decimal" /></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
 
           <!-- Annuities (B – Green) -->
           <div class="ap-form-section">
             <h2>Annuities (B – Green)</h2>
-            <div class="ap-form-grid ap-form-grid-3">
-              <!-- Row 1 -->
-              <div>
-                <label for="ann1Carrier">Annuity 1 – Insurance Company / Description</label>
-                <input id="ann1Carrier" type="text" />
-              </div>
-              <div>
-                <label for="ann1Owner">Annuity 1 – His/Her/Both</label>
-                <input id="ann1Owner" type="text" />
-              </div>
-              <div>
-                <label for="ann1Balance">Annuity 1 – Account Value</label>
-                <input id="ann1Balance" type="number" inputmode="decimal" />
-              </div>
-
-              <!-- Row 2 -->
-              <div>
-                <label for="ann2Carrier">Annuity 2 – Insurance Company / Description</label>
-                <input id="ann2Carrier" type="text" />
-              </div>
-              <div>
-                <label for="ann2Owner">Annuity 2 – His/Her/Both</label>
-                <input id="ann2Owner" type="text" />
-              </div>
-              <div>
-                <label for="ann2Balance">Annuity 2 – Account Value</label>
-                <input id="ann2Balance" type="number" inputmode="decimal" />
-              </div>
-
-              <!-- Row 3 -->
-              <div>
-                <label for="ann3Carrier">Annuity 3 – Insurance Company / Description</label>
-                <input id="ann3Carrier" type="text" />
-              </div>
-              <div>
-                <label for="ann3Owner">Annuity 3 – His/Her/Both</label>
-                <input id="ann3Owner" type="text" />
-              </div>
-              <div>
-                <label for="ann3Balance">Annuity 3 – Account Value</label>
-                <input id="ann3Balance" type="number" inputmode="decimal" />
-              </div>
-
-              <!-- Row 4 -->
-              <div>
-                <label for="ann4Carrier">Annuity 4 – Insurance Company / Description</label>
-                <input id="ann4Carrier" type="text" />
-              </div>
-              <div>
-                <label for="ann4Owner">Annuity 4 – His/Her/Both</label>
-                <input id="ann4Owner" type="text" />
-              </div>
-              <div>
-                <label for="ann4Balance">Annuity 4 – Account Value</label>
-                <input id="ann4Balance" type="number" inputmode="decimal" />
-              </div>
-
-              <!-- Row 5 -->
-              <div>
-                <label for="ann5Carrier">Annuity 5 – Insurance Company / Description</label>
-                <input id="ann5Carrier" type="text" />
-              </div>
-              <div>
-                <label for="ann5Owner">Annuity 5 – His/Her/Both</label>
-                <input id="ann5Owner" type="text" />
-              </div>
-              <div>
-                <label for="ann5Balance">Annuity 5 – Account Value</label>
-                <input id="ann5Balance" type="number" inputmode="decimal" />
-              </div>
+            <div class="ap-table-wrapper">
+              <table class="ap-table">
+                <thead>
+                  <tr>
+                    <th>Insurance Company / Description</th>
+                    <th>His/Her/Both</th>
+                    <th>Current Account Value</th>
+                    <th>Original Term in Years</th>
+                    <th>Still in Surrender Period? (Yes/No)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input id="ann1Desc" type="text" /></td>
+                    <td><input id="ann1Owner" type="text" /></td>
+                    <td><input id="ann1Balance" type="number" inputmode="decimal" /></td>
+                    <td><input id="ann1TermYears" type="number" inputmode="decimal" /></td>
+                    <td><input id="ann1Surrender" type="text" /></td>
+                  </tr>
+                  <tr>
+                    <td><input id="ann2Desc" type="text" /></td>
+                    <td><input id="ann2Owner" type="text" /></td>
+                    <td><input id="ann2Balance" type="number" inputmode="decimal" /></td>
+                    <td><input id="ann2TermYears" type="number" inputmode="decimal" /></td>
+                    <td><input id="ann2Surrender" type="text" /></td>
+                  </tr>
+                  <tr>
+                    <td><input id="ann3Desc" type="text" /></td>
+                    <td><input id="ann3Owner" type="text" /></td>
+                    <td><input id="ann3Balance" type="number" inputmode="decimal" /></td>
+                    <td><input id="ann3TermYears" type="number" inputmode="decimal" /></td>
+                    <td><input id="ann3Surrender" type="text" /></td>
+                  </tr>
+                  <tr>
+                    <td><input id="ann4Desc" type="text" /></td>
+                    <td><input id="ann4Owner" type="text" /></td>
+                    <td><input id="ann4Balance" type="number" inputmode="decimal" /></td>
+                    <td><input id="ann4TermYears" type="number" inputmode="decimal" /></td>
+                    <td><input id="ann4Surrender" type="text" /></td>
+                  </tr>
+                  <tr>
+                    <td><input id="ann5Desc" type="text" /></td>
+                    <td><input id="ann5Owner" type="text" /></td>
+                    <td><input id="ann5Balance" type="number" inputmode="decimal" /></td>
+                    <td><input id="ann5TermYears" type="number" inputmode="decimal" /></td>
+                    <td><input id="ann5Surrender" type="text" /></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
 
           <!-- Income Sources -->
           <div class="ap-form-section">
-            <h2>Current Income Sources</h2>
-            <p class="ap-help">
-              Mirror of the Excel “Income Sources” table: who’s income, type (Pension / SS / Wages / Other),
-              and annual amount.
-            </p>
-            <div class="ap-form-grid ap-form-grid-4">
-              <!-- Row 1 -->
-              <div>
-                <label for="inc1Who">Income 1 – Who (His/Her/Both)</label>
-                <input id="inc1Who" type="text" />
-              </div>
-              <div>
-                <label for="inc1Type">Income 1 – Type</label>
-                <input id="inc1Type" type="text" />
-              </div>
-              <div>
-                <label for="inc1Amount">Income 1 – Annual Amount</label>
-                <input id="inc1Amount" type="number" inputmode="decimal" />
-              </div>
-              <div>
-                <label for="inc1Notes">Income 1 – Notes</label>
-                <input id="inc1Notes" type="text" />
-              </div>
-
-              <!-- Row 2 -->
-              <div>
-                <label for="inc2Who">Income 2 – Who (His/Her/Both)</label>
-                <input id="inc2Who" type="text" />
-              </div>
-              <div>
-                <label for="inc2Type">Income 2 – Type</label>
-                <input id="inc2Type" type="text" />
-              </div>
-              <div>
-                <label for="inc2Amount">Income 2 – Annual Amount</label>
-                <input id="inc2Amount" type="number" inputmode="decimal" />
-              </div>
-              <div>
-                <label for="inc2Notes">Income 2 – Notes</label>
-                <input id="inc2Notes" type="text" />
-              </div>
-
-              <!-- Row 3 -->
-              <div>
-                <label for="inc3Who">Income 3 – Who (His/Her/Both)</label>
-                <input id="inc3Who" type="text" />
-              </div>
-              <div>
-                <label for="inc3Type">Income 3 – Type</label>
-                <input id="inc3Type" type="text" />
-              </div>
-              <div>
-                <label for="inc3Amount">Income 3 – Annual Amount</label>
-                <input id="inc3Amount" type="number" inputmode="decimal" />
-              </div>
-              <div>
-                <label for="inc3Notes">Income 3 – Notes</label>
-                <input id="inc3Notes" type="text" />
-              </div>
+            <h2>Income Sources (Before Retirement)</h2>
+            <div class="ap-table-wrapper">
+              <table class="ap-table">
+                <thead>
+                  <tr>
+                    <th>Who’s Income (His/Her/Both)</th>
+                    <th>Type (Pension / SS / Wages / Other)</th>
+                    <th>Dollar Amount of Annual Income ($)</th>
+                    <th>Notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input id="inc1Who" type="text" /></td>
+                    <td><input id="inc1Type" type="text" /></td>
+                    <td><input id="inc1Amount" type="number" inputmode="decimal" /></td>
+                    <td><input id="inc1Notes" type="text" /></td>
+                  </tr>
+                  <tr>
+                    <td><input id="inc2Who" type="text" /></td>
+                    <td><input id="inc2Type" type="text" /></td>
+                    <td><input id="inc2Amount" type="number" inputmode="decimal" /></td>
+                    <td><input id="inc2Notes" type="text" /></td>
+                  </tr>
+                  <tr>
+                    <td><input id="inc3Who" type="text" /></td>
+                    <td><input id="inc3Type" type="text" /></td>
+                    <td><input id="inc3Amount" type="number" inputmode="decimal" /></td>
+                    <td><input id="inc3Notes" type="text" /></td>
+                  </tr>
+                  <tr>
+                    <td><input id="inc4Who" type="text" /></td>
+                    <td><input id="inc4Type" type="text" /></td>
+                    <td><input id="inc4Amount" type="number" inputmode="decimal" /></td>
+                    <td><input id="inc4Notes" type="text" /></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
 
             <div class="ap-form-grid ap-form-grid-2">
               <div>
-                <label for="totalAnnualIncome">Approximate Total Annual Income</label>
+                <label for="totalAnnualIncome">Approximate Total Annual Income ($)</label>
                 <input id="totalAnnualIncome" type="number" inputmode="decimal" />
               </div>
             </div>
@@ -662,57 +560,71 @@
           <!-- Living Expenses & Desired Retirement Income -->
           <div class="ap-form-section">
             <h2>Living Expenses &amp; Desired Retirement Income</h2>
-            <div class="ap-form-grid ap-form-grid-3">
+            <div class="ap-form-grid ap-form-grid-2">
               <div>
-                <label for="gdLivingExpensesAnnual">Approximate Annual Living Expenses</label>
-                <input id="gdLivingExpensesAnnual" type="number" inputmode="decimal" />
+                <label for="livingExpensesAnnual">Approximate Annual Living Expenses ($)</label>
+                <input id="livingExpensesAnnual" type="number" inputmode="decimal" />
               </div>
               <div>
-                <label for="desiredRetIncome">Desired Annual Income After Retirement</label>
+                <label for="livingExpensesNotes">Living Expenses – Notes</label>
+                <input id="livingExpensesNotes" type="text" />
+              </div>
+              <div>
+                <label for="desiredRetIncome">Desired Annual Income After Retirement ($)</label>
                 <input id="desiredRetIncome" type="number" inputmode="decimal" />
               </div>
               <div>
-                <label for="livingNotes">Notes</label>
-                <input id="livingNotes" type="text" />
+                <label for="desiredRetIncomeNotes">Desired Retirement Income – Notes</label>
+                <input id="desiredRetIncomeNotes" type="text" />
               </div>
+            </div>
+            <div>
+              <label for="incomeOverallNotes">Additional Notes (Income &amp; Expenses)</label>
+              <textarea id="incomeOverallNotes" rows="2"></textarea>
             </div>
           </div>
 
-          <!-- Goals Rating (1–5) -->
+          <!-- Goals Rating -->
           <div class="ap-form-section">
-            <h2>Goals (1 = Not Concerned, 5 = Most Concerned)</h2>
+            <h2>Retirement Goals – Importance (1–5)</h2>
             <p class="ap-help">
-              Mirrors the goals section in your Excel form. You can use 1–5 or phrases like
-              "Not Concerned", "Very Concerned", "Most Concerned".
+              Use 1 = Not Concerned, 5 = Most Concerned (mirrors the Excel dropdown).
             </p>
-            <div class="ap-form-grid ap-form-grid-2">
-              <div>
-                <label for="goalIncomeLifetime">Have enough retirement income that lasts my lifetime</label>
-                <input id="goalIncomeLifetime" type="text" />
+            <div class="ap-goals-grid">
+              <div class="ap-goal-row">
+                <label for="goal1Rating">Have enough retirement income that lasts my lifetime</label>
+                <input id="goal1Rating" type="text" placeholder="1–5 or text (e.g. 5 Most Concerned)" />
+                <input id="goal1Notes" type="text" placeholder="Notes" />
               </div>
-              <div>
-                <label for="goalProtectAssets">Protect assets from losses</label>
-                <input id="goalProtectAssets" type="text" />
+              <div class="ap-goal-row">
+                <label for="goal2Rating">Protect assets from losses</label>
+                <input id="goal2Rating" type="text" />
+                <input id="goal2Notes" type="text" placeholder="Notes" />
               </div>
-              <div>
-                <label for="goalSaveMoreIRA">Save more for retirement than current IRA limits allow</label>
-                <input id="goalSaveMoreIRA" type="text" />
+              <div class="ap-goal-row">
+                <label for="goal3Rating">Save more for retirement than current IRA limits allow</label>
+                <input id="goal3Rating" type="text" />
+                <input id="goal3Notes" type="text" placeholder="Notes" />
               </div>
-              <div>
-                <label for="goalLTC">Protect myself/family from catastrophic long-term care costs</label>
-                <input id="goalLTC" type="text" />
+              <div class="ap-goal-row">
+                <label for="goal4Rating">Protect myself/family from catastrophic long-term care costs</label>
+                <input id="goal4Rating" type="text" />
+                <input id="goal4Notes" type="text" placeholder="Notes" />
               </div>
-              <div>
-                <label for="goalCashAnyAge">Grow a cash account accessible at any age (no 59½ restrictions)</label>
-                <input id="goalCashAnyAge" type="text" />
+              <div class="ap-goal-row">
+                <label for="goal5Rating">Grow a cash account accessible at any age (no 59½ restrictions)</label>
+                <input id="goal5Rating" type="text" />
+                <input id="goal5Notes" type="text" placeholder="Notes" />
               </div>
-              <div>
-                <label for="goalNextGen">Pass retirement money to next generation tax-efficiently</label>
-                <input id="goalNextGen" type="text" />
+              <div class="ap-goal-row">
+                <label for="goal6Rating">Pass retirement money to next generation tax-efficiently</label>
+                <input id="goal6Rating" type="text" />
+                <input id="goal6Notes" type="text" placeholder="Notes" />
               </div>
-              <div>
-                <label for="goalReduceTax">Implement a retirement program that reduces tax liability</label>
-                <input id="goalReduceTax" type="text" />
+              <div class="ap-goal-row">
+                <label for="goal7Rating">Implement a retirement program that reduces tax liability</label>
+                <input id="goal7Rating" type="text" />
+                <input id="goal7Notes" type="text" placeholder="Notes" />
               </div>
             </div>
           </div>
@@ -720,14 +632,14 @@
           <!-- Document Checklist & Additional Notes -->
           <div class="ap-form-section">
             <h2>Document Checklist &amp; Additional Notes</h2>
-            <p class="ap-help">
-              List items such as wills, trusts, POAs, policies, and the year established/completed.
-            </p>
-            <label for="documentChecklist">Document Checklist</label>
-            <textarea id="documentChecklist" rows="3"></textarea>
-
-            <label for="additionalNotes" style="margin-top:12px;display:block;">Additional Notes</label>
-            <textarea id="additionalNotes" rows="3"></textarea>
+            <div>
+              <label for="documentChecklist">Document Checklist (list items and year established/completed)</label>
+              <textarea id="documentChecklist" rows="3"></textarea>
+            </div>
+            <div>
+              <label for="additionalNotes">Additional Notes</label>
+              <textarea id="additionalNotes" rows="3"></textarea>
+            </div>
           </div>
 
           <div class="ap-form-actions">
@@ -1154,7 +1066,7 @@
           <strong style="color:#166534;">Green</strong> = Annuities (B).
         </p>
 
-        <!-- Asset Allocation Snapshot (Base, before plans) -->
+        <!-- Asset Allocation Snapshot (Base) -->
         <div class="ap-form-section">
           <h2>Asset Allocation Snapshot (Base)</h2>
           <div class="asset-legend">
@@ -1512,7 +1424,7 @@
         </ul>
         <p>
           This web version mirrors your original Excel Income-for-Life Plan while making it easier
-          to use on a laptop or desktop with clients.
+          to use on a laptop or tablet with clients.
         </p>
       </section>
     </main>
