@@ -120,9 +120,33 @@ const clientCase = {
   additionalNotes: "",
 
   assetSummary: null,
+
+  planInputs: {
+    projectionYears: null,
+    hisCurrentAge: null,
+    herCurrentAge: null,
+    hisSSAnnual: null,
+    herSSAnnual: null,
+    pension1Annual: null,
+    pension2Annual: null,
+    otherIncomeAnnual: null,
+    livingExpensesAnnual: null,
+    incomeGrowthPct: null,
+    expenseInflationPct: null,
+    hisSSStartAge: null,
+    herSSStartAge: null,
+    pension1StartAge: null,
+    pension2StartAge: null,
+    pension1SurvivorPct: null,
+    pension2SurvivorPct: null,
+    hisDeathAge: null,
+    herDeathAge: null,
+    silver: [], // [{owner, annualIncome, rolloverAmount, startAge}]
+    gold: [],   // same structure
+  },
 };
 
-// Capture everything from the form into clientCase
+// Capture everything from the Client Data form into clientCase
 function updateClientCaseFromForm() {
   // BUSINESS
   clientCase.business.name = getVal("businessName");
@@ -406,6 +430,132 @@ function renderAssetSummary(summary) {
   setText("as-total-assets", formatCurrency(summary.totals.allAssets));
 }
 
+// ---------- PLAN INPUTS ----------
+
+function updatePlanInputsFromForm() {
+  const pi = clientCase.planInputs;
+
+  pi.projectionYears = numOrNull("piProjectionYears");
+  pi.hisCurrentAge = numOrNull("piHisCurrentAge");
+  pi.herCurrentAge = numOrNull("piHerCurrentAge");
+  pi.hisSSAnnual = numOrNull("piHisSSAnnual");
+  pi.herSSAnnual = numOrNull("piHerSSAnnual");
+  pi.pension1Annual = numOrNull("piPension1Annual");
+  pi.pension2Annual = numOrNull("piPension2Annual");
+  pi.otherIncomeAnnual = numOrNull("piOtherIncomeAnnual");
+  pi.livingExpensesAnnual = numOrNull("piLivingExpensesAnnual");
+  pi.incomeGrowthPct = numOrNull("piIncomeGrowthPct");
+  pi.expenseInflationPct = numOrNull("piExpenseInflationPct");
+
+  pi.hisSSStartAge = numOrNull("piHisSSStartAge");
+  pi.herSSStartAge = numOrNull("piHerSSStartAge");
+  pi.pension1StartAge = numOrNull("piPension1StartAge");
+  pi.pension2StartAge = numOrNull("piPension2StartAge");
+  pi.pension1SurvivorPct = numOrNull("piPension1SurvivorPct");
+  pi.pension2SurvivorPct = numOrNull("piPension2SurvivorPct");
+  pi.hisDeathAge = numOrNull("piHisDeathAge");
+  pi.herDeathAge = numOrNull("piHerDeathAge");
+
+  // Silver sources
+  pi.silver = [];
+  for (let i = 1; i <= 4; i++) {
+    const owner = getVal(`piSilver${i}Owner`);
+    const annualIncome = numOrNull(`piSilver${i}Annual`);
+    const rolloverAmount = numOrNull(`piSilver${i}Rollover`);
+    const startAge = numOrNull(`piSilver${i}StartAge`);
+
+    if (owner || annualIncome !== null || rolloverAmount !== null || startAge !== null) {
+      pi.silver.push({
+        owner,
+        annualIncome,
+        rolloverAmount,
+        startAge,
+      });
+    }
+  }
+
+  // Gold sources
+  pi.gold = [];
+  for (let i = 1; i <= 4; i++) {
+    const owner = getVal(`piGold${i}Owner`);
+    const annualIncome = numOrNull(`piGold${i}Annual`);
+    const rolloverAmount = numOrNull(`piGold${i}Rollover`);
+    const startAge = numOrNull(`piGold${i}StartAge`);
+
+    if (owner || annualIncome !== null || rolloverAmount !== null || startAge !== null) {
+      pi.gold.push({
+        owner,
+        annualIncome,
+        rolloverAmount,
+        startAge,
+      });
+    }
+  }
+}
+
+function loadPlanInputsIntoForm() {
+  const pi = clientCase.planInputs || {};
+
+  const setVal = (id, value) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.value = value !== null && value !== undefined ? String(value) : "";
+  };
+
+  // Base
+  setVal("piProjectionYears", pi.projectionYears);
+  setVal("piHisCurrentAge", pi.hisCurrentAge);
+  setVal("piHerCurrentAge", pi.herCurrentAge);
+  setVal("piHisSSAnnual", pi.hisSSAnnual);
+  setVal("piHerSSAnnual", pi.herSSAnnual);
+  setVal("piPension1Annual", pi.pension1Annual);
+  setVal("piPension2Annual", pi.pension2Annual);
+  setVal("piOtherIncomeAnnual", pi.otherIncomeAnnual);
+  setVal("piIncomeGrowthPct", pi.incomeGrowthPct);
+  setVal("piExpenseInflationPct", pi.expenseInflationPct);
+
+  // Living expenses: if planInputs doesn't have one yet, default from clientCase
+  const le =
+    pi.livingExpensesAnnual !== null && pi.livingExpensesAnnual !== undefined
+      ? pi.livingExpensesAnnual
+      : clientCase.livingExpensesAnnual;
+  setVal("piLivingExpensesAnnual", le);
+
+  // Timing
+  setVal("piHisSSStartAge", pi.hisSSStartAge);
+  setVal("piHerSSStartAge", pi.herSSStartAge);
+  setVal("piPension1StartAge", pi.pension1StartAge);
+  setVal("piPension2StartAge", pi.pension2StartAge);
+  setVal("piPension1SurvivorPct", pi.pension1SurvivorPct);
+  setVal("piPension2SurvivorPct", pi.pension2SurvivorPct);
+  setVal("piHisDeathAge", pi.hisDeathAge);
+  setVal("piHerDeathAge", pi.herDeathAge);
+
+  // Silver (up to 4)
+  const silver = pi.silver || [];
+  for (let i = 1; i <= 4; i++) {
+    const src = silver[i - 1] || {};
+    setVal(`piSilver${i}Owner`, src.owner);
+    setVal(`piSilver${i}Annual`, src.annualIncome);
+    setVal(`piSilver${i}Rollover`, src.rolloverAmount);
+    setVal(`piSilver${i}StartAge`, src.startAge);
+  }
+
+  // Gold (up to 4)
+  const gold = pi.gold || [];
+  for (let i = 1; i <= 4; i++) {
+    const src = gold[i - 1] || {};
+    setVal(`piGold${i}Owner`, src.owner);
+    setVal(`piGold${i}Annual`, src.annualIncome);
+    setVal(`piGold${i}Rollover`, src.rolloverAmount);
+    setVal(`piGold${i}StartAge`, src.startAge);
+  }
+
+  // Reasonable defaults, if still blank
+  const projEl = document.getElementById("piProjectionYears");
+  if (projEl && !projEl.value) projEl.value = "30";
+}
+
 // Wire up the form & navigation
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("client-form");
@@ -429,6 +579,22 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Save Plan Inputs button
+  const savePlanInputsBtn = document.getElementById("save-plan-inputs");
+  const planInputsStatus = document.getElementById("planInputsStatus");
+
+  if (savePlanInputsBtn) {
+    savePlanInputsBtn.addEventListener("click", () => {
+      updatePlanInputsFromForm();
+      console.log("Plan inputs saved:", clientCase.planInputs);
+
+      if (planInputsStatus) {
+        planInputsStatus.textContent = "Plan inputs saved (in memory).";
+        planInputsStatus.style.color = "#059669";
+      }
+    });
+  }
+
   // Step nav buttons
   const stepButtons = document.querySelectorAll(".ap-step-btn");
   stepButtons.forEach((btn) => {
@@ -442,6 +608,13 @@ document.addEventListener("DOMContentLoaded", () => {
         updateClientCaseFromForm();
         clientCase.assetSummary = calculateAssetSummary(clientCase);
         renderAssetSummary(clientCase.assetSummary);
+      }
+
+      // If going to Inputs, sync data & load plan inputs
+      if (step === "inputs") {
+        clientCase.timestamp = new Date().toISOString();
+        updateClientCaseFromForm(); // so livingExpensesAnnual etc are fresh
+        loadPlanInputsIntoForm();
       }
 
       // Toggle active button styles
