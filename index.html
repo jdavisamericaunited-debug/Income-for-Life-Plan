@@ -1,200 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Income-for-Life Plan – AmericaPlanning</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <!-- Mobile rotate tip -->
-  <div id="ap-rotate-tip">
-    Turn phone sideways for easy viewing.
-  </div>
-
-  <div id="ap-app">
-    <header class="ap-header">
-      <div class="ap-header-inner">
-        <div class="ap-logo-lockup">
-          <div class="ap-logo-circle">AP</div>
-          <div>
-            <div class="ap-logo-title">America United Wealth Planning</div>
-            <div class="ap-logo-subtitle">Income-for-Life Plan</div>
-          </div>
-        </div>
-        <div class="ap-header-contact">
-          <div>AmericaPlanning.com</div>
-          <div>847-592-5405</div>
-        </div>
-      </div>
-    </header>
-
-    <main class="ap-main">
-      <!-- Step indicator -->
-      <nav class="ap-steps">
-        <button class="ap-step-btn ap-step-btn-active" data-step="client">
-          1. Client Goals &amp; Data
-        </button>
-        <button class="ap-step-btn" data-step="assets">
-          2. Asset Summary
-        </button>
-        <button class="ap-step-btn" data-step="inputs">
-          3. Plan Inputs
-        </button>
-        <button class="ap-step-btn" data-step="plans">
-          4. Plan Comparisons
-        </button>
-        <button class="ap-step-btn" data-step="summary">
-          5. Summary &amp; Report
-        </button>
-      </nav>
-
-      <!-- STEP 1: CLIENT GOALS & DATA -->
-      <section id="step-client" class="ap-card">
-        <h1>Client Goals &amp; Data</h1>
-        <p class="ap-intro">
-          This page mirrors your full Excel <strong>Client Goals &amp; Data</strong> worksheet.
-          Capture everything needed to build the Income-for-Life Plan before moving to Assets, Inputs, and Plans.
-        </p>
-
-        <form id="client-form">
-          <!-- Business Information -->
-          <div class="ap-form-section">
-            <h2>Business Information (if Self-Employed)</h2>
-            <div class="ap-form-grid ap-form-grid-3">
-              <div>
-                <label for="businessName">Business Name (if self-employed)</label>
-                <input id="businessName" type="text" />
-              </div>
-              <div>
-                <label for="businessYears">Years in Business</label>
-                <input id="businessYears" type="number" inputmode="decimal" />
-              </div>
-            </div>
-            <div class="ap-form-grid ap-form-grid-3">
-              <div>
-                <label for="businessAddress">Business Address</label>
-                <input id="businessAddress" type="text" />
-              </div>
-              <div>
-                <label for="businessCity">City</label>
-                <input id="businessCity" type="text" />
-              </div>
-              <div>
-                <label for="businessState">State</label>
-                <input id="businessState" type="text" />
-              </div>
-              <div>
-                <label for="businessZip">Zip Code</label>
-                <input id="businessZip" type="text" inputmode="numeric" />
-              </div>
-            </div>
-          </div>
-
-          <!-- Personal Information -->
-          <div class="ap-form-section">
-            <h2>Personal Information</h2>
-            <div class="ap-form-grid ap-form-grid-2">
-              <div>
-                <label for="clientName">Client Name (His)</label>
-                <input id="clientName" type="text" />
-              </div>
-              <div>
-                <label for="spouseName">Spouse Name (Her)</label>
-                <input id="spouseName" type="text" />
-              </div>
-              <div>
-                <label for="clientBirthDate">His Birth Date</label>
-                <input id="clientBirthDate" type="date" />
-              </div>
-              <div>
-                <label for="spouseBirthDate">Her Birth Date</label>
-                <input id="spouseBirthDate" type="date" />
-              </div>
-              <div>
-                <label for="clientAge">His Age</label>
-                <input id="clientAge" type="number" inputmode="decimal" />
-              </div>
-              <div>
-                <label for="spouseAge">Her Age</label>
-                <input id="spouseAge" type="number" inputmode="decimal" />
-              </div>
-            </div>
-            <div class="ap-form-grid ap-form-grid-2">
-              <div>
-                <label for="homeAddress">Home Address</label>
-                <input id="homeAddress" type="text" />
-              </div>
-              <div>
-                <label for="homeCity">City</label>
-                <input id="homeCity" type="text" />
-              </div>
-              <div>
-                <label for="homeState">State</label>
-                <input id="homeState" type="text" />
-              </div>
-              <div>
-                <label for="homeZip">Zip Code</label>
-                <input id="homeZip" type="text" inputmode="numeric" />
-              </div>
-              <div>
-                <label for="hisCell">His Cell Number</label>
-                <input id="hisCell" type="tel" />
-              </div>
-              <div>
-                <label for="herCell">Her Cell Number</label>
-                <input id="herCell" type="tel" />
-              </div>
-              <div>
-                <label for="bestEmail">Best Email Address</label>
-                <input id="bestEmail" type="email" />
-              </div>
-            </div>
-          </div>
-
-          <!-- Children -->
-          <div class="ap-form-section">
-            <h2>Children (Estate Planning Purposes)</h2>
-            <p class="ap-help">List each child, their age, and number of their children.</p>
-            <div class="ap-table-wrapper">
-              <table class="ap-table">
-                <thead>
-                  <tr>
-                    <th>Child</th>
-                    <th>Age</th>
-                    <th># of Their Children</th>
-                    <th>Notes</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><input id="child1Name" type="text" /></td>
-                    <td><input id="child1Age" type="number" inputmode="decimal" /></td>
-                    <td><input id="child1Grandkids" type="number" inputmode="decimal" /></td>
-                    <td><input id="child1Notes" type="text" /></td>
-                  </tr>
-                  <tr>
-                    <td><input id="child2Name" type="text" /></td>
-                    <td><input id="child2Age" type="number" inputmode="decimal" /></td>
-                    <td><input id="child2Grandkids" type="number" inputmode="decimal" /></td>
-                    <td><input id="child2Notes" type="text" /></td>
-                  </tr>
-                  <tr>
-                    <td><input id="child3Name" type="text" /></td>
-                    <td><input id="child3Age" type="number" inputmode="decimal" /></td>
-                    <td><input id="child3Grandkids" type="number" inputmode="decimal" /></td>
-                    <td><input id="child3Notes" type="text" /></td>
-                  </tr>
-                  <tr>
-                    <td><input id="child4Name" type="text" /></td>
-                    <td><input id="child4Age" type="number" inputmode="decimal" /></td>
-                    <td><input id="child4Grandkids" type="number" inputmode="decimal" /></td>
-                    <td><input id="child4Notes" type="text" /></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
 <!-- Current Advisors (Optional) -->
 <div class="ap-form-section">
   <h2>Current Advisors (Optional)</h2>
@@ -207,7 +10,6 @@
       <label for="accountantFirm">Accountant – Firm Name &amp; Telephone</label>
       <input id="accountantFirm" type="text" />
     </div>
-
     <div>
       <label for="attorneyName">Attorney – Advisor Name</label>
       <input id="attorneyName" type="text" />
@@ -216,7 +18,6 @@
       <label for="attorneyFirm">Attorney – Firm Name &amp; Telephone</label>
       <input id="attorneyFirm" type="text" />
     </div>
-
     <div>
       <label for="advisorName">Financial Advisor – Advisor Name</label>
       <input id="advisorName" type="text" />
@@ -305,4 +106,85 @@
   </div>
 </div>
 
-      
+<!-- Residences & Real Estate Investments -->
+<div class="ap-form-section">
+  <h2>Residences & Real Estate Investments</h2>
+  <div class="ap-form-grid ap-form-grid-2">
+    <div>
+      <label for="primaryResidenceOwned">Primary Residence – Owned/Rented</label>
+      <input id="primaryResidenceOwned" type="text" />
+    </div>
+    <div>
+      <label for="primaryResidenceValue">Primary Residence – Approx. Value</label>
+      <input id="primaryResidenceValue" type="number" inputmode="decimal" />
+    </div>
+    <div>
+      <label for="primaryResidenceMortgage">Primary Residence – Mortgage Amount</label>
+      <input id="primaryResidenceMortgage" type="number" inputmode="decimal" />
+    </div>
+    <div>
+      <label for="primaryResidencePayment">Primary Residence – Monthly Payment</label>
+      <input id="primaryResidencePayment" type="number" inputmode="decimal" />
+    </div>
+
+    <div>
+      <label for="secondaryResidenceOwned">2nd Home / Rental – Owned/Rented</label>
+      <input id="secondaryResidenceOwned" type="text" />
+    </div>
+    <div>
+      <label for="secondaryResidenceValue">2nd Home / Rental – Approx. Value</label>
+      <input id="secondaryResidenceValue" type="number" inputmode="decimal" />
+    </div>
+    <div>
+      <label for="secondaryResidenceMortgage">2nd Home / Rental – Mortgage Amount</label>
+      <input id="secondaryResidenceMortgage" type="number" inputmode="decimal" />
+    </div>
+    <div>
+      <label for="secondaryResidencePayment">2nd Home / Rental – Monthly Payment</label>
+      <input id="secondaryResidencePayment" type="number" inputmode="decimal" />
+    </div>
+  </div>
+</div>
+
+<!-- Current Portfolio – Investment Accounts (C – Red) -->
+<div class="ap-form-section">
+  <h2>Current Portfolio – Investment Accounts (C – Red)</h2>
+  <p class="ap-help">Typical examples: IRAs, 401(k)s, 403(b)s, brokerage accounts.</p>
+  <div class="ap-form-grid ap-form-grid-3">
+    <div>
+      <label for="account1Name">Account 1 – Name / Description</label>
+      <input id="account1Name" type="text" />
+    </div>
+    <div>
+      <label for="account1Owner">His/Her/Both</label>
+      <input id="account1Owner" type="text" />
+    </div>
+    <div>
+      <label for="account1Balance">Balance ($)</label>
+      <input id="account1Balance" type="number" inputmode="decimal" />
+    </div>
+    <div>
+      <label for="account1Notes">Notes</label>
+      <input id="account1Notes" type="text" />
+    </div>
+
+    <div>
+      <label for="account2Name">Account 2 – Name / Description</label>
+      <input id="account2Name" type="text" />
+    </div>
+    <div>
+      <label for="account2Owner">His/Her/Both</label>
+      <input id="account2Owner" type="text" />
+    </div>
+    <div>
+      <label for="account2Balance">Balance ($)</label>
+      <input id="account2Balance" type="number" inputmode="decimal" />
+    </div>
+    <div>
+      <label for="account2Notes">Notes</label>
+      <input id="account2Notes" type="text" />
+    </div>
+  </div>
+</div>
+
+<!-- Additional sections like Savings / Checking / CU, Annuities, etc. will follow in a similar structure -->
