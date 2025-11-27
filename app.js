@@ -226,6 +226,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const data = getAllFieldsData(planInputsSection);
     localStorage.setItem("apPlanInputs", JSON.stringify(data));
     updateSaveStatus(planInputsStatus, "Plan inputs saved");
+    updateScheduleHeaders();
     buildSchedules();
   };
 
@@ -235,6 +236,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const data = JSON.parse(raw);
       applyDataToFields(planInputsSection, data);
+      updateScheduleHeaders();
     } catch (e) {
       console.error("Error loading plan inputs", e);
     }
@@ -280,30 +282,81 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  /* ---------------- Schedule headers from Inputs ------------- */
+
+  const updateScheduleHeaders = () => {
+    const getDesc = (inputId, fallback) => {
+      const el = $(inputId);
+      if (!el) return fallback;
+      const v = (el.value || "").trim();
+      return v || fallback;
+    };
+
+    const setHeader = (thId, text) => {
+      const el = $(thId);
+      if (el) el.textContent = text;
+    };
+
+    // Silver plan column titles – use insurance company / contract description
+    setHeader("th-silver1", getDesc("piSilver1Desc", "Silver 1 Income"));
+    setHeader("th-silver2", getDesc("piSilver2Desc", "Silver 2 Income"));
+    setHeader("th-silver3", getDesc("piSilver3Desc", "Silver 3 Income"));
+    setHeader("th-silver4", getDesc("piSilver4Desc", "Silver 4 Income"));
+
+    // Gold plan column titles
+    setHeader("th-gold1", getDesc("piGold1Desc", "Gold 1 Income"));
+    setHeader("th-gold2", getDesc("piGold2Desc", "Gold 2 Income"));
+    setHeader("th-gold3", getDesc("piGold3Desc", "Gold 3 Income"));
+    setHeader("th-gold4", getDesc("piGold4Desc", "Gold 4 Income"));
+  };
+
   /* ---------------- Year-by-year schedules ---------------- */
 
   const clearSchedules = () => {
-    const bodies = [
-      "no-plan-schedule-body",
-      "silver-schedule-body",
-      "gold-schedule-body",
-    ];
-    bodies.forEach((id) => {
-      const tbody = $(id);
-      if (tbody) tbody.innerHTML = "";
-    });
+    ["no-plan-schedule-body", "silver-schedule-body", "gold-schedule-body"].forEach(
+      (id) => {
+        const tbody = $(id);
+        if (tbody) tbody.innerHTML = "";
+      }
+    );
+  };
+
+  const updatePlanSummaryCards = ({ noPlan, silver, gold }) => {
+    const updateCard = (prefix, data) => {
+      const incomeEl = $(`${prefix}-income`);
+      const expEl = $(`${prefix}-expenses`);
+      const gapEl = $(`${prefix}-gap`);
+
+      if (!incomeEl || !expEl || !gapEl) return;
+
+      incomeEl.textContent = fmtCurrency(data.income);
+      expEl.textContent = fmtCurrency(data.expenses);
+
+      const gap = data.income - data.expenses;
+      gapEl.textContent = fmtCurrency(gap);
+      gapEl.classList.remove("plan-metric-gap-positive", "plan-metric-gap-negative");
+      if (gap >= 0) {
+        gapEl.classList.add("plan-metric-gap-positive");
+      } else {
+        gapEl.classList.add("plan-metric-gap-negative");
+      }
+    };
+
+    updateCard("no-plan", noPlan);
+    updateCard("silver-plan", silver);
+    updateCard("gold-plan", gold);
   };
 
   const buildSchedules = () => {
     clearSchedules();
+    updateScheduleHeaders();
 
     const projectionYears = num($("piProjectionYears")?.value);
     if (!projectionYears || projectionYears <= 0) {
-      // Still update summary cards to zeros
       updatePlanSummaryCards({
-        noPlan: { income: 0, expenses: 0, add: 0 },
-        silver: { income: 0, expenses: 0, add: 0 },
-        gold: { income: 0, expenses: 0, add: 0 },
+        noPlan: { income: 0, expenses: 0, add: 0, gap: 0 },
+        silver: { income: 0, expenses: 0, add: 0, gap: 0 },
+        gold: { income: 0, expenses: 0, add: 0, gap: 0 },
       });
       return;
     }
@@ -317,7 +370,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const incomeGrowthPct = num($("piIncomeGrowthPct")?.value) / 100;
     const expenseInflationPct = num($("piExpenseInflationPct")?.value) / 100;
 
-    // Base annual amounts (first year amounts before growth)
+    // Base annual amounts (first-year amounts)
     const hisSSAnnual = num($("piHisSSAnnual")?.value);
     const herSSAnnual = num($("piHerSSAnnual")?.value);
     const pension1Annual = num($("piPension1Annual")?.value);
@@ -355,6 +408,32 @@ document.addEventListener("DOMContentLoaded", () => {
     let firstYearSilver = null;
     let firstYearGold = null;
 
+    const sourceIncomeForYear = (src, hisAge, herAge, hisDeathAge, herDeathAge, incomeGrowthFactor) => {
+      if (!src.annual || !src.startAge) return 0;
+
+      let ownerAge = null;
+      let ownerDeathAge = null;
+
+      if (src.owner.startsWith("h")) {
+        ownerAge = hisAge;
+        ownerDeathAge = hisDeathAge;
+      } else if (src.owner.startsWith("s") || src.owner.startsWith("w")) {
+        ownerAge = herAge;
+        ownerDeathAge = herDeathAge;
+      } else {
+        ownerAge = Math.max(hisAge || 0, herAge || 0);
+        ownerDeathAge = Math.max(hisDeathAge || 0, herDeathAge || 0);
+      }
+
+      if (!ownerAge) return 0;
+
+      const alive = ownerAge <= ownerDeathAge;
+      if (alive && ownerAge >= src.startAge) {
+        return src.annual * incomeGrowthFactor;
+      }
+      return 0;
+    };
+
     for (let yearIndex = 0; yearIndex < projectionYears; yearIndex++) {
       const yr = yearIndex + 1;
       const hisAge = hisAge0 ? hisAge0 + yearIndex : "";
@@ -362,6 +441,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const hisAlive = !hisAge0 ? false : hisAge <= hisDeathAge;
       const herAlive = !herAge0 ? false : herAge <= herDeathAge;
+      const anyAlive = hisAlive || herAlive;
 
       const incomeGrowthFactor = Math.pow(1 + incomeGrowthPct, yearIndex);
       const expenseGrowthFactor = Math.pow(1 + expenseInflationPct, yearIndex);
@@ -377,16 +457,14 @@ document.addEventListener("DOMContentLoaded", () => {
         herSS = herSSAnnual * incomeGrowthFactor;
       }
 
-      // Simple pension logic: full amount once start age is reached,
-      // reduced to survivor percentage after first death,
-      // zero when both have passed their death ages.
-      const anyAlive = hisAlive || herAlive;
-
       let pension1 = 0;
       if (anyAlive && hisAge >= pension1StartAge) {
         pension1 = pension1Annual * incomeGrowthFactor;
         const firstDeathAge = Math.min(hisDeathAge || 999, herDeathAge || 999);
-        if ((hisAge > firstDeathAge || herAge > firstDeathAge) && (hisAge <= hisDeathAge || herAge <= herDeathAge)) {
+        if (
+          (hisAge > firstDeathAge || herAge > firstDeathAge) &&
+          (hisAge <= hisDeathAge || herAge <= herDeathAge)
+        ) {
           pension1 = pension1 * (pension1SurvivorPct || 1);
         }
       }
@@ -395,7 +473,10 @@ document.addEventListener("DOMContentLoaded", () => {
       if (anyAlive && herAge >= pension2StartAge) {
         pension2 = pension2Annual * incomeGrowthFactor;
         const firstDeathAge = Math.min(hisDeathAge || 999, herDeathAge || 999);
-        if ((hisAge > firstDeathAge || herAge > firstDeathAge) && (hisAge <= hisDeathAge || herAge <= herDeathAge)) {
+        if (
+          (hisAge > firstDeathAge || herAge > firstDeathAge) &&
+          (hisAge <= hisDeathAge || herAge <= herDeathAge)
+        ) {
           pension2 = pension2 * (pension2SurvivorPct || 1);
         }
       }
@@ -408,104 +489,141 @@ document.addEventListener("DOMContentLoaded", () => {
       const baseIncome = hisSS + herSS + pension1 + pension2 + otherIncome;
       const expenses = livingExpensesAnnual * expenseGrowthFactor;
 
-      // ---- Additional Silver / Gold incomes ----
-      const calcAdditionalIncome = (sources) => {
-        let total = 0;
-        sources.forEach((src) => {
-          if (!src.annual || !src.startAge) return;
-          let ownerAge = null;
-          let ownerDeathAge = null;
+      // ---- Additional Silver / Gold incomes per source ----
+      const silverIncomes = silverSources.map((src) =>
+        sourceIncomeForYear(
+          src,
+          hisAge,
+          herAge,
+          hisDeathAge,
+          herDeathAge,
+          incomeGrowthFactor
+        )
+      );
+      const silverAddTotal = silverIncomes.reduce((a, b) => a + b, 0);
 
-          if (src.owner.startsWith("h")) {
-            ownerAge = hisAge;
-            ownerDeathAge = hisDeathAge;
-          } else if (src.owner.startsWith("s") || src.owner.startsWith("w")) {
-            ownerAge = herAge;
-            ownerDeathAge = herDeathAge;
-          } else {
-            // assume joint / either
-            ownerAge = Math.max(hisAge || 0, herAge || 0);
-            ownerDeathAge = Math.max(hisDeathAge || 0, herDeathAge || 0);
-          }
-
-          if (!ownerAge) return;
-
-          const alive = ownerAge <= ownerDeathAge;
-          if (alive && ownerAge >= src.startAge) {
-            total += src.annual * incomeGrowthFactor;
-          }
-        });
-        return total;
-      };
-
-      const silverAdd = calcAdditionalIncome(silverSources);
-      const goldAdd = calcAdditionalIncome(goldSources);
+      const goldIncomes = goldSources.map((src) =>
+        sourceIncomeForYear(
+          src,
+          hisAge,
+          herAge,
+          hisDeathAge,
+          herDeathAge,
+          incomeGrowthFactor
+        )
+      );
+      const goldAddTotal = goldIncomes.reduce((a, b) => a + b, 0);
 
       const noPlanTotal = baseIncome;
-      const silverTotal = baseIncome + silverAdd;
-      const goldTotal = baseIncome + goldAdd;
+      const silverTotal = baseIncome + silverAddTotal;
+      const goldTotal = baseIncome + goldAddTotal;
 
       const noPlanGap = noPlanTotal - expenses;
       const silverGap = silverTotal - expenses;
       const goldGap = goldTotal - expenses;
 
-      const rowHtml = (planType) => {
-        let addIncome = 0;
-        let totalIncome = 0;
-        let gap = 0;
+      // ----- Build rows for each plan (landscape layout) -----
 
-        if (planType === "no") {
-          addIncome = 0;
-          totalIncome = noPlanTotal;
-          gap = noPlanGap;
-        } else if (planType === "silver") {
-          addIncome = silverAdd;
-          totalIncome = silverTotal;
-          gap = silverGap;
-        } else {
-          addIncome = goldAdd;
-          totalIncome = goldTotal;
-          gap = goldGap;
-        }
-
+      if (noPlanBody) {
         const gapClass =
-          gap >= 0 ? "plan-metric-gap-positive" : "plan-metric-gap-negative";
-
-        return `
+          noPlanGap >= 0
+            ? "plan-metric-gap-positive"
+            : "plan-metric-gap-negative";
+        noPlanBody.insertAdjacentHTML(
+          "beforeend",
+          `
           <tr>
             <td>${yr}</td>
             <td>${hisAge || ""}</td>
             <td>${herAge || ""}</td>
-            <td>${fmtCurrency(baseIncome)}</td>
-            <td>${fmtCurrency(addIncome)}</td>
-            <td>${fmtCurrency(totalIncome)}</td>
+            <td class="col-his-ss">${fmtCurrency(hisSS)}</td>
+            <td class="col-her-ss">${fmtCurrency(herSS)}</td>
+            <td>${fmtCurrency(pension1)}</td>
+            <td>${fmtCurrency(pension2)}</td>
+            <td>${fmtCurrency(otherIncome)}</td>
+            <td>${fmtCurrency(noPlanTotal)}</td>
             <td>${fmtCurrency(expenses)}</td>
-            <td><span class="${gapClass}">${fmtCurrency(gap)}</span></td>
+            <td><span class="${gapClass}">${fmtCurrency(noPlanGap)}</span></td>
           </tr>
-        `;
-      };
+        `
+        );
+      }
 
-      if (noPlanBody) noPlanBody.insertAdjacentHTML("beforeend", rowHtml("no"));
-      if (silverBody) silverBody.insertAdjacentHTML("beforeend", rowHtml("silver"));
-      if (goldBody) goldBody.insertAdjacentHTML("beforeend", rowHtml("gold"));
+      if (silverBody) {
+        const gapClass =
+          silverGap >= 0
+            ? "plan-metric-gap-positive"
+            : "plan-metric-gap-negative";
+        silverBody.insertAdjacentHTML(
+          "beforeend",
+          `
+          <tr>
+            <td>${yr}</td>
+            <td>${hisAge || ""}</td>
+            <td>${herAge || ""}</td>
+            <td class="col-his-ss">${fmtCurrency(hisSS)}</td>
+            <td class="col-her-ss">${fmtCurrency(herSS)}</td>
+            <td>${fmtCurrency(pension1)}</td>
+            <td>${fmtCurrency(pension2)}</td>
+            <td>${fmtCurrency(otherIncome)}</td>
+            <td>${fmtCurrency(silverIncomes[0] || 0)}</td>
+            <td>${fmtCurrency(silverIncomes[1] || 0)}</td>
+            <td>${fmtCurrency(silverIncomes[2] || 0)}</td>
+            <td>${fmtCurrency(silverIncomes[3] || 0)}</td>
+            <td>${fmtCurrency(silverTotal)}</td>
+            <td>${fmtCurrency(expenses)}</td>
+            <td><span class="${gapClass}">${fmtCurrency(silverGap)}</span></td>
+          </tr>
+        `
+        );
+      }
+
+      if (goldBody) {
+        const gapClass =
+          goldGap >= 0
+            ? "plan-metric-gap-positive"
+            : "plan-metric-gap-negative";
+        goldBody.insertAdjacentHTML(
+          "beforeend",
+          `
+          <tr>
+            <td>${yr}</td>
+            <td>${hisAge || ""}</td>
+            <td>${herAge || ""}</td>
+            <td class="col-his-ss">${fmtCurrency(hisSS)}</td>
+            <td class="col-her-ss">${fmtCurrency(herSS)}</td>
+            <td>${fmtCurrency(pension1)}</td>
+            <td>${fmtCurrency(pension2)}</td>
+            <td>${fmtCurrency(otherIncome)}</td>
+            <td>${fmtCurrency(goldIncomes[0] || 0)}</td>
+            <td>${fmtCurrency(goldIncomes[1] || 0)}</td>
+            <td>${fmtCurrency(goldIncomes[2] || 0)}</td>
+            <td>${fmtCurrency(goldIncomes[3] || 0)}</td>
+            <td>${fmtCurrency(goldTotal)}</td>
+            <td>${fmtCurrency(expenses)}</td>
+            <td><span class="${gapClass}">${fmtCurrency(goldGap)}</span></td>
+          </tr>
+        `
+        );
+      }
 
       if (yearIndex === 0) {
         firstYearNoPlan = {
           income: noPlanTotal,
-          expenses: expenses,
+          expenses,
           add: 0,
           gap: noPlanGap,
         };
         firstYearSilver = {
           income: silverTotal,
-          expenses: expenses,
-          add: silverAdd,
+          expenses,
+          add: silverAddTotal,
           gap: silverGap,
         };
         firstYearGold = {
           income: goldTotal,
-          expenses: expenses,
-          add: goldAdd,
+          expenses,
+          add: goldAddTotal,
           gap: goldGap,
         };
       }
@@ -516,32 +634,6 @@ document.addEventListener("DOMContentLoaded", () => {
       silver: firstYearSilver || { income: 0, expenses: 0, add: 0, gap: 0 },
       gold: firstYearGold || { income: 0, expenses: 0, add: 0, gap: 0 },
     });
-  };
-
-  const updatePlanSummaryCards = ({ noPlan, silver, gold }) => {
-    const updateCard = (prefix, data) => {
-      const incomeEl = $(`${prefix}-income`);
-      const expEl = $(`${prefix}-expenses`);
-      const gapEl = $(`${prefix}-gap`);
-
-      if (!incomeEl || !expEl || !gapEl) return;
-
-      incomeEl.textContent = fmtCurrency(data.income);
-      expEl.textContent = fmtCurrency(data.expenses);
-
-      const gap = data.income - data.expenses;
-      gapEl.textContent = fmtCurrency(gap);
-      gapEl.classList.remove("plan-metric-gap-positive", "plan-metric-gap-negative");
-      if (gap >= 0) {
-        gapEl.classList.add("plan-metric-gap-positive");
-      } else {
-        gapEl.classList.add("plan-metric-gap-negative");
-      }
-    };
-
-    updateCard("no-plan", noPlan);
-    updateCard("silver-plan", silver);
-    updateCard("gold-plan", gold);
   };
 
   /* ---------------- Initial load ---------------- */
