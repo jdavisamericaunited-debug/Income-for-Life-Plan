@@ -1,6 +1,4 @@
-/* ===========================
-   Global / Layout
-   =========================== */
+/* ===== Global / Layout ===== */
 
 *,
 *::before,
@@ -8,610 +6,481 @@
   box-sizing: border-box;
 }
 
-html,
-body {
+html, body {
   margin: 0;
   padding: 0;
 }
 
 body {
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
-    sans-serif;
-  background: #f3f4f6;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  background: #e5e7eb;
   color: #111827;
 }
 
-#app {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+/* Hide rotate tip by default (desktop app) */
+#ap-rotate-tip {
+  display: none;
 }
 
-/* ===========================
-   Header & Footer
-   =========================== */
+/* Main app shell */
+#ap-app {
+  max-width: 1400px;        /* <<< wide desktop canvas */
+  margin: 24px auto 40px;
+  padding: 24px 32px 32px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 20px 35px rgba(15, 23, 42, 0.12);
+}
+
+/* ===== Header ===== */
 
 .ap-header {
-  background: #0b5aa2;
-  color: #f9fafb;
-  padding: 10px 16px;
-  box-shadow: 0 2px 4px rgba(15, 23, 42, 0.15);
+  border-bottom: 3px solid #0b5aa2;
+  padding-bottom: 16px;
 }
 
 .ap-header-inner {
-  max-width: 1100px;
-  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 32px;
 }
 
-.ap-logo-main {
-  font-weight: 700;
-  font-size: 18px;
-}
-
-.ap-logo-sub {
-  display: block;
-  font-size: 13px;
-  opacity: 0.9;
-}
-
-.ap-main {
-  max-width: 1100px;
-  margin: 16px auto 24px;
-  padding: 0 12px 40px;
-  flex: 1;
-}
-
-.ap-footer {
-  border-top: 1px solid #e5e7eb;
-  background: #f9fafb;
-  padding: 10px 16px;
-  font-size: 12px;
-  color: #4b5563;
-}
-
-.ap-footer-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.ap-footer a {
-  color: #0b5aa2;
-  text-decoration: none;
-}
-
-.ap-footer a:hover {
-  text-decoration: underline;
-}
-
-.ap-footer-disclaimer {
-  margin-top: 4px;
-  font-size: 11px;
-  color: #6b7280;
-}
-
-/* ===========================
-   Steps / Navigation
-   =========================== */
-
-.ap-steps {
+.ap-logo-lockup {
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 14px;
+  align-items: center;
+  gap: 16px;
 }
 
-.ap-step-btn {
-  padding: 6px 12px;
+.ap-logo-circle {
+  width: 52px;
+  height: 52px;
   border-radius: 999px;
-  border: 1px solid #d1d5db;
-  background: #f9fafb;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
+  background: #0b5aa2;
+  color: #f9fafb;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 22px;
+}
+
+.ap-logo-title {
+  font-size: 22px;
+  font-weight: 700;
   color: #111827;
 }
 
-.ap-step-btn:hover:not(:disabled) {
-  background: #e5e7eb;
+.ap-logo-subtitle {
+  font-size: 15px;
+  color: #4b5563;
+}
+
+.ap-header-contact {
+  text-align: right;
+  font-size: 14px;
+  color: #374151;
+}
+
+/* ===== Step Nav ===== */
+
+.ap-main {
+  margin-top: 20px;
+}
+
+.ap-steps {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.ap-step-btn {
+  flex: 1;
+  border-radius: 999px;
+  border: 1px solid #d1d5db;
+  background: #f9fafb;
+  padding: 10px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.ap-step-btn:hover {
+  background: #eff6ff;
+  border-color: #93c5fd;
 }
 
 .ap-step-btn-active {
   background: #0b5aa2;
+  color: #f9fafb;
   border-color: #0b5aa2;
-  color: #ffffff;
 }
 
-.ap-step-btn:disabled {
-  opacity: 0.5;
-  cursor: default;
-}
-
-/* ===========================
-   Cards / Sections
-   =========================== */
+/* ===== Cards ===== */
 
 .ap-card {
-  background: #ffffff;
-  border-radius: 16px;
-  padding: 16px 18px 20px;
-  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
-}
-
-.ap-card + .ap-card {
-  margin-top: 16px;
+  margin-top: 22px;
+  padding: 22px 24px 26px;
+  background: #f9fafb;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
 }
 
 .ap-card-hidden {
   display: none;
 }
 
+.ap-card h1 {
+  margin: 0 0 10px;
+  font-size: 22px;
+  color: #111827;
+}
+
 .ap-intro {
+  margin: 0 0 18px;
   font-size: 14px;
   color: #4b5563;
-  margin-top: 2px;
-  margin-bottom: 10px;
 }
+
+/* ===== Form Sections ===== */
 
 .ap-form-section {
-  margin-top: 14px;
-  padding-top: 10px;
-  border-top: 1px solid #e5e7eb;
-}
-
-.ap-form-section:first-of-type {
-  border-top: none;
-  padding-top: 0;
+  margin-bottom: 22px;
+  padding: 14px 16px 16px;
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
 }
 
 .ap-form-section h2 {
-  margin: 0 0 6px;
-  font-size: 16px;
+  margin: 0 0 10px;
+  font-size: 18px;
   color: #0b5aa2;
 }
 
-.ap-subheading {
-  font-size: 14px;
-  font-weight: 600;
+.ap-form-section h3 {
+  margin: 10px 0 6px;
+  font-size: 15px;
   color: #111827;
-  margin: 0 0 4px;
 }
 
-/* ===========================
-   Form Layout & Controls
-   =========================== */
-
-.ap-form {
-  margin-top: 6px;
-}
-
-.ap-grid-2 {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 10px 14px;
-}
-
-.ap-field {
-  display: flex;
-  flex-direction: column;
-}
-
-.ap-field label {
+.ap-help {
+  margin: 4px 0 10px;
   font-size: 13px;
-  margin-bottom: 3px;
-  color: #374151;
+  color: #6b7280;
 }
 
-.ap-field input,
-.ap-field select,
-.ap-field textarea {
-  padding: 6px 8px;
+/* ===== Grids (Desktop) ===== */
+
+.ap-form-grid {
+  display: grid;
+  gap: 12px 20px;
+}
+
+/* 2-column grid on desktop */
+.ap-form-grid-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* 3-column grid on desktop */
+.ap-form-grid-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* 4-column grid (used for Silver/Gold blocks) */
+.ap-form-grid-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+/* Inputs and labels */
+
+.ap-form-grid label {
+  display: block;
+  font-size: 13px;
+  color: #374151;
+  margin-bottom: 4px;
+}
+
+.ap-form-grid input,
+.ap-form-section textarea {
+  width: 100%;
+  padding: 7px 8px;
   border-radius: 6px;
   border: 1px solid #d1d5db;
   font-size: 13px;
   font-family: inherit;
   color: #111827;
-  background: #ffffff;
 }
 
-.ap-field input:focus,
-.ap-field select:focus,
-.ap-field textarea:focus {
-  outline: 2px solid #0b5aa2;
-  outline-offset: 1px;
-  border-color: #0b5aa2;
-}
-
-.ap-field textarea {
+.ap-form-section textarea {
   resize: vertical;
 }
 
-.ap-form-actions {
-  margin-top: 16px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+/* ===== Tables ===== */
 
-.ap-btn-primary {
-  background: #0b5aa2;
-  color: #ffffff;
-  border: none;
-  border-radius: 999px;
-  padding: 8px 18px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
+.ap-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
 }
-
-.ap-btn-primary:hover {
-  background: #0a4a86;
-}
-
-.ap-save-status {
-  font-size: 13px;
-  color: #6b7280;
-}
-
-.ap-small {
-  font-size: 12px;
-  color: #6b7280;
-}
-
-/* ===========================
-   Tables
-   =========================== */
 
 .ap-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 13px;
-  margin-top: 4px;
-}
-
-.ap-table thead {
-  background: #f3f4f6;
 }
 
 .ap-table th,
 .ap-table td {
   border: 1px solid #e5e7eb;
-  padding: 6px 6px;
+  padding: 6px 8px;
   text-align: left;
-  vertical-align: middle;
 }
 
 .ap-table th {
+  background: #eff6ff;
   font-weight: 600;
-  color: #374151;
-  font-size: 12px;
+  color: #1f2937;
 }
 
-.ap-table td input,
-.ap-table td select {
+.ap-table td input {
+  border: none;
   width: 100%;
-  border-radius: 4px;
-  border: 1px solid #d1d5db;
-  padding: 4px 6px;
-  font-size: 12px;
-  font-family: inherit;
-}
-
-/* ===========================
-   Plan Comparisons (Step 4)
-   =========================== */
-
-.asset-legend {
-  margin-bottom: 8px;
+  padding: 4px 4px;
   font-size: 13px;
 }
 
-.asset-chip {
-  display: inline-block;
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 13px;
-  font-weight: 600;
-  margin-right: 6px;
-  margin-bottom: 6px;
-  border: 1px solid transparent;
-}
+/* ===== Goal Rows ===== */
 
-/* Red – Investment accounts */
-.asset-chip-investments {
-  background: #fee2e2;
-  color: #991b1b;
-  border-color: #fecaca;
-}
-
-/* Yellow – Savings/Checking/CU */
-.asset-chip-savings {
-  background: #fef9c3;
-  color: #854d0e;
-  border-color: #facc15;
-}
-
-/* Green – Annuities */
-.asset-chip-annuities {
-  background: #dcfce7;
-  color: #166534;
-  border-color: #86efac;
-}
-
-/* Tabs above plan cards */
-
-.plan-tabs {
+.ap-goals-grid {
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin: 10px 0 12px;
+  flex-direction: column;
+  gap: 8px;
 }
 
-/* Base tab style */
-.plan-tab {
-  padding: 6px 14px;
-  border-radius: 999px;
+.ap-goal-row {
+  display: grid;
+  grid-template-columns: 1.6fr 0.3fr 0.7fr; /* label, rating, notes */
+  gap: 10px;
+  align-items: center;
+}
+
+.ap-goal-row label {
+  font-size: 13px;
+  color: #374151;
+}
+
+.ap-goal-row input {
+  padding: 6px 8px;
+  border-radius: 6px;
   border: 1px solid #d1d5db;
-  background: #f9fafb;
+  font-size: 13px;
+}
+
+/* ===== Buttons / Save Status ===== */
+
+.ap-form-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.ap-primary-btn {
+  border-radius: 999px;
+  border: none;
+  padding: 9px 18px;
+  background: #0b5aa2;
+  color: #f9fafb;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease,
-    border-color 0.15s ease;
-  color: #111827;
 }
 
-/* Inactive border colors by plan */
-.plan-tab[data-plan="no-plan"] {
-  border-color: #4b5563; /* dark neutral */
+.ap-primary-btn:hover {
+  background: #2563eb;
 }
 
-.plan-tab[data-plan="silver"] {
-  border-color: #9ca3af; /* silver/gray */
+.ap-save-status {
+  font-size: 13px;
+  color: #059669;
 }
 
-.plan-tab[data-plan="gold"] {
-  border-color: #f59e0b; /* gold */
+/* ===== Plan Tabs & Cards ===== */
+
+.plan-tabs {
+  display: inline-flex;
+  border-radius: 999px;
+  background: #e5e7eb;
+  padding: 3px;
+  margin-bottom: 12px;
 }
 
-/* Active states – filled with matching colors */
-.plan-tab-active[data-plan="no-plan"] {
-  background: #111827;
+.plan-tab {
+  border: none;
+  background: transparent;
+  padding: 7px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #4b5563;
+  cursor: pointer;
+}
+
+.plan-tab-active {
+  background: #0b5aa2;
   color: #f9fafb;
-  border-color: #111827;
 }
-
-.plan-tab-active[data-plan="silver"] {
-  background: linear-gradient(90deg, #e5e7eb, #f3f4f6);
-  color: #111827;
-  border-color: #9ca3af;
-}
-
-.plan-tab-active[data-plan="gold"] {
-  background: linear-gradient(90deg, #fbbf24, #f59e0b);
-  color: #78350f;
-  border-color: #f59e0b;
-}
-
-/* Plan cards */
 
 .plan-card {
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
-  margin-top: 6px;
-}
-
-.plan-card-header {
-  padding: 10px 14px;
-  font-weight: 600;
-}
-
-/* No Plan: neutral / black & white */
-.plan-card-no-plan .plan-card-header {
-  background: #111827;
-  color: #f9fafb;
-}
-
-/* Silver Plan header */
-.plan-card-silver .plan-card-header {
-  background: linear-gradient(90deg, #e5e7eb, #f3f4f6);
-  color: #111827;
-}
-
-/* Gold Plan header */
-.plan-card-gold .plan-card-header {
-  background: linear-gradient(90deg, #fbbf24, #f59e0b);
-  color: #78350f;
-}
-
-.plan-card-body {
-  padding: 14px 16px;
+  margin-top: 8px;
   background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  padding: 14px 16px 16px;
 }
 
 .plan-card-hidden {
   display: none;
 }
 
-.plan-metric-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 12px;
-  margin-top: 6px;
+.plan-card-header {
+  font-size: 16px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 8px;
 }
 
-.plan-metric {
-  padding: 10px 12px;
-  background: #f9fafb;
-  border-radius: 10px;
-  border: 1px solid #e5e7eb;
+.plan-card-body {
+  font-size: 13px;
+  color: #374151;
+}
+
+.plan-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 10px;
 }
 
 .plan-metric-label {
-  font-size: 13px;
-  color: #4b5563;
+  font-size: 12px;
+  color: #6b7280;
 }
 
 .plan-metric-value {
   font-size: 16px;
-  font-weight: 600;
-  margin-top: 4px;
-}
-
-.plan-metric-gap-positive {
-  color: #166534; /* green */
-}
-
-.plan-metric-gap-negative {
-  color: #b91c1c; /* red */
+  font-weight: 700;
+  color: #111827;
 }
 
 .plan-note {
-  margin-top: 10px;
-  font-size: 13px;
-  color: #4b5563;
+  font-size: 12px;
+  color: #6b7280;
+  margin-bottom: 10px;
 }
 
-/* ===========================
-   Responsive
-   =========================== */
-
-@media (max-width: 640px) {
-  .ap-card {
-    padding: 14px 12px 18px;
-  }
-
-  .ap-header-inner,
-  .ap-footer-inner {
-    text-align: left;
-  }
-
-  .ap-logo-main {
-    font-size: 16px;
-  }
-}
-/* ---------- Plan Schedule (Landscape) ---------- */
+/* Schedules */
 
 .plan-schedule-wrapper {
-  margin-top: 8px;
-  overflow-x: auto;           /* horizontal scroll on small screens */
+  margin-top: 6px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  overflow: auto;
 }
 
-.plan-schedule {
-  min-width: 1200px;          /* makes the table wide / landscape */
-}
-
-/* His SS in blue, Her SS in pink */
-.plan-schedule th.col-his-ss,
-.plan-schedule td.col-his-ss {
-  background: #dbeafe;        /* light blue */
-  color: #1e3a8a;
-}
-
-.plan-schedule th.col-her-ss,
-.plan-schedule td.col-her-ss {
-  background: #fce7f3;        /* light pink */
-  color: #9d174d;
-}
-/* ---- Plan summary panels (A/B/C + incomes + pie) ---- */
+/* ABC summary */
 
 .plan-summary-heading {
-  margin-top: 18px;
-  font-size: 16px;
-  font-weight: 700;
-  color: #0b5aa2;
+  margin-top: 14px;
+  font-size: 15px;
+  font-weight: 600;
 }
 
 .plan-summary-layout {
   display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  margin-top: 10px;
   align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: 10px;
 }
 
 .plan-income-summary {
-  flex: 1 1 220px;
-  max-width: 320px;
-  font-size: 14px;
+  flex: 1;
 }
 
 .summary-abc-row {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
+  gap: 10px;
   margin-bottom: 8px;
 }
 
 .summary-abc-item {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
 }
 
 .summary-abc-label {
-  width: 24px;
-  text-align: center;
-  padding: 2px 4px;
-  border-radius: 3px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  font-size: 12px;
   font-weight: 700;
-  color: #111827;
+  color: #ffffff;
 }
 
-.summary-a { background: #facc15; }      /* yellow – savings/checking */
-.summary-b { background: #bbf7d0; }      /* light green – annuities */
-.summary-c { background: #fecaca; }      /* soft red – investments */
+.summary-a { background: #facc15; }
+.summary-b { background: #16a34a; }
+.summary-c { background: #ef4444; }
 
 .summary-abc-value {
-  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  font-size: 13px;
 }
 
 .plan-income-row {
   display: flex;
   justify-content: space-between;
-  gap: 8px;
+  font-size: 13px;
   margin-bottom: 4px;
 }
 
-.plan-income-row .label {
-  font-weight: 500;
-}
-
 .plan-income-row.main {
-  margin-top: 4px;
-  margin-bottom: 6px;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  border-top: 1px solid #e5e7eb;
-  border-bottom: 1px solid #e5e7eb;
   font-weight: 700;
 }
 
 .plan-income-row .label.her {
-  background: #fee2e2;
-  padding: 2px 4px;
-  border-radius: 4px;
+  color: #1d4ed8;
 }
 
 .plan-income-row .label.his {
-  background: #dbeafe;
-  padding: 2px 4px;
-  border-radius: 4px;
+  color: #b91c1c;
 }
 
+/* Pie charts */
+
 .plan-pie-wrapper {
-  flex: 1 1 260px;
-  min-width: 220px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 260px;
+  height: 260px;
 }
 
 .plan-pie-canvas {
-  max-width: 320px;
-  max-height: 260px;
+  width: 100%;
+  height: 100%;
+}
+
+/* ===== Footer ===== */
+
+.ap-footer {
+  margin-top: 18px;
+  padding-top: 10px;
+  border-top: 1px solid #e5e7eb;
+  font-size: 12px;
+  color: #6b7280;
+  text-align: center;
 }
