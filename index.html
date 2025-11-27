@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>AmericaPlanning – Income for Life Planner</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Basic branding & layout -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- Top header / brand bar -->
+    <header class="ap-header">
+      <div class="ap-header-inner">
+        <div class="ap-logo">
+          <!-- You can swap this text for an actual <img> later -->
+          <span class="ap-logo-main">AmericaPlanning.com</span>
+          <span class="ap-logo-sub">Income for Life Planner</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="ap-main">
+      <!-- Simple step indicator for later pages -->
+      <nav class="ap-steps">
+        <button class="ap-step-btn ap-step-btn-active" data-step="client">
+          1. Client Goals &amp; Data
+        </button>
+        <button class="ap-step-btn" data-step="inputs" disabled>
+          2. Plan Inputs (coming soon)
+        </button>
+        <button class="ap-step-btn" data-step="plans" disabled>
+          3. Plan Comparisons (coming soon)
+        </button>
+        <button class="ap-step-btn" data-step="summary" disabled>
+          4. Summary &amp; Report (coming soon)
+        </button>
+      </nav>
+
+      <!-- STEP 1: Client Goals & Data -->
+      <section id="step-client" class="ap-card">
+        <h1>Client Goals &amp; Data</h1>
+        <p class="ap-intro">
+          Enter your client’s basic information and retirement goals.
+          This mirrors your Excel “Client Goals &amp; Data” sheet and feeds all downstream calculations.
+        </p>
+
+        <form id="client-form" class="ap-form">
+          <!-- Client Info -->
+          <div class="ap-form-section">
+            <h2>Client Information</h2>
+            <div class="ap-grid-2">
+              <div class="ap-field">
+                <label for="clientName">Client Name</label>
+                <input type="text" id="clientName" name="clientName" required />
+              </div>
+
+              <div class="ap-field">
+                <label for="clientDOB">Client Date of Birth</label>
+                <input type="date" id="clientDOB" name="clientDOB" required />
+              </div>
+
+              <div class="ap-field">
+                <label for="clientEmail">Client Email</label>
+                <input type="email" id="clientEmail" name="clientEmail" />
+              </div>
+
+              <div class="ap-field">
+                <label for="clientPhone">Client Phone</label>
+                <input type="tel" id="clientPhone" name="clientPhone" />
+              </div>
+
+              <div class="ap-field">
+                <label for="clientCity">City</label>
+                <input type="text" id="clientCity" name="clientCity" />
+              </div>
+
+              <div class="ap-field">
+                <label for="clientState">State</label>
+                <input type="text" id="clientState" name="clientState" maxlength="2" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Spouse Info -->
+          <div class="ap-form-section">
+            <h2>Spouse / Partner Information</h2>
+            <div class="ap-grid-2">
+              <div class="ap-field">
+                <label for="spouseName">Spouse Name</label>
+                <input type="text" id="spouseName" name="spouseName" />
+              </div>
+
+              <div class="ap-field">
+                <label for="spouseDOB">Spouse Date of Birth</label>
+                <input type="date" id="spouseDOB" name="spouseDOB" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Retirement Goals -->
+          <div class="ap-form-section">
+            <h2>Retirement Goals</h2>
+            <div class="ap-grid-2">
+              <div class="ap-field">
+                <label for="targetRetireAgeClient">
+                  Target Retirement Age – Client
+                </label>
+                <input
+                  type="number"
+                  id="targetRetireAgeClient"
+                  name="targetRetireAgeClient"
+                  min="40"
+                  max="80"
+                />
+              </div>
+
+              <div class="ap-field">
+                <label for="targetRetireAgeSpouse">
+                  Target Retirement Age – Spouse
+                </label>
+                <input
+                  type="number"
+                  id="targetRetireAgeSpouse"
+                  name="targetRetireAgeSpouse"
+                  min="40"
+                  max="80"
+                />
+              </div>
+
+              <div class="ap-field">
+                <label for="desiredIncomeToday">
+                  Desired Annual Retirement Income (Today’s Dollars)
+                </label>
+                <div class="ap-input-prefix">
+                  <span>$</span>
+                  <input
+                    type="number"
+                    id="desiredIncomeToday"
+                    name="desiredIncomeToday"
+                    min="0"
+                    step="1000"
+                  />
+                </div>
+              </div>
+
+              <div class="ap-field">
+                <label for="notesGoals">
+                  Notes about Retirement Goals
+                </label>
+                <textarea
+                  id="notesGoals"
+                  name="notesGoals"
+                  rows="3"
+                  placeholder="Lifestyle goals, travel, legacy, major expenses, etc."
+                ></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit -->
+          <div class="ap-form-actions">
+            <button type="submit" class="ap-btn-primary">
+              Save Client Data
+            </button>
+            <span class="ap-save-status" id="saveStatus">Not saved yet</span>
+          </div>
+        </form>
+      </section>
+
+      <!-- Placeholder sections for future steps (disabled for now) -->
+      <section id="step-inputs" class="ap-card ap-card-hidden">
+        <h1>Plan Inputs</h1>
+        <p>Coming soon – this will mirror your Excel “Inputs” sheet.</p>
+      </section>
+
+      <section id="step-plans" class="ap-card ap-card-hidden">
+        <h1>Plan Comparisons</h1>
+        <p>Coming soon – No Plan vs Silver vs Gold vs Survivor.</p>
+      </section>
+
+      <section id="step-summary" class="ap-card ap-card-hidden">
+        <h1>Summary &amp; Report</h1>
+        <p>Coming soon – client-ready summary and print/PDF layout.</p>
+      </section>
+    </main>
+
+    <!-- Footer / disclaimer strip -->
+    <footer class="ap-footer">
+      <div class="ap-footer-inner">
+        <div>
+          America United Wealth Planning &nbsp;|&nbsp;
+          <a href="https://www.americaplanning.com" target="_blank" rel="noopener">
+            AmericaPlanning.com
+          </a>
+          &nbsp;|&nbsp; Phone: 847-592-5405 &nbsp;|&nbsp; Email:
+          <a href="mailto:john@AmericaPlanning.com">john@AmericaPlanning.com</a>
+        </div>
+        <div class="ap-footer-disclaimer">
+          For Illinois residents only. For educational purposes – not individual tax,
+          legal, or investment advice.
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- App logic -->
+  <script src="app.js"></script>
+</body>
+</html>
