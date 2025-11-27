@@ -24,14 +24,17 @@
         <button class="ap-step-btn ap-step-btn-active" data-step="client">
           1. Client Goals &amp; Data
         </button>
+        <button class="ap-step-btn" data-step="assets">
+          2. Assets Summary
+        </button>
         <button class="ap-step-btn" data-step="inputs" disabled>
-          2. Plan Inputs (coming soon)
+          3. Plan Inputs (coming soon)
         </button>
         <button class="ap-step-btn" data-step="plans" disabled>
-          3. Plan Comparisons (coming soon)
+          4. Plan Comparisons (coming soon)
         </button>
         <button class="ap-step-btn" data-step="summary" disabled>
-          4. Summary &amp; Report (coming soon)
+          5. Summary &amp; Report (coming soon)
         </button>
       </nav>
 
@@ -43,7 +46,7 @@
           information entered here will feed the rest of the Income for Life plan.
         </p>
 
-       <form id="client-form" class="ap-form" novalidate>
+        <form id="client-form" class="ap-form" novalidate>
           <!-- BUSINESS INFO -->
           <div class="ap-form-section">
             <h2>Business Information (if self-employed)</h2>
@@ -81,11 +84,11 @@
             <div class="ap-grid-2">
               <div class="ap-field">
                 <label for="clientName">Client Name</label>
-                <input type="text" id="clientName" required />
+                <input type="text" id="clientName" />
               </div>
               <div class="ap-field">
                 <label for="clientDOB">Client Date of Birth</label>
-                <input type="date" id="clientDOB" required />
+                <input type="date" id="clientDOB" />
               </div>
 
               <div class="ap-field">
@@ -144,7 +147,6 @@
                 </tr>
               </thead>
               <tbody>
-                <!-- 4 rows like the worksheet -->
                 <tr>
                   <td><input id="child1Name" /></td>
                   <td><input id="child1Age" type="number" min="0" /></td>
@@ -391,7 +393,6 @@
                 </tr>
               </thead>
               <tbody>
-                <!-- 5 lines like the sheet -->
                 <tr>
                   <td><input id="inv1Name" /></td>
                   <td><input id="inv1Owner" /></td>
@@ -545,7 +546,6 @@
                 </tr>
               </thead>
               <tbody>
-                <!-- 6 rows -->
                 <tr>
                   <td><input id="inc1Who" /></td>
                   <td><input id="inc1Type" /></td>
@@ -729,6 +729,101 @@
             <span class="ap-save-status" id="saveStatus">Not saved yet</span>
           </div>
         </form>
+      </section>
+
+      <!-- STEP 2: ASSETS SUMMARY (BALANCE SHEET STYLE) -->
+      <section id="step-assets" class="ap-card ap-card-hidden">
+        <h1>Assets Summary</h1>
+        <p class="ap-intro">
+          Balance sheet style snapshot built from the data you entered on the Client
+          Goals &amp; Data page. Use this to confirm values and categories before
+          running plan projections.
+        </p>
+
+        <!-- Real Estate -->
+        <div class="ap-form-section">
+          <h2>Real Estate</h2>
+          <table class="ap-table">
+            <thead>
+              <tr>
+                <th>Property</th>
+                <th style="width: 20%;">Property Value</th>
+                <th style="width: 20%;">Mortgage Balance</th>
+                <th style="width: 20%;">Net Equity</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Primary Residence</td>
+                <td><span id="as-primary-value">$0</span></td>
+                <td><span id="as-primary-mortgage">$0</span></td>
+                <td><span id="as-primary-equity">$0</span></td>
+              </tr>
+              <tr>
+                <td>Secondary Residence</td>
+                <td><span id="as-secondary-value">$0</span></td>
+                <td><span id="as-secondary-mortgage">$0</span></td>
+                <td><span id="as-secondary-equity">$0</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Financial Accounts -->
+        <div class="ap-form-section">
+          <h2>Financial Accounts</h2>
+          <table class="ap-table">
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th style="width: 18%;">Number of Accounts</th>
+                <th style="width: 24%;">Total Balance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Investment / Retirement Accounts (Qualified &amp; Non-Qualified)</td>
+                <td><span id="as-portfolio-count">0</span></td>
+                <td><span id="as-portfolio-total">$0</span></td>
+              </tr>
+              <tr>
+                <td>Savings, Checking &amp; Credit Union</td>
+                <td><span id="as-savings-count">0</span></td>
+                <td><span id="as-savings-total">$0</span></td>
+              </tr>
+              <tr>
+                <td>Annuities</td>
+                <td><span id="as-annuities-count">0</span></td>
+                <td><span id="as-annuities-total">$0</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Totals -->
+        <div class="ap-form-section">
+          <h2>Totals</h2>
+          <table class="ap-table">
+            <tbody>
+              <tr>
+                <th style="width: 60%;">Total Real Estate Equity</th>
+                <td><span id="as-total-real-estate-equity">$0</span></td>
+              </tr>
+              <tr>
+                <th>Total Financial Assets</th>
+                <td><span id="as-total-financial-assets">$0</span></td>
+              </tr>
+              <tr>
+                <th>Total Assets</th>
+                <td><span id="as-total-assets">$0</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="ap-small">
+            Note: This summary is informational only and based solely on values entered
+            on the Client Goals &amp; Data worksheet.
+          </p>
+        </div>
       </section>
 
       <!-- Placeholder other steps -->
