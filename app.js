@@ -1,690 +1,622 @@
-// AmericaPlanning Income-for-Life Planner JS
-// - SS & Pension growth only (annuities level)
-// - SS survivor logic (lower benefit lost after first death)
-// - Pensions with survivor %
-// - Silver/Gold annuity income continues as long as either spouse is alive
-// - Final A/B/C asset & income summaries with pies for No Plan, Silver, Gold
+// app.js – AmericaPlanning Income-for-Life Plan
+// Works with the HTML you pasted (step nav, saving, asset summary, basic plan calcs)
 
-document.addEventListener("DOMContentLoaded", () => {
-  /* ---------------- Helpers ---------------- */
-
-  const $ = (id) => document.getElementById(id);
-
-  const num = (val) => {
-    if (val === undefined || val === null) return 0;
-    const n = parseFloat(String(val).replace(/,/g, ""));
-    return isNaN(n) ? 0 : n;
+(function () {
+  const STORAGE_KEYS = {
+    CLIENT: "ap_ifl_client_data",
+    INPUTS: "ap_ifl_plan_inputs",
   };
 
-  const fmtCurrency = (value) =>
-    num(value).toLocaleString("en-US", {
+  const state = {
+    client: null,
+    inputs: null,
+    charts: {
+      np: null,
+      sp: null,
+      gp: null,
+    },
+  };
+
+  // ---------- Utility helpers ----------
+
+  function $(selector) {
+    return document.querySelector(selector);
+  }
+
+  function $all(selector) {
+    return Array.from(document.querySelectorAll(selector));
+  }
+
+  function toNumber(val) {
+    const n = parseFloat(String(val).replace(/,/g, ""));
+    return isNaN(n) ? 0 : n;
+  }
+
+  function fmtCurrency(val) {
+    const n = toNumber(val);
+    return n.toLocaleString("en-US", {
       style: "currency",
       currency: "USD",
       maximumFractionDigits: 0,
     });
+  }
 
-  const fmtPct = (value) =>
-    `${num(value).toLocaleString("en-US", {
-      maximumFractionDigits: 1,
-    })}%`;
+  function fmtPercent(val) {
+    const n = toNumber(val);
+    return `${n.toFixed(1)}%`;
+  }
 
-  /* ---------------- Global state for assets & charts ---------------- */
-
-  let baseAssets = { savings: 0, annuities: 0, investments: 0 }; // from Client Data
-  let npAssetChart = null;
-  let spAssetChart = null;
-  let gpAssetChart = null;
-
-  const ASSET_COLORS = ["#facc15", "#bbf7d0", "#f87171"]; // A yellow, B green, C red
-
-  const createOrUpdatePie = (existingChart, canvasId, data) => {
-    if (!window.Chart) return existingChart;
-    const canvas = $(canvasId);
-    if (!canvas) return existingChart;
-    const ctx = canvas.getContext("2d");
-
-    if (!existingChart) {
-      return new Chart(ctx, {
-        type: "pie",
-        data: {
-          labels: ["A: Savings/Checking/CU", "B: Annuities", "C: Investments"],
-          datasets: [
-            {
-              data,
-              backgroundColor: ASSET_COLORS,
-              borderWidth: 1,
-            },
-          ],
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            legend: {
-              position: "bottom",
-            },
-          },
-        },
-      });
-    } else {
-      existingChart.data.datasets[0].data = data;
-      existingChart.update();
-      return existingChart;
-    }
-  };
-
-  /* ---------------- Step navigation ---------------- */
-
-  const stepButtons = document.querySelectorAll(".ap-step-btn");
-  const stepSections = {
-    client: $("step-client"),
-    assets: $("step-assets"),
-    inputs: $("step-inputs"),
-    plans: $("step-plans"),
-    summary: $("step-summary"),
-  };
-
-  const showStep = (stepName) => {
-    stepButtons.forEach((btn) => {
-      if (btn.dataset.step === stepName) {
-        btn.classList.add("ap-step-btn-active");
-      } else {
-        btn.classList.remove("ap-step-btn-active");
-      }
-    });
-
-    Object.entries(stepSections).forEach(([name, section]) => {
-      if (!section) return;
-      if (name === stepName) {
-        section.classList.remove("ap-card-hidden");
-      } else {
-        section.classList.add("ap-card-hidden");
-      }
-    });
-  };
-
-  stepButtons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const step = btn.dataset.step;
-      if (!step || btn.disabled) return;
-      showStep(step);
-    });
-  });
-
-  /* ---------------- Save / load client data ---------------- */
-
-  const clientForm = $("client-form");
-  const saveStatus = $("saveStatus");
-
-  const getAllFieldsData = (rootEl) => {
-    const data = {};
-    if (!rootEl) return data;
-    const fields = rootEl.querySelectorAll("input, select, textarea");
-    fields.forEach((field) => {
-      if (!field.id) return;
-      data[field.id] = field.value;
-    });
-    return data;
-  };
-
-  const applyDataToFields = (rootEl, data) => {
-    if (!rootEl || !data) return;
-    Object.entries(data).forEach(([id, value]) => {
-      const el = $(id);
-      if (el) el.value = value;
-    });
-  };
-
-  const updateSaveStatus = (el, msg) => {
+  function showStatus(el, message) {
     if (!el) return;
-    const now = new Date();
-    const timeStr = now.toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
+    el.textContent = message;
+    el.classList.add("ap-save-status-visible");
+    setTimeout(() => {
+      el.classList.remove("ap-save-status-visible");
+    }, 2500);
+  }
+
+  // ---------- Local storage ----------
+
+  function saveToStorage(key, data) {
+    try {
+      localStorage.setItem(key, JSON.stringify(data));
+    } catch (e) {
+      console.error("LocalStorage save error", e);
+    }
+  }
+
+  function loadFromStorage(key) {
+    try {
+      const raw = localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) {
+      console.error("LocalStorage load error", e);
+      return null;
+    }
+  }
+
+  // ---------- Step navigation ----------
+
+  function initStepNavigation() {
+    const stepButtons = $all(".ap-step-btn");
+    const cards = $all(".ap-card");
+
+    function activateStep(stepName) {
+      // Buttons
+      stepButtons.forEach((btn) => {
+        if (btn.dataset.step === stepName) {
+          btn.classList.add("ap-step-btn-active");
+        } else {
+          btn.classList.remove("ap-step-btn-active");
+        }
+      });
+
+      // Sections
+      cards.forEach((card) => {
+        if (card.id === `step-${stepName}`) {
+          card.classList.remove("ap-card-hidden");
+        } else {
+          card.classList.add("ap-card-hidden");
+        }
+      });
+    }
+
+    stepButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const stepName = btn.dataset.step;
+        if (stepName) activateStep(stepName);
+      });
     });
-    el.textContent = `${msg} (${timeStr})`;
-  };
 
-  const updateAssetsSummary = () => {
-    // Real estate
-    const primaryVal = num($("primaryValue")?.value);
-    const primaryMort = num($("primaryMortgage")?.value);
-    const secondaryVal = num($("secondaryValue")?.value);
-    const secondaryMort = num($("secondaryMortgage")?.value);
+    // Default to first (client)
+    activateStep("client");
+  }
 
-    const primaryEq = Math.max(primaryVal - primaryMort, 0);
-    const secondaryEq = Math.max(secondaryVal - secondaryMort, 0);
+  // ---------- Client form (Step 1) ----------
 
-    $("as-primary-value").textContent = fmtCurrency(primaryVal);
-    $("as-primary-mortgage").textContent = fmtCurrency(primaryMort);
-    $("as-primary-equity").textContent = fmtCurrency(primaryEq);
+  function readClientForm() {
+    const ids = [
+      "clientName",
+      "spouseName",
+      "advisorName",
+      "planDate",
 
-    $("as-secondary-value").textContent = fmtCurrency(secondaryVal);
-    $("as-secondary-mortgage").textContent = fmtCurrency(secondaryMort);
-    $("as-secondary-equity").textContent = fmtCurrency(secondaryEq);
+      "primaryValue",
+      "primaryMortgage",
+      "secondaryValue",
+      "secondaryMortgage",
 
-    const totalRealEstateEquity = primaryEq + secondaryEq;
-
-    // Investment / retirement accounts
-    const invBalances = [
       "inv1Balance",
       "inv2Balance",
       "inv3Balance",
       "inv4Balance",
       "inv5Balance",
-    ].map((id) => num($(id)?.value));
-    const invCount = invBalances.filter((v) => v > 0).length;
-    const invTotal = invBalances.reduce((a, b) => a + b, 0);
 
-    $("as-portfolio-count").textContent = invCount.toString();
-    $("as-portfolio-total").textContent = fmtCurrency(invTotal);
-
-    // Savings / checking / CU
-    const savBalances = [
       "sav1Balance",
       "sav2Balance",
       "sav3Balance",
       "sav4Balance",
       "sav5Balance",
-    ].map((id) => num($(id)?.value));
-    const savCount = savBalances.filter((v) => v > 0).length;
-    const savTotal = savBalances.reduce((a, b) => a + b, 0);
 
-    $("as-savings-count").textContent = savCount.toString();
-    $("as-savings-total").textContent = fmtCurrency(savTotal);
-
-    // Annuities
-    const annBalances = [
       "ann1Balance",
       "ann2Balance",
       "ann3Balance",
       "ann4Balance",
       "ann5Balance",
-    ].map((id) => num($(id)?.value));
-    const annCount = annBalances.filter((v) => v > 0).length;
-    const annTotal = annBalances.reduce((a, b) => a + b, 0);
+    ];
 
-    $("as-annuities-count").textContent = annCount.toString();
-    $("as-annuities-total").textContent = fmtCurrency(annTotal);
+    const data = {};
+    ids.forEach((id) => {
+      const el = $(`#${id}`);
+      if (!el) return;
+      if (el.type === "number") {
+        data[id] = toNumber(el.value);
+      } else {
+        data[id] = el.value || "";
+      }
+    });
+    return data;
+  }
 
-    const totalFinancialAssets = invTotal + savTotal + annTotal;
-    const totalAssets = totalRealEstateEquity + totalFinancialAssets;
-
-    $("as-total-real-estate-equity").textContent = fmtCurrency(
-      totalRealEstateEquity
-    );
-    $("as-total-financial-assets").textContent = fmtCurrency(
-      totalFinancialAssets
-    );
-    $("as-total-assets").textContent = fmtCurrency(totalAssets);
-
-    // Save base financial assets for plan allocations
-    baseAssets = {
-      savings: savTotal,
-      annuities: annTotal,
-      investments: invTotal,
-    };
-
-    // Base allocation snapshot in Step 4
-    $("plan-alloc-investments").textContent = fmtCurrency(invTotal);
-    $("plan-alloc-savings").textContent = fmtCurrency(savTotal);
-    $("plan-alloc-annuities").textContent = fmtCurrency(annTotal);
-    $("plan-alloc-total").textContent = fmtCurrency(totalFinancialAssets);
-
-    if (totalFinancialAssets > 0) {
-      $("plan-alloc-investments-pct").textContent = fmtPct(
-        (invTotal / totalFinancialAssets) * 100
-      );
-      $("plan-alloc-savings-pct").textContent = fmtPct(
-        (savTotal / totalFinancialAssets) * 100
-      );
-      $("plan-alloc-annuities-pct").textContent = fmtPct(
-        (annTotal / totalFinancialAssets) * 100
-      );
-    } else {
-      $("plan-alloc-investments-pct").textContent = "0%";
-      $("plan-alloc-savings-pct").textContent = "0%";
-      $("plan-alloc-annuities-pct").textContent = "0%";
-    }
-  };
-
-  if (clientForm) {
-    clientForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const data = getAllFieldsData(clientForm);
-      localStorage.setItem("apClientData", JSON.stringify(data));
-      updateSaveStatus(saveStatus, "Client data saved");
-      updateAssetsSummary();
-      buildSchedules();
+  function fillClientForm(data) {
+    if (!data) return;
+    Object.keys(data).forEach((id) => {
+      const el = $(`#${id}`);
+      if (!el) return;
+      if (el.type === "number") {
+        el.value = data[id] || data[id] === 0 ? data[id] : "";
+      } else {
+        el.value = data[id] || "";
+      }
     });
   }
 
-  const loadClientData = () => {
-    const raw = localStorage.getItem("apClientData");
-    if (!raw || !clientForm) return;
-    try {
-      const data = JSON.parse(raw);
-      applyDataToFields(clientForm, data);
-      updateAssetsSummary();
-    } catch (e) {
-      console.error("Error loading client data", e);
-    }
-  };
-
-  /* ---------------- Save / load plan inputs ---------------- */
-
-  const planInputsSection = $("step-inputs");
-  const planInputsStatus = $("planInputsStatus");
-  const savePlanInputsBtn = $("save-plan-inputs");
-
-  const savePlanInputs = () => {
-    if (!planInputsSection) return;
-    const data = getAllFieldsData(planInputsSection);
-    localStorage.setItem("apPlanInputs", JSON.stringify(data));
-    updateSaveStatus(planInputsStatus, "Plan inputs saved");
-    updateScheduleHeaders();
-    buildSchedules();
-  };
-
-  const loadPlanInputs = () => {
-    const raw = localStorage.getItem("apPlanInputs");
-    if (!raw || !planInputsSection) return;
-    try {
-      const data = JSON.parse(raw);
-      applyDataToFields(planInputsSection, data);
-      updateScheduleHeaders();
-    } catch (e) {
-      console.error("Error loading plan inputs", e);
-    }
-  };
-
-  if (savePlanInputsBtn) {
-    savePlanInputsBtn.addEventListener("click", savePlanInputs);
-  }
-
-  /* ---------------- Plan tabs (No Plan / Silver / Gold) ---------------- */
-
-  const planTabs = document.querySelectorAll(".plan-tab");
-  const planCards = {
-    "no-plan": $("plan-no-plan"),
-    silver: $("plan-silver"),
-    gold: $("plan-gold"),
-  };
-
-  const showPlanCard = (planKey) => {
-    planTabs.forEach((btn) => {
-      if (btn.dataset.plan === planKey) {
-        btn.classList.add("plan-tab-active");
-      } else {
-        btn.classList.remove("plan-tab-active");
-      }
-    });
-
-    Object.entries(planCards).forEach(([key, card]) => {
-      if (!card) return;
-      if (key === planKey) {
-        card.classList.remove("plan-card-hidden");
-      } else {
-        card.classList.add("plan-card-hidden");
-      }
-    });
-  };
-
-  planTabs.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const plan = btn.dataset.plan;
-      if (!plan) return;
-      showPlanCard(plan);
-    });
-  });
-
-  /* ---------------- Schedule headers from Inputs ------------- */
-
-  const updateScheduleHeaders = () => {
-    const getDesc = (inputId, fallback) => {
-      const el = $(inputId);
-      if (!el) return fallback;
-      const v = (el.value || "").trim();
-      return v || fallback;
+  function computeAssetSummary(client) {
+    if (!client) return {
+      primaryValue: 0,
+      primaryMortgage: 0,
+      secondaryValue: 0,
+      secondaryMortgage: 0,
+      primaryEquity: 0,
+      secondaryEquity: 0,
+      totalRealEstateEquity: 0,
+      investments: { total: 0, count: 0 },
+      savings: { total: 0, count: 0 },
+      annuities: { total: 0, count: 0 },
+      totalFinancial: 0,
+      totalAssets: 0,
     };
 
-    const setHeader = (thId, text) => {
-      const el = $(thId);
-      if (el) el.textContent = text;
-    };
+    const primaryValue = toNumber(client.primaryValue);
+    const primaryMortgage = toNumber(client.primaryMortgage);
+    const secondaryValue = toNumber(client.secondaryValue);
+    const secondaryMortgage = toNumber(client.secondaryMortgage);
 
-    // Silver plan column titles – use insurance company / contract description
-    setHeader("th-silver1", getDesc("piSilver1Desc", "Silver 1 Income"));
-    setHeader("th-silver2", getDesc("piSilver2Desc", "Silver 2 Income"));
-    setHeader("th-silver3", getDesc("piSilver3Desc", "Silver 3 Income"));
-    setHeader("th-silver4", getDesc("piSilver4Desc", "Silver 4 Income"));
+    const primaryEquity = Math.max(0, primaryValue - primaryMortgage);
+    const secondaryEquity = Math.max(0, secondaryValue - secondaryMortgage);
+    const totalRealEstateEquity = primaryEquity + secondaryEquity;
 
-    // Gold plan column titles
-    setHeader("th-gold1", getDesc("piGold1Desc", "Gold 1 Income"));
-    setHeader("th-gold2", getDesc("piGold2Desc", "Gold 2 Income"));
-    setHeader("th-gold3", getDesc("piGold3Desc", "Gold 3 Income"));
-    setHeader("th-gold4", getDesc("piGold4Desc", "Gold 4 Income"));
-  };
+    const invIds = ["inv1Balance", "inv2Balance", "inv3Balance", "inv4Balance", "inv5Balance"];
+    const savIds = ["sav1Balance", "sav2Balance", "sav3Balance", "sav4Balance", "sav5Balance"];
+    const annIds = ["ann1Balance", "ann2Balance", "ann3Balance", "ann4Balance", "ann5Balance"];
 
-  /* ---------------- Year-by-year schedules ---------------- */
-
-  const clearSchedules = () => {
-    [
-      "no-plan-schedule-body",
-      "silver-schedule-body",
-      "gold-schedule-body",
-    ].forEach((id) => {
-      const tbody = $(id);
-      if (tbody) tbody.innerHTML = "";
-    });
-  };
-
-  const updatePlanSummaryCards = ({ noPlan, silver, gold }) => {
-    const updateCard = (prefix, data) => {
-      const incomeEl = $(`${prefix}-income`);
-      const expEl = $(`${prefix}-expenses`);
-      const gapEl = $(`${prefix}-gap`);
-
-      if (!incomeEl || !expEl || !gapEl) return;
-
-      incomeEl.textContent = fmtCurrency(data.income);
-      expEl.textContent = fmtCurrency(data.expenses);
-
-      const gap = data.income - data.expenses;
-      gapEl.textContent = fmtCurrency(gap);
-      gapEl.classList.remove(
-        "plan-metric-gap-positive",
-        "plan-metric-gap-negative"
-      );
-      if (gap >= 0) {
-        gapEl.classList.add("plan-metric-gap-positive");
-      } else {
-        gapEl.classList.add("plan-metric-gap-negative");
-      }
-    };
-
-    updateCard("no-plan", noPlan);
-    updateCard("silver-plan", silver);
-    updateCard("gold-plan", gold);
-  };
-
-  const updatePlanSummaryPanels = (
-    summaries,
-    assetsNoPlan,
-    assetsSilver,
-    assetsGold
-  ) => {
-    const map = {
-      noPlan: {
-        prefix: "np",
-        assets: assetsNoPlan,
-      },
-      silver: {
-        prefix: "sp",
-        assets: assetsSilver,
-      },
-      gold: {
-        prefix: "gp",
-        assets: assetsGold,
-      },
-    };
-
-    Object.entries(map).forEach(([key, cfg]) => {
-      const s = summaries[key];
-      if (!s) return;
-
-      const p = cfg.prefix;
-      const assets = cfg.assets || { savings: 0, annuities: 0, investments: 0 };
-
-      // A/B/C values
-      const aEl = $(`${p}-A`);
-      const bEl = $(`${p}-B`);
-      const cEl = $(`${p}-C`);
-      if (aEl) aEl.textContent = fmtCurrency(assets.savings);
-      if (bEl) bEl.textContent = fmtCurrency(assets.annuities);
-      if (cEl) cEl.textContent = fmtCurrency(assets.investments);
-
-      // Income lines
-      const livingEl = $(`${p}-living-today`);
-      const retEl = $(`${p}-ret-income`);
-      const herEl = $(`${p}-her-survivor`);
-      const hisEl = $(`${p}-his-survivor`);
-
-      if (livingEl) livingEl.textContent = fmtCurrency(s.livingToday);
-      if (retEl) retEl.textContent = fmtCurrency(s.retirementIncome);
-      if (herEl) herEl.textContent = fmtCurrency(s.herSurvivorIncome);
-      if (hisEl) hisEl.textContent = fmtCurrency(s.hisSurvivorIncome);
-    });
-
-    // Update pies
-    const npData = [
-      assetsNoPlan.savings,
-      assetsNoPlan.annuities,
-      assetsNoPlan.investments,
-    ];
-    const spData = [
-      assetsSilver.savings,
-      assetsSilver.annuities,
-      assetsSilver.investments,
-    ];
-    const gpData = [
-      assetsGold.savings,
-      assetsGold.annuities,
-      assetsGold.investments,
-    ];
-
-    npAssetChart = createOrUpdatePie(npAssetChart, "np-asset-pie", npData);
-    spAssetChart = createOrUpdatePie(spAssetChart, "sp-asset-pie", spData);
-    gpAssetChart = createOrUpdatePie(gpAssetChart, "gp-asset-pie", gpData);
-  };
-
-  const buildSchedules = () => {
-    clearSchedules();
-    updateScheduleHeaders();
-
-    const projectionYears = num($("piProjectionYears")?.value);
-    if (!projectionYears || projectionYears <= 0) {
-      updatePlanSummaryCards({
-        noPlan: { income: 0, expenses: 0 },
-        silver: { income: 0, expenses: 0 },
-        gold: { income: 0, expenses: 0 },
+    function sumCategory(ids) {
+      let total = 0;
+      let count = 0;
+      ids.forEach((id) => {
+        const val = toNumber(client[id]);
+        if (val > 0) {
+          total += val;
+          count += 1;
+        }
       });
-      return;
+      return { total, count };
     }
 
-    const hisAge0 = num($("piHisCurrentAge")?.value);
-    const herAge0 = num($("piHerCurrentAge")?.value);
+    const investments = sumCategory(invIds);
+    const savings = sumCategory(savIds);
+    const annuities = sumCategory(annIds);
 
-    const hisDeathAge = num($("piHisDeathAge")?.value) || (hisAge0 + 30);
-    const herDeathAge = num($("piHerDeathAge")?.value) || (herAge0 + 30);
+    const totalFinancial = investments.total + savings.total + annuities.total;
+    const totalAssets = totalRealEstateEquity + totalFinancial;
 
-    const ssGrowthPct = num($("piSSGrowthPct")?.value) / 100;
-    const pensionGrowthPct = num($("piPensionGrowthPct")?.value) / 100;
-    const expenseInflationPct = num($("piExpenseInflationPct")?.value) / 100;
+    return {
+      primaryValue,
+      primaryMortgage,
+      secondaryValue,
+      secondaryMortgage,
+      primaryEquity,
+      secondaryEquity,
+      totalRealEstateEquity,
+      investments,
+      savings,
+      annuities,
+      totalFinancial,
+      totalAssets,
+    };
+  }
 
-    // Base annual amounts (year 1)
-    const hisSSAnnual = num($("piHisSSAnnual")?.value);
-    const herSSAnnual = num($("piHerSSAnnual")?.value);
-    const pension1Annual = num($("piPension1Annual")?.value);
-    const pension2Annual = num($("piPension2Annual")?.value);
-    const otherIncomeAnnual = num($("piOtherIncomeAnnual")?.value);
-    const livingExpensesAnnual = num($("piLivingExpensesAnnual")?.value);
+  function updateAssetSummaryUI(summary) {
+    if (!summary) return;
 
-    const hisSSStartAge = num($("piHisSSStartAge")?.value) || hisAge0;
-    const herSSStartAge = num($("piHerSSStartAge")?.value) || herAge0;
-    const pension1StartAge = num($("piPension1StartAge")?.value) || hisAge0;
-    const pension2StartAge = num($("piPension2StartAge")?.value) || herAge0;
+    // Real estate
+    $("#as-primary-value").textContent = fmtCurrency(summary.primaryValue);
+    $("#as-primary-mortgage").textContent = fmtCurrency(summary.primaryMortgage);
+    $("#as-primary-equity").textContent = fmtCurrency(summary.primaryEquity);
 
-    const pension1SurvivorPct = num($("piPension1SurvivorPct")?.value) / 100;
-    const pension2SurvivorPct = num($("piPension2SurvivorPct")?.value) / 100;
+    $("#as-secondary-value").textContent = fmtCurrency(summary.secondaryValue);
+    $("#as-secondary-mortgage").textContent = fmtCurrency(summary.secondaryMortgage);
+    $("#as-secondary-equity").textContent = fmtCurrency(summary.secondaryEquity);
 
-    // Determine which SS is higher/lower (for survivor logic)
-    const ssHighIsHis = hisSSAnnual >= herSSAnnual;
+    $("#as-total-real-estate-equity").textContent = fmtCurrency(summary.totalRealEstateEquity);
 
-    // Silver additional income sources (level, no growth; joint-life to survivor)
-    const silverSources = [1, 2, 3, 4].map((i) => ({
-      owner: ($(`piSilver${i}Owner`)?.value || "").toLowerCase(),
-      annual: num($(`piSilver${i}Annual`)?.value),
-      startAge: num($(`piSilver${i}StartAge`)?.value),
-      rollover: num($(`piSilver${i}Rollover`)?.value),
-    }));
+    // Financial assets
+    $("#as-portfolio-count").textContent = summary.investments.count;
+    $("#as-portfolio-total").textContent = fmtCurrency(summary.investments.total);
 
-    // Gold additional income sources (level, no growth; joint-life to survivor)
-    const goldSources = [1, 2, 3, 4].map((i) => ({
-      owner: ($(`piGold${i}Owner`)?.value || "").toLowerCase(),
-      annual: num($(`piGold${i}Annual`)?.value),
-      startAge: num($(`piGold${i}StartAge`)?.value),
-      rollover: num($(`piGold${i}Rollover`)?.value),
-    }));
+    $("#as-savings-count").textContent = summary.savings.count;
+    $("#as-savings-total").textContent = fmtCurrency(summary.savings.total);
 
-    const noPlanBody = $("no-plan-schedule-body");
-    const silverBody = $("silver-schedule-body");
-    const goldBody = $("gold-schedule-body");
+    $("#as-annuities-count").textContent = summary.annuities.count;
+    $("#as-annuities-total").textContent = fmtCurrency(summary.annuities.total);
 
-    let firstYearNoPlan = null;
-    let firstYearSilver = null;
-    let firstYearGold = null;
+    $("#as-total-financial-assets").textContent = fmtCurrency(summary.totalFinancial);
 
-    // Survivor income trackers (first year after one spouse has died, the other is alive)
-    let herSurvNoPlan = null;
-    let hisSurvNoPlan = null;
-    let herSurvSilver = null;
-    let hisSurvSilver = null;
-    let herSurvGold = null;
-    let hisSurvGold = null;
+    // Plan allocation base
+    $("#plan-alloc-investments").textContent = fmtCurrency(summary.investments.total);
+    $("#plan-alloc-savings").textContent = fmtCurrency(summary.savings.total);
+    $("#plan-alloc-annuities").textContent = fmtCurrency(summary.annuities.total);
+    $("#plan-alloc-total").textContent = fmtCurrency(summary.totalFinancial);
 
-    // Extra incomes (annuities) are level and continue as long as either spouse is alive
-    const sourceIncomeForYear = (src, hisAge, herAge, hisDeath, herDeath) => {
-      if (!src.annual || !src.startAge) return 0;
+    const total = summary.totalFinancial || 1;
+    const invPct = (summary.investments.total / total) * 100;
+    const savPct = (summary.savings.total / total) * 100;
+    const annPct = (summary.annuities.total / total) * 100;
 
-      // Turn-on condition based on owner + start age
-      let active = false;
+    $("#plan-alloc-investments-pct").textContent = fmtPercent(invPct);
+    $("#plan-alloc-savings-pct").textContent = fmtPercent(savPct);
+    $("#plan-alloc-annuities-pct").textContent = fmtPercent(annPct);
 
-      if (src.owner.startsWith("h")) {
-        if (hisAge && hisAge >= src.startAge) active = true;
-      } else if (src.owner.startsWith("s") || src.owner.startsWith("w")) {
-        if (herAge && herAge >= src.startAge) active = true;
+    updateCharts(summary);
+  }
+
+  // ---------- Plan Inputs (Step 3) ----------
+
+  function readPlanInputs() {
+    const ids = [
+      "piHisCurrentAge",
+      "piHerCurrentAge",
+      "piProjectionYears",
+      "piHisDeathAge",
+      "piHerDeathAge",
+
+      "piHisSSAnnual",
+      "piHerSSAnnual",
+      "piSSGrowthPct",
+      "piHisSSStartAge",
+      "piHerSSStartAge",
+
+      "piPension1Annual",
+      "piPension1StartAge",
+      "piPension1SurvivorPct",
+
+      "piPension2Annual",
+      "piPension2StartAge",
+      "piPension2SurvivorPct",
+
+      "piPensionGrowthPct",
+      "piOtherIncomeAnnual",
+
+      "piLivingExpensesAnnual",
+      "piExpenseInflationPct",
+
+      // Silver
+      "piSilver1Desc", "piSilver1Owner", "piSilver1StartAge", "piSilver1Annual", "piSilver1Rollover",
+      "piSilver2Desc", "piSilver2Owner", "piSilver2StartAge", "piSilver2Annual", "piSilver2Rollover",
+      "piSilver3Desc", "piSilver3Owner", "piSilver3StartAge", "piSilver3Annual", "piSilver3Rollover",
+      "piSilver4Desc", "piSilver4Owner", "piSilver4StartAge", "piSilver4Annual", "piSilver4Rollover",
+
+      // Gold
+      "piGold1Desc", "piGold1Owner", "piGold1StartAge", "piGold1Annual", "piGold1Rollover",
+      "piGold2Desc", "piGold2Owner", "piGold2StartAge", "piGold2Annual", "piGold2Rollover",
+      "piGold3Desc", "piGold3Owner", "piGold3StartAge", "piGold3Annual", "piGold3Rollover",
+      "piGold4Desc", "piGold4Owner", "piGold4StartAge", "piGold4Annual", "piGold4Rollover",
+    ];
+
+    const inputs = {};
+    ids.forEach((id) => {
+      const el = $(`#${id}`);
+      if (!el) return;
+      if (el.type === "number") {
+        inputs[id] = toNumber(el.value);
       } else {
-        // If "both" or blank, treat as joint: use later of their ages
-        const jointAge = Math.max(hisAge || 0, herAge || 0);
-        if (jointAge >= src.startAge) active = true;
+        inputs[id] = el.value || "";
       }
+    });
 
-      // Joint-life style: income continues as long as either spouse is alive
-      const hisAlive = hisAge ? hisAge <= hisDeath : false;
-      const herAlive = herAge ? herAge <= herDeath : false;
-      const anyAlive = hisAlive || herAlive;
+    return inputs;
+  }
 
-      if (active && anyAlive) {
-        return src.annual; // LEVEL payout – no growth
+  function fillPlanInputs(inputs) {
+    if (!inputs) return;
+    Object.keys(inputs).forEach((id) => {
+      const el = $(`#${id}`);
+      if (!el) return;
+      if (el.type === "number") {
+        el.value = inputs[id] || inputs[id] === 0 ? inputs[id] : "";
+      } else {
+        el.value = inputs[id] || "";
       }
-      return 0;
+    });
+
+    // Update Silver/Gold column headers with description labels if available
+    if (inputs.piSilver1Desc) $("#th-silver1").textContent = inputs.piSilver1Desc;
+    if (inputs.piSilver2Desc) $("#th-silver2").textContent = inputs.piSilver2Desc;
+    if (inputs.piSilver3Desc) $("#th-silver3").textContent = inputs.piSilver3Desc;
+    if (inputs.piSilver4Desc) $("#th-silver4").textContent = inputs.piSilver4Desc;
+
+    if (inputs.piGold1Desc) $("#th-gold1").textContent = inputs.piGold1Desc;
+    if (inputs.piGold2Desc) $("#th-gold2").textContent = inputs.piGold2Desc;
+    if (inputs.piGold3Desc) $("#th-gold3").textContent = inputs.piGold3Desc;
+    if (inputs.piGold4Desc) $("#th-gold4").textContent = inputs.piGold4Desc;
+  }
+
+  // ---------- Basic Plan Calculations ----------
+
+  function computeBaseIncome(inputs) {
+    if (!inputs) return { baseIncome: 0, expenses: 0 };
+
+    const hisSS = inputs.piHisSSAnnual || 0;
+    const herSS = inputs.piHerSSAnnual || 0;
+    const p1 = inputs.piPension1Annual || 0;
+    const p2 = inputs.piPension2Annual || 0;
+    const other = inputs.piOtherIncomeAnnual || 0;
+    const expenses = inputs.piLivingExpensesAnnual || 0;
+
+    const baseIncome = hisSS + herSS + p1 + p2 + other;
+    return { baseIncome, expenses };
+  }
+
+  function computeSilverGoldAddl(inputs, prefix) {
+    // prefix = "Silver" or "Gold"
+    const annualIds = [`pi${prefix}1Annual`, `pi${prefix}2Annual`, `pi${prefix}3Annual`, `pi${prefix}4Annual`];
+    let total = 0;
+    annualIds.forEach((id) => {
+      total += inputs[id] || 0;
+    });
+    return total;
+  }
+
+  function updatePlanSummaryUI() {
+    const inputs = state.inputs || {};
+    const { baseIncome, expenses } = computeBaseIncome(inputs);
+
+    const silverAddl = computeSilverGoldAddl(inputs, "Silver");
+    const goldAddl = computeSilverGoldAddl(inputs, "Gold");
+
+    // No Plan
+    const npIncome = baseIncome;
+    const npGap = npIncome - expenses;
+
+    $("#no-plan-income").textContent = fmtCurrency(npIncome);
+    $("#no-plan-expenses").textContent = fmtCurrency(expenses);
+    $("#no-plan-gap").textContent = fmtCurrency(npGap);
+
+    // Silver Plan
+    const spIncome = baseIncome + silverAddl;
+    const spGap = spIncome - expenses;
+
+    $("#silver-plan-income").textContent = fmtCurrency(spIncome);
+    $("#silver-plan-expenses").textContent = fmtCurrency(expenses);
+    $("#silver-plan-gap").textContent = fmtCurrency(spGap);
+
+    // Gold Plan
+    const gpIncome = baseIncome + goldAddl;
+    const gpGap = gpIncome - expenses;
+
+    $("#gold-plan-income").textContent = fmtCurrency(gpIncome);
+    $("#gold-plan-expenses").textContent = fmtCurrency(expenses);
+    $("#gold-plan-gap").textContent = fmtCurrency(gpGap);
+
+    // Simple survivor logic: survivor gets the higher SS + full pensions + other + Silver/Gold
+    const hisSS = inputs.piHisSSAnnual || 0;
+    const herSS = inputs.piHerSSAnnual || 0;
+    const p1 = inputs.piPension1Annual || 0;
+    const p2 = inputs.piPension2Annual || 0;
+    const p1SurvPct = (inputs.piPension1SurvivorPct || 100) / 100;
+    const p2SurvPct = (inputs.piPension2SurvivorPct || 100) / 100;
+    const other = inputs.piOtherIncomeAnnual || 0;
+
+    const survivorBase = Math.max(hisSS, herSS) + p1 * p1SurvPct + p2 * p2SurvPct + other;
+
+    // No Plan survivors
+    $("#np-living-today").textContent = fmtCurrency(expenses);
+    $("#np-ret-income").textContent = fmtCurrency(npIncome);
+    $("#np-her-survivor").textContent = fmtCurrency(survivorBase);
+    $("#np-his-survivor").textContent = fmtCurrency(survivorBase);
+
+    // Silver Plan survivors
+    const spSurvivor = survivorBase + silverAddl;
+    $("#sp-living-today").textContent = fmtCurrency(expenses);
+    $("#sp-ret-income").textContent = fmtCurrency(spIncome);
+    $("#sp-her-survivor").textContent = fmtCurrency(spSurvivor);
+    $("#sp-his-survivor").textContent = fmtCurrency(spSurvivor);
+
+    // Gold Plan survivors
+    const gpSurvivor = survivorBase + goldAddl;
+    $("#gp-living-today").textContent = fmtCurrency(expenses);
+    $("#gp-ret-income").textContent = fmtCurrency(gpIncome);
+    $("#gp-her-survivor").textContent = fmtCurrency(gpSurvivor);
+    $("#gp-his-survivor").textContent = fmtCurrency(gpSurvivor);
+
+    // For now, use same A/B/C values across No Plan, Silver, Gold (you can later
+    // adjust these to reflect rollovers between C -> B)
+    const summary = computeAssetSummary(state.client);
+    if (!summary) return;
+
+    $("#np-A").textContent = fmtCurrency(summary.savings.total);
+    $("#np-B").textContent = fmtCurrency(summary.annuities.total);
+    $("#np-C").textContent = fmtCurrency(summary.investments.total);
+
+    $("#sp-A").textContent = fmtCurrency(summary.savings.total);
+    $("#sp-B").textContent = fmtCurrency(summary.annuities.total);
+    $("#sp-C").textContent = fmtCurrency(summary.investments.total);
+
+    $("#gp-A").textContent = fmtCurrency(summary.savings.total);
+    $("#gp-B").textContent = fmtCurrency(summary.annuities.total);
+    $("#gp-C").textContent = fmtCurrency(summary.investments.total);
+  }
+
+  // ---------- Chart.js pies ----------
+
+  function createPieChart(ctx, data) {
+    if (!window.Chart || !ctx) return null;
+    return new Chart(ctx, {
+      type: "doughnut",
+      data: {
+        labels: ["Savings (A)", "Annuities (B)", "Investments (C)"],
+        datasets: [
+          {
+            data: [data.savings, data.annuities, data.investments],
+            backgroundColor: ["#facc15", "#16a34a", "#b91c1c"],
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: "bottom",
+          },
+        },
+      },
+    });
+  }
+
+  function updateCharts(summary) {
+    if (!window.Chart || !summary) return;
+
+    const data = {
+      savings: summary.savings.total,
+      annuities: summary.annuities.total,
+      investments: summary.investments.total,
     };
 
-    for (let yearIndex = 0; yearIndex < projectionYears; yearIndex++) {
-      const yr = yearIndex + 1;
-      const hisAge = hisAge0 ? hisAge0 + yearIndex : "";
-      const herAge = herAge0 ? herAge0 + yearIndex : "";
+    const npCtx = $("#np-asset-pie")?.getContext("2d");
+    const spCtx = $("#sp-asset-pie")?.getContext("2d");
+    const gpCtx = $("#gp-asset-pie")?.getContext("2d");
 
-      const hisAlive = hisAge0 ? hisAge <= hisDeathAge : false;
-      const herAlive = herAge0 ? herAge <= herDeathAge : false;
-      const anyAlive = hisAlive || herAlive;
+    // Destroy old charts if any
+    ["np", "sp", "gp"].forEach((key) => {
+      if (state.charts[key]) {
+        state.charts[key].destroy();
+        state.charts[key] = null;
+      }
+    });
 
-      const ssGrowthFactor = Math.pow(1 + ssGrowthPct, yearIndex);
-      const pensionGrowthFactor = Math.pow(1 + pensionGrowthPct, yearIndex);
-      const expenseGrowthFactor = Math.pow(1 + expenseInflationPct, yearIndex);
+    state.charts.np = createPieChart(npCtx, data);
+    state.charts.sp = createPieChart(spCtx, data);
+    state.charts.gp = createPieChart(gpCtx, data);
+  }
 
-      // ---- Social Security with survivor logic (lose lower benefit) ----
-      let hisSS = 0;
-      let herSS = 0;
+  // ---------- Plan tabs (No Plan / Silver / Gold) ----------
 
-      const bothAlive = hisAlive && herAlive;
+  function initPlanTabs() {
+    const tabs = $all(".plan-tab");
+    const cards = {
+      "no-plan": $("#plan-no-plan"),
+      silver: $("#plan-silver"),
+      gold: $("#plan-gold"),
+    };
 
-      if (bothAlive) {
-        if (hisAge >= hisSSStartAge) {
-          hisSS = hisSSAnnual * ssGrowthFactor;
-        }
-        if (herAge >= herSSStartAge) {
-          herSS = herSSAnnual * ssGrowthFactor;
-        }
-      } else if (hisAlive && !herAlive) {
-        // He is survivor
-        if (ssHighIsHis) {
-          if (hisAge >= hisSSStartAge) {
-            hisSS = hisSSAnnual * ssGrowthFactor;
-          }
+    function activate(plan) {
+      tabs.forEach((t) => {
+        if (t.dataset.plan === plan) {
+          t.classList.add("plan-tab-active");
         } else {
-          if (hisAge >= herSSStartAge) {
-            hisSS = herSSAnnual * ssGrowthFactor;
-          }
+          t.classList.remove("plan-tab-active");
         }
-      } else if (!hisAlive && herAlive) {
-        // She is survivor
-        if (ssHighIsHis) {
-          if (herAge >= hisSSStartAge) {
-            herSS = hisSSAnnual * ssGrowthFactor;
-          }
+      });
+
+      Object.keys(cards).forEach((key) => {
+        const card = cards[key];
+        if (!card) return;
+        if (key === plan) {
+          card.classList.remove("plan-card-hidden");
         } else {
-          if (herAge >= herSSStartAge) {
-            herSS = herSSAnnual * ssGrowthFactor;
-          }
+          card.classList.add("plan-card-hidden");
         }
-      }
-      // else both dead: both 0
+      });
+    }
 
-      // ---- Pensions with survivor % (100% or 50%) ----
-      let pension1 = 0;
-      let pension2 = 0;
+    tabs.forEach((t) => {
+      t.addEventListener("click", () => {
+        const plan = t.dataset.plan;
+        if (plan) activate(plan);
+      });
+    });
 
-      if (anyAlive && pension1Annual && hisAge >= pension1StartAge) {
-        pension1 = pension1Annual * pensionGrowthFactor;
+    activate("no-plan");
+  }
 
-        const firstDeathAge = Math.min(
-          hisDeathAge || 999,
-          herDeathAge || 999
-        );
-        const bothDead = !hisAlive && !herAlive;
+  // ---------- Init on DOMContentLoaded ----------
 
-        if (!bothDead && (hisAge > firstDeathAge || herAge > firstDeathAge)) {
-          // After first death, apply survivor %
-          const pct = pension1SurvivorPct || 1;
-          pension1 = pension1 * pct;
-        }
-      }
+  document.addEventListener("DOMContentLoaded", () => {
+    initStepNavigation();
+    initPlanTabs();
 
-      if (anyAlive && pension2Annual && herAge >= pension2StartAge) {
-        pension2 = pension2Annual * pensionGrowthFactor;
+    // Load existing data from storage
+    const storedClient = loadFromStorage(STORAGE_KEYS.CLIENT);
+    const storedInputs = loadFromStorage(STORAGE_KEYS.INPUTS);
 
-        const firstDeathAge = Math.min(
-          hisDeathAge || 999,
-          herDeathAge || 999
-        );
-        const bothDead = !hisAlive && !herAlive;
+    if (storedClient) {
+      state.client = storedClient;
+      fillClientForm(storedClient);
+    }
+    if (storedInputs) {
+      state.inputs = storedInputs;
+      fillPlanInputs(storedInputs);
+    }
 
-        if (!bothDead && (hisAge > firstDeathAge || herAge > firstDeathAge)) {
-          const pct = pension2SurvivorPct || 1;
-          pension2 = pension2 * pct;
-        }
-      }
+    // Initial calculations
+    const summary = computeAssetSummary(state.client);
+    updateAssetSummaryUI(summary);
+    updatePlanSummaryUI();
 
-      // ---- Other income (level for now) ----
-      let otherIncome = 0;
-      if (anyAlive) {
-        otherIncome = otherIncomeAnnual; // no growth
-      }
+    // Handle client form submit
+    const clientForm = $("#client-form");
+    const saveStatus = $("#saveStatus");
+    if (clientForm) {
+      clientForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const data = readClientForm();
+        state.client = data;
+        saveToStorage(STORAGE_KEYS.CLIENT, data);
 
-      const baseIncome = hisSS + herSS + pension1 + pension2 + otherIncome;
-      const expenses = livingExpensesAnnual * expenseGrowthFactor;
+        const summary = computeAssetSummary(data);
+        updateAssetSummaryUI(summary);
+        updatePlanSummaryUI();
 
-      // ---- Silver / Gold additional incomes (level, joint-life) ----
-      const silverIncomes = silverSources.map((src) =>
-        sourceIncomeForYear(src, hisAge, herAge, hisDeathAge, herDeathAge)
-      );
-      const silverAddTotal = silverIncomes.reduce((a, b) => a + b, 0);
+        showStatus(saveStatus, "Client data saved.");
+      });
+    }
 
-      const goldIncomes = goldSources.map((src) =>
-        sourceIncomeForYear(src, hisAge, herAge, hisDeathAge, herDeathAge)
-      );
-      const goldAddTotal = goldIncomes.reduce((a, b) => a + b, 0);
+    // Handle Save Plan Inputs button
+    const saveInputsBtn = $("#save-plan-inputs");
+    const planInputsStatus = $("#planInputsStatus");
+    if (saveInputsBtn) {
+      saveInputsBtn.addEventListener("click", () => {
+        const inputs = readPlanInputs();
+        state.inputs = inputs;
+        saveToStorage(STORAGE_KEYS.INPUTS, inputs);
 
-      const noPlanTotal = baseIncome;
-      c
+        // Update headers & summaries
+        fillPlanInputs(inputs);
+        updatePlanSummaryUI();
+
+        showStatus(planInputsStatus, "Plan inputs saved.");
+      });
+    }
+  });
+})();
