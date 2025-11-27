@@ -247,3 +247,52 @@ body {
   font-size: 11px;
   color: #6b7280;
 }
+/* Simple table styling for list sections */
+.ap-subheading {
+  margin: 4px 0 2px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.ap-small {
+  font-size: 12px;
+  color: #6b7280;
+  margin: 2px 0 6px;
+}
+
+.ap-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 6px;
+  font-size: 13px;
+}
+
+.ap-table th,
+.ap-table td {
+  border: 1px solid #e5e7eb;
+  padding: 6px 8px;
+  vertical-align: middle;
+}
+
+.ap-table th {
+  background: #f3f4f6;
+  font-weight: 600;
+  text-align: left;
+}
+
+.ap-table input,
+.ap-table select,
+.ap-table textarea {
+  border: none;
+  width: 100%;
+  font-size: 13px;
+  padding: 4px 5px;
+  box-sizing: border-box;
+}
+
+.ap-table input:focus,
+.ap-table select:focus,
+.ap-table textarea:focus {
+  outline: none;
+}
