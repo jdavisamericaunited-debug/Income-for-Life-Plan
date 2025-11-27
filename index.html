@@ -30,8 +30,8 @@
         <button class="ap-step-btn" data-step="inputs">
           3. Plan Inputs
         </button>
-        <button class="ap-step-btn" data-step="plans" disabled>
-          4. Plan Comparisons (coming soon)
+        <button class="ap-step-btn" data-step="plans">
+          4. Plan Comparisons
         </button>
         <button class="ap-step-btn" data-step="summary" disabled>
           5. Summary &amp; Report (coming soon)
@@ -1046,12 +1046,159 @@
         </div>
       </section>
 
-      <!-- Placeholder other steps -->
+      <!-- STEP 4: PLAN COMPARISONS -->
       <section id="step-plans" class="ap-card ap-card-hidden">
         <h1>Plan Comparisons</h1>
-        <p>Coming soon – No Plan vs Silver vs Gold vs Survivor.</p>
+        <p class="ap-intro">
+          Compare <strong>No Plan</strong>, <strong>Silver Plan</strong>, and <strong>Gold Plan</strong>
+          using the information you've already entered. Assets are color-coded:
+          <strong style="color:#b91c1c;">Red</strong> = Investment Accounts,
+          <strong style="color:#854d0e;">Yellow</strong> = Savings/Checking/Credit Union,
+          <strong style="color:#166534;">Green</strong> = Annuities.
+        </p>
+
+        <!-- Asset Allocation Snapshot -->
+        <div class="ap-form-section">
+          <h2>Asset Allocation Snapshot</h2>
+          <div class="asset-legend">
+            <span class="asset-chip asset-chip-investments">Investments</span>
+            <span class="asset-chip asset-chip-savings">Savings / Checking / CU</span>
+            <span class="asset-chip asset-chip-annuities">Annuities</span>
+          </div>
+          <table class="ap-table">
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th>Amount</th>
+                <th>% of Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Investment Accounts</td>
+                <td>
+                  <span id="plan-alloc-investments" class="asset-chip asset-chip-investments">$0</span>
+                </td>
+                <td><span id="plan-alloc-investments-pct">0%</span></td>
+              </tr>
+              <tr>
+                <td>Savings / Checking / Credit Union</td>
+                <td>
+                  <span id="plan-alloc-savings" class="asset-chip asset-chip-savings">$0</span>
+                </td>
+                <td><span id="plan-alloc-savings-pct">0%</span></td>
+              </tr>
+              <tr>
+                <td>Annuities</td>
+                <td>
+                  <span id="plan-alloc-annuities" class="asset-chip asset-chip-annuities">$0</span>
+                </td>
+                <td><span id="plan-alloc-annuities-pct">0%</span></td>
+              </tr>
+              <tr>
+                <th>Total Financial Assets</th>
+                <th><span id="plan-alloc-total">$0</span></th>
+                <th></th>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Plan Cards -->
+        <div class="ap-form-section">
+          <h2>Plan Comparison – Income vs Expenses</h2>
+
+          <!-- Tabs for No Plan, Silver, Gold -->
+          <div class="plan-tabs">
+            <button class="plan-tab plan-tab-active" data-plan="no-plan">No Plan</button>
+            <button class="plan-tab" data-plan="silver">Silver Plan</button>
+            <button class="plan-tab" data-plan="gold">Gold Plan</button>
+          </div>
+
+          <!-- No Plan Card -->
+          <div id="plan-no-plan" class="plan-card plan-card-no-plan">
+            <div class="plan-card-header">
+              No Plan – Current Path
+            </div>
+            <div class="plan-card-body">
+              <div class="plan-metric-grid">
+                <div class="plan-metric">
+                  <div class="plan-metric-label">Annual Income (starting year)</div>
+                  <div class="plan-metric-value" id="no-plan-income">$0</div>
+                </div>
+                <div class="plan-metric">
+                  <div class="plan-metric-label">Annual Living Expenses</div>
+                  <div class="plan-metric-value" id="no-plan-expenses">$0</div>
+                </div>
+                <div class="plan-metric">
+                  <div class="plan-metric-label">Income Surplus / Shortfall</div>
+                  <div class="plan-metric-value" id="no-plan-gap">$0</div>
+                </div>
+              </div>
+              <p class="plan-note">
+                No Plan uses only Social Security, pensions, and other income you entered on the Inputs page –
+                with no additional guaranteed income from Silver or Gold rollovers.
+              </p>
+            </div>
+          </div>
+
+          <!-- Silver Plan Card -->
+          <div id="plan-silver" class="plan-card plan-card-silver plan-card-hidden">
+            <div class="plan-card-header">
+              Silver Plan – Additional Guaranteed Income
+            </div>
+            <div class="plan-card-body">
+              <div class="plan-metric-grid">
+                <div class="plan-metric">
+                  <div class="plan-metric-label">Annual Income (starting year)</div>
+                  <div class="plan-metric-value" id="silver-plan-income">$0</div>
+                </div>
+                <div class="plan-metric">
+                  <div class="plan-metric-label">Annual Living Expenses</div>
+                  <div class="plan-metric-value" id="silver-plan-expenses">$0</div>
+                </div>
+                <div class="plan-metric">
+                  <div class="plan-metric-label">Income Surplus / Shortfall</div>
+                  <div class="plan-metric-value" id="silver-plan-gap">$0</div>
+                </div>
+              </div>
+              <p class="plan-note">
+                Silver Plan adds income from the Silver rollover sources you entered on the Inputs page,
+                on top of the No Plan income.
+              </p>
+            </div>
+          </div>
+
+          <!-- Gold Plan Card -->
+          <div id="plan-gold" class="plan-card plan-card-gold plan-card-hidden">
+            <div class="plan-card-header">
+              Gold Plan – Maximum Income Strategy
+            </div>
+            <div class="plan-card-body">
+              <div class="plan-metric-grid">
+                <div class="plan-metric">
+                  <div class="plan-metric-label">Annual Income (starting year)</div>
+                  <div class="plan-metric-value" id="gold-plan-income">$0</div>
+                </div>
+                <div class="plan-metric">
+                  <div class="plan-metric-label">Annual Living Expenses</div>
+                  <div class="plan-metric-value" id="gold-plan-expenses">$0</div>
+                </div>
+                <div class="plan-metric">
+                  <div class="plan-metric-label">Income Surplus / Shortfall</div>
+                  <div class="plan-metric-value" id="gold-plan-gap">$0</div>
+                </div>
+              </div>
+              <p class="plan-note">
+                Gold Plan adds income from the Gold rollover sources you entered on the Inputs page,
+                on top of the No Plan income.
+              </p>
+            </div>
+          </div>
+        </div>
       </section>
 
+      <!-- STEP 5: SUMMARY PLACEHOLDER -->
       <section id="step-summary" class="ap-card ap-card-hidden">
         <h1>Summary &amp; Report</h1>
         <p>Coming soon – client-ready summary and print/PDF layout.</p>
