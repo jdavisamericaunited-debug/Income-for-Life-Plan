@@ -27,8 +27,8 @@
         <button class="ap-step-btn" data-step="assets">
           2. Assets Summary
         </button>
-        <button class="ap-step-btn" data-step="inputs" disabled>
-          3. Plan Inputs (coming soon)
+        <button class="ap-step-btn" data-step="inputs">
+          3. Plan Inputs
         </button>
         <button class="ap-step-btn" data-step="plans" disabled>
           4. Plan Comparisons (coming soon)
@@ -826,12 +826,227 @@
         </div>
       </section>
 
-      <!-- Placeholder other steps -->
+      <!-- STEP 3: PLAN INPUTS -->
       <section id="step-inputs" class="ap-card ap-card-hidden">
         <h1>Plan Inputs</h1>
-        <p>Coming soon – this will mirror your Excel “Inputs” sheet.</p>
+        <p class="ap-intro">
+          This page mirrors your Excel “Inputs” sheet. Set projection years, Social
+          Security, pensions, inflation, death ages and the Silver/Gold plan
+          rollovers that create additional income.
+        </p>
+
+        <!-- Base Plan Assumptions -->
+        <div class="ap-form-section">
+          <h2>Base Plan Assumptions</h2>
+          <div class="ap-grid-2">
+            <div class="ap-field">
+              <label for="piProjectionYears">Projection Length (years)</label>
+              <input type="number" id="piProjectionYears" min="1" max="60" />
+            </div>
+
+            <div class="ap-field">
+              <label for="piHisCurrentAge">His Current Age</label>
+              <input type="number" id="piHisCurrentAge" min="40" max="90" />
+            </div>
+            <div class="ap-field">
+              <label for="piHerCurrentAge">Her Current Age</label>
+              <input type="number" id="piHerCurrentAge" min="40" max="90" />
+            </div>
+
+            <div class="ap-field">
+              <label for="piHisSSAnnual">His Social Security (annual)</label>
+              <input type="number" id="piHisSSAnnual" min="0" step="1000" />
+            </div>
+            <div class="ap-field">
+              <label for="piHerSSAnnual">Her Social Security (annual)</label>
+              <input type="number" id="piHerSSAnnual" min="0" step="1000" />
+            </div>
+
+            <div class="ap-field">
+              <label for="piPension1Annual">Pension 1 (annual)</label>
+              <input type="number" id="piPension1Annual" min="0" step="1000" />
+            </div>
+            <div class="ap-field">
+              <label for="piPension2Annual">Pension 2 (annual)</label>
+              <input type="number" id="piPension2Annual" min="0" step="1000" />
+            </div>
+
+            <div class="ap-field">
+              <label for="piOtherIncomeAnnual">Other Income (annual)</label>
+              <input type="number" id="piOtherIncomeAnnual" min="0" step="1000" />
+            </div>
+
+            <div class="ap-field">
+              <label for="piLivingExpensesAnnual">
+                Living Expenses (annual)
+              </label>
+              <input type="number" id="piLivingExpensesAnnual" min="0" step="1000" />
+            </div>
+
+            <div class="ap-field">
+              <label for="piIncomeGrowthPct">Grow % for incomes</label>
+              <input type="number" id="piIncomeGrowthPct" step="0.1" />
+            </div>
+            <div class="ap-field">
+              <label for="piExpenseInflationPct">Inflation % for expenses</label>
+              <input type="number" id="piExpenseInflationPct" step="0.1" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Timing & Longevity -->
+        <div class="ap-form-section">
+          <h2>Timing &amp; Longevity</h2>
+          <div class="ap-grid-2">
+            <div class="ap-field">
+              <label for="piHisSSStartAge">His SS Start Age</label>
+              <input type="number" id="piHisSSStartAge" min="60" max="80" />
+            </div>
+            <div class="ap-field">
+              <label for="piHerSSStartAge">Her SS Start Age</label>
+              <input type="number" id="piHerSSStartAge" min="60" max="80" />
+            </div>
+
+            <div class="ap-field">
+              <label for="piPension1StartAge">Pension 1 Start Age</label>
+              <input type="number" id="piPension1StartAge" min="40" max="90" />
+            </div>
+            <div class="ap-field">
+              <label for="piPension2StartAge">Pension 2 Start Age</label>
+              <input type="number" id="piPension2StartAge" min="40" max="90" />
+            </div>
+
+            <div class="ap-field">
+              <label for="piPension1SurvivorPct">Pension 1 Survivor %</label>
+              <input type="number" id="piPension1SurvivorPct" min="0" max="100" />
+            </div>
+            <div class="ap-field">
+              <label for="piPension2SurvivorPct">Pension 2 Survivor %</label>
+              <input type="number" id="piPension2SurvivorPct" min="0" max="100" />
+            </div>
+
+            <div class="ap-field">
+              <label for="piHisDeathAge">His Death Age</label>
+              <input type="number" id="piHisDeathAge" min="50" max="110" />
+            </div>
+            <div class="ap-field">
+              <label for="piHerDeathAge">Her Death Age</label>
+              <input type="number" id="piHerDeathAge" min="50" max="110" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Silver Plan Additional Income -->
+        <div class="ap-form-section">
+          <h2>Silver Plan Additional Income (4 sources)</h2>
+          <p class="ap-small">
+            For each source: specify the rollover amount transferred from current
+            assets, the annual income target it is designed to create, owner, and
+            start age.
+          </p>
+          <table class="ap-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Owner (His/Her)</th>
+                <th>Annual Income Target ($)</th>
+                <th>Rollover Amount ($)</th>
+                <th>Start Age</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Silver 1</td>
+                <td><input id="piSilver1Owner" /></td>
+                <td><input id="piSilver1Annual" type="number" min="0" step="1000" /></td>
+                <td><input id="piSilver1Rollover" type="number" min="0" step="1000" /></td>
+                <td><input id="piSilver1StartAge" type="number" min="40" max="90" /></td>
+              </tr>
+              <tr>
+                <td>Silver 2</td>
+                <td><input id="piSilver2Owner" /></td>
+                <td><input id="piSilver2Annual" type="number" min="0" step="1000" /></td>
+                <td><input id="piSilver2Rollover" type="number" min="0" step="1000" /></td>
+                <td><input id="piSilver2StartAge" type="number" min="40" max="90" /></td>
+              </tr>
+              <tr>
+                <td>Silver 3</td>
+                <td><input id="piSilver3Owner" /></td>
+                <td><input id="piSilver3Annual" type="number" min="0" step="1000" /></td>
+                <td><input id="piSilver3Rollover" type="number" min="0" step="1000" /></td>
+                <td><input id="piSilver3StartAge" type="number" min="40" max="90" /></td>
+              </tr>
+              <tr>
+                <td>Silver 4</td>
+                <td><input id="piSilver4Owner" /></td>
+                <td><input id="piSilver4Annual" type="number" min="0" step="1000" /></td>
+                <td><input id="piSilver4Rollover" type="number" min="0" step="1000" /></td>
+                <td><input id="piSilver4StartAge" type="number" min="40" max="90" /></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Gold Plan Additional Income -->
+        <div class="ap-form-section">
+          <h2>Gold Plan Additional Income (4 sources)</h2>
+          <p class="ap-small">
+            Gold Plan typically uses larger rollovers and may start at different ages
+            to increase income or provide back-up income later in retirement.
+          </p>
+          <table class="ap-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Owner (His/Her)</th>
+                <th>Annual Income Target ($)</th>
+                <th>Rollover Amount ($)</th>
+                <th>Start Age</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Gold 1</td>
+                <td><input id="piGold1Owner" /></td>
+                <td><input id="piGold1Annual" type="number" min="0" step="1000" /></td>
+                <td><input id="piGold1Rollover" type="number" min="0" step="1000" /></td>
+                <td><input id="piGold1StartAge" type="number" min="40" max="90" /></td>
+              </tr>
+              <tr>
+                <td>Gold 2</td>
+                <td><input id="piGold2Owner" /></td>
+                <td><input id="piGold2Annual" type="number" min="0" step="1000" /></td>
+                <td><input id="piGold2Rollover" type="number" min="0" step="1000" /></td>
+                <td><input id="piGold2StartAge" type="number" min="40" max="90" /></td>
+              </tr>
+              <tr>
+                <td>Gold 3</td>
+                <td><input id="piGold3Owner" /></td>
+                <td><input id="piGold3Annual" type="number" min="0" step="1000" /></td>
+                <td><input id="piGold3Rollover" type="number" min="0" step="1000" /></td>
+                <td><input id="piGold3StartAge" type="number" min="40" max="90" /></td>
+              </tr>
+              <tr>
+                <td>Gold 4</td>
+                <td><input id="piGold4Owner" /></td>
+                <td><input id="piGold4Annual" type="number" min="0" step="1000" /></td>
+                <td><input id="piGold4Rollover" type="number" min="0" step="1000" /></td>
+                <td><input id="piGold4StartAge" type="number" min="40" max="90" /></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- SAVE PLAN INPUTS -->
+        <div class="ap-form-actions">
+          <button type="button" class="ap-btn-primary" id="save-plan-inputs">
+            Save Plan Inputs
+          </button>
+          <span class="ap-save-status" id="planInputsStatus">Not saved yet</span>
+        </div>
       </section>
 
+      <!-- Placeholder other steps -->
       <section id="step-plans" class="ap-card ap-card-hidden">
         <h1>Plan Comparisons</h1>
         <p>Coming soon – No Plan vs Silver vs Gold vs Survivor.</p>
