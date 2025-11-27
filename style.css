@@ -296,3 +296,139 @@ body {
 .ap-table textarea:focus {
   outline: none;
 }
+/* ---------- Plan Comparisons ---------- */
+
+.asset-legend {
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+
+.asset-chip {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-right: 6px;
+  margin-bottom: 6px;
+  border: 1px solid transparent;
+}
+
+.asset-chip-investments {
+  background: #fee2e2; /* light red */
+  color: #991b1b;
+  border-color: #fecaca;
+}
+
+.asset-chip-savings {
+  background: #fef9c3; /* light yellow */
+  color: #854d0e;
+  border-color: #facc15;
+}
+
+.asset-chip-annuities {
+  background: #dcfce7; /* light green */
+  color: #166534;
+  border-color: #86efac;
+}
+
+.plan-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 10px 0 12px;
+}
+
+.plan-tab {
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid #d1d5db;
+  background: #f9fafb;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.plan-tab-active {
+  background: #0b5aa2;
+  color: #ffffff;
+  border-color: #0b5aa2;
+}
+
+.plan-card {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
+  margin-top: 6px;
+}
+
+.plan-card-header {
+  padding: 10px 14px;
+  font-weight: 600;
+}
+
+/* No Plan: neutral / black & white */
+.plan-card-no-plan .plan-card-header {
+  background: #111827;
+  color: #f9fafb;
+}
+
+/* Silver Plan header */
+.plan-card-silver .plan-card-header {
+  background: linear-gradient(90deg, #e5e7eb, #f3f4f6);
+  color: #111827;
+}
+
+/* Gold Plan header */
+.plan-card-gold .plan-card-header {
+  background: linear-gradient(90deg, #fbbf24, #f59e0b);
+  color: #78350f;
+}
+
+.plan-card-body {
+  padding: 14px 16px;
+  background: #ffffff;
+}
+
+.plan-card-hidden {
+  display: none;
+}
+
+.plan-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.plan-metric {
+  padding: 10px 12px;
+  background: #f9fafb;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+}
+
+.plan-metric-label {
+  font-size: 13px;
+  color: #4b5563;
+}
+
+.plan-metric-value {
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.plan-metric-gap-positive {
+  color: #166534; /* green */
+}
+
+.plan-metric-gap-negative {
+  color: #b91c1c; /* red */
+}
+
+.plan-note {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #4b5563;
+}
