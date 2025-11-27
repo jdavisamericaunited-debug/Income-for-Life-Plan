@@ -494,3 +494,26 @@ body {
     font-size: 16px;
   }
 }
+/* ---------- Plan Schedule (Landscape) ---------- */
+
+.plan-schedule-wrapper {
+  margin-top: 8px;
+  overflow-x: auto;           /* horizontal scroll on small screens */
+}
+
+.plan-schedule {
+  min-width: 1200px;          /* makes the table wide / landscape */
+}
+
+/* His SS in blue, Her SS in pink */
+.plan-schedule th.col-his-ss,
+.plan-schedule td.col-his-ss {
+  background: #dbeafe;        /* light blue */
+  color: #1e3a8a;
+}
+
+.plan-schedule th.col-her-ss,
+.plan-schedule td.col-her-ss {
+  background: #fce7f3;        /* light pink */
+  color: #9d174d;
+}
