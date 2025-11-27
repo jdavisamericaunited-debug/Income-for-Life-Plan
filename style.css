@@ -1,31 +1,41 @@
-/* Base resets */
+/* ===========================
+   Global / Layout
+   =========================== */
+
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
+html,
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, Helvetica, Arial, sans-serif;
-  background: #f5f7fb;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+    sans-serif;
+  background: #f3f4f6;
   color: #111827;
 }
 
-/* Layout wrappers */
 #app {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-/* Header */
+/* ===========================
+   Header & Footer
+   =========================== */
+
 .ap-header {
   background: #0b5aa2;
   color: #f9fafb;
-  padding: 12px 16px;
-  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.25);
+  padding: 10px 16px;
+  box-shadow: 0 2px 4px rgba(15, 23, 42, 0.15);
 }
 
 .ap-header-inner {
@@ -38,7 +48,7 @@ body {
 
 .ap-logo-main {
   font-weight: 700;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .ap-logo-sub {
@@ -47,181 +57,15 @@ body {
   opacity: 0.9;
 }
 
-/* Main content */
 .ap-main {
-  flex: 1;
   max-width: 1100px;
-  margin: 18px auto 32px;
-  padding: 0 12px;
-}
-
-/* Step navigation */
-.ap-steps {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 16px;
-}
-
-.ap-step-btn {
-  border: 1px solid #cbd5f5;
-  background: #e5ecff;
-  color: #1f2937;
-  border-radius: 999px;
-  padding: 6px 14px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.ap-step-btn[disabled] {
-  opacity: 0.55;
-  cursor: default;
-}
-
-.ap-step-btn-active {
-  background: #0b5aa2;
-  color: #f9fafb;
-  border-color: #0b5aa2;
-}
-
-/* Card */
-.ap-card {
-  background: #ffffff;
-  border-radius: 10px;
-  padding: 18px 16px 20px;
-  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
-}
-
-.ap-card-hidden {
-  display: none;
-}
-
-/* Typo */
-.ap-card h1 {
-  margin: 0 0 6px;
-  font-size: 22px;
-}
-
-.ap-card h2 {
-  margin: 18px 0 8px;
-  font-size: 18px;
-  color: #0b5aa2;
-}
-
-.ap-intro {
-  margin: 0 0 16px;
-  font-size: 14px;
-  color: #4b5563;
-}
-
-/* Form layout */
-.ap-form {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.ap-form-section {
-  border-top: 1px solid #e5e7eb;
-  padding-top: 12px;
-}
-
-.ap-form-section:first-of-type {
-  border-top: none;
-  padding-top: 0;
-}
-
-.ap-grid-2 {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px 18px;
-}
-
-@media (max-width: 768px) {
-  .ap-grid-2 {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Fields */
-.ap-field label {
-  display: block;
-  font-size: 13px;
-  font-weight: 600;
-  color: #374151;
-  margin-bottom: 4px;
-}
-
-.ap-field input,
-.ap-field textarea {
-  width: 100%;
-  padding: 8px 9px;
-  border-radius: 6px;
-  border: 1px solid #d1d5db;
-  font-size: 14px;
-}
-
-.ap-field input:focus,
-.ap-field textarea:focus {
-  outline: none;
-  border-color: #0b5aa2;
-  box-shadow: 0 0 0 1px rgba(11, 90, 162, 0.25);
-}
-
-/* Dollar prefix */
-.ap-input-prefix {
-  display: flex;
-  align-items: center;
-  border-radius: 6px;
-  border: 1px solid #d1d5db;
-  overflow: hidden;
-}
-
-.ap-input-prefix span {
-  padding: 8px 9px;
-  background: #f3f4f6;
-  border-right: 1px solid #d1d5db;
-  font-size: 14px;
-}
-
-.ap-input-prefix input {
-  border: none;
+  margin: 16px auto 24px;
+  padding: 0 12px 40px;
   flex: 1;
-  padding: 8px 9px;
 }
 
-/* Actions */
-.ap-form-actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 4px;
-}
-
-.ap-btn-primary {
-  background: #0b5aa2;
-  color: #f9fafb;
-  border: none;
-  border-radius: 999px;
-  padding: 8px 18px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.ap-btn-primary:hover {
-  background: #094680;
-}
-
-.ap-save-status {
-  font-size: 13px;
-  color: #6b7280;
-}
-
-/* Footer */
 .ap-footer {
-  border-top: 1px solid #d1d5db;
+  border-top: 1px solid #e5e7eb;
   background: #f9fafb;
   padding: 10px 16px;
   font-size: 12px;
@@ -231,6 +75,7 @@ body {
 .ap-footer-inner {
   max-width: 1100px;
   margin: 0 auto;
+  text-align: center;
 }
 
 .ap-footer a {
@@ -243,60 +88,221 @@ body {
 }
 
 .ap-footer-disclaimer {
-  margin-top: 2px;
+  margin-top: 4px;
   font-size: 11px;
   color: #6b7280;
 }
-/* Simple table styling for list sections */
+
+/* ===========================
+   Steps / Navigation
+   =========================== */
+
+.ap-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.ap-step-btn {
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid #d1d5db;
+  background: #f9fafb;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #111827;
+}
+
+.ap-step-btn:hover:not(:disabled) {
+  background: #e5e7eb;
+}
+
+.ap-step-btn-active {
+  background: #0b5aa2;
+  border-color: #0b5aa2;
+  color: #ffffff;
+}
+
+.ap-step-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* ===========================
+   Cards / Sections
+   =========================== */
+
+.ap-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 16px 18px 20px;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
+}
+
+.ap-card + .ap-card {
+  margin-top: 16px;
+}
+
+.ap-card-hidden {
+  display: none;
+}
+
+.ap-intro {
+  font-size: 14px;
+  color: #4b5563;
+  margin-top: 2px;
+  margin-bottom: 10px;
+}
+
+.ap-form-section {
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.ap-form-section:first-of-type {
+  border-top: none;
+  padding-top: 0;
+}
+
+.ap-form-section h2 {
+  margin: 0 0 6px;
+  font-size: 16px;
+  color: #0b5aa2;
+}
+
 .ap-subheading {
-  margin: 4px 0 2px;
   font-size: 14px;
   font-weight: 600;
   color: #111827;
+  margin: 0 0 4px;
+}
+
+/* ===========================
+   Form Layout & Controls
+   =========================== */
+
+.ap-form {
+  margin-top: 6px;
+}
+
+.ap-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 10px 14px;
+}
+
+.ap-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.ap-field label {
+  font-size: 13px;
+  margin-bottom: 3px;
+  color: #374151;
+}
+
+.ap-field input,
+.ap-field select,
+.ap-field textarea {
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  font-size: 13px;
+  font-family: inherit;
+  color: #111827;
+  background: #ffffff;
+}
+
+.ap-field input:focus,
+.ap-field select:focus,
+.ap-field textarea:focus {
+  outline: 2px solid #0b5aa2;
+  outline-offset: 1px;
+  border-color: #0b5aa2;
+}
+
+.ap-field textarea {
+  resize: vertical;
+}
+
+.ap-form-actions {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ap-btn-primary {
+  background: #0b5aa2;
+  color: #ffffff;
+  border: none;
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ap-btn-primary:hover {
+  background: #0a4a86;
+}
+
+.ap-save-status {
+  font-size: 13px;
+  color: #6b7280;
 }
 
 .ap-small {
   font-size: 12px;
   color: #6b7280;
-  margin: 2px 0 6px;
 }
+
+/* ===========================
+   Tables
+   =========================== */
 
 .ap-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 6px;
   font-size: 13px;
+  margin-top: 4px;
+}
+
+.ap-table thead {
+  background: #f3f4f6;
 }
 
 .ap-table th,
 .ap-table td {
   border: 1px solid #e5e7eb;
-  padding: 6px 8px;
+  padding: 6px 6px;
+  text-align: left;
   vertical-align: middle;
 }
 
 .ap-table th {
-  background: #f3f4f6;
   font-weight: 600;
-  text-align: left;
+  color: #374151;
+  font-size: 12px;
 }
 
-.ap-table input,
-.ap-table select,
-.ap-table textarea {
-  border: none;
+.ap-table td input,
+.ap-table td select {
   width: 100%;
-  font-size: 13px;
-  padding: 4px 5px;
-  box-sizing: border-box;
+  border-radius: 4px;
+  border: 1px solid #d1d5db;
+  padding: 4px 6px;
+  font-size: 12px;
+  font-family: inherit;
 }
 
-.ap-table input:focus,
-.ap-table select:focus,
-.ap-table textarea:focus {
-  outline: none;
-}
-/* ---------- Plan Comparisons ---------- */
+/* ===========================
+   Plan Comparisons (Step 4)
+   =========================== */
 
 .asset-legend {
   margin-bottom: 8px;
@@ -314,23 +320,28 @@ body {
   border: 1px solid transparent;
 }
 
+/* Red – Investment accounts */
 .asset-chip-investments {
-  background: #fee2e2; /* light red */
+  background: #fee2e2;
   color: #991b1b;
   border-color: #fecaca;
 }
 
+/* Yellow – Savings/Checking/CU */
 .asset-chip-savings {
-  background: #fef9c3; /* light yellow */
+  background: #fef9c3;
   color: #854d0e;
   border-color: #facc15;
 }
 
+/* Green – Annuities */
 .asset-chip-annuities {
-  background: #dcfce7; /* light green */
+  background: #dcfce7;
   color: #166534;
   border-color: #86efac;
 }
+
+/* Tabs above plan cards */
 
 .plan-tabs {
   display: flex;
@@ -339,6 +350,7 @@ body {
   margin: 10px 0 12px;
 }
 
+/* Base tab style */
 .plan-tab {
   padding: 6px 14px;
   border-radius: 999px;
@@ -347,13 +359,44 @@ body {
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease,
+    border-color 0.15s ease;
+  color: #111827;
 }
 
-.plan-tab-active {
-  background: #0b5aa2;
-  color: #ffffff;
-  border-color: #0b5aa2;
+/* Inactive border colors by plan */
+.plan-tab[data-plan="no-plan"] {
+  border-color: #4b5563; /* dark neutral */
 }
+
+.plan-tab[data-plan="silver"] {
+  border-color: #9ca3af; /* silver/gray */
+}
+
+.plan-tab[data-plan="gold"] {
+  border-color: #f59e0b; /* gold */
+}
+
+/* Active states – filled with matching colors */
+.plan-tab-active[data-plan="no-plan"] {
+  background: #111827;
+  color: #f9fafb;
+  border-color: #111827;
+}
+
+.plan-tab-active[data-plan="silver"] {
+  background: linear-gradient(90deg, #e5e7eb, #f3f4f6);
+  color: #111827;
+  border-color: #9ca3af;
+}
+
+.plan-tab-active[data-plan="gold"] {
+  background: linear-gradient(90deg, #fbbf24, #f59e0b);
+  color: #78350f;
+  border-color: #f59e0b;
+}
+
+/* Plan cards */
 
 .plan-card {
   border-radius: 16px;
@@ -431,4 +474,23 @@ body {
   margin-top: 10px;
   font-size: 13px;
   color: #4b5563;
+}
+
+/* ===========================
+   Responsive
+   =========================== */
+
+@media (max-width: 640px) {
+  .ap-card {
+    padding: 14px 12px 18px;
+  }
+
+  .ap-header-inner,
+  .ap-footer-inner {
+    text-align: left;
+  }
+
+  .ap-logo-main {
+    font-size: 16px;
+  }
 }
