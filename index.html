@@ -1,19 +1,30 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>AmericaPlanning – Income for Life Planner</title>
+  <meta charset="UTF-8" />
+  <title>Income-for-Life Plan – AmericaPlanning</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="app">
-    <!-- Top header / brand bar -->
+  <!-- Mobile rotate tip -->
+  <div id="ap-rotate-tip">
+    Turn phone sideways for easy viewing.
+  </div>
+
+  <div id="ap-app">
     <header class="ap-header">
       <div class="ap-header-inner">
-        <div class="ap-logo">
-          <span class="ap-logo-main">AmericaPlanning.com</span>
-          <span class="ap-logo-sub">Income for Life Planner</span>
+        <div class="ap-logo-lockup">
+          <div class="ap-logo-circle">AP</div>
+          <div>
+            <div class="ap-logo-title">America United Wealth Planning</div>
+            <div class="ap-logo-subtitle">Income-for-Life Plan</div>
+          </div>
+        </div>
+        <div class="ap-header-contact">
+          <div>AmericaPlanning.com</div>
+          <div>847-592-5405</div>
         </div>
       </div>
     </header>
@@ -25,7 +36,7 @@
           1. Client Goals &amp; Data
         </button>
         <button class="ap-step-btn" data-step="assets">
-          2. Assets Summary
+          2. Asset Summary
         </button>
         <button class="ap-step-btn" data-step="inputs">
           3. Plan Inputs
@@ -33,795 +44,231 @@
         <button class="ap-step-btn" data-step="plans">
           4. Plan Comparisons
         </button>
-        <button class="ap-step-btn" data-step="summary" disabled>
-          5. Summary &amp; Report (coming soon)
+        <button class="ap-step-btn" data-step="summary">
+          5. Summary &amp; Report
         </button>
       </nav>
 
-      <!-- STEP 1: FULL CLIENT GOALS & DATA -->
+      <!-- STEP 1: CLIENT GOALS & DATA -->
       <section id="step-client" class="ap-card">
         <h1>Client Goals &amp; Data</h1>
         <p class="ap-intro">
-          This page mirrors your Excel “Client Goals &amp; Data” sheet. All
-          information entered here will feed the rest of the Income for Life plan.
+          Enter the key facts from your <strong>Goals &amp; Data</strong> worksheet.
+          These values feed the rest of the Income-for-Life Plan.
         </p>
 
-        <form id="client-form" class="ap-form" novalidate>
-          <!-- BUSINESS INFO -->
+        <form id="client-form">
           <div class="ap-form-section">
-            <h2>Business Information (if self-employed)</h2>
-            <div class="ap-grid-2">
-              <div class="ap-field">
-                <label for="businessName">Business Name</label>
-                <input type="text" id="businessName" />
-              </div>
-              <div class="ap-field">
-                <label for="yearsInBusiness">Years in Business</label>
-                <input type="number" id="yearsInBusiness" min="0" max="80" />
-              </div>
-              <div class="ap-field">
-                <label for="businessAddress">Business Address</label>
-                <input type="text" id="businessAddress" />
-              </div>
-              <div class="ap-field">
-                <label for="businessCity">Business City</label>
-                <input type="text" id="businessCity" />
-              </div>
-              <div class="ap-field">
-                <label for="businessState">Business State</label>
-                <input type="text" id="businessState" maxlength="2" />
-              </div>
-              <div class="ap-field">
-                <label for="businessZip">Business Zip Code</label>
-                <input type="text" id="businessZip" />
-              </div>
-            </div>
-          </div>
-
-          <!-- PERSONAL INFO -->
-          <div class="ap-form-section">
-            <h2>Personal Information</h2>
-            <div class="ap-grid-2">
-              <div class="ap-field">
+            <h2>Client Information</h2>
+            <div class="ap-form-grid ap-form-grid-2">
+              <div>
                 <label for="clientName">Client Name</label>
-                <input type="text" id="clientName" />
+                <input id="clientName" type="text" />
               </div>
-              <div class="ap-field">
-                <label for="clientDOB">Client Date of Birth</label>
-                <input type="date" id="clientDOB" />
+              <div>
+                <label for="spouseName">Spouse Name</label>
+                <input id="spouseName" type="text" />
               </div>
-
-              <div class="ap-field">
-                <label for="spouseName">Spouse / Partner Name</label>
-                <input type="text" id="spouseName" />
+              <div>
+                <label for="advisorName">Advisor</label>
+                <input id="advisorName" type="text" />
               </div>
-              <div class="ap-field">
-                <label for="spouseDOB">Spouse Date of Birth</label>
-                <input type="date" id="spouseDOB" />
-              </div>
-
-              <div class="ap-field">
-                <label for="homeAddress">Home Address</label>
-                <input type="text" id="homeAddress" />
-              </div>
-              <div class="ap-field">
-                <label for="homeCity">Home City</label>
-                <input type="text" id="homeCity" />
-              </div>
-
-              <div class="ap-field">
-                <label for="homeState">Home State</label>
-                <input type="text" id="homeState" maxlength="2" />
-              </div>
-              <div class="ap-field">
-                <label for="homeZip">Home Zip Code</label>
-                <input type="text" id="homeZip" />
-              </div>
-
-              <div class="ap-field">
-                <label for="clientPhone">His Cell Number</label>
-                <input type="tel" id="clientPhone" />
-              </div>
-              <div class="ap-field">
-                <label for="spousePhone">Her Cell Number</label>
-                <input type="tel" id="spousePhone" />
-              </div>
-
-              <div class="ap-field">
-                <label for="clientEmail">Best Email Address</label>
-                <input type="email" id="clientEmail" />
+              <div>
+                <label for="planDate">Plan Date</label>
+                <input id="planDate" type="date" />
               </div>
             </div>
           </div>
 
-          <!-- CHILDREN -->
           <div class="ap-form-section">
-            <h2>Children (Estate Planning Purposes)</h2>
-            <table class="ap-table">
-              <thead>
-                <tr>
-                  <th style="width: 30%;">Name</th>
-                  <th style="width: 10%;">Age</th>
-                  <th style="width: 20%;">Number of Their Children</th>
-                  <th>Notes</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><input id="child1Name" /></td>
-                  <td><input id="child1Age" type="number" min="0" /></td>
-                  <td><input id="child1Grandchildren" type="number" min="0" /></td>
-                  <td><input id="child1Notes" /></td>
-                </tr>
-                <tr>
-                  <td><input id="child2Name" /></td>
-                  <td><input id="child2Age" type="number" min="0" /></td>
-                  <td><input id="child2Grandchildren" type="number" min="0" /></td>
-                  <td><input id="child2Notes" /></td>
-                </tr>
-                <tr>
-                  <td><input id="child3Name" /></td>
-                  <td><input id="child3Age" type="number" min="0" /></td>
-                  <td><input id="child3Grandchildren" type="number" min="0" /></td>
-                  <td><input id="child3Notes" /></td>
-                </tr>
-                <tr>
-                  <td><input id="child4Name" /></td>
-                  <td><input id="child4Age" type="number" min="0" /></td>
-                  <td><input id="child4Grandchildren" type="number" min="0" /></td>
-                  <td><input id="child4Notes" /></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <!-- CURRENT ADVISORS -->
-          <div class="ap-form-section">
-            <h2>Current Advisors (Optional)</h2>
-            <div class="ap-grid-2">
-              <div class="ap-field">
-                <label for="accountantName">Accountant – Advisor Name</label>
-                <input id="accountantName" />
+            <h2>Residence &amp; Real Estate</h2>
+            <div class="ap-form-grid ap-form-grid-2">
+              <div>
+                <label for="primaryValue">Primary Residence – Value</label>
+                <input id="primaryValue" type="number" inputmode="decimal" />
               </div>
-              <div class="ap-field">
-                <label for="accountantFirm">Accountant – Firm &amp; Telephone</label>
-                <input id="accountantFirm" />
+              <div>
+                <label for="primaryMortgage">Primary Residence – Mortgage</label>
+                <input id="primaryMortgage" type="number" inputmode="decimal" />
               </div>
-
-              <div class="ap-field">
-                <label for="attorneyName">Attorney – Advisor Name</label>
-                <input id="attorneyName" />
+              <div>
+                <label for="secondaryValue">2nd Home / Rental – Value</label>
+                <input id="secondaryValue" type="number" inputmode="decimal" />
               </div>
-              <div class="ap-field">
-                <label for="attorneyFirm">Attorney – Firm &amp; Telephone</label>
-                <input id="attorneyFirm" />
-              </div>
-
-              <div class="ap-field">
-                <label for="advisorName">Financial Advisor – Name</label>
-                <input id="advisorName" />
-              </div>
-              <div class="ap-field">
-                <label for="advisorFirm">Financial Advisor – Firm &amp; Telephone</label>
-                <input id="advisorFirm" />
+              <div>
+                <label for="secondaryMortgage">2nd Home / Rental – Mortgage</label>
+                <input id="secondaryMortgage" type="number" inputmode="decimal" />
               </div>
             </div>
           </div>
 
-          <!-- RETIREMENT TIMING -->
           <div class="ap-form-section">
-            <h2>Retirement Timing</h2>
-            <div class="ap-grid-2">
-              <div class="ap-field">
-                <label for="targetRetireAgeClient">
-                  Planned Retirement Age (His)
-                </label>
-                <input
-                  type="number"
-                  id="targetRetireAgeClient"
-                  min="40"
-                  max="80"
-                />
+            <h2>Investment Accounts (C – Red)</h2>
+            <p class="ap-help">Typical examples: IRAs, 401(k)s, brokerage accounts.</p>
+            <div class="ap-form-grid ap-form-grid-3">
+              <div>
+                <label for="inv1Balance">Investment 1 – Balance</label>
+                <input id="inv1Balance" type="number" inputmode="decimal" />
               </div>
-              <div class="ap-field">
-                <label for="targetRetireAgeSpouse">
-                  Planned Retirement Age (Her)
-                </label>
-                <input
-                  type="number"
-                  id="targetRetireAgeSpouse"
-                  min="40"
-                  max="80"
-                />
+              <div>
+                <label for="inv2Balance">Investment 2 – Balance</label>
+                <input id="inv2Balance" type="number" inputmode="decimal" />
               </div>
-              <div class="ap-field">
-                <label for="retiredYearHis">
-                  If Already Retired: His Year
-                </label>
-                <input type="number" id="retiredYearHis" min="1900" />
+              <div>
+                <label for="inv3Balance">Investment 3 – Balance</label>
+                <input id="inv3Balance" type="number" inputmode="decimal" />
               </div>
-              <div class="ap-field">
-                <label for="retiredYearHer">
-                  If Already Retired: Her Year
-                </label>
-                <input type="number" id="retiredYearHer" min="1900" />
+              <div>
+                <label for="inv4Balance">Investment 4 – Balance</label>
+                <input id="inv4Balance" type="number" inputmode="decimal" />
+              </div>
+              <div>
+                <label for="inv5Balance">Investment 5 – Balance</label>
+                <input id="inv5Balance" type="number" inputmode="decimal" />
               </div>
             </div>
           </div>
 
-          <!-- ESTATE PLANNING & INSURANCE -->
           <div class="ap-form-section">
-            <h2>Estate Planning &amp; Insurance</h2>
-            <div class="ap-grid-2">
-              <div class="ap-field">
-                <label for="hasWill">Do You Have a Will?</label>
-                <select id="hasWill">
-                  <option value=""></option>
-                  <option>Yes</option>
-                  <option>No</option>
-                </select>
+            <h2>Savings / Checking / Credit Union (A – Yellow)</h2>
+            <div class="ap-form-grid ap-form-grid-3">
+              <div>
+                <label for="sav1Balance">Account 1 – Balance</label>
+                <input id="sav1Balance" type="number" inputmode="decimal" />
               </div>
-              <div class="ap-field">
-                <label for="willYear">Will – Year Completed</label>
-                <input type="number" id="willYear" min="1900" />
+              <div>
+                <label for="sav2Balance">Account 2 – Balance</label>
+                <input id="sav2Balance" type="number" inputmode="decimal" />
               </div>
-
-              <div class="ap-field">
-                <label for="hasFinancialPOA">Financial Power of Attorney</label>
-                <select id="hasFinancialPOA">
-                  <option value=""></option>
-                  <option>Yes</option>
-                  <option>No</option>
-                </select>
+              <div>
+                <label for="sav3Balance">Account 3 – Balance</label>
+                <input id="sav3Balance" type="number" inputmode="decimal" />
               </div>
-              <div class="ap-field">
-                <label for="hasMedicalPOA">Medical Power of Attorney</label>
-                <select id="hasMedicalPOA">
-                  <option value=""></option>
-                  <option>Yes</option>
-                  <option>No</option>
-                </select>
+              <div>
+                <label for="sav4Balance">Account 4 – Balance</label>
+                <input id="sav4Balance" type="number" inputmode="decimal" />
               </div>
-
-              <div class="ap-field">
-                <label for="mpoaFiled">Is MPOA Electronically Filed?</label>
-                <select id="mpoaFiled">
-                  <option value=""></option>
-                  <option>Yes</option>
-                  <option>No</option>
-                </select>
-              </div>
-
-              <div class="ap-field">
-                <label for="hasTrust">Do You Have a Trust?</label>
-                <select id="hasTrust">
-                  <option value=""></option>
-                  <option>Yes</option>
-                  <option>No</option>
-                </select>
-              </div>
-              <div class="ap-field">
-                <label for="trustYear">Trust – Year Completed</label>
-                <input type="number" id="trustYear" min="1900" />
-              </div>
-
-              <div class="ap-field">
-                <label for="termLifeHis">
-                  Term Life Insurance (His) – Dollar Amount
-                </label>
-                <input type="number" id="termLifeHis" min="0" step="1000" />
-              </div>
-              <div class="ap-field">
-                <label for="termLifeHer">
-                  Term Life Insurance (Her) – Dollar Amount
-                </label>
-                <input type="number" id="termLifeHer" min="0" step="1000" />
-              </div>
-            </div>
-
-            <div class="ap-field" style="margin-top:8px;">
-              <label for="estateNotes">Estate Planning Notes</label>
-              <textarea id="estateNotes" rows="2"></textarea>
-            </div>
-          </div>
-
-          <!-- RESIDENCES & REAL ESTATE -->
-          <div class="ap-form-section">
-            <h2>Residences &amp; Real Estate Investments</h2>
-            <h3 class="ap-subheading">Primary Residence</h3>
-            <div class="ap-grid-2">
-              <div class="ap-field">
-                <label for="primaryOwned">Owned / Rented</label>
-                <select id="primaryOwned">
-                  <option value=""></option>
-                  <option>Owned</option>
-                  <option>Rented</option>
-                </select>
-              </div>
-              <div class="ap-field">
-                <label for="primaryValue">Approx. Value (if Owned)</label>
-                <input type="number" id="primaryValue" min="0" step="1000" />
-              </div>
-              <div class="ap-field">
-                <label for="primaryMortgage">Mortgage Amount</label>
-                <input type="number" id="primaryMortgage" min="0" step="1000" />
-              </div>
-              <div class="ap-field">
-                <label for="primaryPayment">Monthly Payment</label>
-                <input type="number" id="primaryPayment" min="0" step="10" />
-              </div>
-            </div>
-
-            <h3 class="ap-subheading" style="margin-top:14px;">
-              Secondary Residence
-            </h3>
-            <div class="ap-grid-2">
-              <div class="ap-field">
-                <label for="secondaryOwned">Owned / Rented</label>
-                <select id="secondaryOwned">
-                  <option value=""></option>
-                  <option>Owned</option>
-                  <option>Rented</option>
-                </select>
-              </div>
-              <div class="ap-field">
-                <label for="secondaryValue">Approx. Value (if Owned)</label>
-                <input type="number" id="secondaryValue" min="0" step="1000" />
-              </div>
-              <div class="ap-field">
-                <label for="secondaryMortgage">Mortgage Amount</label>
-                <input type="number" id="secondaryMortgage" min="0" step="1000" />
-              </div>
-              <div class="ap-field">
-                <label for="secondaryPayment">Monthly Payment</label>
-                <input type="number" id="secondaryPayment" min="0" step="10" />
+              <div>
+                <label for="sav5Balance">Account 5 – Balance</label>
+                <input id="sav5Balance" type="number" inputmode="decimal" />
               </div>
             </div>
           </div>
 
-          <!-- CURRENT PORTFOLIO -->
           <div class="ap-form-section">
-            <h2>Current Portfolio (Qualified / Non-Qualified)</h2>
-            <table class="ap-table">
-              <thead>
-                <tr>
-                  <th>Investment Account Name / Description</th>
-                  <th style="width: 10%;">His/Her/Both</th>
-                  <th style="width: 18%;">Qualified / Non-Qualified</th>
-                  <th style="width: 20%;">Balance ($)</th>
-                  <th>Notes</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><input id="inv1Name" /></td>
-                  <td><input id="inv1Owner" /></td>
-                  <td><input id="inv1Type" /></td>
-                  <td><input id="inv1Balance" type="number" min="0" step="1000" /></td>
-                  <td><input id="inv1Notes" /></td>
-                </tr>
-                <tr>
-                  <td><input id="inv2Name" /></td>
-                  <td><input id="inv2Owner" /></td>
-                  <td><input id="inv2Type" /></td>
-                  <td><input id="inv2Balance" type="number" min="0" step="1000" /></td>
-                  <td><input id="inv2Notes" /></td>
-                </tr>
-                <tr>
-                  <td><input id="inv3Name" /></td>
-                  <td><input id="inv3Owner" /></td>
-                  <td><input id="inv3Type" /></td>
-                  <td><input id="inv3Balance" type="number" min="0" step="1000" /></td>
-                  <td><input id="inv3Notes" /></td>
-                </tr>
-                <tr>
-                  <td><input id="inv4Name" /></td>
-                  <td><input id="inv4Owner" /></td>
-                  <td><input id="inv4Type" /></td>
-                  <td><input id="inv4Balance" type="number" min="0" step="1000" /></td>
-                  <td><input id="inv4Notes" /></td>
-                </tr>
-                <tr>
-                  <td><input id="inv5Name" /></td>
-                  <td><input id="inv5Owner" /></td>
-                  <td><input id="inv5Type" /></td>
-                  <td><input id="inv5Balance" type="number" min="0" step="1000" /></td>
-                  <td><input id="inv5Notes" /></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <!-- SAVINGS ACCOUNTS -->
-          <div class="ap-form-section">
-            <h2>Savings, Checking &amp; Credit Union Accounts</h2>
-            <table class="ap-table">
-              <thead>
-                <tr>
-                  <th>Account Description</th>
-                  <th style="width: 12%;">His/Her/Both</th>
-                  <th style="width: 20%;">Current Balance</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><input id="sav1Desc" /></td>
-                  <td><input id="sav1Owner" /></td>
-                  <td><input id="sav1Balance" type="number" min="0" step="1000" /></td>
-                </tr>
-                <tr>
-                  <td><input id="sav2Desc" /></td>
-                  <td><input id="sav2Owner" /></td>
-                  <td><input id="sav2Balance" type="number" min="0" step="1000" /></td>
-                </tr>
-                <tr>
-                  <td><input id="sav3Desc" /></td>
-                  <td><input id="sav3Owner" /></td>
-                  <td><input id="sav3Balance" type="number" min="0" step="1000" /></td>
-                </tr>
-                <tr>
-                  <td><input id="sav4Desc" /></td>
-                  <td><input id="sav4Owner" /></td>
-                  <td><input id="sav4Balance" type="number" min="0" step="1000" /></td>
-                </tr>
-                <tr>
-                  <td><input id="sav5Desc" /></td>
-                  <td><input id="sav5Owner" /></td>
-                  <td><input id="sav5Balance" type="number" min="0" step="1000" /></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <!-- ANNUITIES -->
-          <div class="ap-form-section">
-            <h2>Annuities</h2>
-            <table class="ap-table">
-              <thead>
-                <tr>
-                  <th>Insurance Company Name</th>
-                  <th style="width: 12%;">His/Her/Both</th>
-                  <th style="width: 18%;">Current Balance</th>
-                  <th style="width: 14%;">Year Opened</th>
-                  <th style="width: 16%;">Original Term (Years)</th>
-                  <th style="width: 18%;">Still in Surrender?</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><input id="ann1Name" /></td>
-                  <td><input id="ann1Owner" /></td>
-                  <td><input id="ann1Balance" type="number" min="0" step="1000" /></td>
-                  <td><input id="ann1Year" type="number" min="1900" /></td>
-                  <td><input id="ann1Term" type="number" min="0" /></td>
-                  <td><input id="ann1Surrender" /></td>
-                </tr>
-                <tr>
-                  <td><input id="ann2Name" /></td>
-                  <td><input id="ann2Owner" /></td>
-                  <td><input id="ann2Balance" type="number" min="0" step="1000" /></td>
-                  <td><input id="ann2Year" type="number" min="1900" /></td>
-                  <td><input id="ann2Term" type="number" min="0" /></td>
-                  <td><input id="ann2Surrender" /></td>
-                </tr>
-                <tr>
-                  <td><input id="ann3Name" /></td>
-                  <td><input id="ann3Owner" /></td>
-                  <td><input id="ann3Balance" type="number" min="0" step="1000" /></td>
-                  <td><input id="ann3Year" type="number" min="1900" /></td>
-                  <td><input id="ann3Term" type="number" min="0" /></td>
-                  <td><input id="ann3Surrender" /></td>
-                </tr>
-                <tr>
-                  <td><input id="ann4Name" /></td>
-                  <td><input id="ann4Owner" /></td>
-                  <td><input id="ann4Balance" type="number" min="0" step="1000" /></td>
-                  <td><input id="ann4Year" type="number" min="1900" /></td>
-                  <td><input id="ann4Term" type="number" min="0" /></td>
-                  <td><input id="ann4Surrender" /></td>
-                </tr>
-                <tr>
-                  <td><input id="ann5Name" /></td>
-                  <td><input id="ann5Owner" /></td>
-                  <td><input id="ann5Balance" type="number" min="0" step="1000" /></td>
-                  <td><input id="ann5Year" type="number" min="1900" /></td>
-                  <td><input id="ann5Term" type="number" min="0" /></td>
-                  <td><input id="ann5Surrender" /></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <!-- INCOME SOURCES -->
-          <div class="ap-form-section">
-            <h2>Income Sources</h2>
-            <table class="ap-table">
-              <thead>
-                <tr>
-                  <th style="width: 12%;">Who’s Income (His/Her/Both)</th>
-                  <th style="width: 20%;">Type (Pension/SS/Wages/Other)</th>
-                  <th>Describe Type (if Other)</th>
-                  <th style="width: 20%;">Annual Income ($)</th>
-                  <th>Notes</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><input id="inc1Who" /></td>
-                  <td><input id="inc1Type" /></td>
-                  <td><input id="inc1Desc" /></td>
-                  <td><input id="inc1Amount" type="number" min="0" step="1000" /></td>
-                  <td><input id="inc1Notes" /></td>
-                </tr>
-                <tr>
-                  <td><input id="inc2Who" /></td>
-                  <td><input id="inc2Type" /></td>
-                  <td><input id="inc2Desc" /></td>
-                  <td><input id="inc2Amount" type="number" min="0" step="1000" /></td>
-                  <td><input id="inc2Notes" /></td>
-                </tr>
-                <tr>
-                  <td><input id="inc3Who" /></td>
-                  <td><input id="inc3Type" /></td>
-                  <td><input id="inc3Desc" /></td>
-                  <td><input id="inc3Amount" type="number" min="0" step="1000" /></td>
-                  <td><input id="inc3Notes" /></td>
-                </tr>
-                <tr>
-                  <td><input id="inc4Who" /></td>
-                  <td><input id="inc4Type" /></td>
-                  <td><input id="inc4Desc" /></td>
-                  <td><input id="inc4Amount" type="number" min="0" step="1000" /></td>
-                  <td><input id="inc4Notes" /></td>
-                </tr>
-                <tr>
-                  <td><input id="inc5Who" /></td>
-                  <td><input id="inc5Type" /></td>
-                  <td><input id="inc5Desc" /></td>
-                  <td><input id="inc5Amount" type="number" min="0" step="1000" /></td>
-                  <td><input id="inc5Notes" /></td>
-                </tr>
-                <tr>
-                  <td><input id="inc6Who" /></td>
-                  <td><input id="inc6Type" /></td>
-                  <td><input id="inc6Desc" /></td>
-                  <td><input id="inc6Amount" type="number" min="0" step="1000" /></td>
-                  <td><input id="inc6Notes" /></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <!-- LIVING EXPENSES & DESIRED INCOME -->
-          <div class="ap-form-section">
-            <h2>Living Expenses &amp; Desired Retirement Income</h2>
-            <div class="ap-grid-2">
-              <div class="ap-field">
-                <label for="livingExpensesAnnual">
-                  Approximate Annual Living Expenses ($)
-                </label>
-                <input
-                  type="number"
-                  id="livingExpensesAnnual"
-                  min="0"
-                  step="1000"
-                />
+            <h2>Annuities (B – Green)</h2>
+            <div class="ap-form-grid ap-form-grid-3">
+              <div>
+                <label for="ann1Balance">Annuity 1 – Account Value</label>
+                <input id="ann1Balance" type="number" inputmode="decimal" />
               </div>
-              <div class="ap-field">
-                <label for="desiredIncomeToday">
-                  Desired Annual Income After Retirement ($,
-                  today’s dollars)
-                </label>
-                <input
-                  type="number"
-                  id="desiredIncomeToday"
-                  min="0"
-                  step="1000"
-                />
+              <div>
+                <label for="ann2Balance">Annuity 2 – Account Value</label>
+                <input id="ann2Balance" type="number" inputmode="decimal" />
+              </div>
+              <div>
+                <label for="ann3Balance">Annuity 3 – Account Value</label>
+                <input id="ann3Balance" type="number" inputmode="decimal" />
+              </div>
+              <div>
+                <label for="ann4Balance">Annuity 4 – Account Value</label>
+                <input id="ann4Balance" type="number" inputmode="decimal" />
+              </div>
+              <div>
+                <label for="ann5Balance">Annuity 5 – Account Value</label>
+                <input id="ann5Balance" type="number" inputmode="decimal" />
               </div>
             </div>
-            <div class="ap-field" style="margin-top:8px;">
-              <label for="incomeNotes">Income / Expenses Notes</label>
-              <textarea id="incomeNotes" rows="2"></textarea>
-            </div>
           </div>
 
-          <!-- GOALS (1–5 SCALE) -->
-          <div class="ap-form-section">
-            <h2>Goals (Rate Each 1–5)</h2>
-            <p class="ap-small">
-              1 = Not Concerned &nbsp;·&nbsp;
-              2 = Slightly Concerned &nbsp;·&nbsp;
-              3 = Moderately Concerned &nbsp;·&nbsp;
-              4 = Very Concerned &nbsp;·&nbsp;
-              5 = Most Concerned
-            </p>
-            <table class="ap-table">
-              <thead>
-                <tr>
-                  <th>Goal</th>
-                  <th style="width: 18%;">Rating (1–5)</th>
-                  <th>Notes</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Have enough retirement income that lasts my lifetime</td>
-                  <td>
-                    <input id="goal1Rating" type="number" min="1" max="5" />
-                  </td>
-                  <td><input id="goal1Notes" /></td>
-                </tr>
-                <tr>
-                  <td>Protect assets from losses</td>
-                  <td>
-                    <input id="goal2Rating" type="number" min="1" max="5" />
-                  </td>
-                  <td><input id="goal2Notes" /></td>
-                </tr>
-                <tr>
-                  <td>Save more for retirement than current IRA limits allow</td>
-                  <td>
-                    <input id="goal3Rating" type="number" min="1" max="5" />
-                  </td>
-                  <td><input id="goal3Notes" /></td>
-                </tr>
-                <tr>
-                  <td>
-                    Protect myself/family from catastrophic long-term care costs
-                  </td>
-                  <td>
-                    <input id="goal4Rating" type="number" min="1" max="5" />
-                  </td>
-                  <td><input id="goal4Notes" /></td>
-                </tr>
-                <tr>
-                  <td>
-                    Grow a cash account accessible at any age (no 59½ restrictions)
-                  </td>
-                  <td>
-                    <input id="goal5Rating" type="number" min="1" max="5" />
-                  </td>
-                  <td><input id="goal5Notes" /></td>
-                </tr>
-                <tr>
-                  <td>
-                    Pass retirement money to next generation tax-efficiently
-                  </td>
-                  <td>
-                    <input id="goal6Rating" type="number" min="1" max="5" />
-                  </td>
-                  <td><input id="goal6Notes" /></td>
-                </tr>
-                <tr>
-                  <td>
-                    Implement a retirement program that reduces tax liability
-                  </td>
-                  <td>
-                    <input id="goal7Rating" type="number" min="1" max="5" />
-                  </td>
-                  <td><input id="goal7Notes" /></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <!-- DOCUMENT CHECKLIST & NOTES -->
-          <div class="ap-form-section">
-            <h2>Document Checklist &amp; Additional Notes</h2>
-            <div class="ap-field">
-              <label for="documentChecklist">
-                Document Checklist (items and year established/completed)
-              </label>
-              <textarea id="documentChecklist" rows="3"></textarea>
-            </div>
-            <div class="ap-field">
-              <label for="additionalNotes">Additional Notes</label>
-              <textarea id="additionalNotes" rows="3"></textarea>
-            </div>
-          </div>
-
-          <!-- SAVE BUTTON -->
           <div class="ap-form-actions">
-            <button type="submit" class="ap-btn-primary">
+            <button type="submit" class="ap-primary-btn">
               Save Client Data
             </button>
-            <span class="ap-save-status" id="saveStatus">Not saved yet</span>
+            <span id="saveStatus" class="ap-save-status"></span>
           </div>
         </form>
       </section>
 
-      <!-- STEP 2: ASSETS SUMMARY (BALANCE SHEET STYLE) -->
+      <!-- STEP 2: ASSET SUMMARY -->
       <section id="step-assets" class="ap-card ap-card-hidden">
-        <h1>Assets Summary</h1>
+        <h1>Asset Summary – Balance Sheet</h1>
         <p class="ap-intro">
-          Balance sheet style snapshot built from the data you entered on the Client
-          Goals &amp; Data page. Use this to confirm values and categories before
-          running plan projections.
+          This page summarizes the assets you entered on the Goals &amp; Data page.
+          It mirrors the balance sheet and feeds the A/B/C charts later.
         </p>
 
-        <!-- Real Estate -->
         <div class="ap-form-section">
           <h2>Real Estate</h2>
           <table class="ap-table">
             <thead>
               <tr>
                 <th>Property</th>
-                <th style="width: 20%;">Property Value</th>
-                <th style="width: 20%;">Mortgage Balance</th>
-                <th style="width: 20%;">Net Equity</th>
+                <th>Value</th>
+                <th>Mortgage</th>
+                <th>Equity</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>Primary Residence</td>
-                <td><span id="as-primary-value">$0</span></td>
-                <td><span id="as-primary-mortgage">$0</span></td>
-                <td><span id="as-primary-equity">$0</span></td>
+                <td id="as-primary-value">$0</td>
+                <td id="as-primary-mortgage">$0</td>
+                <td id="as-primary-equity">$0</td>
               </tr>
               <tr>
-                <td>Secondary Residence</td>
-                <td><span id="as-secondary-value">$0</span></td>
-                <td><span id="as-secondary-mortgage">$0</span></td>
-                <td><span id="as-secondary-equity">$0</span></td>
+                <td>2nd Home / Rental</td>
+                <td id="as-secondary-value">$0</td>
+                <td id="as-secondary-mortgage">$0</td>
+                <td id="as-secondary-equity">$0</td>
+              </tr>
+              <tr>
+                <th colspan="3">Total Real Estate Equity</th>
+                <th id="as-total-real-estate-equity">$0</th>
               </tr>
             </tbody>
           </table>
         </div>
 
-        <!-- Financial Accounts -->
         <div class="ap-form-section">
-          <h2>Financial Accounts</h2>
+          <h2>Financial Assets</h2>
           <table class="ap-table">
             <thead>
               <tr>
                 <th>Category</th>
-                <th style="width: 18%;">Number of Accounts</th>
-                <th style="width: 24%;">Total Balance</th>
+                <th>Number of Accounts</th>
+                <th>Total Balance</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Investment / Retirement Accounts (Qualified &amp; Non-Qualified)</td>
-                <td><span id="as-portfolio-count">0</span></td>
-                <td><span id="as-portfolio-total">$0</span></td>
+                <td>Investment Accounts (C – Red)</td>
+                <td id="as-portfolio-count">0</td>
+                <td id="as-portfolio-total">$0</td>
               </tr>
               <tr>
-                <td>Savings, Checking &amp; Credit Union</td>
-                <td><span id="as-savings-count">0</span></td>
-                <td><span id="as-savings-total">$0</span></td>
+                <td>Savings / Checking / CU (A – Yellow)</td>
+                <td id="as-savings-count">0</td>
+                <td id="as-savings-total">$0</td>
               </tr>
               <tr>
-                <td>Annuities</td>
-                <td><span id="as-annuities-count">0</span></td>
-                <td><span id="as-annuities-total">$0</span></td>
+                <td>Annuities (B – Green)</td>
+                <td id="as-annuities-count">0</td>
+                <td id="as-annuities-total">$0</td>
+              </tr>
+              <tr>
+                <th colspan="2">Total Financial Assets</th>
+                <th id="as-total-financial-assets">$0</th>
               </tr>
             </tbody>
           </table>
         </div>
 
-        <!-- Totals -->
         <div class="ap-form-section">
-          <h2>Totals</h2>
-          <table class="ap-table">
-            <tbody>
-              <tr>
-                <th style="width: 60%;">Total Real Estate Equity</th>
-                <td><span id="as-total-real-estate-equity">$0</span></td>
-              </tr>
-              <tr>
-                <th>Total Financial Assets</th>
-                <td><span id="as-total-financial-assets">$0</span></td>
-              </tr>
-              <tr>
-                <th>Total Assets</th>
-                <td><span id="as-total-assets">$0</span></td>
-              </tr>
-            </tbody>
-          </table>
-          <p class="ap-small">
-            Note: This summary is informational only and based solely on values entered
-            on the Client Goals &amp; Data worksheet.
+          <h2>Total Assets</h2>
+          <p>
+            <strong>Total Assets (Real Estate Equity + Financial Assets):</strong>
+            <span id="as-total-assets">$0</span>
           </p>
         </div>
       </section>
@@ -830,256 +277,341 @@
       <section id="step-inputs" class="ap-card ap-card-hidden">
         <h1>Plan Inputs</h1>
         <p class="ap-intro">
-          This page mirrors your Excel “Inputs” sheet. Set projection years, Social
-          Security, pensions, inflation, death ages and the Silver/Gold plan
-          rollovers that create additional income.
+          Enter the retirement income assumptions used to build your
+          <strong>No Plan</strong>, <strong>Silver Plan</strong>, and
+          <strong>Gold Plan</strong> illustrations.
         </p>
 
-        <!-- Base Plan Assumptions -->
         <div class="ap-form-section">
-          <h2>Base Plan Assumptions</h2>
-          <div class="ap-grid-2">
-            <div class="ap-field">
-              <label for="piProjectionYears">Projection Length (years)</label>
-              <input type="number" id="piProjectionYears" min="1" max="60" />
-            </div>
-
-            <div class="ap-field">
+          <h2>Ages &amp; Projection</h2>
+          <div class="ap-form-grid ap-form-grid-3">
+            <div>
               <label for="piHisCurrentAge">His Current Age</label>
-              <input type="number" id="piHisCurrentAge" min="40" max="90" />
+              <input id="piHisCurrentAge" type="number" inputmode="decimal" />
             </div>
-            <div class="ap-field">
+            <div>
               <label for="piHerCurrentAge">Her Current Age</label>
-              <input type="number" id="piHerCurrentAge" min="40" max="90" />
+              <input id="piHerCurrentAge" type="number" inputmode="decimal" />
             </div>
-
-            <div class="ap-field">
-              <label for="piHisSSAnnual">His Social Security (annual)</label>
-              <input type="number" id="piHisSSAnnual" min="0" step="1000" />
+            <div>
+              <label for="piProjectionYears">Projection Years</label>
+              <input id="piProjectionYears" type="number" inputmode="decimal" value="30" />
             </div>
-            <div class="ap-field">
-              <label for="piHerSSAnnual">Her Social Security (annual)</label>
-              <input type="number" id="piHerSSAnnual" min="0" step="1000" />
+            <div>
+              <label for="piHisDeathAge">His Assumed Death Age</label>
+              <input id="piHisDeathAge" type="number" inputmode="decimal" />
             </div>
-
-            <div class="ap-field">
-              <label for="piPension1Annual">Pension 1 (annual)</label>
-              <input type="number" id="piPension1Annual" min="0" step="1000" />
-            </div>
-            <div class="ap-field">
-              <label for="piPension2Annual">Pension 2 (annual)</label>
-              <input type="number" id="piPension2Annual" min="0" step="1000" />
-            </div>
-
-            <div class="ap-field">
-              <label for="piOtherIncomeAnnual">Other Income (annual)</label>
-              <input type="number" id="piOtherIncomeAnnual" min="0" step="1000" />
-            </div>
-
-            <div class="ap-field">
-              <label for="piLivingExpensesAnnual">
-                Living Expenses (annual)
-              </label>
-              <input type="number" id="piLivingExpensesAnnual" min="0" step="1000" />
-            </div>
-
-            <div class="ap-field">
-              <label for="piSSGrowthPct">Social Security COLA %</label>
-              <input
-                type="number"
-                id="piSSGrowthPct"
-                step="0.1"
-                placeholder="e.g., 2.0"
-              />
-            </div>
-
-            <div class="ap-field">
-              <label for="piPensionGrowthPct">Pension Increase %</label>
-              <input
-                type="number"
-                id="piPensionGrowthPct"
-                step="0.1"
-                placeholder="e.g., 0.0 or 1.0"
-              />
-            </div>
-
-            <div class="ap-field">
-              <label for="piExpenseInflationPct">Inflation % for expenses</label>
-              <input type="number" id="piExpenseInflationPct" step="0.1" />
+            <div>
+              <label for="piHerDeathAge">Her Assumed Death Age</label>
+              <input id="piHerDeathAge" type="number" inputmode="decimal" />
             </div>
           </div>
         </div>
 
-        <!-- Timing & Longevity -->
         <div class="ap-form-section">
-          <h2>Timing &amp; Longevity</h2>
-          <div class="ap-grid-2">
-            <div class="ap-field">
+          <h2>Social Security</h2>
+          <div class="ap-form-grid ap-form-grid-3">
+            <div>
+              <label for="piHisSSAnnual">His Social Security (Annual at Start)</label>
+              <input id="piHisSSAnnual" type="number" inputmode="decimal" />
+            </div>
+            <div>
+              <label for="piHerSSAnnual">Her Social Security (Annual at Start)</label>
+              <input id="piHerSSAnnual" type="number" inputmode="decimal" />
+            </div>
+            <div>
+              <label for="piSSGrowthPct">COLA % (applied to SS only)</label>
+              <input id="piSSGrowthPct" type="number" inputmode="decimal" value="2" />
+            </div>
+            <div>
               <label for="piHisSSStartAge">His SS Start Age</label>
-              <input type="number" id="piHisSSStartAge" min="60" max="80" />
+              <input id="piHisSSStartAge" type="number" inputmode="decimal" />
             </div>
-            <div class="ap-field">
+            <div>
               <label for="piHerSSStartAge">Her SS Start Age</label>
-              <input type="number" id="piHerSSStartAge" min="60" max="80" />
+              <input id="piHerSSStartAge" type="number" inputmode="decimal" />
+            </div>
+          </div>
+          <p class="ap-help">
+            Survivor logic: when one spouse dies, the lower Social Security benefit
+            drops off and the higher benefit continues for the survivor.
+          </p>
+        </div>
+
+        <div class="ap-form-section">
+          <h2>Pensions &amp; Other Income</h2>
+          <div class="ap-form-grid ap-form-grid-3">
+            <div>
+              <label for="piPension1Annual">Pension 1 – Annual at Start</label>
+              <input id="piPension1Annual" type="number" inputmode="decimal" />
+            </div>
+            <div>
+              <label for="piPension1StartAge">Pension 1 – Start Age</label>
+              <input id="piPension1StartAge" type="number" inputmode="decimal" />
+            </div>
+            <div>
+              <label for="piPension1SurvivorPct">Pension 1 – Survivor % (e.g. 100 or 50)</label>
+              <input id="piPension1SurvivorPct" type="number" inputmode="decimal" value="100" />
             </div>
 
-            <div class="ap-field">
-              <label for="piPension1StartAge">Pension 1 Start Age</label>
-              <input type="number" id="piPension1StartAge" min="40" max="90" />
+            <div>
+              <label for="piPension2Annual">Pension 2 – Annual at Start</label>
+              <input id="piPension2Annual" type="number" inputmode="decimal" />
             </div>
-            <div class="ap-field">
-              <label for="piPension2StartAge">Pension 2 Start Age</label>
-              <input type="number" id="piPension2StartAge" min="40" max="90" />
+            <div>
+              <label for="piPension2StartAge">Pension 2 – Start Age</label>
+              <input id="piPension2StartAge" type="number" inputmode="decimal" />
             </div>
-
-            <div class="ap-field">
-              <label for="piPension1SurvivorPct">Pension 1 Survivor %</label>
-              <input type="number" id="piPension1SurvivorPct" min="0" max="100" />
-            </div>
-            <div class="ap-field">
-              <label for="piPension2SurvivorPct">Pension 2 Survivor %</label>
-              <input type="number" id="piPension2SurvivorPct" min="0" max="100" />
+            <div>
+              <label for="piPension2SurvivorPct">Pension 2 – Survivor % (e.g. 100 or 50)</label>
+              <input id="piPension2SurvivorPct" type="number" inputmode="decimal" value="100" />
             </div>
 
-            <div class="ap-field">
-              <label for="piHisDeathAge">His Death Age</label>
-              <input type="number" id="piHisDeathAge" min="50" max="110" />
+            <div>
+              <label for="piPensionGrowthPct">Pension Increase % (optional)</label>
+              <input id="piPensionGrowthPct" type="number" inputmode="decimal" value="0" />
             </div>
-            <div class="ap-field">
-              <label for="piHerDeathAge">Her Death Age</label>
-              <input type="number" id="piHerDeathAge" min="50" max="110" />
+            <div>
+              <label for="piOtherIncomeAnnual">Other Income (Annual)</label>
+              <input id="piOtherIncomeAnnual" type="number" inputmode="decimal" />
             </div>
           </div>
         </div>
 
-        <!-- Silver Plan Additional Income -->
         <div class="ap-form-section">
-          <h2>Silver Plan Additional Income (4 sources)</h2>
-          <p class="ap-small">
-            For each source: specify the rollover amount transferred from current
-            assets, the annual income target it is designed to create, owner, start age,
-            and a brief description (e.g., insurance company and contract name).
-          </p>
-          <table class="ap-table">
-            <thead>
-              <tr>
-                <th>Description (Insurance Company / Contract)</th>
-                <th>Owner (His/Her)</th>
-                <th>Annual Income Target ($)</th>
-                <th>Rollover Amount ($)</th>
-                <th>Start Age</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><input id="piSilver1Desc" placeholder="Silver 1 – Insurance Co / Contract" /></td>
-                <td><input id="piSilver1Owner" /></td>
-                <td><input id="piSilver1Annual" type="number" min="0" step="1000" /></td>
-                <td><input id="piSilver1Rollover" type="number" min="0" step="1000" /></td>
-                <td><input id="piSilver1StartAge" type="number" min="40" max="90" /></td>
-              </tr>
-              <tr>
-                <td><input id="piSilver2Desc" placeholder="Silver 2 – Insurance Co / Contract" /></td>
-                <td><input id="piSilver2Owner" /></td>
-                <td><input id="piSilver2Annual" type="number" min="0" step="1000" /></td>
-                <td><input id="piSilver2Rollover" type="number" min="0" step="1000" /></td>
-                <td><input id="piSilver2StartAge" type="number" min="40" max="90" /></td>
-              </tr>
-              <tr>
-                <td><input id="piSilver3Desc" placeholder="Silver 3 – Insurance Co / Contract" /></td>
-                <td><input id="piSilver3Owner" /></td>
-                <td><input id="piSilver3Annual" type="number" min="0" step="1000" /></td>
-                <td><input id="piSilver3Rollover" type="number" min="0" step="1000" /></td>
-                <td><input id="piSilver3StartAge" type="number" min="40" max="90" /></td>
-              </tr>
-              <tr>
-                <td><input id="piSilver4Desc" placeholder="Silver 4 – Insurance Co / Contract" /></td>
-                <td><input id="piSilver4Owner" /></td>
-                <td><input id="piSilver4Annual" type="number" min="0" step="1000" /></td>
-                <td><input id="piSilver4Rollover" type="number" min="0" step="1000" /></td>
-                <td><input id="piSilver4StartAge" type="number" min="40" max="90" /></td>
-              </tr>
-            </tbody>
-          </table>
+          <h2>Living Expenses</h2>
+          <div class="ap-form-grid ap-form-grid-3">
+            <div>
+              <label for="piLivingExpensesAnnual">Annual Living Expenses (Today)</label>
+              <input id="piLivingExpensesAnnual" type="number" inputmode="decimal" />
+            </div>
+            <div>
+              <label for="piExpenseInflationPct">Expense Inflation %</label>
+              <input id="piExpenseInflationPct" type="number" inputmode="decimal" value="2" />
+            </div>
+          </div>
         </div>
 
-        <!-- Gold Plan Additional Income -->
         <div class="ap-form-section">
-          <h2>Gold Plan Additional Income (4 sources)</h2>
-          <p class="ap-small">
-            Gold Plan typically uses larger rollovers and may start at different ages
-            to increase income or provide back-up income later in retirement.
+          <h2>Silver Plan – Lifetime Income Sources</h2>
+          <p class="ap-help">
+            Enter the income streams and rollover amounts that define your Silver Plan.
+            Income from these annuities is treated as level and continues to the survivor.
           </p>
-          <table class="ap-table">
-            <thead>
-              <tr>
-                <th>Description (Insurance Company / Contract)</th>
-                <th>Owner (His/Her)</th>
-                <th>Annual Income Target ($)</th>
-                <th>Rollover Amount ($)</th>
-                <th>Start Age</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><input id="piGold1Desc" placeholder="Gold 1 – Insurance Co / Contract" /></td>
-                <td><input id="piGold1Owner" /></td>
-                <td><input id="piGold1Annual" type="number" min="0" step="1000" /></td>
-                <td><input id="piGold1Rollover" type="number" min="0" step="1000" /></td>
-                <td><input id="piGold1StartAge" type="number" min="40" max="90" /></td>
-              </tr>
-              <tr>
-                <td><input id="piGold2Desc" placeholder="Gold 2 – Insurance Co / Contract" /></td>
-                <td><input id="piGold2Owner" /></td>
-                <td><input id="piGold2Annual" type="number" min="0" step="1000" /></td>
-                <td><input id="piGold2Rollover" type="number" min="0" step="1000" /></td>
-                <td><input id="piGold2StartAge" type="number" min="40" max="90" /></td>
-              </tr>
-              <tr>
-                <td><input id="piGold3Desc" placeholder="Gold 3 – Insurance Co / Contract" /></td>
-                <td><input id="piGold3Owner" /></td>
-                <td><input id="piGold3Annual" type="number" min="0" step="1000" /></td>
-                <td><input id="piGold3Rollover" type="number" min="0" step="1000" /></td>
-                <td><input id="piGold3StartAge" type="number" min="40" max="90" /></td>
-              </tr>
-              <tr>
-                <td><input id="piGold4Desc" placeholder="Gold 4 – Insurance Co / Contract" /></td>
-                <td><input id="piGold4Owner" /></td>
-                <td><input id="piGold4Annual" type="number" min="0" step="1000" /></td>
-                <td><input id="piGold4Rollover" type="number" min="0" step="1000" /></td>
-                <td><input id="piGold4StartAge" type="number" min="40" max="90" /></td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="ap-form-grid ap-form-grid-4">
+            <!-- Silver 1 -->
+            <div>
+              <label for="piSilver1Desc">Silver 1 – Description / Carrier</label>
+              <input id="piSilver1Desc" type="text" />
+            </div>
+            <div>
+              <label for="piSilver1Owner">Owner (His, Her, or Joint)</label>
+              <input id="piSilver1Owner" type="text" />
+            </div>
+            <div>
+              <label for="piSilver1StartAge">Start Age</label>
+              <input id="piSilver1StartAge" type="number" inputmode="decimal" />
+            </div>
+            <div>
+              <label for="piSilver1Annual">Annual Lifetime Income</label>
+              <input id="piSilver1Annual" type="number" inputmode="decimal" />
+            </div>
+            <div>
+              <label for="piSilver1Rollover">Rollover from Investments</label>
+              <input id="piSilver1Rollover" type="number" inputmode="decimal" />
+            </div>
+
+            <!-- Silver 2 -->
+            <div>
+              <label for="piSilver2Desc">Silver 2 – Description / Carrier</label>
+              <input id="piSilver2Desc" type="text" />
+            </div>
+            <div>
+              <label for="piSilver2Owner">Owner (His, Her, or Joint)</label>
+              <input id="piSilver2Owner" type="text" />
+            </div>
+            <div>
+              <label for="piSilver2StartAge">Start Age</label>
+              <input id="piSilver2StartAge" type="number" inputmode="decimal" />
+            </div>
+            <div>
+              <label for="piSilver2Annual">Annual Lifetime Income</label>
+              <input id="piSilver2Annual" type="number" inputmode="decimal" />
+            </div>
+            <div>
+              <label for="piSilver2Rollover">Rollover from Investments</label>
+              <input id="piSilver2Rollover" type="number" inputmode="decimal" />
+            </div>
+
+            <!-- Silver 3 -->
+            <div>
+              <label for="piSilver3Desc">Silver 3 – Description / Carrier</label>
+              <input id="piSilver3Desc" type="text" />
+            </div>
+            <div>
+              <label for="piSilver3Owner">Owner (His, Her, or Joint)</label>
+              <input id="piSilver3Owner" type="text" />
+            </div>
+            <div>
+              <label for="piSilver3StartAge">Start Age</label>
+              <input id="piSilver3StartAge" type="number" inputmode="decimal" />
+            </div>
+            <div>
+              <label for="piSilver3Annual">Annual Lifetime Income</label>
+              <input id="piSilver3Annual" type="number" inputmode="decimal" />
+            </div>
+            <div>
+              <label for="piSilver3Rollover">Rollover from Investments</label>
+              <input id="piSilver3Rollover" type="number" inputmode="decimal" />
+            </div>
+
+            <!-- Silver 4 -->
+            <div>
+              <label for="piSilver4Desc">Silver 4 – Description / Carrier</label>
+              <input id="piSilver4Desc" type="text" />
+            </div>
+            <div>
+              <label for="piSilver4Owner">Owner (His, Her, or Joint)</label>
+              <input id="piSilver4Owner" type="text" />
+            </div>
+            <div>
+              <label for="piSilver4StartAge">Start Age</label>
+              <input id="piSilver4StartAge" type="number" inputmode="decimal" />
+            </div>
+            <div>
+              <label for="piSilver4Annual">Annual Lifetime Income</label>
+              <input id="piSilver4Annual" type="number" inputmode="decimal" />
+            </div>
+            <div>
+              <label for="piSilver4Rollover">Rollover from Investments</label>
+              <input id="piSilver4Rollover" type="number" inputmode="decimal" />
+            </div>
+          </div>
         </div>
 
-        <!-- SAVE PLAN INPUTS -->
+        <div class="ap-form-section">
+          <h2>Gold Plan – Lifetime Income Sources</h2>
+          <p class="ap-help">
+            Gold Plan typically uses larger or additional rollovers to maximize guaranteed income.
+            These are modeled as an alternative to the Silver Plan.
+          </p>
+          <div class="ap-form-grid ap-form-grid-4">
+            <!-- Gold 1 -->
+            <div>
+              <label for="piGold1Desc">Gold 1 – Description / Carrier</label>
+              <input id="piGold1Desc" type="text" />
+            </div>
+            <div>
+              <label for="piGold1Owner">Owner (His, Her, or Joint)</label>
+              <input id="piGold1Owner" type="text" />
+            </div>
+            <div>
+              <label for="piGold1StartAge">Start Age</label>
+              <input id="piGold1StartAge" type="number" inputmode="decimal" />
+            </div>
+            <div>
+              <label for="piGold1Annual">Annual Lifetime Income</label>
+              <input id="piGold1Annual" type="number" inputmode="decimal" />
+            </div>
+            <div>
+              <label for="piGold1Rollover">Rollover from Investments</label>
+              <input id="piGold1Rollover" type="number" inputmode="decimal" />
+            </div>
+
+            <!-- Gold 2 -->
+            <div>
+              <label for="piGold2Desc">Gold 2 – Description / Carrier</label>
+              <input id="piGold2Desc" type="text" />
+            </div>
+            <div>
+              <label for="piGold2Owner">Owner (His, Her, or Joint)</label>
+              <input id="piGold2Owner" type="text" />
+            </div>
+            <div>
+              <label for="piGold2StartAge">Start Age</label>
+              <input id="piGold2StartAge" type="number" inputmode="decimal" />
+            </div>
+            <div>
+              <label for="piGold2Annual">Annual Lifetime Income</label>
+              <input id="piGold2Annual" type="number" inputmode="decimal" />
+            </div>
+            <div>
+              <label for="piGold2Rollover">Rollover from Investments</label>
+              <input id="piGold2Rollover" type="number" inputmode="decimal" />
+            </div>
+
+            <!-- Gold 3 -->
+            <div>
+              <label for="piGold3Desc">Gold 3 – Description / Carrier</label>
+              <input id="piGold3Desc" type="text" />
+            </div>
+            <div>
+              <label for="piGold3Owner">Owner (His, Her, or Joint)</label>
+              <input id="piGold3Owner" type="text" />
+            </div>
+            <div>
+              <label for="piGold3StartAge">Start Age</label>
+              <input id="piGold3StartAge" type="number" inputmode="decimal" />
+            </div>
+            <div>
+              <label for="piGold3Annual">Annual Lifetime Income</label>
+              <input id="piGold3Annual" type="number" inputmode="decimal" />
+            </div>
+            <div>
+              <label for="piGold3Rollover">Rollover from Investments</label>
+              <input id="piGold3Rollover" type="number" inputmode="decimal" />
+            </div>
+
+            <!-- Gold 4 -->
+            <div>
+              <label for="piGold4Desc">Gold 4 – Description / Carrier</label>
+              <input id="piGold4Desc" type="text" />
+            </div>
+            <div>
+              <label for="piGold4Owner">Owner (His, Her, or Joint)</label>
+              <input id="piGold4Owner" type="text" />
+            </div>
+            <div>
+              <label for="piGold4StartAge">Start Age</label>
+              <input id="piGold4StartAge" type="number" inputmode="decimal" />
+            </div>
+            <div>
+              <label for="piGold4Annual">Annual Lifetime Income</label>
+              <input id="piGold4Annual" type="number" inputmode="decimal" />
+            </div>
+            <div>
+              <label for="piGold4Rollover">Rollover from Investments</label>
+              <input id="piGold4Rollover" type="number" inputmode="decimal" />
+            </div>
+          </div>
+        </div>
+
         <div class="ap-form-actions">
-          <button type="button" class="ap-btn-primary" id="save-plan-inputs">
+          <button type="button" id="save-plan-inputs" class="ap-primary-btn">
             Save Plan Inputs
           </button>
-          <span class="ap-save-status" id="planInputsStatus">Not saved yet</span>
+          <span id="planInputsStatus" class="ap-save-status"></span>
         </div>
       </section>
 
-      <!-- STEP 4: PLAN COMPARISONS -->
+      <!-- STEP 4: PLAN COMPARISONS (schedules + A/B/C charts) -->
       <section id="step-plans" class="ap-card ap-card-hidden">
         <h1>Plan Comparisons</h1>
         <p class="ap-intro">
-          Compare <strong>No Plan</strong>, <strong>Silver Plan</strong>, and <strong>Gold Plan</strong>
-          using the information you've already entered. Assets are color-coded:
-          <strong style="color:#b91c1c;">Red</strong> = Investment Accounts,
-          <strong style="color:#854d0e;">Yellow</strong> = Savings/Checking/Credit Union,
-          <strong style="color:#166534;">Green</strong> = Annuities.
+          Compare <strong>No Plan</strong>, <strong>Silver Plan</strong>, and
+          <strong>Gold Plan</strong>. Assets are color-coded:
+          <strong style="color:#b91c1c;">Red</strong> = Investment Accounts (C),
+          <strong style="color:#facc15;">Yellow</strong> = Savings/Checking/CU (A),
+          <strong style="color:#166534;">Green</strong> = Annuities (B).
         </p>
 
-        <!-- Asset Allocation Snapshot -->
+        <!-- Asset Allocation Snapshot (Base, before plans) -->
         <div class="ap-form-section">
-          <h2>Asset Allocation Snapshot</h2>
+          <h2>Asset Allocation Snapshot (Base)</h2>
           <div class="asset-legend">
-            <span class="asset-chip asset-chip-investments">Investments</span>
-            <span class="asset-chip asset-chip-savings">Savings / Checking / CU</span>
-            <span class="asset-chip asset-chip-annuities">Annuities</span>
+            <span class="asset-chip asset-chip-investments">Investments (C)</span>
+            <span class="asset-chip asset-chip-savings">Savings / Checking / CU (A)</span>
+            <span class="asset-chip asset-chip-annuities">Annuities (B)</span>
           </div>
           <table class="ap-table">
             <thead>
@@ -1091,21 +623,21 @@
             </thead>
             <tbody>
               <tr>
-                <td>Investment Accounts</td>
+                <td>Investment Accounts (C)</td>
                 <td>
                   <span id="plan-alloc-investments" class="asset-chip asset-chip-investments">$0</span>
                 </td>
                 <td><span id="plan-alloc-investments-pct">0%</span></td>
               </tr>
               <tr>
-                <td>Savings / Checking / Credit Union</td>
+                <td>Savings / Checking / Credit Union (A)</td>
                 <td>
                   <span id="plan-alloc-savings" class="asset-chip asset-chip-savings">$0</span>
                 </td>
                 <td><span id="plan-alloc-savings-pct">0%</span></td>
               </tr>
               <tr>
-                <td>Annuities</td>
+                <td>Annuities (B)</td>
                 <td>
                   <span id="plan-alloc-annuities" class="asset-chip asset-chip-annuities">$0</span>
                 </td>
@@ -1177,6 +709,48 @@
                   <tbody id="no-plan-schedule-body"></tbody>
                 </table>
               </div>
+
+              <!-- No Plan Summary Panel -->
+              <h3 class="plan-summary-heading">Asset Allocation &amp; Income Summary – No Plan</h3>
+              <div class="plan-summary-layout">
+                <div class="plan-income-summary">
+                  <div class="summary-abc-row">
+                    <div class="summary-abc-item">
+                      <span class="summary-abc-label summary-a">A</span>
+                      <span class="summary-abc-value" id="np-A">$0</span>
+                    </div>
+                    <div class="summary-abc-item">
+                      <span class="summary-abc-label summary-b">B</span>
+                      <span class="summary-abc-value" id="np-B">$0</span>
+                    </div>
+                    <div class="summary-abc-item">
+                      <span class="summary-abc-label summary-c">C</span>
+                      <span class="summary-abc-value" id="np-C">$0</span>
+                    </div>
+                  </div>
+
+                  <div class="plan-income-row">
+                    <span class="label">Living Expenses Today</span>
+                    <span id="np-living-today">$0</span>
+                  </div>
+                  <div class="plan-income-row main">
+                    <span class="label">No Plan Retirement Income</span>
+                    <span id="np-ret-income">$0</span>
+                  </div>
+                  <div class="plan-income-row">
+                    <span class="label her">Her Survivor Income</span>
+                    <span id="np-her-survivor">$0</span>
+                  </div>
+                  <div class="plan-income-row">
+                    <span class="label his">His Survivor Income</span>
+                    <span id="np-his-survivor">$0</span>
+                  </div>
+                </div>
+
+                <div class="plan-pie-wrapper">
+                  <canvas id="np-asset-pie" class="plan-pie-canvas"></canvas>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -1230,6 +804,48 @@
                   </thead>
                   <tbody id="silver-schedule-body"></tbody>
                 </table>
+              </div>
+
+              <!-- Silver Summary Panel -->
+              <h3 class="plan-summary-heading">Asset Allocation &amp; Income Summary – Silver Plan</h3>
+              <div class="plan-summary-layout">
+                <div class="plan-income-summary">
+                  <div class="summary-abc-row">
+                    <div class="summary-abc-item">
+                      <span class="summary-abc-label summary-a">A</span>
+                      <span class="summary-abc-value" id="sp-A">$0</span>
+                    </div>
+                    <div class="summary-abc-item">
+                      <span class="summary-abc-label summary-b">B</span>
+                      <span class="summary-abc-value" id="sp-B">$0</span>
+                    </div>
+                    <div class="summary-abc-item">
+                      <span class="summary-abc-label summary-c">C</span>
+                      <span class="summary-abc-value" id="sp-C">$0</span>
+                    </div>
+                  </div>
+
+                  <div class="plan-income-row">
+                    <span class="label">Living Expenses Today</span>
+                    <span id="sp-living-today">$0</span>
+                  </div>
+                  <div class="plan-income-row main">
+                    <span class="label">Silver Plan Retirement Income</span>
+                    <span id="sp-ret-income">$0</span>
+                  </div>
+                  <div class="plan-income-row">
+                    <span class="label her">Her Survivor Income</span>
+                    <span id="sp-her-survivor">$0</span>
+                  </div>
+                  <div class="plan-income-row">
+                    <span class="label his">His Survivor Income</span>
+                    <span id="sp-his-survivor">$0</span>
+                  </div>
+                </div>
+
+                <div class="plan-pie-wrapper">
+                  <canvas id="sp-asset-pie" class="plan-pie-canvas"></canvas>
+                </div>
               </div>
             </div>
           </div>
@@ -1285,34 +901,76 @@
                   <tbody id="gold-schedule-body"></tbody>
                 </table>
               </div>
+
+              <!-- Gold Summary Panel -->
+              <h3 class="plan-summary-heading">Asset Allocation &amp; Income Summary – Gold Plan</h3>
+              <div class="plan-summary-layout">
+                <div class="plan-income-summary">
+                  <div class="summary-abc-row">
+                    <div class="summary-abc-item">
+                      <span class="summary-abc-label summary-a">A</span>
+                      <span class="summary-abc-value" id="gp-A">$0</span>
+                    </div>
+                    <div class="summary-abc-item">
+                      <span class="summary-abc-label summary-b">B</span>
+                      <span class="summary-abc-value" id="gp-B">$0</span>
+                    </div>
+                    <div class="summary-abc-item">
+                      <span class="summary-abc-label summary-c">C</span>
+                      <span class="summary-abc-value" id="gp-C">$0</span>
+                    </div>
+                  </div>
+
+                  <div class="plan-income-row">
+                    <span class="label">Living Expenses Today</span>
+                    <span id="gp-living-today">$0</span>
+                  </div>
+                  <div class="plan-income-row main">
+                    <span class="label">Gold Plan Retirement Income</span>
+                    <span id="gp-ret-income">$0</span>
+                  </div>
+                  <div class="plan-income-row">
+                    <span class="label her">Her Survivor Income</span>
+                    <span id="gp-her-survivor">$0</span>
+                  </div>
+                  <div class="plan-income-row">
+                    <span class="label his">His Survivor Income</span>
+                    <span id="gp-his-survivor">$0</span>
+                  </div>
+                </div>
+
+                <div class="plan-pie-wrapper">
+                  <canvas id="gp-asset-pie" class="plan-pie-canvas"></canvas>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- STEP 5: SUMMARY PLACEHOLDER -->
+      <!-- STEP 5: SUMMARY & REPORT -->
       <section id="step-summary" class="ap-card ap-card-hidden">
-        <h1>Summary &amp; Report</h1>
-        <p>Coming soon – client-ready summary and print/PDF layout.</p>
+        <h1>Summary &amp; Next Steps</h1>
+        <p class="ap-intro">
+          Use the <strong>No Plan, Silver, and Gold</strong> comparisons to help your clients
+          see the value of guaranteed lifetime income and survivor protection. You can
+          print the schedules from your browser or screen-share during a meeting.
+        </p>
+        <ul class="ap-bullets">
+          <li>Review the survivor income lines for both spouses.</li>
+          <li>Highlight the change in A/B/C asset allocation from No Plan to Silver and Gold.</li>
+          <li>Discuss which combination of guarantees and flexibility best fits their goals.</li>
+        </ul>
+        <p>
+          This web version mirrors your original Excel Income-for-Life Plan while making it easier
+          to use on a laptop or tablet with clients.
+        </p>
       </section>
     </main>
 
-    <!-- Footer -->
     <footer class="ap-footer">
-      <div class="ap-footer-inner">
-        <div>
-          America United Wealth Planning &nbsp;|&nbsp;
-          <a href="https://www.americaplanning.com" target="_blank" rel="noopener">
-            AmericaPlanning.com
-          </a>
-          &nbsp;|&nbsp; Phone: 847-592-5405 &nbsp;|&nbsp; Email:
-          <a href="mailto:john@AmericaPlanning.com">john@AmericaPlanning.com</a>
-        </div>
-        <div class="ap-footer-disclaimer">
-          For Illinois residents only. For educational purposes – not individual tax,
-          legal, or investment advice.
-        </div>
-      </div>
+      <div>America United Wealth Planning &bull; AmericaPlanning.com</div>
+      <div>For illustration purposes only. Not a contract or guarantee.</div>
     </footer>
   </div>
 
@@ -1321,4 +979,3 @@
   <script src="app.js"></script>
 </body>
 </html>
-
