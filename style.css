@@ -517,3 +517,101 @@ body {
   background: #fce7f3;        /* light pink */
   color: #9d174d;
 }
+/* ---- Plan summary panels (A/B/C + incomes + pie) ---- */
+
+.plan-summary-heading {
+  margin-top: 18px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #0b5aa2;
+}
+
+.plan-summary-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 10px;
+  align-items: flex-start;
+}
+
+.plan-income-summary {
+  flex: 1 1 220px;
+  max-width: 320px;
+  font-size: 14px;
+}
+
+.summary-abc-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.summary-abc-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.summary-abc-label {
+  width: 24px;
+  text-align: center;
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.summary-a { background: #facc15; }      /* yellow – savings/checking */
+.summary-b { background: #bbf7d0; }      /* light green – annuities */
+.summary-c { background: #fecaca; }      /* soft red – investments */
+
+.summary-abc-value {
+  font-variant-numeric: tabular-nums;
+}
+
+.plan-income-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.plan-income-row .label {
+  font-weight: 500;
+}
+
+.plan-income-row.main {
+  margin-top: 4px;
+  margin-bottom: 6px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-top: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+  font-weight: 700;
+}
+
+.plan-income-row .label.her {
+  background: #fee2e2;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.plan-income-row .label.his {
+  background: #dbeafe;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.plan-pie-wrapper {
+  flex: 1 1 260px;
+  min-width: 220px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.plan-pie-canvas {
+  max-width: 320px;
+  max-height: 260px;
+}
