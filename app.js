@@ -1,6 +1,6 @@
 // AmericaPlanning Income-for-Life Planner JS
-// Handles step navigation, saving/loading, asset summary,
-// plan comparisons, and year-by-year schedules.
+// Updated: SS & Pension growth only, annuities level,
+// and SS survivor logic (lower benefit lost after first death).
 
 document.addEventListener("DOMContentLoaded", () => {
   /* ---------------- Helpers ---------------- */
@@ -165,8 +165,9 @@ document.addEventListener("DOMContentLoaded", () => {
     $("as-total-real-estate-equity").textContent = fmtCurrency(
       totalRealEstateEquity
     );
-    $("as-total-financial-assets").textContent =
-      fmtCurrency(totalFinancialAssets);
+    $("as-total-financial-assets").textContent = fmtCurrency(
+      totalFinancialAssets
+    );
     $("as-total-assets").textContent = fmtCurrency(totalAssets);
 
     // Plan allocation snapshot (Step 4)
@@ -354,9 +355,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const projectionYears = num($("piProjectionYears")?.value);
     if (!projectionYears || projectionYears <= 0) {
       updatePlanSummaryCards({
-        noPlan: { income: 0, expenses: 0, add: 0, gap: 0 },
-        silver: { income: 0, expenses: 0, add: 0, gap: 0 },
-        gold: { income: 0, expenses: 0, add: 0, gap: 0 },
+        noPlan: { income: 0, expenses: 0 },
+        silver: { income: 0, expenses: 0 },
+        gold: { income: 0, expenses: 0 },
       });
       return;
     }
@@ -367,10 +368,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const hisDeathAge = num($("piHisDeathAge")?.value) || (hisAge0 + 30);
     const herDeathAge = num($("piHerDeathAge")?.value) || (herAge0 + 30);
 
-    const incomeGrowthPct = num($("piIncomeGrowthPct")?.value) / 100;
+    const ssGrowthPct = num($("piSSGrowthPct")?.value) / 100;
+    const pensionGrowthPct = num($("piPensionGrowthPct")?.value) / 100;
     const expenseInflationPct = num($("piExpenseInflationPct")?.value) / 100;
 
-    // Base annual amounts (first-year amounts)
+    // Base annual amounts (year 1)
     const hisSSAnnual = num($("piHisSSAnnual")?.value);
     const herSSAnnual = num($("piHerSSAnnual")?.value);
     const pension1Annual = num($("piPension1Annual")?.value);
@@ -386,14 +388,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const pension1SurvivorPct = num($("piPension1SurvivorPct")?.value) / 100;
     const pension2SurvivorPct = num($("piPension2SurvivorPct")?.value) / 100;
 
-    // Silver additional income sources
+    // Determine which SS is higher/lower (for survivor logic)
+    const ssHighIsHis = hisSSAnnual >= herSSAnnual;
+
+    // Silver additional income sources (level, no growth)
     const silverSources = [1, 2, 3, 4].map((i) => ({
       owner: ($(`piSilver${i}Owner`)?.value || "").toLowerCase(),
       annual: num($(`piSilver${i}Annual`)?.value),
       startAge: num($(`piSilver${i}StartAge`)?.value),
     }));
 
-    // Gold additional income sources
+    // Gold additional income sources (level, no growth)
     const goldSources = [1, 2, 3, 4].map((i) => ({
       owner: ($(`piGold${i}Owner`)?.value || "").toLowerCase(),
       annual: num($(`piGold${i}Annual`)?.value),
@@ -408,7 +413,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let firstYearSilver = null;
     let firstYearGold = null;
 
-    const sourceIncomeForYear = (src, hisAge, herAge, hisDeathAge, herDeathAge, incomeGrowthFactor) => {
+    // Annuity / extra incomes are level – no growth parameter
+    const sourceIncomeForYear = (src, hisAge, herAge, hisDeath, herDeath) => {
       if (!src.annual || !src.startAge) return 0;
 
       let ownerAge = null;
@@ -416,20 +422,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (src.owner.startsWith("h")) {
         ownerAge = hisAge;
-        ownerDeathAge = hisDeathAge;
+        ownerDeathAge = hisDeath;
       } else if (src.owner.startsWith("s") || src.owner.startsWith("w")) {
         ownerAge = herAge;
-        ownerDeathAge = herDeathAge;
+        ownerDeathAge = herDeath;
       } else {
+        // If "both" or blank, treat as joint
         ownerAge = Math.max(hisAge || 0, herAge || 0);
-        ownerDeathAge = Math.max(hisDeathAge || 0, herDeathAge || 0);
+        ownerDeathAge = Math.max(hisDeath || 0, herDeath || 0);
       }
 
       if (!ownerAge) return 0;
 
       const alive = ownerAge <= ownerDeathAge;
       if (alive && ownerAge >= src.startAge) {
-        return src.annual * incomeGrowthFactor;
+        return src.annual; // LEVEL payout – no growth
       }
       return 0;
     };
@@ -439,78 +446,112 @@ document.addEventListener("DOMContentLoaded", () => {
       const hisAge = hisAge0 ? hisAge0 + yearIndex : "";
       const herAge = herAge0 ? herAge0 + yearIndex : "";
 
-      const hisAlive = !hisAge0 ? false : hisAge <= hisDeathAge;
-      const herAlive = !herAge0 ? false : herAge <= herDeathAge;
+      const hisAlive = hisAge0 ? hisAge <= hisDeathAge : false;
+      const herAlive = herAge0 ? herAge <= herDeathAge : false;
       const anyAlive = hisAlive || herAlive;
 
-      const incomeGrowthFactor = Math.pow(1 + incomeGrowthPct, yearIndex);
+      const ssGrowthFactor = Math.pow(1 + ssGrowthPct, yearIndex);
+      const pensionGrowthFactor = Math.pow(1 + pensionGrowthPct, yearIndex);
       const expenseGrowthFactor = Math.pow(1 + expenseInflationPct, yearIndex);
 
-      // ---- Base income components (No Plan) ----
+      // ---- Social Security with survivor logic (lose lower benefit) ----
       let hisSS = 0;
-      if (hisAlive && hisAge >= hisSSStartAge) {
-        hisSS = hisSSAnnual * incomeGrowthFactor;
-      }
-
       let herSS = 0;
-      if (herAlive && herAge >= herSSStartAge) {
-        herSS = herSSAnnual * incomeGrowthFactor;
-      }
 
+      const bothAlive = hisAlive && herAlive;
+
+      if (bothAlive) {
+        if (hisAge >= hisSSStartAge) {
+          hisSS = hisSSAnnual * ssGrowthFactor;
+        }
+        if (herAge >= herSSStartAge) {
+          herSS = herSSAnnual * ssGrowthFactor;
+        }
+      } else if (hisAlive && !herAlive) {
+        // He is survivor
+        if (ssHighIsHis) {
+          // His SS is higher – he keeps his own benefit
+          if (hisAge >= hisSSStartAge) {
+            hisSS = hisSSAnnual * ssGrowthFactor;
+          }
+        } else {
+          // Her SS was higher – he steps up to her benefit
+          if (hisAge >= herSSStartAge) {
+            hisSS = herSSAnnual * ssGrowthFactor;
+          }
+        }
+        // Her column stays 0 (lower SS lost)
+      } else if (!hisAlive && herAlive) {
+        // She is survivor
+        if (ssHighIsHis) {
+          // His SS is higher – she steps up to his benefit
+          if (herAge >= hisSSStartAge) {
+            herSS = hisSSAnnual * ssGrowthFactor;
+          }
+        } else {
+          // Her SS is higher – she keeps her own
+          if (herAge >= herSSStartAge) {
+            herSS = herSSAnnual * ssGrowthFactor;
+          }
+        }
+        // His column stays 0 (lower SS lost)
+      }
+      // else both dead: both 0
+
+      // ---- Pensions with survivor % (100% or 50%) ----
       let pension1 = 0;
-      if (anyAlive && hisAge >= pension1StartAge) {
-        pension1 = pension1Annual * incomeGrowthFactor;
-        const firstDeathAge = Math.min(hisDeathAge || 999, herDeathAge || 999);
-        if (
-          (hisAge > firstDeathAge || herAge > firstDeathAge) &&
-          (hisAge <= hisDeathAge || herAge <= herDeathAge)
-        ) {
-          pension1 = pension1 * (pension1SurvivorPct || 1);
-        }
-      }
-
       let pension2 = 0;
-      if (anyAlive && herAge >= pension2StartAge) {
-        pension2 = pension2Annual * incomeGrowthFactor;
-        const firstDeathAge = Math.min(hisDeathAge || 999, herDeathAge || 999);
-        if (
-          (hisAge > firstDeathAge || herAge > firstDeathAge) &&
-          (hisAge <= hisDeathAge || herAge <= herDeathAge)
-        ) {
-          pension2 = pension2 * (pension2SurvivorPct || 1);
+
+      if (anyAlive && pension1Annual && hisAge >= pension1StartAge) {
+        pension1 = pension1Annual * pensionGrowthFactor;
+
+        const firstDeathAge = Math.min(
+          hisDeathAge || 999,
+          herDeathAge || 999
+        );
+        const bothDead =
+          (!hisAlive && herAlive === false) || (hisAlive === false && !herAlive);
+
+        if (!bothDead && (hisAge > firstDeathAge || herAge > firstDeathAge)) {
+          // After first death, apply survivor %
+          const pct = pension1SurvivorPct || 1;
+          pension1 = pension1 * pct;
         }
       }
 
+      if (anyAlive && pension2Annual && herAge >= pension2StartAge) {
+        pension2 = pension2Annual * pensionGrowthFactor;
+
+        const firstDeathAge = Math.min(
+          hisDeathAge || 999,
+          herDeathAge || 999
+        );
+        const bothDead =
+          (!hisAlive && herAlive === false) || (hisAlive === false && !herAlive);
+
+        if (!bothDead && (hisAge > firstDeathAge || herAge > firstDeathAge)) {
+          const pct = pension2SurvivorPct || 1;
+          pension2 = pension2 * pct;
+        }
+      }
+
+      // ---- Other income (level for now) ----
       let otherIncome = 0;
       if (anyAlive) {
-        otherIncome = otherIncomeAnnual * incomeGrowthFactor;
+        otherIncome = otherIncomeAnnual; // no growth
       }
 
       const baseIncome = hisSS + herSS + pension1 + pension2 + otherIncome;
       const expenses = livingExpensesAnnual * expenseGrowthFactor;
 
-      // ---- Additional Silver / Gold incomes per source ----
+      // ---- Silver / Gold additional incomes (level) ----
       const silverIncomes = silverSources.map((src) =>
-        sourceIncomeForYear(
-          src,
-          hisAge,
-          herAge,
-          hisDeathAge,
-          herDeathAge,
-          incomeGrowthFactor
-        )
+        sourceIncomeForYear(src, hisAge, herAge, hisDeathAge, herDeathAge)
       );
       const silverAddTotal = silverIncomes.reduce((a, b) => a + b, 0);
 
       const goldIncomes = goldSources.map((src) =>
-        sourceIncomeForYear(
-          src,
-          hisAge,
-          herAge,
-          hisDeathAge,
-          herDeathAge,
-          incomeGrowthFactor
-        )
+        sourceIncomeForYear(src, hisAge, herAge, hisDeathAge, herDeathAge)
       );
       const goldAddTotal = goldIncomes.reduce((a, b) => a + b, 0);
 
@@ -607,32 +648,27 @@ document.addEventListener("DOMContentLoaded", () => {
         );
       }
 
+      // Capture first-year numbers for the summary cards
       if (yearIndex === 0) {
         firstYearNoPlan = {
           income: noPlanTotal,
           expenses,
-          add: 0,
-          gap: noPlanGap,
         };
         firstYearSilver = {
           income: silverTotal,
           expenses,
-          add: silverAddTotal,
-          gap: silverGap,
         };
         firstYearGold = {
           income: goldTotal,
           expenses,
-          add: goldAddTotal,
-          gap: goldGap,
         };
       }
     }
 
     updatePlanSummaryCards({
-      noPlan: firstYearNoPlan || { income: 0, expenses: 0, add: 0, gap: 0 },
-      silver: firstYearSilver || { income: 0, expenses: 0, add: 0, gap: 0 },
-      gold: firstYearGold || { income: 0, expenses: 0, add: 0, gap: 0 },
+      noPlan: firstYearNoPlan || { income: 0, expenses: 0 },
+      silver: firstYearSilver || { income: 0, expenses: 0 },
+      gold: firstYearGold || { income: 0, expenses: 0 },
     });
   };
 
