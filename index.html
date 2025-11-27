@@ -1,532 +1,16 @@
-<!-- AmericaPlanning – Income-for-Life Plan (Desktop-First Embed) -->
-<div id="ap-ifl-embed">
-  <style>
-    #ap-ifl-embed,
-    #ap-ifl-embed * {
-      box-sizing: border-box;
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    }
-
-    #ap-ifl-embed {
-      max-width: 1400px; /* desktop width */
-      margin: 0 auto;
-      padding: 16px 8px 40px;
-      color: #111827;
-    }
-
-    /* App shell */
-    #ap-ifl-embed #ap-app {
-      background: #f3f4f6;
-      border-radius: 16px;
-      padding: 18px 20px 26px;
-      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.1);
-    }
-
-    /* Header */
-    #ap-ifl-embed .ap-header {
-      border-bottom: 3px solid #0b5aa2;
-      padding-bottom: 10px;
-      margin-bottom: 16px;
-    }
-
-    #ap-ifl-embed .ap-header-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      flex-wrap: nowrap;
-    }
-
-    #ap-ifl-embed .ap-logo-lockup {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    #ap-ifl-embed .ap-logo-circle {
-      width: 46px;
-      height: 46px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #0b5aa2, #1d4ed8);
-      color: #f9fafb;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 19px;
-      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.35);
-    }
-
-    #ap-ifl-embed .ap-logo-title {
-      font-size: 17px;
-      font-weight: 700;
-      color: #111827;
-    }
-
-    #ap-ifl-embed .ap-logo-subtitle {
-      font-size: 13px;
-      color: #4b5563;
-    }
-
-    #ap-ifl-embed .ap-header-contact {
-      text-align: right;
-      font-size: 13px;
-      color: #374151;
-      white-space: nowrap;
-    }
-
-    /* Step nav */
-    #ap-ifl-embed .ap-steps {
-      display: flex;
-      flex-wrap: nowrap;
-      gap: 6px;
-      margin: 14px 0 16px;
-    }
-
-    #ap-ifl-embed .ap-step-btn {
-      flex: 1 1 0;
-      border-radius: 999px;
-      padding: 8px 10px;
-      border: 1px solid #d1d5db;
-      background: #ffffff;
-      font-size: 13px;
-      font-weight: 600;
-      color: #374151;
-      cursor: pointer;
-      transition: all 0.15s ease;
-      text-align: center;
-    }
-
-    #ap-ifl-embed .ap-step-btn:hover {
-      border-color: #0b5aa2;
-      background: #eff6ff;
-    }
-
-    #ap-ifl-embed .ap-step-btn-active {
-      background: #0b5aa2;
-      border-color: #0b5aa2;
-      color: #f9fafb;
-      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.25);
-    }
-
-    /* Cards */
-    #ap-ifl-embed .ap-card {
-      background: #ffffff;
-      border-radius: 14px;
-      padding: 18px 16px 20px;
-      margin-bottom: 16px;
-      border: 1px solid #e5e7eb;
-    }
-
-    #ap-ifl-embed .ap-card-hidden {
-      display: none;
-    }
-
-    #ap-ifl-embed .ap-card h1 {
-      font-size: 20px;
-      margin-bottom: 6px;
-      color: #111827;
-    }
-
-    #ap-ifl-embed .ap-intro {
-      font-size: 14px;
-      color: #4b5563;
-      margin-bottom: 16px;
-    }
-
-    /* Sections */
-    #ap-ifl-embed .ap-form-section {
-      margin-top: 12px;
-      margin-bottom: 16px;
-      padding: 10px 10px 12px;
-      border-radius: 10px;
-      background: #f9fafb;
-      border: 1px solid #e5e7eb;
-    }
-
-    #ap-ifl-embed .ap-form-section h2 {
-      font-size: 15px;
-      margin: 0 0 8px;
-      color: #111827;
-    }
-
-    #ap-ifl-embed .ap-help {
-      font-size: 12px;
-      color: #6b7280;
-      margin-bottom: 10px;
-    }
-
-    /* Grids – desktop wide */
-    #ap-ifl-embed .ap-form-grid {
-      display: grid;
-      gap: 10px 14px;
-    }
-
-    #ap-ifl-embed .ap-form-grid-2 {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    #ap-ifl-embed .ap-form-grid-3 {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    #ap-ifl-embed .ap-form-grid-4 {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-
-    #ap-ifl-embed label {
-      display: block;
-      font-size: 12px;
-      font-weight: 600;
-      color: #374151;
-      margin-bottom: 3px;
-    }
-
-    #ap-ifl-embed input[type="text"],
-    #ap-ifl-embed input[type="number"],
-    #ap-ifl-embed input[type="date"] {
-      width: 100%;
-      border-radius: 8px;
-      border: 1px solid #d1d5db;
-      padding: 6px 8px;
-      font-size: 13px;
-      color: #111827;
-      background: #ffffff;
-      outline: none;
-      transition: border-color 0.12s ease, box-shadow 0.12s ease;
-    }
-
-    #ap-ifl-embed input[type="text"]:focus,
-    #ap-ifl-embed input[type="number"]:focus,
-    #ap-ifl-embed input[type="date"]:focus {
-      border-color: #0b5aa2;
-      box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.22);
-    }
-
-    /* Tables */
-    #ap-ifl-embed .ap-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 12px;
-      margin-top: 8px;
-      background: #ffffff;
-    }
-
-    #ap-ifl-embed .ap-table th,
-    #ap-ifl-embed .ap-table td {
-      border: 1px solid #e5e7eb;
-      padding: 6px 6px;
-      text-align: right;
-      white-space: nowrap;
-    }
-
-    #ap-ifl-embed .ap-table th:nth-child(1),
-    #ap-ifl-embed .ap-table td:nth-child(1) {
-      text-align: left;
-    }
-
-    #ap-ifl-embed .ap-table thead th {
-      background: #f3f4f6;
-      font-weight: 600;
-      color: #374151;
-    }
-
-    #ap-ifl-embed .plan-schedule-wrapper {
-      overflow-x: auto;
-      margin-top: 6px;
-    }
-
-    /* Actions */
-    #ap-ifl-embed .ap-form-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-top: 12px;
-      flex-wrap: nowrap;
-    }
-
-    #ap-ifl-embed .ap-primary-btn {
-      border: none;
-      border-radius: 999px;
-      padding: 8px 18px;
-      font-size: 14px;
-      font-weight: 700;
-      background: linear-gradient(135deg, #0b5aa2, #1d4ed8);
-      color: #f9fafb;
-      cursor: pointer;
-      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.25);
-      transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.08s ease;
-      white-space: nowrap;
-    }
-
-    #ap-ifl-embed .ap-primary-btn:hover {
-      filter: brightness(1.05);
-      transform: translateY(-1px);
-      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.3);
-    }
-
-    #ap-ifl-embed .ap-primary-btn:active {
-      transform: translateY(0);
-      box-shadow: 0 5px 12px rgba(15, 23, 42, 0.2);
-    }
-
-    #ap-ifl-embed .ap-save-status {
-      font-size: 12px;
-      color: #16a34a;
-      opacity: 0;
-      transition: opacity 0.2s ease;
-    }
-
-    #ap-ifl-embed .ap-save-status-visible {
-      opacity: 1;
-    }
-
-    /* Plan tabs */
-    #ap-ifl-embed .plan-tabs {
-      display: inline-flex;
-      flex-wrap: nowrap;
-      gap: 4px;
-      margin: 6px 0 10px;
-    }
-
-    #ap-ifl-embed .plan-tab {
-      border-radius: 999px;
-      padding: 5px 12px;
-      border: 1px solid #d1d5db;
-      background: #ffffff;
-      font-size: 12px;
-      font-weight: 600;
-      color: #374151;
-      cursor: pointer;
-      transition: all 0.15s ease;
-      white-space: nowrap;
-    }
-
-    #ap-ifl-embed .plan-tab-active {
-      background: #111827;
-      border-color: #111827;
-      color: #f9fafb;
-    }
-
-    #ap-ifl-embed .plan-card {
-      margin-top: 10px;
-      border-radius: 12px;
-      border: 1px solid #e5e7eb;
-      background: #ffffff;
-    }
-
-    #ap-ifl-embed .plan-card-hidden {
-      display: none;
-    }
-
-    #ap-ifl-embed .plan-card-header {
-      padding: 8px 12px;
-      border-bottom: 1px solid #e5e7eb;
-      font-size: 14px;
-      font-weight: 700;
-      background: linear-gradient(90deg, #0b5aa2, #1d4ed8);
-      color: #f9fafb;
-    }
-
-    #ap-ifl-embed .plan-card-body {
-      padding: 10px 10px 12px;
-    }
-
-    #ap-ifl-embed .plan-metric-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 8px;
-      margin-bottom: 8px;
-    }
-
-    #ap-ifl-embed .plan-metric {
-      background: #eff6ff;
-      border-radius: 10px;
-      padding: 6px 8px;
-      border: 1px solid #dbeafe;
-    }
-
-    #ap-ifl-embed .plan-metric-label {
-      font-size: 11px;
-      color: #1f2937;
-      margin-bottom: 2px;
-    }
-
-    #ap-ifl-embed .plan-metric-value {
-      font-size: 15px;
-      font-weight: 700;
-      color: #111827;
-    }
-
-    #ap-ifl-embed .plan-note {
-      font-size: 12px;
-      color: #4b5563;
-      margin: 4px 0 8px;
-    }
-
-    /* Asset chips / legend */
-    #ap-ifl-embed .asset-legend {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      font-size: 11px;
-      margin-bottom: 4px;
-    }
-
-    #ap-ifl-embed .asset-chip {
-      border-radius: 999px;
-      padding: 2px 8px;
-      font-size: 11px;
-      font-weight: 600;
-      color: #111827;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid transparent;
-      white-space: nowrap;
-    }
-
-    #ap-ifl-embed .asset-chip-investments {
-      background: #fee2e2;
-      border-color: #fecaca;
-      color: #991b1b;
-    }
-
-    #ap-ifl-embed .asset-chip-savings {
-      background: #fef9c3;
-      border-color: #fef3c7;
-      color: #854d0e;
-    }
-
-    #ap-ifl-embed .asset-chip-annuities {
-      background: #dcfce7;
-      border-color: #bbf7d0;
-      color: #166534;
-    }
-
-    /* ABC summary + pie */
-    #ap-ifl-embed .plan-summary-heading {
-      font-size: 14px;
-      margin: 10px 0 6px;
-      color: #111827;
-    }
-
-    #ap-ifl-embed .plan-summary-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
-      gap: 10px;
-      align-items: stretch;
-    }
-
-    #ap-ifl-embed .plan-income-summary {
-      border-radius: 10px;
-      border: 1px solid #e5e7eb;
-      background: #f9fafb;
-      padding: 8px 8px 6px;
-      font-size: 12px;
-    }
-
-    #ap-ifl-embed .summary-abc-row {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 6px;
-    }
-
-    #ap-ifl-embed .summary-abc-item {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    #ap-ifl-embed .summary-abc-label {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 20px;
-      height: 20px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 700;
-      color: #ffffff;
-    }
-
-    #ap-ifl-embed .summary-a { background: #eab308; }
-    #ap-ifl-embed .summary-b { background: #16a34a; }
-    #ap-ifl-embed .summary-c { background: #b91c1c; }
-
-    #ap-ifl-embed .summary-abc-value {
-      font-weight: 700;
-      font-size: 13px;
-      color: #111827;
-    }
-
-    #ap-ifl-embed .plan-income-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 6px;
-      margin-top: 3px;
-    }
-
-    #ap-ifl-embed .plan-income-row .label {
-      color: #4b5563;
-    }
-
-    #ap-ifl-embed .plan-income-row.main .label {
-      font-weight: 700;
-      color: #111827;
-    }
-
-    #ap-ifl-embed .plan-income-row.her .label {
-      color: #7c3aed;
-    }
-
-    #ap-ifl-embed .plan-income-row.his .label {
-      color: #0ea5e9;
-    }
-
-    #ap-ifl-embed .plan-pie-wrapper {
-      border-radius: 10px;
-      border: 1px solid #e5e7eb;
-      background: #ffffff;
-      padding: 8px;
-      min-height: 220px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    #ap-ifl-embed .plan-pie-canvas {
-      width: 100% !important;
-      height: 220px !important;
-    }
-
-    /* Bullets on Summary page */
-    #ap-ifl-embed .ap-bullets {
-      padding-left: 18px;
-      font-size: 13px;
-      color: #4b5563;
-      margin-bottom: 10px;
-    }
-
-    #ap-ifl-embed .ap-bullets li {
-      margin-bottom: 4px;
-    }
-
-    /* Footer */
-    #ap-ifl-embed .ap-footer {
-      font-size: 11px;
-      color: #6b7280;
-      text-align: center;
-      margin-top: 16px;
-    }
-
-    #ap-ifl-embed .ap-footer div + div {
-      margin-top: 2px;
-    }
-  </style>
-
-  <!-- NO mobile rotate tip (desktop-only) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Income-for-Life Plan – AmericaPlanning</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Desktop-focused; rotate tip can stay or be ignored on desktop -->
+  <div id="ap-rotate-tip">
+    Turn phone sideways for easy viewing.
+  </div>
 
   <div id="ap-app">
     <header class="ap-header">
@@ -565,78 +49,385 @@
         </button>
       </nav>
 
-      <!-- STEP 1: CLIENT GOALS & DATA -->
+      <!-- STEP 1: CLIENT GOALS & DATA (modeled from Excel sheet) -->
       <section id="step-client" class="ap-card">
         <h1>Client Goals &amp; Data</h1>
         <p class="ap-intro">
-          Enter the key facts from your <strong>Goals &amp; Data</strong> worksheet.
-          These values feed the rest of the Income-for-Life Plan.
+          This page mirrors your Excel <strong>Client Goals &amp; Data</strong> worksheet:
+          business info, personal details, advisors, estate planning, real estate, accounts,
+          income, and goals. These values feed the rest of the Income-for-Life Plan.
         </p>
 
         <form id="client-form">
+          <!-- Business Information -->
           <div class="ap-form-section">
-            <h2>Client Information</h2>
+            <h2>Business Information (if Self-Employed)</h2>
             <div class="ap-form-grid ap-form-grid-2">
               <div>
-                <label for="clientName">Client Name</label>
+                <label for="businessName">Business Name (if self-employed)</label>
+                <input id="businessName" type="text" />
+              </div>
+              <div>
+                <label for="businessYears">Years in Business</label>
+                <input id="businessYears" type="number" inputmode="decimal" />
+              </div>
+            </div>
+            <div class="ap-form-grid ap-form-grid-2">
+              <div>
+                <label for="businessAddress">Business Address</label>
+                <input id="businessAddress" type="text" />
+              </div>
+            </div>
+            <div class="ap-form-grid ap-form-grid-3">
+              <div>
+                <label for="businessCity">City</label>
+                <input id="businessCity" type="text" />
+              </div>
+              <div>
+                <label for="businessState">State</label>
+                <input id="businessState" type="text" />
+              </div>
+              <div>
+                <label for="businessZip">Zip Code</label>
+                <input id="businessZip" type="text" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Personal Information -->
+          <div class="ap-form-section">
+            <h2>Personal Information</h2>
+            <div class="ap-form-grid ap-form-grid-3">
+              <div>
+                <label for="clientName">His Name</label>
                 <input id="clientName" type="text" />
               </div>
               <div>
-                <label for="spouseName">Spouse Name</label>
+                <label for="clientBirthDate">His Birth Date</label>
+                <input id="clientBirthDate" type="date" />
+              </div>
+              <div>
+                <label for="clientAge">His Age</label>
+                <input id="clientAge" type="number" inputmode="decimal" />
+              </div>
+
+              <div>
+                <label for="spouseName">Her Name</label>
                 <input id="spouseName" type="text" />
               </div>
               <div>
-                <label for="advisorName">Advisor</label>
+                <label for="spouseBirthDate">Her Birth Date</label>
+                <input id="spouseBirthDate" type="date" />
+              </div>
+              <div>
+                <label for="spouseAge">Her Age</label>
+                <input id="spouseAge" type="number" inputmode="decimal" />
+              </div>
+            </div>
+
+            <div class="ap-form-grid ap-form-grid-2">
+              <div>
+                <label for="homeAddress">Home Address</label>
+                <input id="homeAddress" type="text" />
+              </div>
+            </div>
+
+            <div class="ap-form-grid ap-form-grid-3">
+              <div>
+                <label for="homeCity">City</label>
+                <input id="homeCity" type="text" />
+              </div>
+              <div>
+                <label for="homeState">State</label>
+                <input id="homeState" type="text" />
+              </div>
+              <div>
+                <label for="homeZip">Zip Code</label>
+                <input id="homeZip" type="text" />
+              </div>
+            </div>
+
+            <div class="ap-form-grid ap-form-grid-3">
+              <div>
+                <label for="hisCell">His Cell Number</label>
+                <input id="hisCell" type="text" />
+              </div>
+              <div>
+                <label for="herCell">Her Cell Number</label>
+                <input id="herCell" type="text" />
+              </div>
+              <div>
+                <label for="bestEmail">Best Email Address</label>
+                <input id="bestEmail" type="email" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Advisor / Plan Info -->
+          <div class="ap-form-section">
+            <h2>Advisor / Plan Information</h2>
+            <div class="ap-form-grid ap-form-grid-3">
+              <div>
+                <label for="advisorName">Advisor (Prepared By)</label>
                 <input id="advisorName" type="text" />
               </div>
               <div>
                 <label for="planDate">Plan Date</label>
                 <input id="planDate" type="date" />
               </div>
+              <div>
+                <label for="planNotes">Plan Notes (Optional)</label>
+                <input id="planNotes" type="text" />
+              </div>
             </div>
           </div>
 
+          <!-- Children -->
           <div class="ap-form-section">
-            <h2>Residence &amp; Real Estate</h2>
+            <h2>Children (Estate Planning Purposes)</h2>
+            <p class="ap-help">
+              In Excel this is a small table for each child. You can list
+              names, ages, number of their children, and any notes here.
+            </p>
+            <textarea id="childrenNotes" rows="3"></textarea>
+          </div>
+
+          <!-- Current Advisors -->
+          <div class="ap-form-section">
+            <h2>Current Advisors (Optional)</h2>
             <div class="ap-form-grid ap-form-grid-2">
               <div>
-                <label for="primaryValue">Primary Residence – Value</label>
+                <label for="accountantName">Accountant – Advisor Name</label>
+                <input id="accountantName" type="text" />
+              </div>
+              <div>
+                <label for="accountantFirm">Accountant – Firm Name &amp; Telephone</label>
+                <input id="accountantFirm" type="text" />
+              </div>
+              <div>
+                <label for="attorneyName">Attorney – Advisor Name</label>
+                <input id="attorneyName" type="text" />
+              </div>
+              <div>
+                <label for="attorneyFirm">Attorney – Firm Name &amp; Telephone</label>
+                <input id="attorneyFirm" type="text" />
+              </div>
+              <div>
+                <label for="finAdvisorName">Financial Advisor – Advisor Name</label>
+                <input id="finAdvisorName" type="text" />
+              </div>
+              <div>
+                <label for="finAdvisorFirm">Financial Advisor – Firm Name &amp; Telephone</label>
+                <input id="finAdvisorFirm" type="text" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Retirement Timing -->
+          <div class="ap-form-section">
+            <h2>Retirement Timing</h2>
+            <div class="ap-form-grid ap-form-grid-4">
+              <div>
+                <label for="plannedRetAgeHis">Planned Retirement Age (His)</label>
+                <input id="plannedRetAgeHis" type="number" inputmode="decimal" />
+              </div>
+              <div>
+                <label for="plannedRetAgeHer">Planned Retirement Age (Her)</label>
+                <input id="plannedRetAgeHer" type="number" inputmode="decimal" />
+              </div>
+              <div>
+                <label for="alreadyRetiredYearHis">If Already Retired: His Year</label>
+                <input id="alreadyRetiredYearHis" type="number" inputmode="decimal" />
+              </div>
+              <div>
+                <label for="alreadyRetiredYearHer">If Already Retired: Her Year</label>
+                <input id="alreadyRetiredYearHer" type="number" inputmode="decimal" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Estate Planning & Insurance -->
+          <div class="ap-form-section">
+            <h2>Estate Planning &amp; Insurance</h2>
+            <div class="ap-form-grid ap-form-grid-4">
+              <div>
+                <label for="haveWill">Do You Have a Will?</label>
+                <input id="haveWill" type="text" placeholder="Yes / No" />
+              </div>
+              <div>
+                <label for="willYear">Will – Year Completed</label>
+                <input id="willYear" type="number" inputmode="decimal" />
+              </div>
+              <div>
+                <label for="finPOA">Financial Power of Attorney?</label>
+                <input id="finPOA" type="text" placeholder="Yes / No" />
+              </div>
+              <div>
+                <label for="medPOA">Medical Power of Attorney?</label>
+                <input id="medPOA" type="text" placeholder="Yes / No" />
+              </div>
+
+              <div>
+                <label for="mpoaEfiled">Is MPOA Electronically Filed?</label>
+                <input id="mpoaEfiled" type="text" placeholder="Yes / No" />
+              </div>
+              <div>
+                <label for="haveTrust">Do You Have a Trust?</label>
+                <input id="haveTrust" type="text" placeholder="Yes / No" />
+              </div>
+              <div>
+                <label for="trustYear">Trust – Year Completed</label>
+                <input id="trustYear" type="number" inputmode="decimal" />
+              </div>
+            </div>
+
+            <div class="ap-form-grid ap-form-grid-3">
+              <div>
+                <label for="termLifeHis">Term Life Insurance (His) – Amount</label>
+                <input id="termLifeHis" type="number" inputmode="decimal" />
+              </div>
+              <div>
+                <label for="termLifeHer">Term Life Insurance (Her) – Amount</label>
+                <input id="termLifeHer" type="number" inputmode="decimal" />
+              </div>
+              <div>
+                <label for="totalLifeIns">Total Life Insurance – Him &amp; Her</label>
+                <input id="totalLifeIns" type="number" inputmode="decimal" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Residences and Real Estate Investments -->
+          <div class="ap-form-section">
+            <h2>Residences &amp; Real Estate</h2>
+            <div class="ap-form-grid ap-form-grid-4">
+              <div>
+                <label for="primaryOwnRent">Primary Residence – Owned/Rented</label>
+                <input id="primaryOwnRent" type="text" placeholder="Owned / Rented" />
+              </div>
+              <div>
+                <label for="primaryValue">Primary Residence – Approx. Value</label>
                 <input id="primaryValue" type="number" inputmode="decimal" />
               </div>
               <div>
-                <label for="primaryMortgage">Primary Residence – Mortgage</label>
+                <label for="primaryMortgage">Primary Residence – Mortgage Amount</label>
                 <input id="primaryMortgage" type="number" inputmode="decimal" />
               </div>
               <div>
-                <label for="secondaryValue">2nd Home / Rental – Value</label>
+                <label for="primaryMonthlyPayment">Primary Residence – Monthly Payment</label>
+                <input id="primaryMonthlyPayment" type="number" inputmode="decimal" />
+              </div>
+
+              <div>
+                <label for="secondaryOwnRent">2nd Home / Rental – Owned/Rented</label>
+                <input id="secondaryOwnRent" type="text" placeholder="Owned / Rented" />
+              </div>
+              <div>
+                <label for="secondaryValue">2nd Home / Rental – Approx. Value</label>
                 <input id="secondaryValue" type="number" inputmode="decimal" />
               </div>
               <div>
-                <label for="secondaryMortgage">2nd Home / Rental – Mortgage</label>
+                <label for="secondaryMortgage">2nd Home / Rental – Mortgage Amount</label>
                 <input id="secondaryMortgage" type="number" inputmode="decimal" />
+              </div>
+              <div>
+                <label for="secondaryMonthlyPayment">2nd Home / Rental – Monthly Payment</label>
+                <input id="secondaryMonthlyPayment" type="number" inputmode="decimal" />
               </div>
             </div>
           </div>
 
+          <!-- Current Portfolio (Investments C – Red) -->
           <div class="ap-form-section">
-            <h2>Investment Accounts (C – Red)</h2>
-            <p class="ap-help">Typical examples: IRAs, 401(k)s, brokerage accounts.</p>
-            <div class="ap-form-grid ap-form-grid-3">
+            <h2>Current Portfolio – Investment Accounts (C – Red)</h2>
+            <p class="ap-help">
+              Mirror of the Excel table: account name/description, owner, qualified vs non-qualified, and balance.
+            </p>
+            <div class="ap-form-grid ap-form-grid-4">
+              <!-- Row 1 -->
+              <div>
+                <label for="inv1Name">Investment 1 – Name / Description</label>
+                <input id="inv1Name" type="text" />
+              </div>
+              <div>
+                <label for="inv1Owner">Investment 1 – His/Her/Both</label>
+                <input id="inv1Owner" type="text" />
+              </div>
+              <div>
+                <label for="inv1Type">Investment 1 – Qualified / Non-Qualified</label>
+                <input id="inv1Type" type="text" />
+              </div>
               <div>
                 <label for="inv1Balance">Investment 1 – Balance</label>
                 <input id="inv1Balance" type="number" inputmode="decimal" />
+              </div>
+
+              <!-- Row 2 -->
+              <div>
+                <label for="inv2Name">Investment 2 – Name / Description</label>
+                <input id="inv2Name" type="text" />
+              </div>
+              <div>
+                <label for="inv2Owner">Investment 2 – His/Her/Both</label>
+                <input id="inv2Owner" type="text" />
+              </div>
+              <div>
+                <label for="inv2Type">Investment 2 – Qualified / Non-Qualified</label>
+                <input id="inv2Type" type="text" />
               </div>
               <div>
                 <label for="inv2Balance">Investment 2 – Balance</label>
                 <input id="inv2Balance" type="number" inputmode="decimal" />
               </div>
+
+              <!-- Row 3 -->
+              <div>
+                <label for="inv3Name">Investment 3 – Name / Description</label>
+                <input id="inv3Name" type="text" />
+              </div>
+              <div>
+                <label for="inv3Owner">Investment 3 – His/Her/Both</label>
+                <input id="inv3Owner" type="text" />
+              </div>
+              <div>
+                <label for="inv3Type">Investment 3 – Qualified / Non-Qualified</label>
+                <input id="inv3Type" type="text" />
+              </div>
               <div>
                 <label for="inv3Balance">Investment 3 – Balance</label>
                 <input id="inv3Balance" type="number" inputmode="decimal" />
               </div>
+
+              <!-- Row 4 -->
+              <div>
+                <label for="inv4Name">Investment 4 – Name / Description</label>
+                <input id="inv4Name" type="text" />
+              </div>
+              <div>
+                <label for="inv4Owner">Investment 4 – His/Her/Both</label>
+                <input id="inv4Owner" type="text" />
+              </div>
+              <div>
+                <label for="inv4Type">Investment 4 – Qualified / Non-Qualified</label>
+                <input id="inv4Type" type="text" />
+              </div>
               <div>
                 <label for="inv4Balance">Investment 4 – Balance</label>
                 <input id="inv4Balance" type="number" inputmode="decimal" />
+              </div>
+
+              <!-- Row 5 -->
+              <div>
+                <label for="inv5Name">Investment 5 – Name / Description</label>
+                <input id="inv5Name" type="text" />
+              </div>
+              <div>
+                <label for="inv5Owner">Investment 5 – His/Her/Both</label>
+                <input id="inv5Owner" type="text" />
+              </div>
+              <div>
+                <label for="inv5Type">Investment 5 – Qualified / Non-Qualified</label>
+                <input id="inv5Type" type="text" />
               </div>
               <div>
                 <label for="inv5Balance">Investment 5 – Balance</label>
@@ -645,24 +436,74 @@
             </div>
           </div>
 
+          <!-- Savings / Checking / Credit Union (A – Yellow) -->
           <div class="ap-form-section">
-            <h2>Savings / Checking / Credit Union (A – Yellow)</h2>
+            <h2>Savings, Checking &amp; Credit Union (A – Yellow)</h2>
             <div class="ap-form-grid ap-form-grid-3">
+              <!-- Row 1 -->
+              <div>
+                <label for="sav1Desc">Account 1 – Description</label>
+                <input id="sav1Desc" type="text" />
+              </div>
+              <div>
+                <label for="sav1Owner">Account 1 – His/Her/Both</label>
+                <input id="sav1Owner" type="text" />
+              </div>
               <div>
                 <label for="sav1Balance">Account 1 – Balance</label>
                 <input id="sav1Balance" type="number" inputmode="decimal" />
+              </div>
+
+              <!-- Row 2 -->
+              <div>
+                <label for="sav2Desc">Account 2 – Description</label>
+                <input id="sav2Desc" type="text" />
+              </div>
+              <div>
+                <label for="sav2Owner">Account 2 – His/Her/Both</label>
+                <input id="sav2Owner" type="text" />
               </div>
               <div>
                 <label for="sav2Balance">Account 2 – Balance</label>
                 <input id="sav2Balance" type="number" inputmode="decimal" />
               </div>
+
+              <!-- Row 3 -->
+              <div>
+                <label for="sav3Desc">Account 3 – Description</label>
+                <input id="sav3Desc" type="text" />
+              </div>
+              <div>
+                <label for="sav3Owner">Account 3 – His/Her/Both</label>
+                <input id="sav3Owner" type="text" />
+              </div>
               <div>
                 <label for="sav3Balance">Account 3 – Balance</label>
                 <input id="sav3Balance" type="number" inputmode="decimal" />
               </div>
+
+              <!-- Row 4 -->
+              <div>
+                <label for="sav4Desc">Account 4 – Description</label>
+                <input id="sav4Desc" type="text" />
+              </div>
+              <div>
+                <label for="sav4Owner">Account 4 – His/Her/Both</label>
+                <input id="sav4Owner" type="text" />
+              </div>
               <div>
                 <label for="sav4Balance">Account 4 – Balance</label>
                 <input id="sav4Balance" type="number" inputmode="decimal" />
+              </div>
+
+              <!-- Row 5 -->
+              <div>
+                <label for="sav5Desc">Account 5 – Description</label>
+                <input id="sav5Desc" type="text" />
+              </div>
+              <div>
+                <label for="sav5Owner">Account 5 – His/Her/Both</label>
+                <input id="sav5Owner" type="text" />
               </div>
               <div>
                 <label for="sav5Balance">Account 5 – Balance</label>
@@ -671,30 +512,222 @@
             </div>
           </div>
 
+          <!-- Annuities (B – Green) -->
           <div class="ap-form-section">
             <h2>Annuities (B – Green)</h2>
             <div class="ap-form-grid ap-form-grid-3">
+              <!-- Row 1 -->
+              <div>
+                <label for="ann1Carrier">Annuity 1 – Insurance Company / Description</label>
+                <input id="ann1Carrier" type="text" />
+              </div>
+              <div>
+                <label for="ann1Owner">Annuity 1 – His/Her/Both</label>
+                <input id="ann1Owner" type="text" />
+              </div>
               <div>
                 <label for="ann1Balance">Annuity 1 – Account Value</label>
                 <input id="ann1Balance" type="number" inputmode="decimal" />
+              </div>
+
+              <!-- Row 2 -->
+              <div>
+                <label for="ann2Carrier">Annuity 2 – Insurance Company / Description</label>
+                <input id="ann2Carrier" type="text" />
+              </div>
+              <div>
+                <label for="ann2Owner">Annuity 2 – His/Her/Both</label>
+                <input id="ann2Owner" type="text" />
               </div>
               <div>
                 <label for="ann2Balance">Annuity 2 – Account Value</label>
                 <input id="ann2Balance" type="number" inputmode="decimal" />
               </div>
+
+              <!-- Row 3 -->
+              <div>
+                <label for="ann3Carrier">Annuity 3 – Insurance Company / Description</label>
+                <input id="ann3Carrier" type="text" />
+              </div>
+              <div>
+                <label for="ann3Owner">Annuity 3 – His/Her/Both</label>
+                <input id="ann3Owner" type="text" />
+              </div>
               <div>
                 <label for="ann3Balance">Annuity 3 – Account Value</label>
                 <input id="ann3Balance" type="number" inputmode="decimal" />
               </div>
+
+              <!-- Row 4 -->
+              <div>
+                <label for="ann4Carrier">Annuity 4 – Insurance Company / Description</label>
+                <input id="ann4Carrier" type="text" />
+              </div>
+              <div>
+                <label for="ann4Owner">Annuity 4 – His/Her/Both</label>
+                <input id="ann4Owner" type="text" />
+              </div>
               <div>
                 <label for="ann4Balance">Annuity 4 – Account Value</label>
                 <input id="ann4Balance" type="number" inputmode="decimal" />
+              </div>
+
+              <!-- Row 5 -->
+              <div>
+                <label for="ann5Carrier">Annuity 5 – Insurance Company / Description</label>
+                <input id="ann5Carrier" type="text" />
+              </div>
+              <div>
+                <label for="ann5Owner">Annuity 5 – His/Her/Both</label>
+                <input id="ann5Owner" type="text" />
               </div>
               <div>
                 <label for="ann5Balance">Annuity 5 – Account Value</label>
                 <input id="ann5Balance" type="number" inputmode="decimal" />
               </div>
             </div>
+          </div>
+
+          <!-- Income Sources -->
+          <div class="ap-form-section">
+            <h2>Current Income Sources</h2>
+            <p class="ap-help">
+              Mirror of the Excel “Income Sources” table: who’s income, type (Pension / SS / Wages / Other),
+              and annual amount.
+            </p>
+            <div class="ap-form-grid ap-form-grid-4">
+              <!-- Row 1 -->
+              <div>
+                <label for="inc1Who">Income 1 – Who (His/Her/Both)</label>
+                <input id="inc1Who" type="text" />
+              </div>
+              <div>
+                <label for="inc1Type">Income 1 – Type</label>
+                <input id="inc1Type" type="text" />
+              </div>
+              <div>
+                <label for="inc1Amount">Income 1 – Annual Amount</label>
+                <input id="inc1Amount" type="number" inputmode="decimal" />
+              </div>
+              <div>
+                <label for="inc1Notes">Income 1 – Notes</label>
+                <input id="inc1Notes" type="text" />
+              </div>
+
+              <!-- Row 2 -->
+              <div>
+                <label for="inc2Who">Income 2 – Who (His/Her/Both)</label>
+                <input id="inc2Who" type="text" />
+              </div>
+              <div>
+                <label for="inc2Type">Income 2 – Type</label>
+                <input id="inc2Type" type="text" />
+              </div>
+              <div>
+                <label for="inc2Amount">Income 2 – Annual Amount</label>
+                <input id="inc2Amount" type="number" inputmode="decimal" />
+              </div>
+              <div>
+                <label for="inc2Notes">Income 2 – Notes</label>
+                <input id="inc2Notes" type="text" />
+              </div>
+
+              <!-- Row 3 -->
+              <div>
+                <label for="inc3Who">Income 3 – Who (His/Her/Both)</label>
+                <input id="inc3Who" type="text" />
+              </div>
+              <div>
+                <label for="inc3Type">Income 3 – Type</label>
+                <input id="inc3Type" type="text" />
+              </div>
+              <div>
+                <label for="inc3Amount">Income 3 – Annual Amount</label>
+                <input id="inc3Amount" type="number" inputmode="decimal" />
+              </div>
+              <div>
+                <label for="inc3Notes">Income 3 – Notes</label>
+                <input id="inc3Notes" type="text" />
+              </div>
+            </div>
+
+            <div class="ap-form-grid ap-form-grid-2">
+              <div>
+                <label for="totalAnnualIncome">Approximate Total Annual Income</label>
+                <input id="totalAnnualIncome" type="number" inputmode="decimal" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Living Expenses & Desired Retirement Income -->
+          <div class="ap-form-section">
+            <h2>Living Expenses &amp; Desired Retirement Income</h2>
+            <div class="ap-form-grid ap-form-grid-3">
+              <div>
+                <label for="gdLivingExpensesAnnual">Approximate Annual Living Expenses</label>
+                <input id="gdLivingExpensesAnnual" type="number" inputmode="decimal" />
+              </div>
+              <div>
+                <label for="desiredRetIncome">Desired Annual Income After Retirement</label>
+                <input id="desiredRetIncome" type="number" inputmode="decimal" />
+              </div>
+              <div>
+                <label for="livingNotes">Notes</label>
+                <input id="livingNotes" type="text" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Goals Rating (1–5) -->
+          <div class="ap-form-section">
+            <h2>Goals (1 = Not Concerned, 5 = Most Concerned)</h2>
+            <p class="ap-help">
+              Mirrors the goals section in your Excel form. You can use 1–5 or phrases like
+              "Not Concerned", "Very Concerned", "Most Concerned".
+            </p>
+            <div class="ap-form-grid ap-form-grid-2">
+              <div>
+                <label for="goalIncomeLifetime">Have enough retirement income that lasts my lifetime</label>
+                <input id="goalIncomeLifetime" type="text" />
+              </div>
+              <div>
+                <label for="goalProtectAssets">Protect assets from losses</label>
+                <input id="goalProtectAssets" type="text" />
+              </div>
+              <div>
+                <label for="goalSaveMoreIRA">Save more for retirement than current IRA limits allow</label>
+                <input id="goalSaveMoreIRA" type="text" />
+              </div>
+              <div>
+                <label for="goalLTC">Protect myself/family from catastrophic long-term care costs</label>
+                <input id="goalLTC" type="text" />
+              </div>
+              <div>
+                <label for="goalCashAnyAge">Grow a cash account accessible at any age (no 59½ restrictions)</label>
+                <input id="goalCashAnyAge" type="text" />
+              </div>
+              <div>
+                <label for="goalNextGen">Pass retirement money to next generation tax-efficiently</label>
+                <input id="goalNextGen" type="text" />
+              </div>
+              <div>
+                <label for="goalReduceTax">Implement a retirement program that reduces tax liability</label>
+                <input id="goalReduceTax" type="text" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Document Checklist & Additional Notes -->
+          <div class="ap-form-section">
+            <h2>Document Checklist &amp; Additional Notes</h2>
+            <p class="ap-help">
+              List items such as wills, trusts, POAs, policies, and the year established/completed.
+            </p>
+            <label for="documentChecklist">Document Checklist</label>
+            <textarea id="documentChecklist" rows="3"></textarea>
+
+            <label for="additionalNotes" style="margin-top:12px;display:block;">Additional Notes</label>
+            <textarea id="additionalNotes" rows="3"></textarea>
           </div>
 
           <div class="ap-form-actions">
@@ -1110,7 +1143,7 @@
         </div>
       </section>
 
-      <!-- STEP 4: PLAN COMPARISONS -->
+      <!-- STEP 4: PLAN COMPARISONS (schedules + A/B/C charts) -->
       <section id="step-plans" class="ap-card ap-card-hidden">
         <h1>Plan Comparisons</h1>
         <p class="ap-intro">
@@ -1121,6 +1154,7 @@
           <strong style="color:#166534;">Green</strong> = Annuities (B).
         </p>
 
+        <!-- Asset Allocation Snapshot (Base, before plans) -->
         <div class="ap-form-section">
           <h2>Asset Allocation Snapshot (Base)</h2>
           <div class="asset-legend">
@@ -1167,9 +1201,11 @@
           </table>
         </div>
 
+        <!-- Plan Cards -->
         <div class="ap-form-section">
           <h2>Plan Comparison – Income vs Expenses</h2>
 
+          <!-- Tabs for No Plan, Silver, Gold -->
           <div class="plan-tabs">
             <button class="plan-tab plan-tab-active" data-plan="no-plan">No Plan</button>
             <button class="plan-tab" data-plan="silver">Silver Plan</button>
@@ -1178,7 +1214,9 @@
 
           <!-- No Plan Card -->
           <div id="plan-no-plan" class="plan-card plan-card-no-plan">
-            <div class="plan-card-header">No Plan – Current Path</div>
+            <div class="plan-card-header">
+              No Plan – Current Path
+            </div>
             <div class="plan-card-body">
               <div class="plan-metric-grid">
                 <div class="plan-metric">
@@ -1221,6 +1259,7 @@
                 </table>
               </div>
 
+              <!-- No Plan Summary Panel -->
               <h3 class="plan-summary-heading">Asset Allocation &amp; Income Summary – No Plan</h3>
               <div class="plan-summary-layout">
                 <div class="plan-income-summary">
@@ -1266,7 +1305,9 @@
 
           <!-- Silver Plan Card -->
           <div id="plan-silver" class="plan-card plan-card-silver plan-card-hidden">
-            <div class="plan-card-header">Silver Plan – Additional Guaranteed Income</div>
+            <div class="plan-card-header">
+              Silver Plan – Additional Guaranteed Income
+            </div>
             <div class="plan-card-body">
               <div class="plan-metric-grid">
                 <div class="plan-metric">
@@ -1300,6 +1341,7 @@
                       <th>Pension 1</th>
                       <th>Pension 2</th>
                       <th>Other Income</th>
+                      <!-- Silver add'l income columns – labels come from Inputs -->
                       <th id="th-silver1">Silver 1 Income</th>
                       <th id="th-silver2">Silver 2 Income</th>
                       <th id="th-silver3">Silver 3 Income</th>
@@ -1313,6 +1355,7 @@
                 </table>
               </div>
 
+              <!-- Silver Summary Panel -->
               <h3 class="plan-summary-heading">Asset Allocation &amp; Income Summary – Silver Plan</h3>
               <div class="plan-summary-layout">
                 <div class="plan-income-summary">
@@ -1358,7 +1401,9 @@
 
           <!-- Gold Plan Card -->
           <div id="plan-gold" class="plan-card plan-card-gold plan-card-hidden">
-            <div class="plan-card-header">Gold Plan – Maximum Income Strategy</div>
+            <div class="plan-card-header">
+              Gold Plan – Maximum Income Strategy
+            </div>
             <div class="plan-card-body">
               <div class="plan-metric-grid">
                 <div class="plan-metric">
@@ -1392,6 +1437,7 @@
                       <th>Pension 1</th>
                       <th>Pension 2</th>
                       <th>Other Income</th>
+                      <!-- Gold add'l income columns – labels come from Inputs -->
                       <th id="th-gold1">Gold 1 Income</th>
                       <th id="th-gold2">Gold 2 Income</th>
                       <th id="th-gold3">Gold 3 Income</th>
@@ -1405,6 +1451,7 @@
                 </table>
               </div>
 
+              <!-- Gold Summary Panel -->
               <h3 class="plan-summary-heading">Asset Allocation &amp; Income Summary – Gold Plan</h3>
               <div class="plan-summary-layout">
                 <div class="plan-income-summary">
@@ -1465,7 +1512,7 @@
         </ul>
         <p>
           This web version mirrors your original Excel Income-for-Life Plan while making it easier
-          to use on a laptop or tablet with clients.
+          to use on a laptop or desktop with clients.
         </p>
       </section>
     </main>
@@ -1476,580 +1523,8 @@
     </footer>
   </div>
 
-  <!-- Chart.js -->
+  <!-- Chart.js for asset allocation pies -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <!-- Inlined app logic (desktop, same as your updated app.js) -->
-  <script>
-    (function () {
-      const STORAGE_KEYS = {
-        CLIENT: "ap_ifl_client_data",
-        INPUTS: "ap_ifl_plan_inputs",
-      };
-
-      const state = {
-        client: null,
-        inputs: null,
-        charts: {
-          np: null,
-          sp: null,
-          gp: null,
-        },
-      };
-
-      function $(selector) {
-        return document.querySelector(selector);
-      }
-
-      function $all(selector) {
-        return Array.from(document.querySelectorAll(selector));
-      }
-
-      function toNumber(val) {
-        const n = parseFloat(String(val).replace(/,/g, ""));
-        return isNaN(n) ? 0 : n;
-      }
-
-      function fmtCurrency(val) {
-        const n = toNumber(val);
-        return n.toLocaleString("en-US", {
-          style: "currency",
-          currency: "USD",
-          maximumFractionDigits: 0,
-        });
-      }
-
-      function fmtPercent(val) {
-        const n = toNumber(val);
-        return n.toFixed(1) + "%";
-      }
-
-      function showStatus(el, message) {
-        if (!el) return;
-        el.textContent = message;
-        el.classList.add("ap-save-status-visible");
-        setTimeout(() => {
-          el.classList.remove("ap-save-status-visible");
-        }, 2500);
-      }
-
-      function saveToStorage(key, data) {
-        try {
-          localStorage.setItem(key, JSON.stringify(data));
-        } catch (e) {
-          console.error("LocalStorage save error", e);
-        }
-      }
-
-      function loadFromStorage(key) {
-        try {
-          const raw = localStorage.getItem(key);
-          return raw ? JSON.parse(raw) : null;
-        } catch (e) {
-          console.error("LocalStorage load error", e);
-          return null;
-        }
-      }
-
-      function initStepNavigation() {
-        const stepButtons = $all(".ap-step-btn");
-        const cards = $all(".ap-card");
-
-        function activateStep(stepName) {
-          stepButtons.forEach((btn) => {
-            if (btn.dataset.step === stepName) {
-              btn.classList.add("ap-step-btn-active");
-            } else {
-              btn.classList.remove("ap-step-btn-active");
-            }
-          });
-
-          cards.forEach((card) => {
-            if (card.id === "step-" + stepName) {
-              card.classList.remove("ap-card-hidden");
-            } else {
-              card.classList.add("ap-card-hidden");
-            }
-          });
-        }
-
-        stepButtons.forEach((btn) => {
-          btn.addEventListener("click", () => {
-            const stepName = btn.dataset.step;
-            if (stepName) activateStep(stepName);
-          });
-        });
-
-        activateStep("client");
-      }
-
-      function readClientForm() {
-        const ids = [
-          "clientName",
-          "spouseName",
-          "advisorName",
-          "planDate",
-          "primaryValue",
-          "primaryMortgage",
-          "secondaryValue",
-          "secondaryMortgage",
-          "inv1Balance",
-          "inv2Balance",
-          "inv3Balance",
-          "inv4Balance",
-          "inv5Balance",
-          "sav1Balance",
-          "sav2Balance",
-          "sav3Balance",
-          "sav4Balance",
-          "sav5Balance",
-          "ann1Balance",
-          "ann2Balance",
-          "ann3Balance",
-          "ann4Balance",
-          "ann5Balance",
-        ];
-
-        const data = {};
-        ids.forEach((id) => {
-          const el = $("#" + id);
-          if (!el) return;
-          if (el.type === "number") {
-            data[id] = toNumber(el.value);
-          } else {
-            data[id] = el.value || "";
-          }
-        });
-        return data;
-      }
-
-      function fillClientForm(data) {
-        if (!data) return;
-        Object.keys(data).forEach((id) => {
-          const el = $("#" + id);
-          if (!el) return;
-          if (el.type === "number") {
-            el.value = data[id] || data[id] === 0 ? data[id] : "";
-          } else {
-            el.value = data[id] || "";
-          }
-        });
-      }
-
-      function computeAssetSummary(client) {
-        if (!client) {
-          return {
-            primaryValue: 0,
-            primaryMortgage: 0,
-            secondaryValue: 0,
-            secondaryMortgage: 0,
-            primaryEquity: 0,
-            secondaryEquity: 0,
-            totalRealEstateEquity: 0,
-            investments: { total: 0, count: 0 },
-            savings: { total: 0, count: 0 },
-            annuities: { total: 0, count: 0 },
-            totalFinancial: 0,
-            totalAssets: 0,
-          };
-        }
-
-        const primaryValue = toNumber(client.primaryValue);
-        const primaryMortgage = toNumber(client.primaryMortgage);
-        const secondaryValue = toNumber(client.secondaryValue);
-        const secondaryMortgage = toNumber(client.secondaryMortgage);
-
-        const primaryEquity = Math.max(0, primaryValue - primaryMortgage);
-        const secondaryEquity = Math.max(0, secondaryValue - secondaryMortgage);
-        const totalRealEstateEquity = primaryEquity + secondaryEquity;
-
-        const invIds = ["inv1Balance", "inv2Balance", "inv3Balance", "inv4Balance", "inv5Balance"];
-        const savIds = ["sav1Balance", "sav2Balance", "sav3Balance", "sav4Balance", "sav5Balance"];
-        const annIds = ["ann1Balance", "ann2Balance", "ann3Balance", "ann4Balance", "ann5Balance"];
-
-        function sumCategory(ids) {
-          let total = 0;
-          let count = 0;
-          ids.forEach((id) => {
-            const val = toNumber(client[id]);
-            if (val > 0) {
-              total += val;
-              count += 1;
-            }
-          });
-          return { total, count };
-        }
-
-        const investments = sumCategory(invIds);
-        const savings = sumCategory(savIds);
-        const annuities = sumCategory(annIds);
-
-        const totalFinancial = investments.total + savings.total + annuities.total;
-        const totalAssets = totalRealEstateEquity + totalFinancial;
-
-        return {
-          primaryValue,
-          primaryMortgage,
-          secondaryValue,
-          secondaryMortgage,
-          primaryEquity,
-          secondaryEquity,
-          totalRealEstateEquity,
-          investments,
-          savings,
-          annuities,
-          totalFinancial,
-          totalAssets,
-        };
-      }
-
-      function updateAssetSummaryUI(summary) {
-        if (!summary) return;
-
-        $("#as-primary-value").textContent = fmtCurrency(summary.primaryValue);
-        $("#as-primary-mortgage").textContent = fmtCurrency(summary.primaryMortgage);
-        $("#as-primary-equity").textContent = fmtCurrency(summary.primaryEquity);
-
-        $("#as-secondary-value").textContent = fmtCurrency(summary.secondaryValue);
-        $("#as-secondary-mortgage").textContent = fmtCurrency(summary.secondaryMortgage);
-        $("#as-secondary-equity").textContent = fmtCurrency(summary.secondaryEquity);
-
-        $("#as-total-real-estate-equity").textContent = fmtCurrency(summary.totalRealEstateEquity);
-
-        $("#as-portfolio-count").textContent = summary.investments.count;
-        $("#as-portfolio-total").textContent = fmtCurrency(summary.investments.total);
-
-        $("#as-savings-count").textContent = summary.savings.count;
-        $("#as-savings-total").textContent = fmtCurrency(summary.savings.total);
-
-        $("#as-annuities-count").textContent = summary.annuities.count;
-        $("#as-annuities-total").textContent = fmtCurrency(summary.annuities.total);
-
-        $("#as-total-financial-assets").textContent = fmtCurrency(summary.totalFinancial);
-        $("#as-total-assets").textContent = fmtCurrency(summary.totalAssets);
-
-        $("#plan-alloc-investments").textContent = fmtCurrency(summary.investments.total);
-        $("#plan-alloc-savings").textContent = fmtCurrency(summary.savings.total);
-        $("#plan-alloc-annuities").textContent = fmtCurrency(summary.annuities.total);
-        $("#plan-alloc-total").textContent = fmtCurrency(summary.totalFinancial);
-
-        const total = summary.totalFinancial || 1;
-        const invPct = (summary.investments.total / total) * 100;
-        const savPct = (summary.savings.total / total) * 100;
-        const annPct = (summary.annuities.total / total) * 100;
-
-        $("#plan-alloc-investments-pct").textContent = fmtPercent(invPct);
-        $("#plan-alloc-savings-pct").textContent = fmtPercent(savPct);
-        $("#plan-alloc-annuities-pct").textContent = fmtPercent(annPct);
-
-        updateCharts(summary);
-      }
-
-      function readPlanInputs() {
-        const ids = [
-          "piHisCurrentAge",
-          "piHerCurrentAge",
-          "piProjectionYears",
-          "piHisDeathAge",
-          "piHerDeathAge",
-          "piHisSSAnnual",
-          "piHerSSAnnual",
-          "piSSGrowthPct",
-          "piHisSSStartAge",
-          "piHerSSStartAge",
-          "piPension1Annual",
-          "piPension1StartAge",
-          "piPension1SurvivorPct",
-          "piPension2Annual",
-          "piPension2StartAge",
-          "piPension2SurvivorPct",
-          "piPensionGrowthPct",
-          "piOtherIncomeAnnual",
-          "piLivingExpensesAnnual",
-          "piExpenseInflationPct",
-          "piSilver1Desc", "piSilver1Owner", "piSilver1StartAge", "piSilver1Annual", "piSilver1Rollover",
-          "piSilver2Desc", "piSilver2Owner", "piSilver2StartAge", "piSilver2Annual", "piSilver2Rollover",
-          "piSilver3Desc", "piSilver3Owner", "piSilver3StartAge", "piSilver3Annual", "piSilver3Rollover",
-          "piSilver4Desc", "piSilver4Owner", "piSilver4StartAge", "piSilver4Annual", "piSilver4Rollover",
-          "piGold1Desc", "piGold1Owner", "piGold1StartAge", "piGold1Annual", "piGold1Rollover",
-          "piGold2Desc", "piGold2Owner", "piGold2StartAge", "piGold2Annual", "piGold2Rollover",
-          "piGold3Desc", "piGold3Owner", "piGold3StartAge", "piGold3Annual", "piGold3Rollover",
-          "piGold4Desc", "piGold4Owner", "piGold4StartAge", "piGold4Annual", "piGold4Rollover",
-        ];
-
-        const inputs = {};
-        ids.forEach((id) => {
-          const el = $("#" + id);
-          if (!el) return;
-          if (el.type === "number") {
-            inputs[id] = toNumber(el.value);
-          } else {
-            inputs[id] = el.value || "";
-          }
-        });
-        return inputs;
-      }
-
-      function fillPlanInputs(inputs) {
-        if (!inputs) return;
-        Object.keys(inputs).forEach((id) => {
-          const el = $("#" + id);
-          if (!el) return;
-          if (el.type === "number") {
-            el.value = inputs[id] || inputs[id] === 0 ? inputs[id] : "";
-          } else {
-            el.value = inputs[id] || "";
-          }
-        });
-
-        if (inputs.piSilver1Desc) $("#th-silver1").textContent = inputs.piSilver1Desc;
-        if (inputs.piSilver2Desc) $("#th-silver2").textContent = inputs.piSilver2Desc;
-        if (inputs.piSilver3Desc) $("#th-silver3").textContent = inputs.piSilver3Desc;
-        if (inputs.piSilver4Desc) $("#th-silver4").textContent = inputs.piSilver4Desc;
-
-        if (inputs.piGold1Desc) $("#th-gold1").textContent = inputs.piGold1Desc;
-        if (inputs.piGold2Desc) $("#th-gold2").textContent = inputs.piGold2Desc;
-        if (inputs.piGold3Desc) $("#th-gold3").textContent = inputs.piGold3Desc;
-        if (inputs.piGold4Desc) $("#th-gold4").textContent = inputs.piGold4Desc;
-      }
-
-      function computeBaseIncome(inputs) {
-        if (!inputs) return { baseIncome: 0, expenses: 0 };
-        const hisSS = inputs.piHisSSAnnual || 0;
-        const herSS = inputs.piHerSSAnnual || 0;
-        const p1 = inputs.piPension1Annual || 0;
-        const p2 = inputs.piPension2Annual || 0;
-        const other = inputs.piOtherIncomeAnnual || 0;
-        const expenses = inputs.piLivingExpensesAnnual || 0;
-        const baseIncome = hisSS + herSS + p1 + p2 + other;
-        return { baseIncome, expenses };
-      }
-
-      function computeSilverGoldAddl(inputs, prefix) {
-        const annualIds = [
-          "pi" + prefix + "1Annual",
-          "pi" + prefix + "2Annual",
-          "pi" + prefix + "3Annual",
-          "pi" + prefix + "4Annual",
-        ];
-        let total = 0;
-        annualIds.forEach((id) => {
-          total += inputs[id] || 0;
-        });
-        return total;
-      }
-
-      function updatePlanSummaryUI() {
-        const inputs = state.inputs || {};
-        const { baseIncome, expenses } = computeBaseIncome(inputs);
-
-        const silverAddl = computeSilverGoldAddl(inputs, "Silver");
-        const goldAddl = computeSilverGoldAddl(inputs, "Gold");
-
-        const npIncome = baseIncome;
-        const npGap = npIncome - expenses;
-
-        $("#no-plan-income").textContent = fmtCurrency(npIncome);
-        $("#no-plan-expenses").textContent = fmtCurrency(expenses);
-        $("#no-plan-gap").textContent = fmtCurrency(npGap);
-
-        const spIncome = baseIncome + silverAddl;
-        const spGap = spIncome - expenses;
-
-        $("#silver-plan-income").textContent = fmtCurrency(spIncome);
-        $("#silver-plan-expenses").textContent = fmtCurrency(expenses);
-        $("#silver-plan-gap").textContent = fmtCurrency(spGap);
-
-        const gpIncome = baseIncome + goldAddl;
-        const gpGap = gpIncome - expenses;
-
-        $("#gold-plan-income").textContent = fmtCurrency(gpIncome);
-        $("#gold-plan-expenses").textContent = fmtCurrency(expenses);
-        $("#gold-plan-gap").textContent = fmtCurrency(gpGap);
-
-        const hisSS = inputs.piHisSSAnnual || 0;
-        const herSS = inputs.piHerSSAnnual || 0;
-        const p1 = inputs.piPension1Annual || 0;
-        const p2 = inputs.piPension2Annual || 0;
-        const p1SurvPct = (inputs.piPension1SurvivorPct || 100) / 100;
-        const p2SurvPct = (inputs.piPension2SurvivorPct || 100) / 100;
-        const other = inputs.piOtherIncomeAnnual || 0;
-
-        const survivorBase = Math.max(hisSS, herSS) + p1 * p1SurvPct + p2 * p2SurvPct + other;
-
-        $("#np-living-today").textContent = fmtCurrency(expenses);
-        $("#np-ret-income").textContent = fmtCurrency(npIncome);
-        $("#np-her-survivor").textContent = fmtCurrency(survivorBase);
-        $("#np-his-survivor").textContent = fmtCurrency(survivorBase);
-
-        const spSurvivor = survivorBase + silverAddl;
-        $("#sp-living-today").textContent = fmtCurrency(expenses);
-        $("#sp-ret-income").textContent = fmtCurrency(spIncome);
-        $("#sp-her-survivor").textContent = fmtCurrency(spSurvivor);
-        $("#sp-his-survivor").textContent = fmtCurrency(spSurvivor);
-
-        const gpSurvivor = survivorBase + goldAddl;
-        $("#gp-living-today").textContent = fmtCurrency(expenses);
-        $("#gp-ret-income").textContent = fmtCurrency(gpIncome);
-        $("#gp-her-survivor").textContent = fmtCurrency(gpSurvivor);
-        $("#gp-his-survivor").textContent = fmtCurrency(gpSurvivor);
-
-        const summary = computeAssetSummary(state.client);
-        if (!summary) return;
-
-        $("#np-A").textContent = fmtCurrency(summary.savings.total);
-        $("#np-B").textContent = fmtCurrency(summary.annuities.total);
-        $("#np-C").textContent = fmtCurrency(summary.investments.total);
-
-        $("#sp-A").textContent = fmtCurrency(summary.savings.total);
-        $("#sp-B").textContent = fmtCurrency(summary.annuities.total);
-        $("#sp-C").textContent = fmtCurrency(summary.investments.total);
-
-        $("#gp-A").textContent = fmtCurrency(summary.savings.total);
-        $("#gp-B").textContent = fmtCurrency(summary.annuities.total);
-        $("#gp-C").textContent = fmtCurrency(summary.investments.total);
-      }
-
-      function createPieChart(ctx, data) {
-        if (!window.Chart || !ctx) return null;
-        return new Chart(ctx, {
-          type: "doughnut",
-          data: {
-            labels: ["Savings (A)", "Annuities (B)", "Investments (C)"],
-            datasets: [
-              {
-                data: [data.savings, data.annuities, data.investments],
-                backgroundColor: ["#facc15", "#16a34a", "#b91c1c"],
-              },
-            ],
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-              legend: {
-                position: "bottom",
-              },
-            },
-          },
-        });
-      }
-
-      function updateCharts(summary) {
-        if (!window.Chart || !summary) return;
-
-        const data = {
-          savings: summary.savings.total,
-          annuities: summary.annuities.total,
-          investments: summary.investments.total,
-        };
-
-        const npCtx = document.getElementById("np-asset-pie")?.getContext("2d");
-        const spCtx = document.getElementById("sp-asset-pie")?.getContext("2d");
-        const gpCtx = document.getElementById("gp-asset-pie")?.getContext("2d");
-
-        ["np", "sp", "gp"].forEach((key) => {
-          if (state.charts[key]) {
-            state.charts[key].destroy();
-            state.charts[key] = null;
-          }
-        });
-
-        state.charts.np = createPieChart(npCtx, data);
-        state.charts.sp = createPieChart(spCtx, data);
-        state.charts.gp = createPieChart(gpCtx, data);
-      }
-
-      function initPlanTabs() {
-        const tabs = $all(".plan-tab");
-        const cards = {
-          "no-plan": document.getElementById("plan-no-plan"),
-          silver: document.getElementById("plan-silver"),
-          gold: document.getElementById("plan-gold"),
-        };
-
-        function activate(plan) {
-          tabs.forEach((t) => {
-            if (t.dataset.plan === plan) {
-              t.classList.add("plan-tab-active");
-            } else {
-              t.classList.remove("plan-tab-active");
-            }
-          });
-
-          Object.keys(cards).forEach((key) => {
-            const card = cards[key];
-            if (!card) return;
-            if (key === plan) {
-              card.classList.remove("plan-card-hidden");
-            } else {
-              card.classList.add("plan-card-hidden");
-            }
-          });
-        }
-
-        tabs.forEach((t) => {
-          t.addEventListener("click", () => {
-            const plan = t.dataset.plan;
-            if (plan) activate(plan);
-          });
-        });
-
-        activate("no-plan");
-      }
-
-      document.addEventListener("DOMContentLoaded", () => {
-        initStepNavigation();
-        initPlanTabs();
-
-        const storedClient = loadFromStorage(STORAGE_KEYS.CLIENT);
-        const storedInputs = loadFromStorage(STORAGE_KEYS.INPUTS);
-
-        if (storedClient) {
-          state.client = storedClient;
-          fillClientForm(storedClient);
-        }
-        if (storedInputs) {
-          state.inputs = storedInputs;
-          fillPlanInputs(storedInputs);
-        }
-
-        const summary = computeAssetSummary(state.client);
-        updateAssetSummaryUI(summary);
-        updatePlanSummaryUI();
-
-        const clientForm = document.getElementById("client-form");
-        const saveStatus = document.getElementById("saveStatus");
-        if (clientForm) {
-          clientForm.addEventListener("submit", (e) => {
-            e.preventDefault();
-            const data = readClientForm();
-            state.client = data;
-            saveToStorage(STORAGE_KEYS.CLIENT, data);
-
-            const summary = computeAssetSummary(data);
-            updateAssetSummaryUI(summary);
-            updatePlanSummaryUI();
-
-            showStatus(saveStatus, "Client data saved.");
-          });
-        }
-
-        const saveInputsBtn = document.getElementById("save-plan-inputs");
-        const planInputsStatus = document.getElementById("planInputsStatus");
-        if (saveInputsBtn) {
-          saveInputsBtn.addEventListener("click", () => {
-            const inputs = readPlanInputs();
-            state.inputs = inputs;
-            saveToStorage(STORAGE_KEYS.INPUTS, inputs);
-
-            fillPlanInputs(inputs);
-            updatePlanSummaryUI();
-
-            showStatus(planInputsStatus, "Plan inputs saved.");
-          });
-        }
-      });
-    })();
-  </script>
-</div>
+  <script src="app.js"></script>
+</body>
+</html>
