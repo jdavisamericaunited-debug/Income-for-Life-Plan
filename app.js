@@ -1,7 +1,9 @@
 // AmericaPlanning Income-for-Life Planner JS
-// SS & Pension growth only, annuities level,
-// SS survivor logic (lower benefit lost after first death),
-// and annuity income continues as long as either spouse is alive.
+// - SS & Pension growth only (annuities level)
+// - SS survivor logic (lower benefit lost after first death)
+// - Pensions with survivor %
+// - Silver/Gold annuity income continues as long as either spouse is alive
+// - Final A/B/C asset & income summaries with pies for No Plan, Silver, Gold
 
 document.addEventListener("DOMContentLoaded", () => {
   /* ---------------- Helpers ---------------- */
@@ -25,6 +27,50 @@ document.addEventListener("DOMContentLoaded", () => {
     `${num(value).toLocaleString("en-US", {
       maximumFractionDigits: 1,
     })}%`;
+
+  /* ---------------- Global state for assets & charts ---------------- */
+
+  let baseAssets = { savings: 0, annuities: 0, investments: 0 }; // from Client Data
+  let npAssetChart = null;
+  let spAssetChart = null;
+  let gpAssetChart = null;
+
+  const ASSET_COLORS = ["#facc15", "#bbf7d0", "#f87171"]; // A yellow, B green, C red
+
+  const createOrUpdatePie = (existingChart, canvasId, data) => {
+    if (!window.Chart) return existingChart;
+    const canvas = $(canvasId);
+    if (!canvas) return existingChart;
+    const ctx = canvas.getContext("2d");
+
+    if (!existingChart) {
+      return new Chart(ctx, {
+        type: "pie",
+        data: {
+          labels: ["A: Savings/Checking/CU", "B: Annuities", "C: Investments"],
+          datasets: [
+            {
+              data,
+              backgroundColor: ASSET_COLORS,
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: "bottom",
+            },
+          },
+        },
+      });
+    } else {
+      existingChart.data.datasets[0].data = data;
+      existingChart.update();
+      return existingChart;
+    }
+  };
 
   /* ---------------- Step navigation ---------------- */
 
@@ -171,7 +217,14 @@ document.addEventListener("DOMContentLoaded", () => {
     );
     $("as-total-assets").textContent = fmtCurrency(totalAssets);
 
-    // Plan allocation snapshot (Step 4)
+    // Save base financial assets for plan allocations
+    baseAssets = {
+      savings: savTotal,
+      annuities: annTotal,
+      investments: invTotal,
+    };
+
+    // Base allocation snapshot in Step 4
     $("plan-alloc-investments").textContent = fmtCurrency(invTotal);
     $("plan-alloc-savings").textContent = fmtCurrency(savTotal);
     $("plan-alloc-annuities").textContent = fmtCurrency(annTotal);
@@ -354,6 +407,76 @@ document.addEventListener("DOMContentLoaded", () => {
     updateCard("gold-plan", gold);
   };
 
+  const updatePlanSummaryPanels = (
+    summaries,
+    assetsNoPlan,
+    assetsSilver,
+    assetsGold
+  ) => {
+    const map = {
+      noPlan: {
+        prefix: "np",
+        assets: assetsNoPlan,
+      },
+      silver: {
+        prefix: "sp",
+        assets: assetsSilver,
+      },
+      gold: {
+        prefix: "gp",
+        assets: assetsGold,
+      },
+    };
+
+    Object.entries(map).forEach(([key, cfg]) => {
+      const s = summaries[key];
+      if (!s) return;
+
+      const p = cfg.prefix;
+      const assets = cfg.assets || { savings: 0, annuities: 0, investments: 0 };
+
+      // A/B/C values
+      const aEl = $(`${p}-A`);
+      const bEl = $(`${p}-B`);
+      const cEl = $(`${p}-C`);
+      if (aEl) aEl.textContent = fmtCurrency(assets.savings);
+      if (bEl) bEl.textContent = fmtCurrency(assets.annuities);
+      if (cEl) cEl.textContent = fmtCurrency(assets.investments);
+
+      // Income lines
+      const livingEl = $(`${p}-living-today`);
+      const retEl = $(`${p}-ret-income`);
+      const herEl = $(`${p}-her-survivor`);
+      const hisEl = $(`${p}-his-survivor`);
+
+      if (livingEl) livingEl.textContent = fmtCurrency(s.livingToday);
+      if (retEl) retEl.textContent = fmtCurrency(s.retirementIncome);
+      if (herEl) herEl.textContent = fmtCurrency(s.herSurvivorIncome);
+      if (hisEl) hisEl.textContent = fmtCurrency(s.hisSurvivorIncome);
+    });
+
+    // Update pies
+    const npData = [
+      assetsNoPlan.savings,
+      assetsNoPlan.annuities,
+      assetsNoPlan.investments,
+    ];
+    const spData = [
+      assetsSilver.savings,
+      assetsSilver.annuities,
+      assetsSilver.investments,
+    ];
+    const gpData = [
+      assetsGold.savings,
+      assetsGold.annuities,
+      assetsGold.investments,
+    ];
+
+    npAssetChart = createOrUpdatePie(npAssetChart, "np-asset-pie", npData);
+    spAssetChart = createOrUpdatePie(spAssetChart, "sp-asset-pie", spData);
+    gpAssetChart = createOrUpdatePie(gpAssetChart, "gp-asset-pie", gpData);
+  };
+
   const buildSchedules = () => {
     clearSchedules();
     updateScheduleHeaders();
@@ -402,6 +525,7 @@ document.addEventListener("DOMContentLoaded", () => {
       owner: ($(`piSilver${i}Owner`)?.value || "").toLowerCase(),
       annual: num($(`piSilver${i}Annual`)?.value),
       startAge: num($(`piSilver${i}StartAge`)?.value),
+      rollover: num($(`piSilver${i}Rollover`)?.value),
     }));
 
     // Gold additional income sources (level, no growth; joint-life to survivor)
@@ -409,6 +533,7 @@ document.addEventListener("DOMContentLoaded", () => {
       owner: ($(`piGold${i}Owner`)?.value || "").toLowerCase(),
       annual: num($(`piGold${i}Annual`)?.value),
       startAge: num($(`piGold${i}StartAge`)?.value),
+      rollover: num($(`piGold${i}Rollover`)?.value),
     }));
 
     const noPlanBody = $("no-plan-schedule-body");
@@ -419,14 +544,16 @@ document.addEventListener("DOMContentLoaded", () => {
     let firstYearSilver = null;
     let firstYearGold = null;
 
+    // Survivor income trackers (first year after one spouse has died, the other is alive)
+    let herSurvNoPlan = null;
+    let hisSurvNoPlan = null;
+    let herSurvSilver = null;
+    let hisSurvSilver = null;
+    let herSurvGold = null;
+    let hisSurvGold = null;
+
     // Extra incomes (annuities) are level and continue as long as either spouse is alive
-    const sourceIncomeForYear = (
-      src,
-      hisAge,
-      herAge,
-      hisDeath,
-      herDeath
-    ) => {
+    const sourceIncomeForYear = (src, hisAge, herAge, hisDeath, herDeath) => {
       if (!src.annual || !src.startAge) return 0;
 
       // Turn-on condition based on owner + start age
@@ -434,10 +561,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (src.owner.startsWith("h")) {
         if (hisAge && hisAge >= src.startAge) active = true;
-      } else if (
-        src.owner.startsWith("s") ||
-        src.owner.startsWith("w")
-      ) {
+      } else if (src.owner.startsWith("s") || src.owner.startsWith("w")) {
         if (herAge && herAge >= src.startAge) active = true;
       } else {
         // If "both" or blank, treat as joint: use later of their ages
@@ -563,127 +687,4 @@ document.addEventListener("DOMContentLoaded", () => {
       const goldAddTotal = goldIncomes.reduce((a, b) => a + b, 0);
 
       const noPlanTotal = baseIncome;
-      const silverTotal = baseIncome + silverAddTotal;
-      const goldTotal = baseIncome + goldAddTotal;
-
-      const noPlanGap = noPlanTotal - expenses;
-      const silverGap = silverTotal - expenses;
-      const goldGap = goldTotal - expenses;
-
-      // ----- Build rows for each plan (landscape layout) -----
-
-      if (noPlanBody) {
-        const gapClass =
-          noPlanGap >= 0
-            ? "plan-metric-gap-positive"
-            : "plan-metric-gap-negative";
-        noPlanBody.insertAdjacentHTML(
-          "beforeend",
-          `
-          <tr>
-            <td>${yr}</td>
-            <td>${hisAge || ""}</td>
-            <td>${herAge || ""}</td>
-            <td class="col-his-ss">${fmtCurrency(hisSS)}</td>
-            <td class="col-her-ss">${fmtCurrency(herSS)}</td>
-            <td>${fmtCurrency(pension1)}</td>
-            <td>${fmtCurrency(pension2)}</td>
-            <td>${fmtCurrency(otherIncome)}</td>
-            <td>${fmtCurrency(noPlanTotal)}</td>
-            <td>${fmtCurrency(expenses)}</td>
-            <td><span class="${gapClass}">${fmtCurrency(noPlanGap)}</span></td>
-          </tr>
-        `
-        );
-      }
-
-      if (silverBody) {
-        const gapClass =
-          silverGap >= 0
-            ? "plan-metric-gap-positive"
-            : "plan-metric-gap-negative";
-        silverBody.insertAdjacentHTML(
-          "beforeend",
-          `
-          <tr>
-            <td>${yr}</td>
-            <td>${hisAge || ""}</td>
-            <td>${herAge || ""}</td>
-            <td class="col-his-ss">${fmtCurrency(hisSS)}</td>
-            <td class="col-her-ss">${fmtCurrency(herSS)}</td>
-            <td>${fmtCurrency(pension1)}</td>
-            <td>${fmtCurrency(pension2)}</td>
-            <td>${fmtCurrency(otherIncome)}</td>
-            <td>${fmtCurrency(silverIncomes[0] || 0)}</td>
-            <td>${fmtCurrency(silverIncomes[1] || 0)}</td>
-            <td>${fmtCurrency(silverIncomes[2] || 0)}</td>
-            <td>${fmtCurrency(silverIncomes[3] || 0)}</td>
-            <td>${fmtCurrency(silverTotal)}</td>
-            <td>${fmtCurrency(expenses)}</td>
-            <td><span class="${gapClass}">${fmtCurrency(silverGap)}</span></td>
-          </tr>
-        `
-        );
-      }
-
-      if (goldBody) {
-        const gapClass =
-          goldGap >= 0
-            ? "plan-metric-gap-positive"
-            : "plan-metric-gap-negative";
-        goldBody.insertAdjacentHTML(
-          "beforeend",
-          `
-          <tr>
-            <td>${yr}</td>
-            <td>${hisAge || ""}</td>
-            <td>${herAge || ""}</td>
-            <td class="col-his-ss">${fmtCurrency(hisSS)}</td>
-            <td class="col-her-ss">${fmtCurrency(herSS)}</td>
-            <td>${fmtCurrency(pension1)}</td>
-            <td>${fmtCurrency(pension2)}</td>
-            <td>${fmtCurrency(otherIncome)}</td>
-            <td>${fmtCurrency(goldIncomes[0] || 0)}</td>
-            <td>${fmtCurrency(goldIncomes[1] || 0)}</td>
-            <td>${fmtCurrency(goldIncomes[2] || 0)}</td>
-            <td>${fmtCurrency(goldIncomes[3] || 0)}</td>
-            <td>${fmtCurrency(goldTotal)}</td>
-            <td>${fmtCurrency(expenses)}</td>
-            <td><span class="${gapClass}">${fmtCurrency(goldGap)}</span></td>
-          </tr>
-        `
-        );
-      }
-
-      // Capture first-year numbers for the summary cards
-      if (yearIndex === 0) {
-        firstYearNoPlan = {
-          income: noPlanTotal,
-          expenses,
-        };
-        firstYearSilver = {
-          income: silverTotal,
-          expenses,
-        };
-        firstYearGold = {
-          income: goldTotal,
-          expenses,
-        };
-      }
-    }
-
-    updatePlanSummaryCards({
-      noPlan: firstYearNoPlan || { income: 0, expenses: 0 },
-      silver: firstYearSilver || { income: 0, expenses: 0 },
-      gold: firstYearGold || { income: 0, expenses: 0 },
-    });
-  };
-
-  /* ---------------- Initial load ---------------- */
-
-  loadClientData();
-  loadPlanInputs();
-  updateAssetsSummary();
-  buildSchedules();
-  showStep("client");
-});
+      c
