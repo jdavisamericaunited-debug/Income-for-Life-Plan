@@ -1,5 +1,5 @@
 // AmericaPlanning Income-for-Life Planner JS
-// Updated: SS & Pension growth only, annuities level,
+// SS & Pension growth only, annuities level,
 // SS survivor logic (lower benefit lost after first death),
 // and annuity income continues as long as either spouse is alive.
 
@@ -366,7 +366,7 @@ document.addEventListener("DOMContentLoaded", () => {
         gold: { income: 0, expenses: 0 },
       });
       return;
-    };
+    }
 
     const hisAge0 = num($("piHisCurrentAge")?.value);
     const herAge0 = num($("piHerCurrentAge")?.value);
@@ -419,7 +419,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let firstYearSilver = null;
     let firstYearGold = null;
 
-    // Annuity / extra incomes are level – and continue to the survivor
+    // Extra incomes (annuities) are level and continue as long as either spouse is alive
     const sourceIncomeForYear = (
       src,
       hisAge,
@@ -429,15 +429,18 @@ document.addEventListener("DOMContentLoaded", () => {
     ) => {
       if (!src.annual || !src.startAge) return 0;
 
-      // Determine when the source is "turned on" based on owner + start age
+      // Turn-on condition based on owner + start age
       let active = false;
 
       if (src.owner.startsWith("h")) {
         if (hisAge && hisAge >= src.startAge) active = true;
-      } else if (src.owner.startsWith("s") || src.owner.startsWith("w")) {
+      } else if (
+        src.owner.startsWith("s") ||
+        src.owner.startsWith("w")
+      ) {
         if (herAge && herAge >= src.startAge) active = true;
       } else {
-        // If "both" or blank, use the later of their ages
+        // If "both" or blank, treat as joint: use later of their ages
         const jointAge = Math.max(hisAge || 0, herAge || 0);
         if (jointAge >= src.startAge) active = true;
       }
@@ -555,7 +558,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const silverAddTotal = silverIncomes.reduce((a, b) => a + b, 0);
 
       const goldIncomes = goldSources.map((src) =>
-        sourceIncomeForYear(src, hisAge, herAge, herDeathAge, hisDeathAge)
+        sourceIncomeForYear(src, hisAge, herAge, hisDeathAge, herDeathAge)
       );
       const goldAddTotal = goldIncomes.reduce((a, b) => a + b, 0);
 
