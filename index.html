@@ -1,4 +1,5 @@
-<!-- Mobile rotate tip (you can keep or remove) -->
+<body>
+<!-- Optional rotate tip (desktop only, so harmless) -->
 <div id="ap-rotate-tip" style="display:none;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;">
   Turn phone sideways for easy viewing.
 </div>
@@ -60,6 +61,27 @@
       border-radius: 12px;
       border: 1px solid #e5e7eb;
       padding: 18px 18px 22px;
+    }
+
+    /* Primary button */
+    .ap-primary-btn {
+      display: inline-block;
+      background: #0b5aa2;
+      color: #ffffff;
+      border: none;
+      border-radius: 999px;
+      padding: 8px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .ap-primary-btn:hover {
+      opacity: 0.95;
+    }
+
+    .ap-save-row {
+      text-align: right;
+      margin-top: 4px;
     }
 
     /* ---------- Goals & Data Form Styles ---------- */
@@ -951,6 +973,13 @@
             <textarea id="additionalNotes" name="additionalNotes"></textarea>
           </div>
         </div>
+
+        <!-- SAVE BUTTON -->
+        <div class="ap-save-row">
+          <button type="button" id="ap-save-data-btn" class="ap-primary-btn">
+            Save Data &amp; Update Asset Summary
+          </button>
+        </div>
       </form>
     </div>
   </div>
@@ -1092,18 +1121,392 @@
     </div>
   </div>
 
-  <!-- PANEL: PLAN INPUTS (placeholder for now) -->
+  <!-- PANEL: PLAN INPUTS (your control page) -->
   <div id="ap-panel-inputs" class="ap-ifl-panel" style="display:none;">
-    <h2>Plan Inputs</h2>
-    <p style="font-size:13px;color:#6b7280;">
-      This panel is reserved for your future Plan Inputs section (Silver / Gold plan sliders, assumptions, etc.).
-      The tabs and framework are already wired – we just need to drop that content in later.
-    </p>
+    <div id="ap-plan-inputs">
+      <h2>Plan Inputs – Control Page</h2>
+      <p style="font-size:13px;color:#6b7280;margin:4px 0 12px;">
+        Comparing your current vs. additional income plan – this page drives the No-Plan, Silver Plan, and Gold Plan projections.
+      </p>
+
+      <!-- TOP: CORE PROJECTION INPUTS + NOTES -->
+      <div style="display:grid;grid-template-columns:1.2fr 0.8fr;gap:16px;align-items:flex-start;margin-bottom:18px;">
+        <!-- LEFT: CORE INPUTS -->
+        <div class="ap-section" style="background:#ffffff;border-radius:10px;border:1px solid #e5e7eb;padding:14px 16px 12px;">
+          <div class="ap-section-title" style="font-size:15px;font-weight:700;color:#0b5aa2;border-bottom:1px solid #e5e7eb;padding-bottom:6px;margin-bottom:10px;">
+            Core Projection Inputs
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 14px;font-size:13px;">
+            <div class="ap-field">
+              <label for="inputsTodayDate" style="font-weight:600;color:#374151;">Today's Date</label>
+              <input id="inputsTodayDate" name="inputsTodayDate" type="date">
+            </div>
+            <div class="ap-field">
+              <label for="projLength" style="font-weight:600;color:#374151;">Projection Length (years)</label>
+              <input id="projLength" name="projLength" type="number" min="1" step="1">
+            </div>
+            <div></div>
+
+            <div class="ap-field">
+              <label for="ageHis" style="font-weight:600;color:#374151;">His Current Age</label>
+              <input id="ageHis" name="ageHis" type="number" min="0" step="1">
+            </div>
+            <div class="ap-field">
+              <label for="ageHer" style="font-weight:600;color:#374151;">Her Current Age</label>
+              <input id="ageHer" name="ageHer" type="number" min="0" step="1">
+            </div>
+            <div></div>
+
+            <div class="ap-field">
+              <label for="ssHisAnnual" style="font-weight:600;color:#374151;">His Social Security (annual)</label>
+              <input id="ssHisAnnual" name="ssHisAnnual" type="text" placeholder="$25,000">
+            </div>
+            <div class="ap-field">
+              <label for="ssHerAnnual" style="font-weight:600;color:#374151;">Her Social Security (annual)</label>
+              <input id="ssHerAnnual" name="ssHerAnnual" type="text" placeholder="$12,500">
+            </div>
+            <div></div>
+
+            <div class="ap-field">
+              <label for="pension1Annual" style="font-weight:600;color:#374151;">Pension 1 (annual)</label>
+              <input id="pension1Annual" name="pension1Annual" type="text" placeholder="$0">
+            </div>
+            <div class="ap-field">
+              <label for="pension2Annual" style="font-weight:600;color:#374151;">Pension 2 (annual)</label>
+              <input id="pension2Annual" name="pension2Annual" type="text" placeholder="$0">
+            </div>
+            <div class="ap-field">
+              <label for="otherIncomeAnnual" style="font-weight:600;color:#374151;">Other Income (annual)</label>
+              <input id="otherIncomeAnnual" name="otherIncomeAnnual" type="text" placeholder="$0">
+            </div>
+
+            <div class="ap-field">
+              <label for="livingExpensesAnnual" style="font-weight:600;color:#374151;">Living Expenses (annual)</label>
+              <input id="livingExpensesAnnual" name="livingExpensesAnnual" type="text" placeholder="$30,000">
+            </div>
+            <div class="ap-field">
+              <label for="incomeGrowthPct" style="font-weight:600;color:#374151;">Grow % for incomes</label>
+              <input id="incomeGrowthPct" name="incomeGrowthPct" type="number" step="0.01" placeholder="0.00">
+            </div>
+            <div class="ap-field">
+              <label for="expenseInflationPct" style="font-weight:600;color:#374151;">Inflation % for expenses</label>
+              <input id="expenseInflationPct" name="expenseInflationPct" type="number" step="0.01" placeholder="0.00">
+            </div>
+
+            <div class="ap-field">
+              <label for="ssHisStartAge" style="font-weight:600;color:#374151;">His SS Start Age</label>
+              <input id="ssHisStartAge" name="ssHisStartAge" type="number" min="0" step="1" placeholder="67">
+            </div>
+            <div class="ap-field">
+              <label for="ssHerStartAge" style="font-weight:600;color:#374151;">Her SS Start Age</label>
+              <input id="ssHerStartAge" name="ssHerStartAge" type="number" min="0" step="1" placeholder="67">
+            </div>
+            <div></div>
+
+            <div class="ap-field">
+              <label for="pension1StartAge" style="font-weight:600;color:#374151;">Pension 1 Start Age</label>
+              <input id="pension1StartAge" name="pension1StartAge" type="number" min="0" step="1" placeholder="0">
+            </div>
+            <div class="ap-field">
+              <label for="pension2StartAge" style="font-weight:600;color:#374151;">Pension 2 Start Age</label>
+              <input id="pension2StartAge" name="pension2StartAge" type="number" min="0" step="1" placeholder="0">
+            </div>
+            <div></div>
+
+            <div class="ap-field">
+              <label for="pension1SurvivorPct" style="font-weight:600;color:#374151;">Pension 1 Survivor %</label>
+              <input id="pension1SurvivorPct" name="pension1SurvivorPct" type="number" step="0.01" placeholder="0.00">
+            </div>
+            <div class="ap-field">
+              <label for="pension2SurvivorPct" style="font-weight:600;color:#374151;">Pension 2 Survivor %</label>
+              <input id="pension2SurvivorPct" name="pension2SurvivorPct" type="number" step="0.01" placeholder="0.00">
+            </div>
+            <div></div>
+
+            <div class="ap-field">
+              <label for="deathAgeHis" style="font-weight:600;color:#374151;">His Death Age</label>
+              <input id="deathAgeHis" name="deathAgeHis" type="number" min="0" step="1" placeholder="85">
+            </div>
+            <div class="ap-field">
+              <label for="deathAgeHer" style="font-weight:600;color:#374151;">Her Death Age</label>
+              <input id="deathAgeHer" name="deathAgeHer" type="number" min="0" step="1" placeholder="89">
+            </div>
+            <div></div>
+          </div>
+        </div>
+
+        <!-- RIGHT: NOTES -->
+        <div class="ap-section" style="background:#ffffff;border-radius:10px;border:1px solid #e5e7eb;padding:14px 16px 12px;">
+          <div class="ap-section-title" style="font-size:15px;font-weight:700;color:#0b5aa2;border-bottom:1px solid #e5e7eb;padding-bottom:6px;margin-bottom:8px;">
+            Description and Notes
+          </div>
+          <div class="ap-field" style="font-size:13px;">
+            <textarea id="inputsNotesMain" name="inputsNotesMain" style="min-height:210px;"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- CURRENT / NO PLAN BUCKETS -->
+      <div class="ap-section" style="background:#ffffff;border-radius:10px;border:1px solid #e5e7eb;padding:14px 16px 12px;margin-bottom:18px;">
+        <div class="ap-section-title" style="font-size:15px;font-weight:700;color:#0b5aa2;border-bottom:1px solid #e5e7eb;padding-bottom:6px;margin-bottom:8px;">
+          Current / No-Plan Asset Buckets (A/B/C)
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px 14px;font-size:13px;margin-bottom:10px;">
+          <div class="ap-field">
+            <label for="currentAYellow" style="font-weight:600;color:#374151;">A Total Yellow (Liquid)</label>
+            <input id="currentAYellow" name="currentAYellow" type="text" placeholder="$316,000.00">
+          </div>
+          <div class="ap-field">
+            <label for="currentCRed" style="font-weight:600;color:#374151;">C Total Red (Invested)</label>
+            <input id="currentCRed" name="currentCRed" type="text" placeholder="$450,000.00">
+          </div>
+          <div class="ap-field">
+            <label for="currentBGreen" style="font-weight:600;color:#374151;">B Total Green (Annuities)</label>
+            <input id="currentBGreen" name="currentBGreen" type="text" placeholder="$0.00">
+          </div>
+          <div class="ap-field">
+            <label for="currentTotalInvestable" style="font-weight:600;color:#374151;">Total Investable (auto)</label>
+            <input id="currentTotalInvestable" name="currentTotalInvestable" type="text" placeholder="$766,000.00" readonly>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px 14px;font-size:13px;">
+          <div class="ap-field">
+            <label for="deathIndexHis" style="font-weight:600;color:#374151;">His Death Year Index (auto)</label>
+            <input id="deathIndexHis" name="deathIndexHis" type="number" step="1" readonly>
+          </div>
+          <div class="ap-field">
+            <label for="deathIndexHer" style="font-weight:600;color:#374151;">Her Death Year Index (auto)</label>
+            <input id="deathIndexHer" name="deathIndexHer" type="number" step="1" readonly>
+          </div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+
+      <!-- SILVER PLAN -->
+      <div class="ap-section" style="background:#ffffff;border-radius:10px;border:1px solid #e5e7eb;padding:14px 16px 12px;margin-bottom:18px;">
+        <div class="ap-section-title" style="font-size:15px;font-weight:700;color:#0b5aa2;border-bottom:1px solid #e5e7eb;padding-bottom:6px;margin-bottom:8px;">
+          Silver Plan – Additional Income &amp; Reallocation
+        </div>
+
+        <div style="display:grid;grid-template-columns:1.2fr 0.8fr;gap:14px;align-items:flex-start;">
+          <!-- LEFT: Silver Income -->
+          <div>
+            <div style="font-size:13px;font-weight:600;color:#374151;margin-bottom:4px;">Silver Plan Add'l Income (4 sources)</div>
+            <table class="ap-table" style="width:100%;border-collapse:collapse;font-size:13px;">
+              <thead>
+                <tr>
+                  <th>Description / Rollover Label</th>
+                  <th style="width:18%;">Annual Income</th>
+                  <th style="width:14%;">Start Age</th>
+                  <th style="width:16%;">Owner (His/Her)</th>
+                  <th>Notes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input name="silver1Desc" type="text" placeholder="Rollover 1"></td>
+                  <td><input name="silver1Income" type="text" placeholder="$10,000"></td>
+                  <td><input name="silver1StartAge" type="number" min="0" step="1" placeholder="67"></td>
+                  <td><input name="silver1Owner" type="text" placeholder="His"></td>
+                  <td><input name="silver1Notes" type="text"></td>
+                </tr>
+                <tr>
+                  <td><input name="silver2Desc" type="text" placeholder="Rollover 2"></td>
+                  <td><input name="silver2Income" type="text" placeholder="$15,000"></td>
+                  <td><input name="silver2StartAge" type="number" min="0" step="1" placeholder="67"></td>
+                  <td><input name="silver2Owner" type="text" placeholder="His"></td>
+                  <td><input name="silver2Notes" type="text"></td>
+                </tr>
+                <tr>
+                  <td><input name="silver3Desc" type="text" placeholder="Rollover 3"></td>
+                  <td><input name="silver3Income" type="text" placeholder="$6,000"></td>
+                  <td><input name="silver3StartAge" type="number" min="0" step="1" placeholder="67"></td>
+                  <td><input name="silver3Owner" type="text" placeholder="His"></td>
+                  <td><input name="silver3Notes" type="text"></td>
+                </tr>
+                <tr>
+                  <td><input name="silver4Desc" type="text" placeholder="Rollover 4"></td>
+                  <td><input name="silver4Income" type="text" placeholder="$3,000"></td>
+                  <td><input name="silver4StartAge" type="number" min="0" step="1" placeholder="67"></td>
+                  <td><input name="silver4Owner" type="text" placeholder="His"></td>
+                  <td><input name="silver4Notes" type="text"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- RIGHT: Silver Dollar Amounts + Buckets -->
+          <div>
+            <div style="font-size:13px;font-weight:600;color:#374151;margin-bottom:4px;">Transferring Money – Silver Plan Dollar Amounts</div>
+            <table class="ap-table" style="width:100%;border-collapse:collapse;font-size:13px;">
+              <thead>
+                <tr>
+                  <th>Rollover Source</th>
+                  <th style="width:40%;">Dollar Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Silver Add'l 1</td>
+                  <td><input name="silver1Amount" type="text" placeholder="$100,000.00"></td>
+                </tr>
+                <tr>
+                  <td>Silver Add'l 2</td>
+                  <td><input name="silver2Amount" type="text" placeholder="$150,000.00"></td>
+                </tr>
+                <tr>
+                  <td>Silver Add'l 3</td>
+                  <td><input name="silver3Amount" type="text" placeholder="$50,000.00"></td>
+                </tr>
+                <tr>
+                  <td>Silver Add'l 4</td>
+                  <td><input name="silver4Amount" type="text" placeholder="$25,000.00"></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div style="margin-top:10px;font-size:13px;">
+              <div class="ap-field" style="margin-bottom:6px;">
+                <label for="silverAYellow" style="font-weight:600;color:#374151;">A Total Yellow (Liquid)</label>
+                <input id="silverAYellow" name="silverAYellow" type="text" placeholder="$316,000.00">
+              </div>
+              <div class="ap-field" style="margin-bottom:6px;">
+                <label for="silverCRed" style="font-weight:600;color:#374151;">C Total Red (Invested)</label>
+                <input id="silverCRed" name="silverCRed" type="text" placeholder="$125,000.00">
+              </div>
+              <div class="ap-field" style="margin-bottom:6px;">
+                <label for="silverBGreen" style="font-weight:600;color:#374151;">B Total Green (Annuities)</label>
+                <input id="silverBGreen" name="silverBGreen" type="text" placeholder="$325,000.00">
+              </div>
+              <div class="ap-field">
+                <label for="silverTotalInvestable" style="font-weight:600;color:#374151;">Total Investable (auto)</label>
+                <input id="silverTotalInvestable" name="silverTotalInvestable" type="text" placeholder="$766,000.00" readonly>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GOLD PLAN -->
+      <div class="ap-section" style="background:#ffffff;border-radius:10px;border:1px solid #e5e7eb;padding:14px 16px 12px;margin-bottom:18px;">
+        <div class="ap-section-title" style="font-size:15px;font-weight:700;color:#b45309;border-bottom:1px solid #e5e7eb;padding-bottom:6px;margin-bottom:8px;">
+          Gold Plan – Additional Income &amp; Reallocation
+        </div>
+
+        <div style="display:grid;grid-template-columns:1.2fr 0.8fr;gap:14px;align-items:flex-start;">
+          <!-- LEFT: Gold Income -->
+          <div>
+            <div style="font-size:13px;font-weight:600;color:#374151;margin-bottom:4px;">Gold Plan Add'l Income (4 sources)</div>
+            <table class="ap-table" style="width:100%;border-collapse:collapse;font-size:13px;">
+              <thead>
+                <tr>
+                  <th>Description / Rollover Label</th>
+                  <th style="width:18%;">Annual Income</th>
+                  <th style="width:14%;">Start Age</th>
+                  <th style="width:16%;">Owner (His/Her)</th>
+                  <th>Notes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input name="gold1Desc" type="text" placeholder="Rollover 1"></td>
+                  <td><input name="gold1Income" type="text" placeholder="$40,000"></td>
+                  <td><input name="gold1StartAge" type="number" min="0" step="1" placeholder="67"></td>
+                  <td><input name="gold1Owner" type="text" placeholder="His"></td>
+                  <td><input name="gold1Notes" type="text"></td>
+                </tr>
+                <tr>
+                  <td><input name="gold2Desc" type="text" placeholder="Rollover 2"></td>
+                  <td><input name="gold2Income" type="text" placeholder="$25,000"></td>
+                  <td><input name="gold2StartAge" type="number" min="0" step="1" placeholder="70"></td>
+                  <td><input name="gold2Owner" type="text" placeholder="His"></td>
+                  <td><input name="gold2Notes" type="text"></td>
+                </tr>
+                <tr>
+                  <td><input name="gold3Desc" type="text" placeholder="Rollover 3"></td>
+                  <td><input name="gold3Income" type="text" placeholder="$35,000"></td>
+                  <td><input name="gold3StartAge" type="number" min="0" step="1" placeholder="67"></td>
+                  <td><input name="gold3Owner" type="text" placeholder="His"></td>
+                  <td><input name="gold3Notes" type="text"></td>
+                </tr>
+                <tr>
+                  <td><input name="gold4Desc" type="text" placeholder="Rollover 4"></td>
+                  <td><input name="gold4Income" type="text" placeholder="$4,000"></td>
+                  <td><input name="gold4StartAge" type="number" min="0" step="1" placeholder="67"></td>
+                  <td><input name="gold4Owner" type="text" placeholder="His"></td>
+                  <td><input name="gold4Notes" type="text"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- RIGHT: Gold Dollar Amounts + Buckets -->
+          <div>
+            <div style="font-size:13px;font-weight:600;color:#374151;margin-bottom:4px;">Transferring Money – Gold Plan Dollar Amounts</div>
+            <table class="ap-table" style="width:100%;border-collapse:collapse;font-size:13px;">
+              <thead>
+                <tr>
+                  <th>Rollover Source</th>
+                  <th style="width:40%;">Dollar Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Gold Add'l 1</td>
+                  <td><input name="gold1Amount" type="text" placeholder="$400,000.00"></td>
+                </tr>
+                <tr>
+                  <td>Gold Add'l 2</td>
+                  <td><input name="gold2Amount" type="text" placeholder="$250,000.00"></td>
+                </tr>
+                <tr>
+                  <td>Gold Add'l 3</td>
+                  <td><input name="gold3Amount" type="text" placeholder="$220,000.00"></td>
+                </tr>
+                <tr>
+                  <td>Gold Add'l 4</td>
+                  <td><input name="gold4Amount" type="text" placeholder="$125,000.00"></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div style="margin-top:10px;font-size:13px;">
+              <div class="ap-field" style="margin-bottom:6px;">
+                <label for="goldAYellow" style="font-weight:600;color:#374151;">A Total Yellow (Liquid)</label>
+                <input id="goldAYellow" name="goldAYellow" type="text" placeholder="$316,000.00">
+              </div>
+              <div class="ap-field" style="margin-bottom:6px;">
+                <label for="goldCRed" style="font-weight:600;color:#374151;">C Total Red (Invested)</label>
+                <input id="goldCRed" name="goldCRed" type="text" placeholder="-$545,000.00">
+              </div>
+              <div class="ap-field" style="margin-bottom:6px;">
+                <label for="goldBGreen" style="font-weight:600;color:#374151;">B Total Green (Annuities)</label>
+                <input id="goldBGreen" name="goldBGreen" type="text" placeholder="$995,000.00">
+              </div>
+              <div class="ap-field">
+                <label for="goldTotalInvestable" style="font-weight:600;color:#374151;">Total Investable (auto)</label>
+                <input id="goldTotalInvestable" name="goldTotalInvestable" type="text" placeholder="$766,000.00" readonly>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EXTERNAL TOOL -->
+      <div style="font-size:12px;color:#4b5563;">
+        External calculator for annuity income illustrations:
+        <a href="https://www.delawarelife.com/static/html/tp-calculator.html" target="_blank" rel="noopener noreferrer">
+          Delaware Life Income Calculator
+        </a>
+      </div>
+    </div>
   </div>
 </div>
 
 <script>
-  // ---- Helpers for Asset Summary ----
+  // ---- Shared helpers ----
   function apParseCurrency(val) {
     if (!val) return 0;
     if (typeof val !== 'string') val = String(val);
@@ -1116,20 +1519,52 @@
   function apFormatCurrency(num) {
     return '$' + (num || 0).toLocaleString(undefined, {
       minimumFractionDigits: 0,
-      maximumFractionDigits: 0
+      maximumFractionDigits: 2
     });
   }
 
-  function apGetInputValue(name) {
-    var el = document.querySelector('[name="' + name + '"]');
+  function apGetInputValue(nameOrId) {
+    var el = document.querySelector('[name="' + nameOrId + '"]') ||
+             document.getElementById(nameOrId);
     return el ? el.value || '' : '';
   }
 
+  // Save/load Goals & Data into localStorage
+  function apSaveGoalsDataToStorage() {
+    if (!window.localStorage) return;
+    var form = document.getElementById('ap-goals-data-form');
+    if (!form) return;
+    var data = {};
+    Array.prototype.forEach.call(form.elements, function(el) {
+      if (!el.name) return;
+      if (['button','submit','reset'].indexOf(el.type) !== -1) return;
+      data[el.name] = el.value;
+    });
+    localStorage.setItem('apGoalsDataForm', JSON.stringify(data));
+  }
+
+  function apLoadGoalsDataFromStorage() {
+    if (!window.localStorage) return;
+    var raw = localStorage.getItem('apGoalsDataForm');
+    if (!raw) return;
+    var form = document.getElementById('ap-goals-data-form');
+    if (!form) return;
+    var data;
+    try { data = JSON.parse(raw); } catch(e) { return; }
+    Object.keys(data).forEach(function(name) {
+      var el = form.elements[name];
+      if (!el) return;
+      el.value = data[name];
+    });
+  }
+
+  // ---- Asset Summary updater ----
   function apUpdateAssetSummary() {
     var now = new Date();
     var dateSpan = document.getElementById('ap-asset-summary-date');
     if (dateSpan) {
-      var dateStr = now.toLocaleDateString() + ' ' + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      var dateStr = now.toLocaleDateString() + ' ' +
+        now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
       dateSpan.textContent = dateStr;
     }
 
@@ -1143,8 +1578,12 @@
       var homeState = apGetInputValue('homeState');
       var homeZip = apGetInputValue('homeZip');
 
-      var fullName = (clientName || '') + (spouseName ? (clientName ? ' and ' : '') + spouseName : '');
-      var addressLine = [homeAddress, homeCity, homeState, homeZip].filter(Boolean).join(' ');
+      var fullName = (clientName || '') +
+        (spouseName ? (clientName ? ' and ' : '') + spouseName : '');
+      var addressLine = [homeAddress, homeCity, homeState, homeZip]
+        .filter(Boolean)
+        .join(' ');
+
       nameAddressDiv.innerHTML =
         (fullName ? '<div>' + fullName + '</div>' : '') +
         (addressLine ? '<div>' + addressLine + '</div>' : '');
@@ -1233,7 +1672,7 @@
       for (var k = 1; k <= maxAnn; k++) {
         var annName = apGetInputValue('ann' + k + 'Name');
         var annOwner = apGetInputValue('ann' + k + 'Owner');
-        var annType = apGetInputValue('ann' + k + 'Type'); // optional, will be blank unless you add
+        var annType = apGetInputValue('ann' + k + 'Type');
         var annBalStr = apGetInputValue('ann' + k + 'Balance');
         var annBal = apParseCurrency(annBalStr);
         if (!annName && !annOwner && !annBalStr) continue;
@@ -1253,7 +1692,7 @@
 
     // Roll-up totals
     var totalAssets = totalCash + totalInv + totalRealEstate + totalAnn;
-    var totalLiab = totalMortgage; // expand later if you add other liabilities
+    var totalLiab = totalMortgage;
     var netWorth = totalAssets - totalLiab;
 
     var elTotA = document.getElementById('ap-total-assets');
@@ -1265,7 +1704,64 @@
     if (elNW) elNW.textContent = apFormatCurrency(netWorth);
   }
 
-  // ---- Tab logic + initial wiring ----
+  // ---- Inputs Page auto-calcs ----
+  function apUpdateInputsDerived() {
+    // Today's date auto-fill
+    var todayEl = document.getElementById('inputsTodayDate');
+    if (todayEl && !todayEl.value) {
+      todayEl.value = new Date().toISOString().slice(0, 10);
+    }
+
+    // Current / No-Plan totals
+    var aCur = apParseCurrency(apGetInputValue('currentAYellow'));
+    var cCur = apParseCurrency(apGetInputValue('currentCRed'));
+    var bCur = apParseCurrency(apGetInputValue('currentBGreen'));
+    var totalCur = aCur + cCur + bCur;
+    var curTotEl = document.getElementById('currentTotalInvestable');
+    if (curTotEl && (aCur || cCur || bCur)) {
+      curTotEl.value = apFormatCurrency(totalCur);
+    }
+
+    // Silver totals
+    var aSil = apParseCurrency(apGetInputValue('silverAYellow'));
+    var cSil = apParseCurrency(apGetInputValue('silverCRed'));
+    var bSil = apParseCurrency(apGetInputValue('silverBGreen'));
+    var totalSil = aSil + cSil + bSil;
+    var silTotEl = document.getElementById('silverTotalInvestable');
+    if (silTotEl && (aSil || cSil || bSil)) {
+      silTotEl.value = apFormatCurrency(totalSil);
+    }
+
+    // Gold totals
+    var aGol = apParseCurrency(apGetInputValue('goldAYellow'));
+    var cGol = apParseCurrency(apGetInputValue('goldCRed'));
+    var bGol = apParseCurrency(apGetInputValue('goldBGreen'));
+    var totalGol = aGol + cGol + bGol;
+    var golTotEl = document.getElementById('goldTotalInvestable');
+    if (golTotEl && (aGol || cGol || bGol)) {
+      golTotEl.value = apFormatCurrency(totalGol);
+    }
+
+    // Death year indexes (rough – can tweak later)
+    var projLen = parseInt(apGetInputValue('projLength') || '0', 10);
+    var ageHis = parseInt(apGetInputValue('ageHis') || '0', 10);
+    var ageHer = parseInt(apGetInputValue('ageHer') || '0', 10);
+    var deathHis = parseInt(apGetInputValue('deathAgeHis') || '0', 10);
+    var deathHer = parseInt(apGetInputValue('deathAgeHer') || '0', 10);
+
+    if (projLen > 0 && ageHis > 0 && deathHis > ageHis) {
+      var idxHis = Math.max(1, Math.min(projLen, deathHis - ageHis));
+      var idxHisEl = document.getElementById('deathIndexHis');
+      if (idxHisEl) idxHisEl.value = idxHis;
+    }
+    if (projLen > 0 && ageHer > 0 && deathHer > ageHer) {
+      var idxHer = Math.max(1, Math.min(projLen, deathHer - ageHer));
+      var idxHerEl = document.getElementById('deathIndexHer');
+      if (idxHerEl) idxHerEl.value = idxHer;
+    }
+  }
+
+  // ---- Tabs + wiring ----
   (function () {
     function showPanel(name) {
       var panels = ['goals', 'assets', 'inputs'];
@@ -1279,14 +1775,19 @@
         btn.classList.toggle('ap-ifl-tab-active', btn.getAttribute('data-panel') === name);
       });
 
-      if (name === 'assets') {
-        if (typeof apUpdateAssetSummary === 'function') {
-          apUpdateAssetSummary();
-        }
+      if (name === 'assets' && typeof apUpdateAssetSummary === 'function') {
+        apUpdateAssetSummary();
+      }
+      if (name === 'inputs' && typeof apUpdateInputsDerived === 'function') {
+        apUpdateInputsDerived();
       }
     }
 
     document.addEventListener('DOMContentLoaded', function () {
+      // Load saved Goals & Data if present
+      apLoadGoalsDataFromStorage();
+
+      // Wire tabs
       var buttons = document.querySelectorAll('#ap-ifl-app .ap-ifl-tab-btn');
       buttons.forEach(function (btn) {
         btn.addEventListener('click', function () {
@@ -1294,11 +1795,24 @@
         });
       });
 
+      // Wire Save button
+      var saveBtn = document.getElementById('ap-save-data-btn');
+      if (saveBtn) {
+        saveBtn.addEventListener('click', function () {
+          apSaveGoalsDataToStorage();
+          if (typeof apUpdateAssetSummary === 'function') {
+            apUpdateAssetSummary();
+          }
+          alert('Client data saved in this browser and Asset Summary figures updated.');
+        });
+      }
+
       // Default to Goals & Data
       showPanel('goals');
     });
 
-    // Optional: expose to global if you ever want to jump to a tab via link
+    // Optional global handle
     window.apShowIFLPanel = showPanel;
   })();
 </script>
+</body>
