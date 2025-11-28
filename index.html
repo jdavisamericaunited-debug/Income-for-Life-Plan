@@ -1,54 +1,95 @@
-<!-- AmericaPlanning – No-Plan Joint Income Page (Desktop-Only Version)
-     - His Social Security column = light blue
-     - Her Social Security column = light pink
-     - Gap auto-calculated and negative values in red + bold
-     - All inputs auto-save to browser storage and reload on revisit
+<!-- AmericaPlanning – No-Plan Income Suite (Joint + Her Survival + His Survival + Final Allocation)
+     - Tabs for each page
+     - His SS column = light blue
+     - Her SS column = light pink
+     - Negative Gap values = red + bold
+     - Auto-save all fields across all tabs (per browser + device)
 -->
 
-<div id="ap-no-plan-joint" style="max-width:1200px;margin:0 auto;padding:16px;box-sizing:border-box;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;">
+<div id="ap-no-plan-app" style="max-width:1200px;margin:0 auto;padding:16px;box-sizing:border-box;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;">
+
   <style>
-    #ap-no-plan-joint * {
+    #ap-no-plan-app * {
       box-sizing: border-box;
       font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
     }
 
-    #ap-no-plan-joint h2 {
+    #ap-no-plan-app h2 {
       margin: 0 0 8px 0;
       font-size: 24px;
       color: #0b5aa2;
-      text-align: left;
       font-weight: 700;
     }
 
-    #ap-no-plan-joint p.ap-intro {
-      margin: 0 0 16px 0;
+    #ap-no-plan-app p.ap-intro {
+      margin: 0 0 10px 0;
       font-size: 14px;
       line-height: 1.5;
       color: #333;
     }
 
-    #ap-no-plan-joint .ap-note {
+    #ap-no-plan-app .ap-note {
       font-size: 12px;
       color: #555;
+      margin-bottom: 16px;
+    }
+
+    /* Tabs */
+    #ap-no-plan-app .ap-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
       margin-bottom: 12px;
     }
 
-    #ap-no-plan-joint .ap-table-wrapper {
-      overflow-x: auto;
-      border: 1px solid #d1d5db;
-      border-radius: 8px;
-      padding: 8px;
-      background: #f9fafb;
+    #ap-no-plan-app .ap-tab-btn {
+      border: 1px solid #0b5aa2;
+      background: #ffffff;
+      color: #0b5aa2;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, box-shadow 0.15s;
     }
 
-    #ap-no-plan-joint table.ap-income-table {
+    #ap-no-plan-app .ap-tab-btn.ap-active {
+      background: #0b5aa2;
+      color: #f9fafb;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    }
+
+    #ap-no-plan-app .ap-tab-section {
+      display: none;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      padding: 14px;
+      background: #f9fafb;
+      margin-top: 4px;
+    }
+
+    #ap-no-plan-app .ap-tab-section.ap-active {
+      display: block;
+    }
+
+    /* Table shell */
+    #ap-no-plan-app .ap-table-wrapper {
+      overflow-x: auto;
+      border-radius: 8px;
+      background: #fff;
+      padding: 8px;
+      border: 1px solid #e5e7eb;
+    }
+
+    #ap-no-plan-app table.ap-income-table {
       width: 100%;
       border-collapse: collapse;
       min-width: 900px;
       background: #ffffff;
     }
 
-    #ap-no-plan-joint table.ap-income-table thead th {
+    #ap-no-plan-app table.ap-income-table thead th {
       background: #0b5aa2;
       color: #f9fafb;
       padding: 6px 4px;
@@ -58,26 +99,26 @@
       white-space: nowrap;
     }
 
-    #ap-no-plan-joint table.ap-income-table tbody td {
+    #ap-no-plan-app table.ap-income-table tbody td {
       border: 1px solid #e5e7eb;
       padding: 4px;
       text-align: center;
       font-size: 13px;
     }
 
-    /* His SS column (4th) – light blue */
-    #ap-no-plan-joint table.ap-income-table thead th:nth-child(4),
-    #ap-no-plan-joint table.ap-income-table tbody td:nth-child(4) {
+    /* His SS (4th col) light blue */
+    #ap-no-plan-app table.ap-income-table thead th:nth-child(4),
+    #ap-no-plan-app table.ap-income-table tbody td:nth-child(4) {
       background-color: #e0f2ff;
     }
 
-    /* Her SS column (5th) – light pink */
-    #ap-no-plan-joint table.ap-income-table thead th:nth-child(5),
-    #ap-no-plan-joint table.ap-income-table tbody td:nth-child(5) {
+    /* Her SS (5th col) light pink */
+    #ap-no-plan-app table.ap-income-table thead th:nth-child(5),
+    #ap-no-plan-app table.ap-income-table tbody td:nth-child(5) {
       background-color: #ffe0ef;
     }
 
-    #ap-no-plan-joint input.ap-cell-input {
+    #ap-no-plan-app input.ap-cell-input {
       width: 100%;
       padding: 2px 3px;
       font-size: 12px;
@@ -86,86 +127,310 @@
       text-align: right;
     }
 
-    #ap-no-plan-joint input.ap-cell-input:focus {
+    #ap-no-plan-app input.ap-cell-input:focus {
       outline: 2px solid #0b5aa2;
       outline-offset: 0;
     }
 
-    #ap-no-plan-joint input.ap-cell-input.ap-year-input,
-    #ap-no-plan-joint input.ap-cell-input.ap-age-input {
+    #ap-no-plan-app input.ap-year-input,
+    #ap-no-plan-app input.ap-age-input {
       text-align: center;
     }
 
-    #ap-no-plan-joint .ap-footer-note {
+    #ap-no-plan-app .ap-gap-negative {
+      color: red !important;
+      font-weight: 700 !important;
+    }
+
+    #ap-no-plan-app .ap-gap-nonnegative {
+      color: inherit;
+      font-weight: 400;
+    }
+
+    #ap-no-plan-app .ap-footer-note {
       margin-top: 10px;
       font-size: 12px;
       color: #555;
       font-style: italic;
     }
 
-    #ap-no-plan-joint .ap-gap-negative {
-      color: red !important;
-      font-weight: 700 !important;
+    /* Final Allocation tables */
+    #ap-no-plan-app table.ap-simple-table {
+      width: 100%;
+      border-collapse: collapse;
+      background:#ffffff;
+      margin-bottom: 10px;
     }
 
-    #ap-no-plan-joint .ap-gap-nonnegative {
-      color: inherit;
-      font-weight: 400;
+    #ap-no-plan-app table.ap-simple-table th,
+    #ap-no-plan-app table.ap-simple-table td {
+      border:1px solid #e5e7eb;
+      padding:6px;
+      font-size:13px;
+      text-align:left;
     }
+
+    #ap-no-plan-app table.ap-simple-table th {
+      background:#e5effa;
+      color:#111827;
+    }
+
+    #ap-no-plan-app .ap-section-heading {
+      font-size:16px;
+      font-weight:600;
+      color:#0b5aa2;
+      margin: 8px 0 4px;
+    }
+
   </style>
 
-  <h2>No-Plan Joint Income Projection</h2>
-  <p class="ap-intro">
-    Use this page to view and adjust your <strong>No-Plan Joint</strong> income scenario. You can enter
-    yearly amounts for His Social Security, Her Social Security, pension income, and other income.
-    The table automatically calculates <strong>Total Income</strong> and the <strong>Gap</strong> between
-    Total Income and your Target Income.
-  </p>
-  <p class="ap-note">
-    <strong>Auto-Save:</strong> Everything you type on this page is saved in your browser. When you return
-    on the same computer and browser, your entries will reload automatically.
-  </p>
+  <!-- TAB BUTTONS -->
+  <div class="ap-tabs">
+    <button class="ap-tab-btn ap-active" data-ap-tab="joint">No-Plan Joint Income</button>
+    <button class="ap-tab-btn" data-ap-tab="her">No-Plan – Her Survival</button>
+    <button class="ap-tab-btn" data-ap-tab="his">No-Plan – His Survival</button>
+    <button class="ap-tab-btn" data-ap-tab="final">Final Allocation &amp; Income</button>
+  </div>
 
-  <div class="ap-table-wrapper">
-    <table id="ap-no-plan-table" class="ap-income-table">
+  <!-- TAB: JOINT -->
+  <section id="ap-tab-joint" class="ap-tab-section ap-active">
+    <h2>No-Plan Joint Income Projection</h2>
+    <p class="ap-intro">
+      Joint income if both spouses are living. Enter yearly income sources and Target Income.
+      The table will calculate <strong>Total Income</strong> and the <strong>Gap</strong> for each year.
+    </p>
+    <p class="ap-note">
+      <strong>Auto-Save:</strong> Everything you type in any of these tabs is saved in your browser.
+      When you return on the same computer and browser, your entries reload automatically.
+    </p>
+
+    <div class="ap-table-wrapper">
+      <table class="ap-income-table" id="ap-table-joint">
+        <thead>
+          <tr>
+            <th>Year</th>
+            <th>Age (His)</th>
+            <th>Age (Her)</th>
+            <th>His Social Security</th>
+            <th>Her Social Security</th>
+            <th>Pension Income</th>
+            <th>Other Income</th>
+            <th>Total Income</th>
+            <th>Target Income</th>
+            <th>Gap</th>
+          </tr>
+        </thead>
+        <tbody id="ap-body-joint">
+          <!-- rows injected by script -->
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ap-footer-note">
+      Negative Gap values are shown in <span style="color:red;font-weight:700;">red and bold</span>.
+      Adjust income or Target Income to see how the Gap changes over time.
+    </div>
+  </section>
+
+  <!-- TAB: HER SURVIVAL -->
+  <section id="ap-tab-her" class="ap-tab-section">
+    <h2>No-Plan – Her Survival Income</h2>
+    <p class="ap-intro">
+      Income projection assuming <strong>she survives him</strong>. You can mirror or adjust Social Security,
+      pension, and other income to reflect survivor benefits.
+    </p>
+
+    <div class="ap-table-wrapper">
+      <table class="ap-income-table" id="ap-table-her">
+        <thead>
+          <tr>
+            <th>Year</th>
+            <th>Age (Her)</th>
+            <th>Age (His)</th>
+            <th>His Social Security</th>
+            <th>Her Social Security</th>
+            <th>Pension Income</th>
+            <th>Other Income</th>
+            <th>Total Income</th>
+            <th>Target Income</th>
+            <th>Gap</th>
+          </tr>
+        </thead>
+        <tbody id="ap-body-her">
+          <!-- rows injected by script -->
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ap-footer-note">
+      Use this to stress-test income if he passes away first and she continues alone.
+      Gaps show in <span style="color:red;font-weight:700;">bold red</span>.
+    </div>
+  </section>
+
+  <!-- TAB: HIS SURVIVAL -->
+  <section id="ap-tab-his" class="ap-tab-section">
+    <h2>No-Plan – His Survival Income</h2>
+    <p class="ap-intro">
+      Income projection assuming <strong>he survives her</strong>. Adjust benefits and other income to reflect
+      survivor benefits and any income changes.
+    </p>
+
+    <div class="ap-table-wrapper">
+      <table class="ap-income-table" id="ap-table-his">
+        <thead>
+          <tr>
+            <th>Year</th>
+            <th>Age (His)</th>
+            <th>Age (Her)</th>
+            <th>His Social Security</th>
+            <th>Her Social Security</th>
+            <th>Pension Income</th>
+            <th>Other Income</th>
+            <th>Total Income</th>
+            <th>Target Income</th>
+            <th>Gap</th>
+          </tr>
+        </thead>
+        <tbody id="ap-body-his">
+          <!-- rows injected by script -->
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ap-footer-note">
+      Use this page to see whether he will have sufficient income if she passes away first.
+      Negative Gaps highlight shortfalls that may need planning.
+    </div>
+  </section>
+
+  <!-- TAB: FINAL ALLOCATION & INCOME -->
+  <section id="ap-tab-final" class="ap-tab-section">
+    <h2>Final Allocation &amp; Income Summary (No-Plan)</h2>
+    <p class="ap-intro">
+      Summarize your base asset allocation (Red / Yellow / Green buckets) and connect it to your
+      No-Plan income picture. These values are manual-entry but auto-save in your browser.
+    </p>
+
+    <div class="ap-section-heading">Guaranteed &amp; Expected Income Summary</div>
+    <table class="ap-simple-table">
       <thead>
         <tr>
-          <th>Year</th>
-          <th>Age (His)</th>
-          <th>Age (Her)</th>
-          <th>His Social Security</th>
-          <th>Her Social Security</th>
-          <th>Pension Income</th>
-          <th>Other Income</th>
-          <th>Total Income</th>
-          <th>Target Income</th>
-          <th>Gap</th>
+          <th>Source</th>
+          <th>Annual Amount</th>
+          <th>Notes</th>
         </tr>
       </thead>
-      <tbody id="ap-no-plan-body">
-        <!-- Rows are created by script -->
+      <tbody>
+        <tr>
+          <td>His Social Security (Full)</td>
+          <td><input type="text" id="fa_his_ss_full" class="ap-cell-input" /></td>
+          <td><input type="text" id="fa_his_ss_notes" class="ap-cell-input" style="text-align:left;" /></td>
+        </tr>
+        <tr>
+          <td>Her Social Security (Full)</td>
+          <td><input type="text" id="fa_her_ss_full" class="ap-cell-input" /></td>
+          <td><input type="text" id="fa_her_ss_notes" class="ap-cell-input" style="text-align:left;" /></td>
+        </tr>
+        <tr>
+          <td>Pension Income</td>
+          <td><input type="text" id="fa_pension" class="ap-cell-input" /></td>
+          <td><input type="text" id="fa_pension_notes" class="ap-cell-input" style="text-align:left;" /></td>
+        </tr>
+        <tr>
+          <td>Other Reliable Income</td>
+          <td><input type="text" id="fa_other" class="ap-cell-input" /></td>
+          <td><input type="text" id="fa_other_notes" class="ap-cell-input" style="text-align:left;" /></td>
+        </tr>
+        <tr>
+          <td><strong>Total Expected Income (Baseline)</strong></td>
+          <td><input type="text" id="fa_total_income" class="ap-cell-input" readonly /></td>
+          <td style="font-size:12px;color:#555;">Calculated from rows above</td>
+        </tr>
       </tbody>
     </table>
-  </div>
 
-  <div class="ap-footer-note">
-    Note: Negative Gap values are shown in <span style="color:red;font-weight:700;">red and bold</span>.
-    You can adjust income or Target Income for each year to see how the Gap changes.
-  </div>
+    <div class="ap-section-heading">Base Asset Allocation (Red / Yellow / Green)</div>
+    <table class="ap-simple-table">
+      <thead>
+        <tr>
+          <th>Bucket</th>
+          <th>Amount</th>
+          <th>% of Total</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Red – Risk / Market</td>
+          <td><input type="text" id="fa_red_amt" class="ap-cell-input" /></td>
+          <td><input type="text" id="fa_red_pct" class="ap-cell-input" readonly /></td>
+          <td><input type="text" id="fa_red_notes" class="ap-cell-input" style="text-align:left;" /></td>
+        </tr>
+        <tr>
+          <td>Yellow – Liquid / Cash</td>
+          <td><input type="text" id="fa_yellow_amt" class="ap-cell-input" /></td>
+          <td><input type="text" id="fa_yellow_pct" class="ap-cell-input" readonly /></td>
+          <td><input type="text" id="fa_yellow_notes" class="ap-cell-input" style="text-align:left;" /></td>
+        </tr>
+        <tr>
+          <td>Green – Protected / Guarantees</td>
+          <td><input type="text" id="fa_green_amt" class="ap-cell-input" /></td>
+          <td><input type="text" id="fa_green_pct" class="ap-cell-input" readonly /></td>
+          <td><input type="text" id="fa_green_notes" class="ap-cell-input" style="text-align:left;" /></td>
+        </tr>
+        <tr>
+          <td><strong>Total Assets</strong></td>
+          <td><input type="text" id="fa_total_assets" class="ap-cell-input" readonly /></td>
+          <td><input type="text" id="fa_total_pct" class="ap-cell-input" readonly /></td>
+          <td style="font-size:12px;color:#555;">Totals and % check (should be 100%)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="ap-footer-note">
+      This page is your visual “dashboard” of how much income is coming from Social Security, pensions,
+      and other sources, and how your base assets are allocated across Red, Yellow, and Green buckets.
+    </div>
+  </section>
 </div>
 
 <script>
 (function () {
-  // ------------- CONFIG -------------
-  var ROW_COUNT = 30; // how many years/rows to show
+  // ---------- CONFIG ----------
+  var ROW_COUNT = 30;
+  var STORAGE_KEY = "IFL_NO_PLAN_SUITE_" + location.pathname;
 
-  // ------------- AUTOSAVE -------------
-  var STORAGE_KEY = "IFL_NO_PLAN_JOINT_" + location.pathname;
+  // ---------- TAB LOGIC ----------
+  function initTabs() {
+    var app = document.getElementById("ap-no-plan-app");
+    if (!app) return;
 
+    var buttons = app.querySelectorAll(".ap-tab-btn");
+    var sections = app.querySelectorAll(".ap-tab-section");
+
+    buttons.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var tab = btn.getAttribute("data-ap-tab");
+        // activate button
+        buttons.forEach(function (b) {
+          b.classList.toggle("ap-active", b === btn);
+        });
+        // show section
+        sections.forEach(function (sec) {
+          var id = sec.id || "";
+          var name = id.replace("ap-tab-", "");
+          sec.classList.toggle("ap-active", name === tab);
+        });
+      });
+    });
+  }
+
+  // ---------- AUTOSAVE ----------
   function getAllFields() {
-    return Array.from(
-      document.querySelectorAll("#ap-no-plan-joint input.ap-cell-input")
-    );
+    var app = document.getElementById("ap-no-plan-app");
+    if (!app) return [];
+    return Array.from(app.querySelectorAll("input, select, textarea"));
   }
 
   function saveAutosave() {
@@ -175,10 +440,7 @@
       fields.forEach(function (el) {
         var key = el.id || el.name;
         if (!key) return;
-        data[key] = {
-          type: "value",
-          value: el.value
-        };
+        data[key] = { value: el.value };
       });
       localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
     } catch (e) {
@@ -195,18 +457,14 @@
       fields.forEach(function (el) {
         var key = el.id || el.name;
         if (!key || !(key in data)) return;
-        var saved = data[key];
-        if (saved && typeof saved.value !== "undefined") {
-          el.value = saved.value;
-        }
+        el.value = data[key].value || "";
       });
     } catch (e) {
       if (console && console.warn) console.warn("Load autosave failed:", e);
     }
   }
 
-  // ------------- TABLE / CALCS -------------
-
+  // ---------- HELPERS ----------
   function parseNum(val) {
     if (val == null) return 0;
     var cleaned = String(val).replace(/[,$\s]/g, "");
@@ -221,50 +479,7 @@
     return fixed.toLocaleString("en-US");
   }
 
-  function recalcAllRows() {
-    var rows = document.querySelectorAll("#ap-no-plan-table tbody tr");
-    rows.forEach(function (row) {
-      var hisSS = row.querySelector("input.ap-his-ss");
-      var herSS = row.querySelector("input.ap-her-ss");
-      var pension = row.querySelector("input.ap-pension");
-      var other = row.querySelector("input.ap-other");
-      var total = row.querySelector("input.ap-total");
-      var target = row.querySelector("input.ap-target");
-      var gap = row.querySelector("input.ap-gap");
-
-      var hisVal = hisSS ? parseNum(hisSS.value) : 0;
-      var herVal = herSS ? parseNum(herSS.value) : 0;
-      var penVal = pension ? parseNum(pension.value) : 0;
-      var othVal = other ? parseNum(other.value) : 0;
-
-      var totalVal = hisVal + herVal + penVal + othVal;
-      if (total) {
-        total.value = formatMoney(totalVal);
-      }
-
-      var targetVal = target ? parseNum(target.value) : 0;
-      var gapVal = totalVal - targetVal;
-
-      if (gap) {
-        gap.value = gap.value === "" && gapVal === 0 ? "" : formatMoney(gapVal);
-
-        // Negative Gap styling
-        if (gapVal < 0) {
-          gap.classList.add("ap-gap-negative");
-          gap.classList.remove("ap-gap-nonnegative");
-        } else {
-          gap.classList.remove("ap-gap-negative");
-          gap.classList.add("ap-gap-nonnegative");
-        }
-      }
-    });
-  }
-
-  function handleFieldChange() {
-    saveAutosave();
-    recalcAllRows();
-  }
-
+  // ---------- BUILD NO-PLAN TABLE ROWS ----------
   function createInputCell(row, id, extraClass) {
     var td = document.createElement("td");
     var input = document.createElement("input");
@@ -276,8 +491,8 @@
     row.appendChild(td);
   }
 
-  function buildTableRows() {
-    var tbody = document.getElementById("ap-no-plan-body");
+  function buildNoPlanTable(prefix, bodyId) {
+    var tbody = document.getElementById(bodyId);
     if (!tbody) return;
 
     tbody.innerHTML = "";
@@ -285,47 +500,59 @@
     for (var i = 0; i < ROW_COUNT; i++) {
       var row = document.createElement("tr");
 
-      // Year
-      createInputCell(row, "np_year_" + i, "ap-year-input");
+      // Col 1: Year
+      createInputCell(row, prefix + "_year_" + i, "ap-year-input");
 
-      // Age (His)
-      createInputCell(row, "np_age_his_" + i, "ap-age-input");
-
-      // Age (Her)
-      createInputCell(row, "np_age_her_" + i, "ap-age-input");
+      // Col 2 & 3: Ages (order depends on tab)
+      if (prefix === "joint") {
+        createInputCell(row, prefix + "_age_his_" + i, "ap-age-input");
+        createInputCell(row, prefix + "_age_her_" + i, "ap-age-input");
+      } else if (prefix === "her") {
+        // Her Survival: Age (Her), Age (His)
+        createInputCell(row, prefix + "_age_her_" + i, "ap-age-input");
+        createInputCell(row, prefix + "_age_his_" + i, "ap-age-input");
+      } else if (prefix === "his") {
+        // His Survival: Age (His), Age (Her)
+        createInputCell(row, prefix + "_age_his_" + i, "ap-age-input");
+        createInputCell(row, prefix + "_age_her_" + i, "ap-age-input");
+      } else {
+        // Fallback
+        createInputCell(row, prefix + "_age_1_" + i, "ap-age-input");
+        createInputCell(row, prefix + "_age_2_" + i, "ap-age-input");
+      }
 
       // His Social Security
-      createInputCell(row, "np_his_ss_" + i, "ap-his-ss");
+      createInputCell(row, prefix + "_his_ss_" + i, "ap-his-ss");
 
       // Her Social Security
-      createInputCell(row, "np_her_ss_" + i, "ap-her-ss");
+      createInputCell(row, prefix + "_her_ss_" + i, "ap-her-ss");
 
-      // Pension Income
-      createInputCell(row, "np_pension_" + i, "ap-pension");
+      // Pension
+      createInputCell(row, prefix + "_pension_" + i, "ap-pension");
 
-      // Other Income
-      createInputCell(row, "np_other_" + i, "ap-other");
+      // Other
+      createInputCell(row, prefix + "_other_" + i, "ap-other");
 
-      // Total Income (read-only)
+      // Total (read-only)
       var tdTotal = document.createElement("td");
       var inputTotal = document.createElement("input");
       inputTotal.type = "text";
-      inputTotal.id = "np_total_" + i;
-      inputTotal.name = "np_total_" + i;
+      inputTotal.id = prefix + "_total_" + i;
+      inputTotal.name = prefix + "_total_" + i;
       inputTotal.className = "ap-cell-input ap-total";
       inputTotal.readOnly = true;
       tdTotal.appendChild(inputTotal);
       row.appendChild(tdTotal);
 
       // Target Income
-      createInputCell(row, "np_target_" + i, "ap-target");
+      createInputCell(row, prefix + "_target_" + i, "ap-target");
 
       // Gap (read-only)
       var tdGap = document.createElement("td");
       var inputGap = document.createElement("input");
       inputGap.type = "text";
-      inputGap.id = "np_gap_" + i;
-      inputGap.name = "np_gap_" + i;
+      inputGap.id = prefix + "_gap_" + i;
+      inputGap.name = prefix + "_gap_" + i;
       inputGap.className = "ap-cell-input ap-gap";
       inputGap.readOnly = true;
       tdGap.appendChild(inputGap);
@@ -335,26 +562,120 @@
     }
   }
 
-  // ------------- INIT -------------
+  // ---------- RECALC NO-PLAN TABLES ----------
+  function recalcNoPlan(prefix) {
+    var tbody = document.getElementById("ap-body-" + prefix);
+    if (!tbody) return;
+    var rows = tbody.querySelectorAll("tr");
+    rows.forEach(function (row, i) {
+      var hisSS = row.querySelector("input[id^='" + prefix + "_his_ss_']");
+      var herSS = row.querySelector("input[id^='" + prefix + "_her_ss_']");
+      var pension = row.querySelector("input[id^='" + prefix + "_pension_']");
+      var other = row.querySelector("input[id^='" + prefix + "_other_']");
+      var total = row.querySelector("input[id^='" + prefix + "_total_']");
+      var target = row.querySelector("input[id^='" + prefix + "_target_']");
+      var gap = row.querySelector("input[id^='" + prefix + "_gap_']");
 
+      var hisVal = hisSS ? parseNum(hisSS.value) : 0;
+      var herVal = herSS ? parseNum(herSS.value) : 0;
+      var penVal = pension ? parseNum(pension.value) : 0;
+      var othVal = other ? parseNum(other.value) : 0;
+
+      var totalVal = hisVal + herVal + penVal + othVal;
+      if (total) {
+        total.value = total.value === "" && totalVal === 0 ? "" : formatMoney(totalVal);
+      }
+
+      var targetVal = target ? parseNum(target.value) : 0;
+      var gapVal = totalVal - targetVal;
+
+      if (gap) {
+        gap.value = gap.value === "" && gapVal === 0 ? "" : formatMoney(gapVal);
+        if (gapVal < 0) {
+          gap.classList.add("ap-gap-negative");
+          gap.classList.remove("ap-gap-nonnegative");
+        } else {
+          gap.classList.remove("ap-gap-negative");
+          gap.classList.add("ap-gap-nonnegative");
+        }
+      }
+    });
+  }
+
+  function recalcAllNoPlan() {
+    ["joint", "her", "his"].forEach(recalcNoPlan);
+  }
+
+  // ---------- RECALC FINAL PAGE ----------
+  function recalcFinal() {
+    // Income totals
+    var his = parseNum(document.getElementById("fa_his_ss_full") && document.getElementById("fa_his_ss_full").value);
+    var her = parseNum(document.getElementById("fa_her_ss_full") && document.getElementById("fa_her_ss_full").value);
+    var pen = parseNum(document.getElementById("fa_pension") && document.getElementById("fa_pension").value);
+    var oth = parseNum(document.getElementById("fa_other") && document.getElementById("fa_other").value);
+    var totalIncome = his + her + pen + oth;
+    var faTotalIncome = document.getElementById("fa_total_income");
+    if (faTotalIncome) {
+      faTotalIncome.value = totalIncome === 0 ? "" : formatMoney(totalIncome);
+    }
+
+    // Asset totals
+    var red = parseNum(document.getElementById("fa_red_amt") && document.getElementById("fa_red_amt").value);
+    var yellow = parseNum(document.getElementById("fa_yellow_amt") && document.getElementById("fa_yellow_amt").value);
+    var green = parseNum(document.getElementById("fa_green_amt") && document.getElementById("fa_green_amt").value);
+    var totalAssets = red + yellow + green;
+
+    var faTotAssets = document.getElementById("fa_total_assets");
+    var faTotPct = document.getElementById("fa_total_pct");
+    var redPct = document.getElementById("fa_red_pct");
+    var yellowPct = document.getElementById("fa_yellow_pct");
+    var greenPct = document.getElementById("fa_green_pct");
+
+    if (faTotAssets) {
+      faTotAssets.value = totalAssets === 0 ? "" : formatMoney(totalAssets);
+    }
+
+    function pct(val, total) {
+      if (!total) return "";
+      return ((val / total) * 100).toFixed(1) + "%";
+    }
+
+    if (redPct) redPct.value = totalAssets ? pct(red, totalAssets) : "";
+    if (yellowPct) yellowPct.value = totalAssets ? pct(yellow, totalAssets) : "";
+    if (greenPct) greenPct.value = totalAssets ? pct(green, totalAssets) : "";
+    if (faTotPct) faTotPct.value = totalAssets ? "100.0%" : "";
+  }
+
+  // ---------- CHANGE HANDLER ----------
+  function handleChange() {
+    saveAutosave();
+    recalcAllNoPlan();
+    recalcFinal();
+  }
+
+  // ---------- INIT ----------
   document.addEventListener("DOMContentLoaded", function () {
-    // Build the empty rows first
-    buildTableRows();
+    // Build all three No-Plan tables
+    buildNoPlanTable("joint", "ap-body-joint");
+    buildNoPlanTable("her", "ap-body-her");
+    buildNoPlanTable("his", "ap-body-his");
 
-    // Restore autosaved values
+    // Load previous values (if any)
     loadAutosave();
 
-    // Recalc totals/gaps based on any restored values
-    recalcAllRows();
+    // Run initial recalc
+    recalcAllNoPlan();
+    recalcFinal();
 
-    // Attach change handlers
-    document
-      .getElementById("ap-no-plan-joint")
-      .addEventListener("input", handleFieldChange, true);
+    // Tabs
+    initTabs();
 
-    document
-      .getElementById("ap-no-plan-joint")
-      .addEventListener("change", handleFieldChange, true);
+    // Global change listener for the whole app
+    var app = document.getElementById("ap-no-plan-app");
+    if (app) {
+      app.addEventListener("input", handleChange, true);
+      app.addEventListener("change", handleChange, true);
+    }
   });
 })();
 </script>
