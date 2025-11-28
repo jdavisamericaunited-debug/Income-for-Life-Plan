@@ -61,65 +61,49 @@
     });
   }
 
-  // ---------- Data Form totals (mimic Excel SUM formulas) ----------
+  // ---------- Data Form totals (mirror Excel logic) ----------
   function apUpdateDataFormTotals() {
-    // Investments total = SUM of inv1Balance..inv3Balance
+    // INVESTMENTS: TOTALS row like =SUM(D47:D56)
     var invTotal = 0;
-    var hasInvLine = false;
-    for (var j = 1; j <= 3; j++) {
+    for (var j = 1; j <= 10; j++) { // up to 10 lines if you expand later
       var rawInv = apGetInputValue('inv' + j + 'Balance');
-      if (rawInv && rawInv.trim() !== '') {
-        hasInvLine = true;
-        invTotal += apParseCurrency(rawInv);
-      }
+      invTotal += apParseCurrency(rawInv);
     }
     var invTotalField = document.querySelector('[name="invTotalBalance"]');
-    if (invTotalField && hasInvLine) {
+    if (invTotalField) {
       invTotalField.value = apFormatCurrency(invTotal);
     }
 
-    // Savings total = SUM of save1Balance..save4Balance
+    // SAVINGS: Total like =SUM(C59:C68)
     var savTotal = 0;
-    var hasSavLine = false;
-    for (var i = 1; i <= 4; i++) {
+    for (var i = 1; i <= 10; i++) { // room to grow
       var rawSav = apGetInputValue('save' + i + 'Balance');
-      if (rawSav && rawSav.trim() !== '') {
-        hasSavLine = true;
-        savTotal += apParseCurrency(rawSav);
-      }
+      savTotal += apParseCurrency(rawSav);
     }
     var savTotalField = document.querySelector('[name="saveTotalBalance"]');
-    if (savTotalField && hasSavLine) {
+    if (savTotalField) {
       savTotalField.value = apFormatCurrency(savTotal);
     }
 
-    // Annuities total = SUM of ann1Balance..ann2Balance
+    // ANNUITIES: Total like =C71+C72+C73+C74+C75
     var annTotal = 0;
-    var hasAnnLine = false;
-    for (var k = 1; k <= 2; k++) {
+    for (var k = 1; k <= 10; k++) { // room to grow
       var rawAnn = apGetInputValue('ann' + k + 'Balance');
-      if (rawAnn && rawAnn.trim() !== '') {
-        hasAnnLine = true;
-        annTotal += apParseCurrency(rawAnn);
-      }
+      annTotal += apParseCurrency(rawAnn);
     }
     var annTotalField = document.querySelector('[name="annTotalBalance"]');
-    if (annTotalField && hasAnnLine) {
+    if (annTotalField) {
       annTotalField.value = apFormatCurrency(annTotal);
     }
 
-    // Income total = SUM of inc1Amount..inc3Amount
+    // INCOME: Approx Total Annual Income like =SUM(D79:D86)
     var incTotal = 0;
-    var hasIncLine = false;
-    for (var r = 1; r <= 3; r++) {
+    for (var r = 1; r <= 10; r++) {
       var rawInc = apGetInputValue('inc' + r + 'Amount');
-      if (rawInc && rawInc.trim() !== '') {
-        hasIncLine = true;
-        incTotal += apParseCurrency(rawInc);
-      }
+      incTotal += apParseCurrency(rawInc);
     }
     var incTotalField = document.querySelector('[name="incTotalAmount"]');
-    if (incTotalField && hasIncLine) {
+    if (incTotalField) {
       incTotalField.value = apFormatCurrency(incTotal);
     }
   }
@@ -163,7 +147,7 @@
     var totalCash = 0;
     if (cashRowsBody) {
       cashRowsBody.innerHTML = '';
-      var maxCash = 4; // save1..save4
+      var maxCash = 10; // save1..save10 if needed
       var cashRowCount = 0;
 
       for (var i = 1; i <= maxCash; i++) {
@@ -184,23 +168,18 @@
         cashRowsBody.appendChild(tr);
       }
 
-      // Fallback: if user only filled the TOTAL field, still show something
+      // Fallback: if user only cares about the TOTAL field, still show something
       if (cashRowCount === 0) {
-        var totalFieldCash = apParseCurrency(apGetInputValue('saveTotalBalance'));
-        if (totalFieldCash) {
-          totalCash = totalFieldCash;
-          var trAgg = document.createElement('tr');
-          trAgg.innerHTML =
-            '<td></td>' +
-            '<td>Aggregate cash (from total)</td>' +
-            '<td class="ap-num">' + apFormatCurrency(totalCash) + '</td>';
-          cashRowsBody.appendChild(trAgg);
-        }
-      } else {
-        // Auto-fill TOTAL field on the Data form from line items
-        apSetInputValue('saveTotalBalance', apFormatCurrency(totalCash));
+        totalCash = apParseCurrency(apGetInputValue('saveTotalBalance'));
+        var trAgg = document.createElement('tr');
+        trAgg.innerHTML =
+          '<td></td>' +
+          '<td>Aggregate cash</td>' +
+          '<td class="ap-num">' + apFormatCurrency(totalCash) + '</td>';
+        cashRowsBody.appendChild(trAgg);
       }
 
+      apSetInputValue('saveTotalBalance', apFormatCurrency(totalCash));
       var elTC = document.getElementById('ap-total-cash');
       if (elTC) elTC.textContent = apFormatCurrency(totalCash);
     }
@@ -210,7 +189,7 @@
     var totalInv = 0;
     if (invRowsBody) {
       invRowsBody.innerHTML = '';
-      var maxInv = 3; // inv1..inv3
+      var maxInv = 10; // inv1..inv10
       var invRowCount = 0;
 
       for (var j = 1; j <= maxInv; j++) {
@@ -233,24 +212,18 @@
         invRowsBody.appendChild(tr2);
       }
 
-      // Fallback: if no rows but TOTAL field filled, still show an aggregate line
       if (invRowCount === 0) {
-        var totalFieldInv = apParseCurrency(apGetInputValue('invTotalBalance'));
-        if (totalFieldInv) {
-          totalInv = totalFieldInv;
-          var trAggInv = document.createElement('tr');
-          trAggInv.innerHTML =
-            '<td></td>' +
-            '<td>Aggregate investments (from total)</td>' +
-            '<td></td>' +
-            '<td class="ap-num">' + apFormatCurrency(totalInv) + '</td>';
-          invRowsBody.appendChild(trAggInv);
-        }
-      } else {
-        // Auto-fill TOTAL field from line items
-        apSetInputValue('invTotalBalance', apFormatCurrency(totalInv));
+        totalInv = apParseCurrency(apGetInputValue('invTotalBalance'));
+        var trAggInv = document.createElement('tr');
+        trAggInv.innerHTML =
+          '<td></td>' +
+          '<td>Aggregate investments</td>' +
+          '<td></td>' +
+          '<td class="ap-num">' + apFormatCurrency(totalInv) + '</td>';
+        invRowsBody.appendChild(trAggInv);
       }
 
+      apSetInputValue('invTotalBalance', apFormatCurrency(totalInv));
       var elTI = document.getElementById('ap-total-investments');
       if (elTI) elTI.textContent = apFormatCurrency(totalInv);
     }
@@ -283,7 +256,7 @@
     var totalAnn = 0;
     if (annRowsBody) {
       annRowsBody.innerHTML = '';
-      var maxAnn = 2; // ann1..ann2
+      var maxAnn = 10; // ann1..ann10
       var annRowCount = 0;
 
       for (var k = 1; k <= maxAnn; k++) {
@@ -305,23 +278,18 @@
         annRowsBody.appendChild(tr3);
       }
 
-      // Fallback from TOTAL field if needed
       if (annRowCount === 0) {
-        var totalFieldAnn = apParseCurrency(apGetInputValue('annTotalBalance'));
-        if (totalFieldAnn) {
-          totalAnn = totalFieldAnn;
-          var trAggAnn = document.createElement('tr');
-          trAggAnn.innerHTML =
-            '<td></td>' +
-            '<td>Aggregate annuities (from total)</td>' +
-            '<td></td>' +
-            '<td class="ap-num">' + apFormatCurrency(totalAnn) + '</td>';
-          annRowsBody.appendChild(trAggAnn);
-        }
-      } else {
-        apSetInputValue('annTotalBalance', apFormatCurrency(totalAnn));
+        totalAnn = apParseCurrency(apGetInputValue('annTotalBalance'));
+        var trAggAnn = document.createElement('tr');
+        trAggAnn.innerHTML =
+          '<td></td>' +
+          '<td>Aggregate annuities</td>' +
+          '<td></td>' +
+          '<td class="ap-num">' + apFormatCurrency(totalAnn) + '</td>';
+        annRowsBody.appendChild(trAggAnn);
       }
 
+      apSetInputValue('annTotalBalance', apFormatCurrency(totalAnn));
       var elTA = document.getElementById('ap-total-annuities');
       if (elTA) elTA.textContent = apFormatCurrency(totalAnn);
     }
@@ -354,7 +322,7 @@
     var bCur = apParseCurrency(apGetInputValue('currentBGreen'));
     var totalCur = aCur + cCur + bCur;
     var curTotEl = document.getElementById('currentTotalInvestable');
-    if (curTotEl && (aCur || cCur || bCur)) {
+    if (curTotEl) {
       curTotEl.value = apFormatCurrency(totalCur);
     }
 
@@ -364,7 +332,7 @@
     var bSil = apParseCurrency(apGetInputValue('silverBGreen'));
     var totalSil = aSil + cSil + bSil;
     var silTotEl = document.getElementById('silverTotalInvestable');
-    if (silTotEl && (aSil || cSil || bSil)) {
+    if (silTotEl) {
       silTotEl.value = apFormatCurrency(totalSil);
     }
 
@@ -374,7 +342,7 @@
     var bGol = apParseCurrency(apGetInputValue('goldBGreen'));
     var totalGol = aGol + cGol + bGol;
     var golTotEl = document.getElementById('goldTotalInvestable');
-    if (golTotEl && (aGol || cGol || bGol)) {
+    if (golTotEl) {
       golTotEl.value = apFormatCurrency(totalGol);
     }
 
@@ -421,7 +389,7 @@
       // Load previously saved data if present
       apLoadGoalsDataFromStorage();
 
-      // Immediately compute totals from any loaded data
+      // Compute totals from loaded data
       apUpdateDataFormTotals();
 
       // Wire tabs
@@ -445,24 +413,18 @@
         });
       }
 
-      // Live update Data Form totals as you type in amount fields
-      var totalInputs = [
-        'inv1Balance','inv2Balance','inv3Balance',
-        'save1Balance','save2Balance','save3Balance','save4Balance',
-        'ann1Balance','ann2Balance',
-        'inc1Amount','inc2Amount','inc3Amount'
-      ];
-      totalInputs.forEach(function(name) {
-        var el = document.querySelector('[name="' + name + '"]');
-        if (el) {
-          el.addEventListener('input', apUpdateDataFormTotals);
-        }
-      });
+      // Live update Data Form totals whenever anything changes on the form
+      var form = document.getElementById('ap-goals-data-form');
+      if (form) {
+        form.addEventListener('input', function () {
+          apUpdateDataFormTotals();
+        });
+      }
 
       // Default to Goals & Data
       showPanel('goals');
 
-      // Expose for any manual calls
+      // Expose for any manual calls in console
       window.apShowIFLPanel = showPanel;
     });
   })();
