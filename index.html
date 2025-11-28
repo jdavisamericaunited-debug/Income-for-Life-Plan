@@ -1,273 +1,102 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Income-for-Life Plan – AmericaPlanning</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: #e5e7eb;
-    }
-
-    #ap-ifl-app,
-    #ap-ifl-app * {
-      box-sizing: border-box;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-    }
-
-    #ap-ifl-app {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 24px 20px 32px;
-      background: #f3f4f6;
-      color: #111827;
-    }
-
-    #ap-ifl-app h1 {
-      font-size: 26px;
-      margin: 0 0 4px;
-    }
-
-    #ap-ifl-app .ap-page-caption {
-      font-size: 13px;
-      color: #6b7280;
-      margin-bottom: 16px;
-    }
-
-    /* Tabs */
-    .ap-ifl-tabs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-
-    .ap-ifl-tab-btn {
-      border: 1px solid #d1d5db;
-      background: #e5e7eb;
-      color: #111827;
-      border-radius: 999px;
-      padding: 6px 14px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    .ap-ifl-tab-btn.ap-ifl-tab-active {
-      background: #0b5aa2;
-      border-color: #0b5aa2;
-      color: #ffffff;
-    }
-
-    .ap-ifl-panel {
-      background: #f9fafb;
-      border-radius: 12px;
-      border: 1px solid #e5e7eb;
-      padding: 18px 18px 22px;
-      display: none; /* Start with all panels hidden */
-    }
-
-    .ap-primary-btn {
-      display: inline-block;
-      background: #0b5aa2;
-      color: #ffffff;
-      border: none;
-      border-radius: 999px;
-      padding: 8px 18px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    .ap-primary-btn:hover {
-      opacity: 0.95;
-    }
-
-    .ap-save-row {
-      text-align: right;
-      margin-top: 4px;
-    }
-
-    /* Goal Data Form Styles */
-    /* Additional styles omitted for brevity, but keep the same structure as the original */
-  </style>
-</head>
-<body>
-
-<div id="ap-ifl-app">
-  <h1>Income-for-Life Plan – Data, Asset Summary & Plan Inputs</h1>
-  <div class="ap-page-caption">
-    Internal planning tool – designed for desktop use.
-  </div>
-
-  <!-- TABS -->
-  <div class="ap-ifl-tabs">
-    <button class="ap-ifl-tab-btn ap-ifl-tab-active" data-panel="goals">Goals &amp; Data</button>
-    <button class="ap-ifl-tab-btn" data-panel="assets">Asset Summary</button>
-    <button class="ap-ifl-tab-btn" data-panel="inputs">Inputs</button>
-    <button class="ap-ifl-tab-btn" data-panel="noplanJoint">No Plan – Joint Income</button>
-    <button class="ap-ifl-tab-btn" data-panel="noplanHer">No Plan – Her Survivor</button>
-    <button class="ap-ifl-tab-btn" data-panel="noplanHis">No Plan – His Survivor</button>
-    <button class="ap-ifl-tab-btn" data-panel="noplanAlloc">No Plan – Allocation &amp; Income</button>
-  </div>
-
-  <!-- PANEL: GOALS & DATA -->
-  <div id="ap-panel-goals" class="ap-ifl-panel" style="display:block;">
-    <div id="ap-goals-data">
-      <h2>Goals &amp; Data Form</h2>
-      <div class="ap-subtitle">
-        Income-for-Life Plan – AmericaPlanning.com
-      </div>
-
-      <form id="ap-goals-data-form">
-        <!-- Example form fields omitted for brevity -->
-
-        <!-- SAVE BUTTON -->
-        <div class="ap-save-row">
-          <button type="button" id="ap-save-data-btn" class="ap-primary-btn">
-            Save Data &amp; Jump to Asset Summary
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- PANEL: ASSET SUMMARY -->
-  <div id="ap-panel-assets" class="ap-ifl-panel">
-    <!-- Asset Summary content omitted for brevity -->
-  </div>
-
-  <!-- PANEL: INPUTS -->
-  <div id="ap-panel-inputs" class="ap-ifl-panel">
-    <!-- Inputs content omitted for brevity -->
-  </div>
-
-  <!-- PANEL: NO PLAN – JOINT INCOME -->
-  <div id="ap-panel-noplanJoint" class="ap-ifl-panel">
-    <!-- No Plan Joint Income content omitted for brevity -->
-  </div>
-
-  <!-- PANEL: NO PLAN – HER SURVIVOR -->
-  <div id="ap-panel-noplanHer" class="ap-ifl-panel">
-    <!-- No Plan Her Survivor content omitted for brevity -->
-  </div>
-
-  <!-- PANEL: NO PLAN – HIS SURVIVOR -->
-  <div id="ap-panel-noplanHis" class="ap-ifl-panel">
-    <!-- No Plan His Survivor content omitted for brevity -->
-  </div>
-
-  <!-- PANEL: NO PLAN – ALLOCATION & INCOME SUMMARY -->
-  <div id="ap-panel-noplanAlloc" class="ap-ifl-panel">
-    <!-- No Plan Allocation & Income Summary content omitted for brevity -->
-  </div>
-</div>
-
 <script>
-  // ---------- Shared helpers ----------
-  function apParseCurrency(val) {
-    if (!val) return 0;
-    if (typeof val !== 'string') val = String(val);
-    val = val.replace(/[^0-9.\-]/g, '');
-    if (!val) return 0;
-    var num = parseFloat(val);
-    return isNaN(num) ? 0 : num;
-  }
+  // ---------- Tabs + wiring ----------
+  (function () {
+    function showPanel(name) {
+      // List of all panel IDs
+      var panels = ['goals', 'assets', 'inputs', 'noplanJoint', 'noplanHer', 'noplanHis', 'noplanAlloc'];
 
-  function apFormatCurrency(num) {
-    return '$' + (num || 0).toLocaleString(undefined, {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 2
-    });
-  }
-
-  function apGetInputValue(nameOrId) {
-    var el = document.querySelector('[name="' + nameOrId + '"]') ||
-             document.getElementById(nameOrId);
-    return el ? el.value || '' : '';
-  }
-
-  function apSetInputValue(idOrName, val) {
-    var byId = document.getElementById(idOrName);
-    if (byId) {
-      byId.value = val;
-      return;
-    }
-    var byName = document.querySelector('[name="' + idOrName + '"]');
-    if (byName) byName.value = val;
-  }
-
-  // ---------- Save / load Goals & Data to localStorage ----------
-  function apSaveGoalsDataToStorage() {
-    if (!window.localStorage) return;
-    var form = document.getElementById('ap-goals-data-form');
-    if (!form) return;
-    var data = {};
-    Array.prototype.forEach.call(form.elements, function(el) {
-      if (!el.name) return;
-      if (['button','submit','reset'].indexOf(el.type) !== -1) return;
-      data[el.name] = el.value;
-    });
-    localStorage.setItem('apGoalsDataForm', JSON.stringify(data));
-  }
-
-  function apLoadGoalsDataFromStorage() {
-    if (!window.localStorage) return;
-    var raw = localStorage.getItem('apGoalsDataForm');
-    if (!raw) return;
-    var form = document.getElementById('ap-goals-data-form');
-    if (!form) return;
-    var data;
-    try { data = JSON.parse(raw); } catch(e) { return; }
-    Object.keys(data).forEach(function(name) {
-      var el = form.elements[name];
-      if (!el) return;
-      el.value = data[name];
-    });
-  }
-
-  // ---------- Show Panel Function (Switch Pages) ----------
-  function showPanel(name) {
-    var panels = ['goals', 'assets', 'inputs', 'noplanJoint', 'noplanHer', 'noplanHis', 'noplanAlloc'];
-    panels.forEach(function (p) {
-      var pane = document.getElementById('ap-panel-' + p);
-      if (pane) pane.style.display = (p === name ? 'block' : 'none');
-    });
-
-    var buttons = document.querySelectorAll('#ap-ifl-app .ap-ifl-tab-btn');
-    buttons.forEach(function (btn) {
-      btn.classList.toggle('ap-ifl-tab-active', btn.getAttribute('data-panel') === name);
-    });
-  }
-
-  // ---------- Event Listeners ----------
-  document.addEventListener('DOMContentLoaded', function () {
-    // Load saved data from localStorage
-    apLoadGoalsDataFromStorage();
-
-    // Add event listeners to tab buttons
-    var buttons = document.querySelectorAll('#ap-ifl-app .ap-ifl-tab-btn');
-    buttons.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        showPanel(btn.getAttribute('data-panel'));
+      // Hide all panels
+      panels.forEach(function (p) {
+        var pane = document.getElementById('ap-panel-' + p);
+        if (pane) {
+          pane.style.display = (p === name ? 'block' : 'none');
+        }
       });
-    });
 
-    // Add event listener to the save button
-    var saveBtn = document.getElementById('ap-save-data-btn');
-    if (saveBtn) {
-      saveBtn.addEventListener('click', function () {
-        apSaveGoalsDataToStorage();
-        showPanel('assets');  // Switch to Asset Summary page after saving
-        alert('Client data saved in this browser and Asset Summary updated.');
+      // Reset tab styles and mark active tab
+      var buttons = document.querySelectorAll('#ap-ifl-app .ap-ifl-tab-btn');
+      buttons.forEach(function (btn) {
+        btn.classList.toggle('ap-ifl-tab-active', btn.getAttribute('data-panel') === name);
       });
+
+      // Update content based on selected panel
+      if (name === 'assets') {
+        apUpdateAssetSummary();
+      }
+      if (name === 'inputs') {
+        apUpdateInputsDerived();
+      }
+      if (name === 'noplanJoint' || name === 'noplanHer' || name === 'noplanHis' || name === 'noplanAlloc') {
+        apUpdateInputsDerived();
+        apRenderNoPlanProjections();
+      }
     }
 
-    showPanel('goals'); // Default panel on load
-  });
+    document.addEventListener('DOMContentLoaded', function () {
+      apLoadGoalsDataFromStorage();
+      apUpdateDataFormTotals();
+
+      // Add event listeners to tab buttons
+      var buttons = document.querySelectorAll('#ap-ifl-app .ap-ifl-tab-btn');
+      buttons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          showPanel(btn.getAttribute('data-panel'));
+        });
+      });
+
+      // Save button to save data and switch to asset summary
+      var saveBtn = document.getElementById('ap-save-data-btn');
+      if (saveBtn) {
+        saveBtn.addEventListener('click', function () {
+          apUpdateDataFormTotals();
+          apSaveGoalsDataToStorage();
+          apUpdateAssetSummary();
+          showPanel('assets');
+          alert('Client data saved in this browser and Asset Summary updated.');
+        });
+      }
+
+      // Form input events to update totals as user types
+      var form = document.getElementById('ap-goals-data-form');
+      if (form) {
+        form.addEventListener('input', function () {
+          apUpdateDataFormTotals();
+        });
+      }
+
+      // Inputs root listener to handle changes for Silver/Gold and other fields
+      var inputsRoot = document.getElementById('ap-plan-inputs');
+      if (inputsRoot) {
+        inputsRoot.addEventListener('input', function (e) {
+          var id = e.target.id || '';
+          if (
+            id.indexOf('silver') === 0 ||
+            id.indexOf('gold') === 0 ||
+            id === 'projLength' ||
+            id === 'ageHis' ||
+            id === 'ageHer' ||
+            id === 'deathAgeHis' ||
+            id === 'deathAgeHer' ||
+            id === 'currentAYellow' ||
+            id === 'currentCRed' ||
+            id === 'currentBGreen' ||
+            id === 'ssHisAnnual' || id === 'ssHerAnnual' ||
+            id === 'ssHisStartAge' || id === 'ssHerStartAge' ||
+            id === 'pension1Annual' || id === 'pension2Annual' ||
+            id === 'pension1StartAge' || id === 'pension2StartAge' ||
+            id === 'pension1SurvivorPct' || id === 'pension2SurvivorPct' ||
+            id === 'otherIncomeAnnual' || id === 'livingExpensesAnnual' ||
+            id === 'incomeGrowthPct' || id === 'expenseInflationPct'
+          ) {
+            apUpdateInputsDerived();
+            apRenderNoPlanProjections();
+          }
+        });
+      }
+
+      // Show the initial panel (Goals)
+      showPanel('goals');
+      window.apShowIFLPanel = showPanel;
+    });
+  })();
 </script>
-
-</body>
-</html>
