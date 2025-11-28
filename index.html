@@ -79,12 +79,11 @@
     <h1>Retirement Planning Tool</h1>
   </header>
 
-  <!-- Tabs for switching between pages (Data, Assets, Inputs, No-Plan) -->
+  <!-- Tabs for switching between pages (Data, Assets, Inputs) -->
   <div class="tabs">
     <button class="tab-button active" data-tab="data-page">Data</button>
     <button class="tab-button" data-tab="assets-page">Assets</button>
     <button class="tab-button" data-tab="inputs-page">Inputs</button>
-    <button class="tab-button" data-tab="no-plan-page">No-Plan</button>
   </div>
 
   <!-- Data Page Section -->
@@ -101,6 +100,10 @@
     <div class="form-section">
       <label for="ss-start-age">Social Security Start Age</label>
       <input type="text" id="ss-start-age" />
+    </div>
+    <div class="form-section">
+      <label for="expected-retirement-savings">Expected Retirement Savings</label>
+      <input type="text" id="expected-retirement-savings" />
     </div>
     <div class="footer-note">Data saved automatically. Your information will reload when you return to this page.</div>
   </div>
@@ -120,6 +123,10 @@
       <label for="real-estate">Real Estate</label>
       <input type="text" id="real-estate" />
     </div>
+    <div class="form-section">
+      <label for="pension-assets">Pension Assets</label>
+      <input type="text" id="pension-assets" />
+    </div>
     <div class="footer-note">Asset data saved automatically. Your information will reload when you return.</div>
   </div>
 
@@ -131,8 +138,8 @@
       <input type="text" id="job-income" />
     </div>
     <div class="form-section">
-      <label for="ss-benefit">Expected Social Security Benefit</label>
-      <input type="text" id="ss-benefit" />
+      <label for="expected-ss-benefit">Expected Social Security Benefit</label>
+      <input type="text" id="expected-ss-benefit" />
     </div>
     <div class="form-section">
       <label for="other-income">Other Income</label>
@@ -143,20 +150,6 @@
       <input type="text" id="inflation-rate" />
     </div>
     <div class="footer-note">Input data saved automatically. Your information will reload when you return.</div>
-  </div>
-
-  <!-- No-Plan Page Section -->
-  <div class="tab-content" id="no-plan-page">
-    <h2>No-Plan Projection</h2>
-    <div class="form-section">
-      <label for="no-plan-income">Expected Income</label>
-      <input type="text" id="no-plan-income" />
-    </div>
-    <div class="form-section">
-      <label for="no-plan-savings">Projected Savings</label>
-      <input type="text" id="no-plan-savings" />
-    </div>
-    <div class="footer-note">No-Plan projection data saved automatically. Your information will reload when you return.</div>
   </div>
 
   <!-- Footer -->
