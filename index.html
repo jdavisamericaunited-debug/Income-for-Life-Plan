@@ -860,3 +860,865 @@
     });
   })();
 </script>
+<script>
+  // ---------- Shared helpers ----------
+  function apParseCurrency(val) {
+    if (!val) return 0;
+    if (typeof val !== 'string') val = String(val);
+    val = val.replace(/[^0-9.\-]/g, '');
+    if (!val) return 0;
+    var num = parseFloat(val);
+    return isNaN(num) ? 0 : num;
+  }
+
+  function apFormatCurrency(num) {
+    return '$' + (num || 0).toLocaleString(undefined, {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2
+    });
+  }
+
+  function apGetInputValue(nameOrId) {
+    var el = document.querySelector('[name="' + nameOrId + '"]') ||
+             document.getElementById(nameOrId);
+    return el ? el.value || '' : '';
+  }
+
+  function apSetInputValue(idOrName, val) {
+    var byId = document.getElementById(idOrName);
+    if (byId) {
+      byId.value = val;
+      return;
+    }
+    var byName = document.querySelector('[name="' + idOrName + '"]');
+    if (byName) byName.value = val;
+  }
+
+  // ---------- Local storage: Goals/Data ----------
+  function apSaveGoalsDataToStorage() {
+    if (!window.localStorage) return;
+    var form = document.getElementById('ap-goals-data-form');
+    if (!form) return;
+    var data = {};
+    Array.prototype.forEach.call(form.elements, function (el) {
+      if (!el.name) return;
+      if (['button', 'submit', 'reset'].indexOf(el.type) !== -1) return;
+      data[el.name] = el.value;
+    });
+    localStorage.setItem('apGoalsDataForm', JSON.stringify(data));
+  }
+
+  function apLoadGoalsDataFromStorage() {
+    if (!window.localStorage) return;
+    var raw = localStorage.getItem('apGoalsDataForm');
+    if (!raw) return;
+    var form = document.getElementById('ap-goals-data-form');
+    if (!form) return;
+    var data;
+    try { data = JSON.parse(raw); } catch (e) { return; }
+    Object.keys(data).forEach(function (name) {
+      var el = form.elements[name];
+      if (!el) return;
+      el.value = data[name];
+    });
+  }
+
+  // ---------- Local storage: Inputs / Plans ----------
+  function apSaveInputsToStorage() {
+    if (!window.localStorage) return;
+    var root = document.getElementById('ap-plan-inputs');
+    if (!root) return;
+    var data = {};
+    var els = root.querySelectorAll('input, select, textarea');
+    els.forEach(function (el) {
+      if (!el.id && !el.name) return;
+      var key = el.id || ('name:' + el.name);
+      data[key] = el.value;
+    });
+    localStorage.setItem('apPlanInputs', JSON.stringify(data));
+  }
+
+  function apLoadInputsFromStorage() {
+    if (!window.localStorage) return;
+    var root = document.getElementById('ap-plan-inputs');
+    if (!root) return;
+    var raw = localStorage.getItem('apPlanInputs');
+    if (!raw) return;
+    var data;
+    try { data = JSON.parse(raw); } catch (e) { return; }
+    Object.keys(data).forEach(function (key) {
+      var el = null;
+      if (key.indexOf('name:') === 0) {
+        var nm = key.slice(5);
+        el = root.querySelector('[name="' + nm + '"]');
+      } else {
+        el = document.getElementById(key);
+      }
+      if (el) el.value = data[key];
+    });
+  }
+
+  // ---------- Goals & Data totals ----------
+  function apUpdateDataFormTotals() {
+    // Investments total
+    var invTotal = 0;
+    for (var j = 1; j <= 3; j++) {
+      invTotal += apParseCurrency(apGetInputValue('inv' + j + 'Balance'));
+    }
+    apSetInputValue('invTotalBalance', apFormatCurrency(invTotal));
+
+    // Savings total
+    var savTotal = 0;
+    for (var i = 1; i <= 4; i++) {
+      savTotal += apParseCurrency(apGetInputValue('save' + i + 'Balance'));
+    }
+    apSetInputValue('saveTotalBalance', apFormatCurrency(savTotal));
+
+    // Annuities total
+    var annTotal = 0;
+    for (var k = 1; k <= 2; k++) {
+      annTotal += apParseCurrency(apGetInputValue('ann' + k + 'Balance'));
+    }
+    apSetInputValue('annTotalBalance', apFormatCurrency(annTotal));
+
+    // Income total
+    var incTotal = 0;
+    for (var r = 1; r <= 3; r++) {
+      incTotal += apParseCurrency(apGetInputValue('inc' + r + 'Amount'));
+    }
+    apSetInputValue('incTotalAmount', apFormatCurrency(incTotal));
+  }
+
+  // ---------- Asset Summary updater ----------
+  function apUpdateAssetSummary() {
+    apUpdateDataFormTotals();
+
+    var now = new Date();
+    var dateSpan = document.getElementById('ap-asset-summary-date');
+    if (dateSpan) {
+      var dateStr = now.toLocaleDateString() + ' ' +
+        now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      dateSpan.textContent = dateStr;
+    }
+
+    var nameAddressDiv = document.getElementById('ap-asset-summary-name-address');
+    if (nameAddressDiv) {
+      var clientName = apGetInputValue('clientName');
+      var spouseName = apGetInputValue('spouseName');
+      var homeAddress = apGetInputValue('homeAddress');
+      var homeCity = apGetInputValue('homeCity');
+      var homeState = apGetInputValue('homeState');
+      var homeZip = apGetInputValue('homeZip');
+
+      var fullName = (clientName || '') +
+        (spouseName ? (clientName ? ' and ' : '') + spouseName : '');
+      var addressLine = [homeAddress, homeCity, homeState, homeZip]
+        .filter(Boolean)
+        .join(' ');
+
+      nameAddressDiv.innerHTML =
+        (fullName ? '<div>' + fullName + '</div>' : '') +
+        (addressLine ? '<div>' + addressLine + '</div>' : '');
+    }
+
+    // CASH
+    var cashRowsBody = document.getElementById('ap-cash-rows');
+    var totalCash = 0;
+    if (cashRowsBody) {
+      cashRowsBody.innerHTML = '';
+      var maxCash = 4;
+      var cashRowCount = 0;
+
+      for (var i = 1; i <= maxCash; i++) {
+        var desc = apGetInputValue('save' + i + 'Desc');
+        var owner = apGetInputValue('save' + i + 'Owner');
+        var balStr = apGetInputValue('save' + i + 'Balance');
+        var bal = apParseCurrency(balStr);
+        if (!desc && !owner && !balStr) continue;
+
+        cashRowCount++;
+        totalCash += bal;
+
+        var tr = document.createElement('tr');
+        tr.innerHTML =
+          '<td>' + (owner || '') + '</td>' +
+          '<td>' + (desc || '') + '</td>' +
+          '<td class="ap-num">' + apFormatCurrency(bal) + '</td>';
+        cashRowsBody.appendChild(tr);
+      }
+
+      if (cashRowCount === 0) {
+        totalCash = apParseCurrency(apGetInputValue('saveTotalBalance'));
+        if (totalCash) {
+          var trAgg = document.createElement('tr');
+          trAgg.innerHTML =
+            '<td></td>' +
+            '<td>Aggregate cash (from total)</td>' +
+            '<td class="ap-num">' + apFormatCurrency(totalCash) + '</td>';
+          cashRowsBody.appendChild(trAgg);
+        }
+      } else {
+        apSetInputValue('saveTotalBalance', apFormatCurrency(totalCash));
+      }
+
+      var elTC = document.getElementById('ap-total-cash');
+      if (elTC) elTC.textContent = apFormatCurrency(totalCash);
+    }
+
+    // INVESTMENTS
+    var invRowsBody = document.getElementById('ap-investment-rows');
+    var totalInv = 0;
+    if (invRowsBody) {
+      invRowsBody.innerHTML = '';
+      var maxInv = 3;
+      var invRowCount = 0;
+
+      for (var j = 1; j <= maxInv; j++) {
+        var name = apGetInputValue('inv' + j + 'Name');
+        var ownerInv = apGetInputValue('inv' + j + 'Owner');
+        var typeInv = apGetInputValue('inv' + j + 'Type');
+        var balInvStr = apGetInputValue('inv' + j + 'Balance');
+        var balInv = apParseCurrency(balInvStr);
+        if (!name && !ownerInv && !balInvStr) continue;
+
+        invRowCount++;
+        totalInv += balInv;
+
+        var tr2 = document.createElement('tr');
+        tr2.innerHTML =
+          '<td>' + (ownerInv || '') + '</td>' +
+          '<td>' + (name || '') + '</td>' +
+          '<td>' + (typeInv || '') + '</td>' +
+          '<td class="ap-num">' + apFormatCurrency(balInv) + '</td>';
+        invRowsBody.appendChild(tr2);
+      }
+
+      if (invRowCount === 0) {
+        totalInv = apParseCurrency(apGetInputValue('invTotalBalance'));
+        if (totalInv) {
+          var trAggInv = document.createElement('tr');
+          trAggInv.innerHTML =
+            '<td></td>' +
+            '<td>Aggregate investments (from total)</td>' +
+            '<td></td>' +
+            '<td class="ap-num">' + apFormatCurrency(totalInv) + '</td>';
+          invRowsBody.appendChild(trAggInv);
+        }
+      } else {
+        apSetInputValue('invTotalBalance', apFormatCurrency(totalInv));
+      }
+
+      var elTI = document.getElementById('ap-total-investments');
+      if (elTI) elTI.textContent = apFormatCurrency(totalInv);
+    }
+
+    // PROPERTY & MORTGAGES
+    var primaryVal = apParseCurrency(apGetInputValue('primaryValue'));
+    var primaryMort = apParseCurrency(apGetInputValue('primaryMortgage'));
+    var secondaryVal = apParseCurrency(apGetInputValue('secondaryValue'));
+    var secondaryMort = apParseCurrency(apGetInputValue('secondaryMortgage'));
+
+    var totalRealEstate = primaryVal + secondaryVal;
+    var totalMortgage = primaryMort + secondaryMort;
+
+    var elPV = document.getElementById('ap-primary-value');
+    if (elPV) elPV.textContent = apFormatCurrency(primaryVal);
+    var elPM = document.getElementById('ap-primary-mortgage');
+    if (elPM) elPM.textContent = apFormatCurrency(primaryMort);
+    var elSV = document.getElementById('ap-secondary-value');
+    if (elSV) elSV.textContent = apFormatCurrency(secondaryVal);
+    var elSM = document.getElementById('ap-secondary-mortgage');
+    if (elSM) elSM.textContent = apFormatCurrency(secondaryMort);
+    var elTR = document.getElementById('ap-total-real-estate');
+    if (elTR) elTR.textContent = apFormatCurrency(totalRealEstate);
+    var elTM = document.getElementById('ap-total-mortgage');
+    if (elTM) elTM.textContent = apFormatCurrency(totalMortgage);
+
+    // ANNUITIES
+    var annRowsBody = document.getElementById('ap-annuity-rows');
+    var totalAnn = 0;
+    if (annRowsBody) {
+      annRowsBody.innerHTML = '';
+      var maxAnn = 2;
+      var annRowCount = 0;
+
+      for (var k = 1; k <= maxAnn; k++) {
+        var annName = apGetInputValue('ann' + k + 'Name');
+        var annOwner = apGetInputValue('ann' + k + 'Owner');
+        var annType = apGetInputValue('ann' + k + 'Type');
+        var annBalStr = apGetInputValue('ann' + k + 'Balance');
+        var annBal = apParseCurrency(annBalStr);
+        if (!annName && !annOwner && !annBalStr) continue;
+
+        annRowCount++;
+        totalAnn += annBal;
+        var tr3 = document.createElement('tr');
+        tr3.innerHTML =
+          '<td>' + (annOwner || '') + '</td>' +
+          '<td>' + (annName || '') + '</td>' +
+          '<td>' + (annType || '') + '</td>' +
+          '<td class="ap-num">' + apFormatCurrency(annBal) + '</td>';
+        annRowsBody.appendChild(tr3);
+      }
+
+      if (annRowCount === 0) {
+        totalAnn = apParseCurrency(apGetInputValue('annTotalBalance'));
+        if (totalAnn) {
+          var trAggAnn = document.createElement('tr');
+          trAggAnn.innerHTML =
+            '<td></td>' +
+            '<td>Aggregate annuities (from total)</td>' +
+            '<td></td>' +
+            '<td class="ap-num">' + apFormatCurrency(totalAnn) + '</td>';
+          annRowsBody.appendChild(trAggAnn);
+        }
+      } else {
+        apSetInputValue('annTotalBalance', apFormatCurrency(totalAnn));
+      }
+
+      var elTA = document.getElementById('ap-total-annuities');
+      if (elTA) elTA.textContent = apFormatCurrency(totalAnn);
+    }
+
+    var totalAssets = totalCash + totalInv + totalRealEstate + totalAnn;
+    var totalLiab = totalMortgage;
+    var netWorth = totalAssets - totalLiab;
+
+    var elTotA = document.getElementById('ap-total-assets');
+    if (elTotA) elTotA.textContent = apFormatCurrency(totalAssets);
+    var elTotL = document.getElementById('ap-total-liabilities');
+    if (elTotL) elTotL.textContent = apFormatCurrency(totalLiab);
+    var elNW = document.getElementById('ap-net-worth');
+    if (elNW) elNW.textContent = apFormatCurrency(netWorth);
+  }
+
+  // ---------- Inputs auto-calcs ----------
+  function apUpdateInputsDerived() {
+    apUpdateAssetSummary();
+
+    var todayEl = document.getElementById('inputsTodayDate');
+    if (todayEl && !todayEl.value) {
+      todayEl.value = new Date().toISOString().slice(0, 10);
+    }
+
+    var projEl = document.getElementById('projLength');
+    if (projEl && (!projEl.value || projEl.value === '0')) {
+      projEl.value = 30;
+    }
+    var projLen = parseInt(apGetInputValue('projLength') || '0', 10);
+
+    // Auto-fill ages from Goals page if empty
+    var goalsAgeHis = apGetInputValue('clientAge');
+    var goalsAgeHer = apGetInputValue('spouseAge');
+    var inputsAgeHisEl = document.getElementById('ageHis');
+    var inputsAgeHerEl = document.getElementById('ageHer');
+    if (inputsAgeHisEl && !inputsAgeHisEl.value && goalsAgeHis) {
+      inputsAgeHisEl.value = goalsAgeHis;
+    }
+    if (inputsAgeHerEl && !inputsAgeHerEl.value && goalsAgeHer) {
+      inputsAgeHerEl.value = goalsAgeHer;
+    }
+
+    var ageHis = parseInt(apGetInputValue('ageHis') || '0', 10);
+    var ageHer = parseInt(apGetInputValue('ageHer') || '0', 10);
+
+    var goalsExpenses = apGetInputValue('annualExpenses');
+    var inputsExpensesEl = document.getElementById('livingExpensesAnnual');
+    if (inputsExpensesEl && !inputsExpensesEl.value && goalsExpenses) {
+      inputsExpensesEl.value = goalsExpenses;
+    }
+
+    // Pull A/B/C from Summary if Inputs empty
+    var yellowFromSummary = (document.getElementById('ap-total-cash') || {}).textContent || '';
+    var redFromSummary    = (document.getElementById('ap-total-investments') || {}).textContent || '';
+    var greenFromSummary  = (document.getElementById('ap-total-annuities') || {}).textContent || '';
+
+    if (!apGetInputValue('currentAYellow') && yellowFromSummary) {
+      apSetInputValue('currentAYellow', yellowFromSummary);
+    }
+    if (!apGetInputValue('currentCRed') && redFromSummary) {
+      apSetInputValue('currentCRed', redFromSummary);
+    }
+    if (!apGetInputValue('currentBGreen') && greenFromSummary) {
+      apSetInputValue('currentBGreen', greenFromSummary);
+    }
+
+    var aCur = apParseCurrency(apGetInputValue('currentAYellow'));
+    var cCur = apParseCurrency(apGetInputValue('currentCRed'));
+    var bCur = apParseCurrency(apGetInputValue('currentBGreen'));
+
+    var totalCur = aCur + cCur + bCur;
+    apSetInputValue('currentTotalInvestable', apFormatCurrency(totalCur));
+
+    var deathHis = parseInt(apGetInputValue('deathAgeHis') || '0', 10);
+    var deathHer = parseInt(apGetInputValue('deathAgeHer') || '0', 10);
+
+    if (projLen > 0) {
+      if (!deathHis && ageHis > 0) {
+        deathHis = ageHis + projLen;
+        apSetInputValue('deathAgeHis', deathHis);
+      }
+      if (!deathHer && ageHer > 0) {
+        deathHer = ageHer + projLen;
+        apSetInputValue('deathAgeHer', deathHer);
+      }
+    }
+
+    if (projLen > 0 && ageHis > 0 && deathHis > ageHis) {
+      var idxHis = Math.max(1, Math.min(projLen, deathHis - ageHis));
+      apSetInputValue('deathIndexHis', idxHis);
+    }
+    if (projLen > 0 && ageHer > 0 && deathHer > ageHer) {
+      var idxHer = Math.max(1, Math.min(projLen, deathHer - ageHer));
+      apSetInputValue('deathIndexHer', idxHer);
+    }
+
+    // Silver reallocations (from No Plan)
+    var silverRoll = 0;
+    for (var s = 1; s <= 4; s++) {
+      silverRoll += apParseCurrency(apGetInputValue('silver' + s + 'Amount'));
+    }
+    var silverA = aCur;
+    var silverC = cCur - silverRoll;
+    var silverB = bCur + silverRoll;
+
+    apSetInputValue('silverAYellow', apFormatCurrency(silverA));
+    apSetInputValue('silverCRed',    apFormatCurrency(silverC));
+    apSetInputValue('silverBGreen',  apFormatCurrency(silverB));
+    apSetInputValue('silverTotalInvestable', apFormatCurrency(silverA + silverC + silverB));
+
+    // Gold reallocations
+    var goldRoll = 0;
+    for (var g = 1; g <= 4; g++) {
+      goldRoll += apParseCurrency(apGetInputValue('gold' + g + 'Amount'));
+    }
+    var goldA = aCur;
+    var goldC = cCur - goldRoll;
+    var goldB = bCur + goldRoll;
+
+    apSetInputValue('goldAYellow', apFormatCurrency(goldA));
+    apSetInputValue('goldCRed',    apFormatCurrency(goldC));
+    apSetInputValue('goldBGreen',  apFormatCurrency(goldB));
+    apSetInputValue('goldTotalInvestable', apFormatCurrency(goldA + goldC + goldB));
+  }
+
+  // ---------- Compute No Plan projections ----------
+  function apComputeNoPlanProjections() {
+    var projLen = parseInt(apGetInputValue('projLength') || '0', 10);
+    var ageHis = parseInt(apGetInputValue('ageHis') || '0', 10);
+    var ageHer = parseInt(apGetInputValue('ageHer') || '0', 10);
+    if (!projLen || !ageHis || !ageHer) {
+      return null;
+    }
+
+    var ssHisBase = apParseCurrency(apGetInputValue('ssHisAnnual'));
+    var ssHerBase = apParseCurrency(apGetInputValue('ssHerAnnual'));
+    var p1Base = apParseCurrency(apGetInputValue('pension1Annual'));
+    var p2Base = apParseCurrency(apGetInputValue('pension2Annual'));
+    var otherBase = apParseCurrency(apGetInputValue('otherIncomeAnnual'));
+    var expBase = apParseCurrency(apGetInputValue('livingExpensesAnnual'));
+
+    var incGrowth = parseFloat(apGetInputValue('incomeGrowthPct') || '0') / 100;
+    var expInfl = parseFloat(apGetInputValue('expenseInflationPct') || '0') / 100;
+
+    var ssHisStartAge = parseInt(apGetInputValue('ssHisStartAge') || '0', 10);
+    var ssHerStartAge = parseInt(apGetInputValue('ssHerStartAge') || '0', 10);
+    var p1StartAge = parseInt(apGetInputValue('pension1StartAge') || '0', 10);
+    var p2StartAge = parseInt(apGetInputValue('pension2StartAge') || '0', 10);
+
+    var deathAgeHis = parseInt(apGetInputValue('deathAgeHis') || '0', 10);
+    var deathAgeHer = parseInt(apGetInputValue('deathAgeHer') || '0', 10);
+
+    var p1SurvPct = parseFloat(apGetInputValue('pension1SurvivorPct') || '0');
+    var p2SurvPct = parseFloat(apGetInputValue('pension2SurvivorPct') || '0');
+    if (p1SurvPct > 1) p1SurvPct = p1SurvPct / 100;
+    if (p2SurvPct > 1) p2SurvPct = p2SurvPct / 100;
+
+    var jointRows = [];
+    var herRows = [];
+    var hisRows = [];
+
+    var jointFirstPositiveIncome = 0;
+    var herSurvivorIncome = 0;
+    var hisSurvivorIncome = 0;
+
+    var deathIndexHis = (deathAgeHis > ageHis) ? (deathAgeHis - ageHis) : null; // 0-based
+    var deathIndexHer = (deathAgeHer > ageHer) ? (deathAgeHer - ageHer) : null;
+
+    for (var year = 0; year < projLen; year++) {
+      var hisAge = ageHis + year;
+      var herAge = ageHer + year;
+      var growthFactor = Math.pow(1 + incGrowth, year);
+      var inflFactor = Math.pow(1 + expInfl, year);
+
+      // ---- JOINT (everyone alive) ----
+      var hisSS_joint = (hisAge >= ssHisStartAge ? ssHisBase * growthFactor : 0);
+      var herSS_joint = (herAge >= ssHerStartAge ? ssHerBase * growthFactor : 0);
+      var p1_joint = (hisAge >= p1StartAge ? p1Base * growthFactor : 0);
+      var p2_joint = (herAge >= p2StartAge ? p2Base * growthFactor : 0);
+      var other_joint = otherBase * growthFactor;
+      var total_joint = hisSS_joint + herSS_joint + p1_joint + p2_joint + other_joint;
+      var exp_joint = expBase * inflFactor;
+      var gap_joint = total_joint - exp_joint;
+
+      jointRows.push({
+        year: year + 1,
+        hisAge: hisAge,
+        herAge: herAge,
+        hisSS: hisSS_joint,
+        herSS: herSS_joint,
+        p1: p1_joint,
+        p2: p2_joint,
+        other: other_joint,
+        total: total_joint,
+        expenses: exp_joint,
+        gap: gap_joint,
+        event: ''
+      });
+
+      if (!jointFirstPositiveIncome && total_joint > 0) {
+        jointFirstPositiveIncome = total_joint;
+      }
+
+      // ---- HER SURVIVOR (he dies first) ----
+      var hisSS_her = hisSS_joint;
+      var herSS_her = herSS_joint;
+      var p1_her = p1_joint;
+      var p2_her = p2_joint;
+      var other_her = other_joint;
+      var eventHer = '';
+
+      if (deathIndexHis != null && year > deathIndexHis) {
+        var herAlive = (!deathIndexHer || year <= deathIndexHer);
+        if (herAlive) {
+          var higherSSBase = 0;
+          if (herAge >= ssHisStartAge) higherSSBase = Math.max(higherSSBase, ssHisBase);
+          if (herAge >= ssHerStartAge) higherSSBase = Math.max(higherSSBase, ssHerBase);
+          herSS_her = higherSSBase * growthFactor;
+          hisSS_her = 0;
+
+          p1_her = (herAge >= p1StartAge ? p1Base * p1SurvPct * growthFactor : 0);
+          p2_her = (herAge >= p2StartAge ? p2Base * growthFactor : 0);
+        } else {
+          hisSS_her = 0; herSS_her = 0;
+          p1_her = 0; p2_her = 0;
+          other_her = 0;
+        }
+      }
+
+      if (deathIndexHis != null && year === deathIndexHis) {
+        eventHer = 'He dies (Age ' + hisAge + ')';
+      }
+
+      var total_her = hisSS_her + herSS_her + p1_her + p2_her + other_her;
+      var exp_her = exp_joint;
+      var gap_her = total_her - exp_her;
+
+      herRows.push({
+        year: year + 1,
+        hisAge: hisAge,
+        herAge: herAge,
+        hisSS: hisSS_her,
+        herSS: herSS_her,
+        p1: p1_her,
+        p2: p2_her,
+        other: other_her,
+        total: total_her,
+        expenses: exp_her,
+        gap: gap_her,
+        event: eventHer
+      });
+
+      if (deathIndexHis != null && year === (deathIndexHis + 1) && !herSurvivorIncome) {
+        herSurvivorIncome = total_her;
+      }
+
+      // ---- HIS SURVIVOR (she dies first) ----
+      var hisSS_his = hisSS_joint;
+      var herSS_his = herSS_joint;
+      var p1_his = p1_joint;
+      var p2_his = p2_joint;
+      var other_his = other_joint;
+      var eventHis = '';
+
+      if (deathIndexHer != null && year > deathIndexHer) {
+        var hisAlive2 = (!deathIndexHis || year <= deathIndexHis);
+        if (hisAlive2) {
+          var higherSSBase2 = 0;
+          if (hisAge >= ssHisStartAge) higherSSBase2 = Math.max(higherSSBase2, ssHisBase);
+          if (hisAge >= ssHerStartAge) higherSSBase2 = Math.max(higherSSBase2, ssHerBase);
+          hisSS_his = higherSSBase2 * growthFactor;
+          herSS_his = 0;
+
+          p2_his = (hisAge >= p2StartAge ? p2Base * p2SurvPct * growthFactor : 0);
+          p1_his = (hisAge >= p1StartAge ? p1Base * growthFactor : 0);
+        } else {
+          hisSS_his = 0; herSS_his = 0;
+          p1_his = 0; p2_his = 0;
+          other_his = 0;
+        }
+      }
+
+      if (deathIndexHer != null && year === deathIndexHer) {
+        eventHis = 'She dies (Age ' + herAge + ')';
+      }
+
+      var total_his = hisSS_his + herSS_his + p1_his + p2_his + other_his;
+      var exp_his = exp_joint;
+      var gap_his = total_his - exp_his;
+
+      hisRows.push({
+        year: year + 1,
+        hisAge: hisAge,
+        herAge: herAge,
+        hisSS: hisSS_his,
+        herSS: herSS_his,
+        p1: p1_his,
+        p2: p2_his,
+        other: other_his,
+        total: total_his,
+        expenses: exp_his,
+        gap: gap_his,
+        event: eventHis
+      });
+
+      if (deathIndexHer != null && year === (deathIndexHer + 1) && !hisSurvivorIncome) {
+        hisSurvivorIncome = total_his;
+      }
+    }
+
+    return {
+      jointRows: jointRows,
+      herRows: herRows,
+      hisRows: hisRows,
+      firstJointIncome: jointFirstPositiveIncome,
+      herSurvivorIncome: herSurvivorIncome,
+      hisSurvivorIncome: hisSurvivorIncome,
+      aCur: apParseCurrency(apGetInputValue('currentAYellow')),
+      bCur: apParseCurrency(apGetInputValue('currentBGreen')),
+      cCur: apParseCurrency(apGetInputValue('currentCRed')),
+      livingToday: apParseCurrency(apGetInputValue('livingExpensesAnnual'))
+    };
+  }
+
+  // ---------- Render No Plan projections ----------
+  function apRenderNoPlanProjections() {
+    var proj = apComputeNoPlanProjections();
+    if (!proj) return;
+
+    function renderTable(rows, bodyId, totalIncomeId, totalExpId, totalGapId) {
+      var tbody = document.getElementById(bodyId);
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      var sumIncome = 0, sumExp = 0, sumGap = 0;
+
+      rows.forEach(function (row) {
+        var hisClass = 'ap-num ap-his-ss';
+        var herClass = 'ap-num ap-her-ss';
+        var gapClass = 'ap-num ap-gap-cell';
+        if (row.gap < 0) gapClass += ' ap-gap-neg';
+
+        var tr = document.createElement('tr');
+        tr.innerHTML =
+          '<td>' + row.year + '</td>' +
+          '<td>' + row.hisAge + '</td>' +
+          '<td>' + row.herAge + '</td>' +
+          '<td class="' + hisClass + '">' + (row.hisSS ? apFormatCurrency(row.hisSS) : '$0') + '</td>' +
+          '<td class="' + herClass + '">' + (row.herSS ? apFormatCurrency(row.herSS) : '$0') + '</td>' +
+          '<td class="ap-num">' + (row.p1 ? apFormatCurrency(row.p1) : '$0') + '</td>' +
+          '<td class="ap-num">' + (row.p2 ? apFormatCurrency(row.p2) : '$0') + '</td>' +
+          '<td class="ap-num">' + (row.other ? apFormatCurrency(row.other) : '$0') + '</td>' +
+          '<td class="ap-num">' + (row.total ? apFormatCurrency(row.total) : '$0') + '</td>' +
+          '<td class="ap-num">' + (row.expenses ? apFormatCurrency(row.expenses) : '$0') + '</td>' +
+          '<td class="' + gapClass + '">' + (row.gap ? apFormatCurrency(row.gap) : '$0') + '</td>' +
+          '<td>' + (row.event || '') + '</td>';
+        tbody.appendChild(tr);
+
+        sumIncome += row.total;
+        sumExp += row.expenses;
+        sumGap += row.gap;
+      });
+
+      if (totalIncomeId) {
+        var elI = document.getElementById(totalIncomeId);
+        if (elI) elI.textContent = apFormatCurrency(sumIncome);
+      }
+      if (totalExpId) {
+        var elE = document.getElementById(totalExpId);
+        if (elE) elE.textContent = apFormatCurrency(sumExp);
+      }
+      if (totalGapId) {
+        var elG = document.getElementById(totalGapId);
+        if (elG) {
+          elG.textContent = apFormatCurrency(sumGap);
+          if (sumGap < 0) elG.classList.add('ap-gap-neg');
+          else elG.classList.remove('ap-gap-neg');
+        }
+      }
+    }
+
+    renderTable(proj.jointRows, 'ap-noplan-joint-body',
+      'ap-noplan-joint-total-income', 'ap-noplan-joint-total-expenses', 'ap-noplan-joint-total-gap');
+
+    renderTable(proj.herRows, 'ap-noplan-her-body',
+      'ap-noplan-her-total-income', 'ap-noplan-her-total-expenses', 'ap-noplan-her-total-gap');
+
+    renderTable(proj.hisRows, 'ap-noplan-his-body',
+      'ap-noplan-his-total-income', 'ap-noplan-his-total-expenses', 'ap-noplan-his-total-gap');
+
+    // Summary numbers for Allocation page
+    document.getElementById('ap-noplan-A-val').textContent = apFormatCurrency(proj.aCur);
+    document.getElementById('ap-noplan-B-val').textContent = apFormatCurrency(proj.bCur);
+    document.getElementById('ap-noplan-C-val').textContent = apFormatCurrency(proj.cCur);
+    document.getElementById('ap-noplan-living-today').textContent = apFormatCurrency(proj.livingToday || 0);
+    document.getElementById('ap-noplan-cashflow').textContent = apFormatCurrency(proj.firstJointIncome || 0);
+    document.getElementById('ap-noplan-her-surv').textContent = apFormatCurrency(proj.herSurvivorIncome || 0);
+    document.getElementById('ap-noplan-his-surv').textContent = apFormatCurrency(proj.hisSurvivorIncome || 0);
+
+    // Pie percentages
+    var totalABC = proj.aCur + proj.bCur + proj.cCur;
+    var aPct = totalABC ? (proj.aCur / totalABC * 100) : 0;
+    var bPct = totalABC ? (proj.bCur / totalABC * 100) : 0;
+    var cPct = totalABC ? (proj.cCur / totalABC * 100) : 0;
+    document.getElementById('ap-noplan-A-pct').textContent = aPct.toFixed(0) + '%';
+    document.getElementById('ap-noplan-B-pct').textContent = bPct.toFixed(0) + '%';
+    document.getElementById('ap-noplan-C-pct').textContent = cPct.toFixed(0) + '%';
+
+    apDrawNoPlanPie(aPct, bPct, cPct);
+  }
+
+  function apDrawNoPlanPie(aPct, bPct, cPct) {
+    var canvas = document.getElementById('ap-noplan-pie');
+    if (!canvas || !canvas.getContext) return;
+    var ctx = canvas.getContext('2d');
+    var cx = canvas.width / 2;
+    var cy = canvas.height / 2;
+    var r = Math.min(cx, cy) - 8;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    var startAngle = -Math.PI / 2;
+
+    function drawSlice(percent, color) {
+      if (!percent || percent <= 0) return;
+      var angle = (percent / 100) * Math.PI * 2;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.arc(cx, cy, r, startAngle, startAngle + angle);
+      ctx.closePath();
+      ctx.fillStyle = color;
+      ctx.fill();
+      startAngle += angle;
+    }
+
+    drawSlice(aPct, '#fde047'); // Yellow
+    drawSlice(bPct, '#9ca3af'); // Grey/Green bucket
+    drawSlice(cPct, '#dc2626'); // Red
+  }
+
+  // ---------- Tabs + wiring ----------
+  (function () {
+    function showPanel(name) {
+      var panels = ['goals', 'assets', 'inputs', 'noplanJoint', 'noplanHer', 'noplanHis', 'noplanAlloc'];
+      panels.forEach(function (p) {
+        var pane = document.getElementById('ap-panel-' + p);
+        if (pane) pane.style.display = (p === name ? 'block' : 'none');
+      });
+
+      var buttons = document.querySelectorAll('#ap-ifl-app .ap-ifl-tab-btn');
+      buttons.forEach(function (btn) {
+        btn.classList.toggle('ap-ifl-tab-active', btn.getAttribute('data-panel') === name);
+      });
+
+      if (name === 'assets') {
+        apUpdateAssetSummary();
+      }
+      if (name === 'inputs') {
+        apUpdateInputsDerived();
+      }
+      if (name === 'noplanJoint' || name === 'noplanHer' || name === 'noplanHis' || name === 'noplanAlloc') {
+        apUpdateInputsDerived();
+        apRenderNoPlanProjections();
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      // Inject extra CSS for colored SS columns & negative gap
+      var extraCss = ''
+        + '.ap-his-ss{background:#e0f2fe;}'
+        + '.ap-her-ss{background:#fee2e2;}'
+        + '.ap-gap-neg{color:#dc2626;font-weight:600;}';
+      var styleTag = document.createElement('style');
+      styleTag.textContent = extraCss;
+      document.head.appendChild(styleTag);
+
+      // Load stored data
+      apLoadGoalsDataFromStorage();
+      apLoadInputsFromStorage();
+
+      apUpdateDataFormTotals();
+      apUpdateInputsDerived();
+      apRenderNoPlanProjections();
+
+      var buttons = document.querySelectorAll('#ap-ifl-app .ap-ifl-tab-btn');
+      buttons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          showPanel(btn.getAttribute('data-panel'));
+        });
+      });
+
+      // SAVE button on Goals page (still there for your workflow)
+      var saveBtn = document.getElementById('ap-save-data-btn');
+      if (saveBtn) {
+        saveBtn.addEventListener('click', function () {
+          apUpdateDataFormTotals();
+          apSaveGoalsDataToStorage();
+          apUpdateAssetSummary();
+          showPanel('assets');
+          alert('Client data saved in this browser and Asset Summary updated.');
+        });
+      }
+
+      // Auto-save Goals & Data as you type
+      var form = document.getElementById('ap-goals-data-form');
+      if (form) {
+        form.addEventListener('input', function () {
+          apUpdateDataFormTotals();
+          apSaveGoalsDataToStorage();
+        });
+      }
+
+      // Auto-save Inputs / plan settings as you type
+      var inputsRoot = document.getElementById('ap-plan-inputs');
+      if (inputsRoot) {
+        inputsRoot.addEventListener('input', function (e) {
+          var id = e.target.id || '';
+          if (
+            id.indexOf('silver') === 0 ||
+            id.indexOf('gold') === 0 ||
+            id === 'projLength' ||
+            id === 'ageHis' || id === 'ageHer' ||
+            id === 'deathAgeHis' || id === 'deathAgeHer' ||
+            id === 'currentAYellow' || id === 'currentCRed' || id === 'currentBGreen' ||
+            id === 'ssHisAnnual' || id === 'ssHerAnnual' ||
+            id === 'ssHisStartAge' || id === 'ssHerStartAge' ||
+            id === 'pension1Annual' || id === 'pension2Annual' ||
+            id === 'pension1StartAge' || id === 'pension2StartAge' ||
+            id === 'pension1SurvivorPct' || id === 'pension2SurvivorPct' ||
+            id === 'otherIncomeAnnual' || id === 'livingExpensesAnnual' ||
+            id === 'incomeGrowthPct' || id === 'expenseInflationPct' ||
+            id === 'inputsTodayDate'
+          ) {
+            apUpdateInputsDerived();
+            apRenderNoPlanProjections();
+          }
+          apSaveInputsToStorage();
+        });
+      }
+
+      showPanel('goals');
+      window.apShowIFLPanel = showPanel;
+    });
+  })();
+</script>
