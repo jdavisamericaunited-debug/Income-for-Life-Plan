@@ -1722,3 +1722,167 @@
     });
   })();
 </script>
+<!-- AmericaPlanning – No-Plan Income Page Enhancements
+     - His SS column = light blue
+     - Her SS column = light pink
+     - Negative Gap values = red + bold
+     - Auto-save all fields to browser storage
+-->
+<script>
+(function () {
+  // -------- AUTOSAVE FOR THIS PAGE --------
+  const STORAGE_KEY = "IFL_AUTOSAVE_" + location.pathname;
+
+  function getAllFields() {
+    return Array.from(document.querySelectorAll("input, select, textarea"));
+  }
+
+  function saveAutosave() {
+    try {
+      const fields = getAllFields();
+      const data = {};
+
+      fields.forEach(function (el) {
+        const key = el.id || el.name;
+        if (!key) return;
+
+        if (el.type === "checkbox") {
+          data[key] = { type: "checkbox", checked: el.checked };
+        } else if (el.type === "radio") {
+          // radios: store the checked value for the group
+          if (!data[key]) data[key] = { type: "radio", value: null };
+          if (el.checked) data[key].value = el.value;
+        } else {
+          data[key] = { type: "value", value: el.value };
+        }
+      });
+
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    } catch (e) {
+      console && console.warn && console.warn("Autosave failed:", e);
+    }
+  }
+
+  function loadAutosave() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+
+      const data = JSON.parse(raw);
+      const fields = getAllFields();
+
+      fields.forEach(function (el) {
+        const key = el.id || el.name;
+        if (!key || !(key in data)) return;
+
+        const saved = data[key];
+
+        if (saved.type === "checkbox") {
+          el.checked = !!saved.checked;
+        } else if (saved.type === "radio") {
+          if (el.value === saved.value) {
+            el.checked = true;
+          }
+        } else {
+          if (typeof saved.value === "string" || typeof saved.value === "number") {
+            el.value = saved.value;
+          }
+        }
+      });
+    } catch (e) {
+      console && console.warn && console.warn("Load autosave failed:", e);
+    }
+  }
+
+  function handleFieldChange() {
+    saveAutosave();
+    // Re-style tables in case a change affected Gap values or SS columns
+    window.requestAnimationFrame(enhanceTables);
+  }
+
+  // -------- TABLE COLORING (SS COLUMNS + GAP) --------
+
+  function enhanceTables() {
+    const tables = Array.from(document.querySelectorAll("table"));
+    tables.forEach(function (table) {
+      const headerRow =
+        table.querySelector("thead tr") ||
+        table.querySelector("tr");
+
+      if (!headerRow) return;
+
+      const headerCells = Array.from(headerRow.children);
+      let hisIndex = null;
+      let herIndex = null;
+      let gapIndex = null;
+
+      headerCells.forEach(function (th, idx) {
+        const text = (th.textContent || "").toLowerCase();
+        if (text.includes("his social security")) {
+          hisIndex = idx;
+        }
+        if (text.includes("her social security")) {
+          herIndex = idx;
+        }
+        if (text.includes("gap")) {
+          gapIndex = idx;
+        }
+      });
+
+      if (hisIndex !== null) {
+        paintColumn(table, hisIndex, "#e0f2ff"); // light blue
+      }
+      if (herIndex !== null) {
+        paintColumn(table, herIndex, "#ffe0ef"); // light pink
+      }
+      if (gapIndex !== null) {
+        styleNegativeGaps(table, gapIndex);
+      }
+    });
+  }
+
+  function paintColumn(table, colIndexZeroBased, color) {
+    Array.from(table.rows).forEach(function (row) {
+      const cell = row.cells[colIndexZeroBased];
+      if (cell) {
+        cell.style.backgroundColor = color;
+      }
+    });
+  }
+
+  function styleNegativeGaps(table, colIndexZeroBased) {
+    Array.from(table.rows).forEach(function (row, rowIdx) {
+      // Skip header row
+      if (rowIdx === 0) return;
+      const cell = row.cells[colIndexZeroBased];
+      if (!cell) return;
+
+      const raw = (cell.textContent || "").replace(/[,$\s]/g, "");
+      const num = parseFloat(raw);
+
+      if (!isNaN(num) && num < 0) {
+        cell.style.color = "red";
+        cell.style.fontWeight = "700";
+      } else {
+        // Reset if it changed from negative to non-negative
+        cell.style.color = "";
+        cell.style.fontWeight = "";
+      }
+    });
+  }
+
+  // -------- INIT --------
+
+  document.addEventListener("DOMContentLoaded", function () {
+    // Restore any saved values first
+    loadAutosave();
+
+    // Start autosave on any change
+    document.addEventListener("input", handleFieldChange, true);
+    document.addEventListener("change", handleFieldChange, true);
+
+    // Initial styling pass for SS columns + Gap cells
+    enhanceTables();
+  });
+})();
+</script>
