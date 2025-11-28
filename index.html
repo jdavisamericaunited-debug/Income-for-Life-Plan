@@ -11,21 +11,21 @@
       background: #e5e7eb;
     }
 
-    /* Light Blue for His Social Security */
-    #ssHisAnnual, #ssHisStartAge {
+    /* Social Security Coloring */
+    .ssHis {
       background-color: lightblue;
     }
 
-    /* Light Pink for Her Social Security */
-    #ssHerAnnual, #ssHerStartAge {
+    .ssHer {
       background-color: lightpink;
     }
 
-    /* Negative gap coloring */
+    /* Negative Gap Coloring */
     .negative-gap {
       color: red;
       font-weight: bold;
     }
+
   </style>
 </head>
 <body>
@@ -54,21 +54,149 @@
       margin: 0 0 4px;
     }
 
-    #ap-ifl-app .ap-page-caption {
-      font-size: 13px;
-      color: #6b7280;
+    /* Tabs */
+    .ap-ifl-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
       margin-bottom: 16px;
     }
 
-    .ap-plan-table td {
-      text-align: right;
+    .ap-ifl-tab-btn {
+      border: 1px solid #d1d5db;
+      background: #e5e7eb;
+      color: #111827;
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
       white-space: nowrap;
+    }
+
+    .ap-ifl-tab-btn.ap-ifl-tab-active {
+      background: #0b5aa2;
+      border-color: #0b5aa2;
+      color: #ffffff;
+    }
+
+    .ap-ifl-panel {
+      background: #f9fafb;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      padding: 18px 18px 22px;
+    }
+
+    .ap-primary-btn {
+      display: inline-block;
+      background: #0b5aa2;
+      color: #ffffff;
+      border: none;
+      border-radius: 999px;
+      padding: 8px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .ap-primary-btn:hover {
+      opacity: 0.95;
     }
 
     .ap-save-row {
       text-align: right;
       margin-top: 4px;
     }
+
+    /* ---------- Goals & Data Styles ---------- */
+    #ap-goals-data h2 {
+      font-size: 20px;
+      margin: 0 0 4px;
+    }
+
+    #ap-goals-data .ap-subtitle {
+      font-size: 13px;
+      color: #6b7280;
+      margin-bottom: 16px;
+    }
+
+    #ap-goals-data form {
+      width: 100%;
+    }
+
+    #ap-goals-data .ap-section {
+      background: #ffffff;
+      border-radius: 10px;
+      border: 1px solid #e5e7eb;
+      padding: 16px 18px 14px;
+      margin-bottom: 18px;
+    }
+
+    #ap-goals-data .ap-section-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0b5aa2;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 6px;
+      margin-bottom: 12px;
+    }
+
+    #ap-goals-data .ap-field {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      font-size: 13px;
+    }
+
+    #ap-goals-data label {
+      font-weight: 600;
+      color: #374151;
+    }
+
+    #ap-goals-data input[type="text"],
+    #ap-goals-data input[type="number"],
+    #ap-goals-data input[type="email"],
+    #ap-goals-data input[type="date"],
+    #ap-goals-data select,
+    #ap-goals-data textarea {
+      width: 100%;
+      border-radius: 6px;
+      border: 1px solid #d1d5db;
+      padding: 6px 8px;
+      font-size: 13px;
+      line-height: 1.4;
+      background: #ffffff;
+    }
+
+    #ap-goals-data .ap-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin-top: 6px;
+    }
+
+    #ap-goals-data .ap-table th,
+    #ap-goals-data .ap-table td {
+      border: 1px solid #e5e7eb;
+      padding: 4px 6px;
+      vertical-align: top;
+    }
+
+    #ap-goals-data .ap-table th {
+      background: #f3f4f6;
+      font-weight: 600;
+      text-align: left;
+    }
+
+    #ap-goals-data .ap-table td.ap-num {
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    #ap-goals-data .ap-total-row {
+      background: #f9fafb;
+      font-weight: 600;
+    }
+
   </style>
 
   <h1>Income-for-Life Plan – Data, Asset Summary & Plan Inputs</h1>
@@ -76,94 +204,150 @@
     Internal planning tool – designed for desktop use.
   </div>
 
-  <!-- Form Starts -->
-  <form id="ap-goals-data-form">
-    <!-- Inputs for Social Security -->
-    <div class="ap-section">
-      <div class="ap-section-title">Social Security Information</div>
-      <div class="ap-grid-2">
-        <div class="ap-field">
-          <label for="ssHisAnnual">His Social Security (annual)</label>
-          <input id="ssHisAnnual" name="ssHisAnnual" type="text" placeholder="$25,000">
-        </div>
-        <div class="ap-field">
-          <label for="ssHerAnnual">Her Social Security (annual)</label>
-          <input id="ssHerAnnual" name="ssHerAnnual" type="text" placeholder="$12,500">
-        </div>
+  <!-- TABS -->
+  <div class="ap-ifl-tabs">
+    <button class="ap-ifl-tab-btn ap-ifl-tab-active" data-panel="goals">Goals &amp; Data</button>
+    <button class="ap-ifl-tab-btn" data-panel="assets">Asset Summary</button>
+    <button class="ap-ifl-tab-btn" data-panel="inputs">Inputs</button>
+    <button class="ap-ifl-tab-btn" data-panel="noplanJoint">No Plan – Joint Income</button>
+    <button class="ap-ifl-tab-btn" data-panel="noplanHer">No Plan – Her Survivor</button>
+    <button class="ap-ifl-tab-btn" data-panel="noplanHis">No Plan – His Survivor</button>
+    <button class="ap-ifl-tab-btn" data-panel="noplanAlloc">No Plan – Allocation &amp; Income</button>
+  </div>
+
+  <!-- PANEL: GOALS & DATA (unchanged layout) -->
+  <div id="ap-panel-goals" class="ap-ifl-panel">
+    <div id="ap-goals-data">
+      <h2>Goals &amp; Data Form</h2>
+      <div class="ap-subtitle">
+        Income-for-Life Plan – AmericaPlanning.com
       </div>
+
+      <form id="ap-goals-data-form">
+        <!-- Social Security Input Fields with Color Changes -->
+        <div class="ap-section">
+          <div class="ap-section-title">Social Security</div>
+          <div class="ap-grid-3">
+            <div class="ap-field">
+              <label for="ssHisAnnual">His Social Security (Annual)</label>
+              <input class="ssHis" id="ssHisAnnual" name="ssHisAnnual" type="text" placeholder="$25,000">
+            </div>
+            <div class="ap-field">
+              <label for="ssHerAnnual">Her Social Security (Annual)</label>
+              <input class="ssHer" id="ssHerAnnual" name="ssHerAnnual" type="text" placeholder="$12,500">
+            </div>
+          </div>
+        </div>
+
+        <!-- No Plan Income Fields -->
+        <div class="ap-section">
+          <div class="ap-section-title">No Plan – Joint Income</div>
+          <table class="ap-table">
+            <thead>
+            <tr>
+              <th>Year</th>
+              <th>His SS</th>
+              <th>Her SS</th>
+              <th>Total Income</th>
+              <th>Gap</th>
+            </tr>
+            </thead>
+            <tbody id="ap-noplan-joint-body">
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Save Button -->
+        <div class="ap-save-row">
+          <button type="button" id="ap-save-data-btn" class="ap-primary-btn">
+            Save Data &amp; Jump to Asset Summary
+          </button>
+        </div>
+      </form>
     </div>
+  </div>
 
-    <!-- Other Input Sections -->
+<script>
+  // ---------- Save / load Goals & Data to localStorage ----------
 
-    <!-- Save Button -->
-    <div class="ap-save-row">
-      <button type="button" id="ap-save-data-btn" class="ap-primary-btn">
-        Save Data &amp; Jump to Asset Summary
-      </button>
-    </div>
-  </form>
-  <!-- Form Ends -->
-
-  <!-- JavaScript Starts -->
-  <script>
-    // Auto-save functionality
-    function apSaveGoalsDataToStorage() {
-      if (!window.localStorage) return;
-      var form = document.getElementById('ap-goals-data-form');
-      if (!form) return;
-      var data = {};
-      Array.prototype.forEach.call(form.elements, function(el) {
-        if (!el.name) return;
-        if (['button','submit','reset'].indexOf(el.type) !== -1) return;
-        data[el.name] = el.value;
-      });
-      localStorage.setItem('apGoalsDataForm', JSON.stringify(data));
-    }
-
-    function apLoadGoalsDataFromStorage() {
-      if (!window.localStorage) return;
-      var raw = localStorage.getItem('apGoalsDataForm');
-      if (!raw) return;
-      var form = document.getElementById('ap-goals-data-form');
-      if (!form) return;
-      var data;
-      try { data = JSON.parse(raw); } catch(e) { return; }
-      Object.keys(data).forEach(function(name) {
-        var el = form.elements[name];
-        if (!el) return;
-        el.value = data[name];
-      });
-    }
-
-    // Color Negative Gap values
-    function apColorNegativeGaps() {
-      var gapElements = document.querySelectorAll('.ap-plan-table .gap');
-      gapElements.forEach(function(gap) {
-        var gapValue = parseFloat(gap.innerText.replace(/[^0-9.-]+/g, ""));
-        if (gapValue < 0) {
-          gap.classList.add('negative-gap');
-        }
-      });
-    }
-
-    // Event listeners
-    document.addEventListener('DOMContentLoaded', function() {
-      apLoadGoalsDataFromStorage();
-
-      var saveBtn = document.getElementById('ap-save-data-btn');
-      if (saveBtn) {
-        saveBtn.addEventListener('click', function() {
-          apSaveGoalsDataToStorage();
-          alert('Client data saved!');
-        });
-      }
-
-      // Apply negative gap coloring
-      apColorNegativeGaps();
+  function apSaveGoalsDataToStorage() {
+    if (!window.localStorage) return;
+    var form = document.getElementById('ap-goals-data-form');
+    if (!form) return;
+    var data = {};
+    Array.prototype.forEach.call(form.elements, function(el) {
+      if (!el.name) return;
+      if (['button','submit','reset'].indexOf(el.type) !== -1) return;
+      data[el.name] = el.value;
     });
-  </script>
-  <!-- JavaScript Ends -->
+    localStorage.setItem('apGoalsDataForm', JSON.stringify(data));
+  }
 
-</div>
+  function apLoadGoalsDataFromStorage() {
+    if (!window.localStorage) return;
+    var raw = localStorage.getItem('apGoalsDataForm');
+    if (!raw) return;
+    var form = document.getElementById('ap-goals-data-form');
+    if (!form) return;
+    var data;
+    try { data = JSON.parse(raw); } catch(e) { return; }
+    Object.keys(data).forEach(function(name) {
+      var el = form.elements[name];
+      if (!el) return;
+      el.value = data[name];
+    });
+  }
+
+  // ---------- Update totals & gaps ----------
+  function apUpdateDataFormTotals() {
+    var gapTotal = 0;
+    var gapElements = document.querySelectorAll(".ap-noplan-joint-body tr");
+    gapElements.forEach(function(row) {
+      var gapValue = parseFloat(row.querySelector('.gap')?.textContent || '0');
+      if (gapValue < 0) {
+        row.querySelector('.gap').classList.add('negative-gap');
+      }
+      gapTotal += gapValue;
+    });
+  }
+
+  // ---------- Tab navigation ----------
+  function showPanel(name) {
+    var panels = ['goals','assets','inputs','noplanJoint','noplanHer','noplanHis','noplanAlloc'];
+    panels.forEach(function (p) {
+      var pane = document.getElementById('ap-panel-' + p);
+      if (pane) pane.style.display = (p === name ? 'block' : 'none');
+    });
+
+    var buttons = document.querySelectorAll('#ap-ifl-app .ap-ifl-tab-btn');
+    buttons.forEach(function (btn) {
+      btn.classList.toggle('ap-ifl-tab-active', btn.getAttribute('data-panel') === name);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    apLoadGoalsDataFromStorage();
+    apUpdateDataFormTotals();
+    
+    var saveBtn = document.getElementById('ap-save-data-btn');
+    if (saveBtn) {
+      saveBtn.addEventListener('click', function () {
+        apSaveGoalsDataToStorage();
+        apUpdateDataFormTotals();
+        alert('Client data saved in this browser and data updated.');
+      });
+    }
+
+    var form = document.getElementById('ap-goals-data-form');
+    if (form) {
+      form.addEventListener('input', function () {
+        apUpdateDataFormTotals();
+      });
+    }
+    
+    showPanel('goals');
+  });
+
+</script>
 </body>
 </html>
