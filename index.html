@@ -13,7 +13,7 @@
   </style>
 </head>
 <body>
-<!-- Optional rotate tip (ignored on desktop) -->
+<!-- Optional rotate tip (mainly for phones if ever used) -->
 <div id="ap-rotate-tip" style="display:none;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;">
   Turn phone sideways for easy viewing.
 </div>
@@ -77,7 +77,6 @@
       padding: 18px 18px 22px;
     }
 
-    /* Primary button */
     .ap-primary-btn {
       display: inline-block;
       background: #0b5aa2;
@@ -98,7 +97,7 @@
       margin-top: 4px;
     }
 
-    /* ---------- Goals & Data Form Styles ---------- */
+    /* ---------- Goals & Data Styles ---------- */
     #ap-goals-data h2 {
       font-size: 20px;
       margin: 0 0 4px;
@@ -392,7 +391,7 @@
       </div>
 
       <form id="ap-goals-data-form">
-        <!-- 1. Business & Primary Contact -->
+        <!-- Business & Primary Contact -->
         <div class="ap-section">
           <div class="ap-section-title">Business &amp; Primary Contact</div>
           <div class="ap-grid-3">
@@ -432,7 +431,7 @@
           </div>
         </div>
 
-        <!-- 2. Personal Information -->
+        <!-- Personal Information -->
         <div class="ap-section">
           <div class="ap-section-title">Personal Information</div>
 
@@ -487,7 +486,7 @@
             </div>
           </div>
 
-          <div class="ap-grid-3" style="margin-top:10px%;">
+          <div class="ap-grid-3" style="margin-top:10px;">
             <div class="ap-field">
               <label for="hisCell">His Cell Number</label>
               <input id="hisCell" name="hisCell" type="text">
@@ -503,7 +502,7 @@
           </div>
         </div>
 
-        <!-- 3. Children -->
+        <!-- Children -->
         <div class="ap-section">
           <div class="ap-section-title">Children (Estate Planning Purposes)</div>
           <table class="ap-table">
@@ -539,7 +538,7 @@
           </table>
         </div>
 
-        <!-- 4. Current Advisors -->
+        <!-- Current Advisors -->
         <div class="ap-section">
           <div class="ap-section-title">Current Advisors (Optional)</div>
           <div class="ap-grid-2">
@@ -574,7 +573,7 @@
           </div>
         </div>
 
-        <!-- 5. Retirement Timing -->
+        <!-- Retirement Timing -->
         <div class="ap-section">
           <div class="ap-section-title">Retirement Timing</div>
           <div class="ap-grid-4">
@@ -597,7 +596,7 @@
           </div>
         </div>
 
-        <!-- 6. Estate Planning & Insurance -->
+        <!-- Estate Planning & Insurance -->
         <div class="ap-section">
           <div class="ap-section-title">Estate Planning &amp; Insurance</div>
 
@@ -682,7 +681,7 @@
           </div>
         </div>
 
-        <!-- 7. Residences & Real Estate -->
+        <!-- Residences & Real Estate -->
         <div class="ap-section">
           <div class="ap-section-title">Residences and Real Estate Investments</div>
           <table class="ap-table">
@@ -714,7 +713,7 @@
           </table>
         </div>
 
-        <!-- 8. Current Portfolio -->
+        <!-- Current Portfolio -->
         <div class="ap-section">
           <div class="ap-section-title">Current Portfolio (Qualified = IRA / 401k / 403b / Brokerage, etc.)</div>
           <table class="ap-table">
@@ -758,7 +757,7 @@
           </table>
         </div>
 
-        <!-- 9. Savings & Credit Union Accounts -->
+        <!-- Savings & Credit Union -->
         <div class="ap-section">
           <div class="ap-section-title">Savings and Credit Union Accounts</div>
           <table class="ap-table">
@@ -799,7 +798,7 @@
           </table>
         </div>
 
-        <!-- 10. Annuities -->
+        <!-- Annuities -->
         <div class="ap-section">
           <div class="ap-section-title">Annuities</div>
           <table class="ap-table">
@@ -837,7 +836,7 @@
           </table>
         </div>
 
-        <!-- 11. Income Sources -->
+        <!-- Income Sources -->
         <div class="ap-section">
           <div class="ap-section-title">Income Sources</div>
           <table class="ap-table">
@@ -881,7 +880,7 @@
           </table>
         </div>
 
-        <!-- 12. Living Expenses & Desired Income -->
+        <!-- Living Expenses & Desired Income -->
         <div class="ap-section">
           <div class="ap-section-title">Living Expenses &amp; Desired Retirement Income</div>
           <div class="ap-grid-2">
@@ -902,7 +901,7 @@
           </div>
         </div>
 
-        <!-- 13. Goals -->
+        <!-- Goals -->
         <div class="ap-section">
           <div class="ap-section-title">Goals</div>
           <div class="ap-pill-note" style="margin-bottom:8px;">
@@ -966,7 +965,7 @@
           </div>
         </div>
 
-        <!-- 14. Document Checklist & Additional Notes -->
+        <!-- Document Checklist & Notes -->
         <div class="ap-section">
           <div class="ap-section-title">Document Checklist &amp; Additional Notes</div>
           <div class="ap-field">
@@ -982,7 +981,7 @@
         </div>
 
         <!-- SAVE BUTTON -->
-        <div class="ap-save-row" style="text-align:right;margin-top:4px;">
+        <div class="ap-save-row">
           <button type="button" id="ap-save-data-btn" class="ap-primary-btn">
             Save Data &amp; Jump to Asset Summary
           </button>
@@ -1007,7 +1006,6 @@
       <div id="ap-asset-summary-layout">
         <!-- LEFT: Cash + Investments -->
         <div>
-          <!-- Cash Accounts -->
           <div>
             <div class="ap-block-title">Cash Accounts</div>
             <table class="ap-table">
@@ -1028,7 +1026,6 @@
             </table>
           </div>
 
-          <!-- Investment Accounts -->
           <div style="margin-top:18px;">
             <div class="ap-block-title">Investment Accounts</div>
             <table class="ap-table">
@@ -1053,7 +1050,6 @@
 
         <!-- RIGHT: Real Estate + Annuities -->
         <div>
-          <!-- Property & Mortgages -->
           <div>
             <div class="ap-block-title">Property &amp; Mortgages</div>
             <table class="ap-table">
@@ -1086,7 +1082,6 @@
             </table>
           </div>
 
-          <!-- Annuities -->
           <div style="margin-top:18px;">
             <div class="ap-block-title">Annuities</div>
             <table class="ap-table">
@@ -1110,7 +1105,6 @@
         </div>
       </div>
 
-      <!-- TOTALS -->
       <div id="ap-asset-summary-bottom">
         <div class="ap-summary-item">
           <div class="ap-summary-label">TOTAL ASSETS</div>
@@ -1136,7 +1130,7 @@
         Comparing your current vs. additional income plan – this page drives the No-Plan, Silver Plan, and Gold Plan projections.
       </p>
 
-      <!-- TOP: CORE PROJECTION INPUTS + NOTES -->
+      <!-- Top area: core projection inputs + notes -->
       <div style="display:grid;grid-template-columns:1.2fr 0.8fr;gap:16px;align-items:flex-start;margin-bottom:18px;">
         <!-- LEFT: CORE INPUTS -->
         <div class="ap-section" style="background:#ffffff;border-radius:10px;border:1px solid #e5e7eb;padding:14px 16px 12px;">
@@ -1253,7 +1247,7 @@
         </div>
       </div>
 
-      <!-- CURRENT / NO PLAN BUCKETS -->
+      <!-- CURRENT / NO-PLAN BUCKETS -->
       <div class="ap-section" style="background:#ffffff;border-radius:10px;border:1px solid #e5e7eb;padding:14px 16px 12px;margin-bottom:18px;">
         <div class="ap-section-title" style="font-size:15px;font-weight:700;color:#0b5aa2;border-bottom:1px solid #e5e7eb;padding-bottom:6px;margin-bottom:8px;">
           Current / No-Plan Asset Buckets (A/B/C)
@@ -1501,7 +1495,6 @@
         </div>
       </div>
 
-      <!-- EXTERNAL TOOL -->
       <div style="font-size:12px;color:#4b5563;">
         External calculator for annuity income illustrations:
         <a href="https://www.delawarelife.com/static/html/tp-calculator.html" target="_blank" rel="noopener noreferrer">
@@ -1575,43 +1568,35 @@
     });
   }
 
-  // ---------- Data Form totals ----------
+  // ---------- Goals & Data totals ----------
   function apUpdateDataFormTotals() {
     // Investments total
     var invTotal = 0;
     for (var j = 1; j <= 3; j++) {
-      var rawInv = apGetInputValue('inv' + j + 'Balance');
-      invTotal += apParseCurrency(rawInv);
+      invTotal += apParseCurrency(apGetInputValue('inv' + j + 'Balance'));
     }
-    var invTotalField = document.querySelector('[name="invTotalBalance"]');
-    if (invTotalField) invTotalField.value = apFormatCurrency(invTotal);
+    apSetInputValue('invTotalBalance', apFormatCurrency(invTotal));
 
     // Savings total
     var savTotal = 0;
     for (var i = 1; i <= 4; i++) {
-      var rawSav = apGetInputValue('save' + i + 'Balance');
-      savTotal += apParseCurrency(rawSav);
+      savTotal += apParseCurrency(apGetInputValue('save' + i + 'Balance'));
     }
-    var savTotalField = document.querySelector('[name="saveTotalBalance"]');
-    if (savTotalField) savTotalField.value = apFormatCurrency(savTotal);
+    apSetInputValue('saveTotalBalance', apFormatCurrency(savTotal));
 
     // Annuities total
     var annTotal = 0;
     for (var k = 1; k <= 2; k++) {
-      var rawAnn = apGetInputValue('ann' + k + 'Balance');
-      annTotal += apParseCurrency(rawAnn);
+      annTotal += apParseCurrency(apGetInputValue('ann' + k + 'Balance'));
     }
-    var annTotalField = document.querySelector('[name="annTotalBalance"]');
-    if (annTotalField) annTotalField.value = apFormatCurrency(annTotal);
+    apSetInputValue('annTotalBalance', apFormatCurrency(annTotal));
 
     // Income total
     var incTotal = 0;
     for (var r = 1; r <= 3; r++) {
-      var rawInc = apGetInputValue('inc' + r + 'Amount');
-      incTotal += apParseCurrency(rawInc);
+      incTotal += apParseCurrency(apGetInputValue('inc' + r + 'Amount'));
     }
-    var incTotalField = document.querySelector('[name="incTotalAmount"]');
-    if (incTotalField) incTotalField.value = apFormatCurrency(incTotal);
+    apSetInputValue('incTotalAmount', apFormatCurrency(incTotal));
   }
 
   // ---------- Asset Summary updater ----------
@@ -1674,9 +1659,8 @@
       }
 
       if (cashRowCount === 0) {
-        var totalFieldCash = apParseCurrency(apGetInputValue('saveTotalBalance'));
-        if (totalFieldCash) {
-          totalCash = totalFieldCash;
+        totalCash = apParseCurrency(apGetInputValue('saveTotalBalance'));
+        if (totalCash) {
           var trAgg = document.createElement('tr');
           trAgg.innerHTML =
             '<td></td>' +
@@ -1721,9 +1705,8 @@
       }
 
       if (invRowCount === 0) {
-        var totalFieldInv = apParseCurrency(apGetInputValue('invTotalBalance'));
-        if (totalFieldInv) {
-          totalInv = totalFieldInv;
+        totalInv = apParseCurrency(apGetInputValue('invTotalBalance'));
+        if (totalInv) {
           var trAggInv = document.createElement('tr');
           trAggInv.innerHTML =
             '<td></td>' +
@@ -1749,24 +1732,18 @@
     var totalRealEstate = primaryVal + secondaryVal;
     var totalMortgage = primaryMort + secondaryMort;
 
-    if (document.getElementById('ap-primary-value')) {
-      document.getElementById('ap-primary-value').textContent = apFormatCurrency(primaryVal);
-    }
-    if (document.getElementById('ap-primary-mortgage')) {
-      document.getElementById('ap-primary-mortgage').textContent = apFormatCurrency(primaryMort);
-    }
-    if (document.getElementById('ap-secondary-value')) {
-      document.getElementById('ap-secondary-value').textContent = apFormatCurrency(secondaryVal);
-    }
-    if (document.getElementById('ap-secondary-mortgage')) {
-      document.getElementById('ap-secondary-mortgage').textContent = apFormatCurrency(secondaryMort);
-    }
-    if (document.getElementById('ap-total-real-estate')) {
-      document.getElementById('ap-total-real-estate').textContent = apFormatCurrency(totalRealEstate);
-    }
-    if (document.getElementById('ap-total-mortgage')) {
-      document.getElementById('ap-total-mortgage').textContent = apFormatCurrency(totalMortgage);
-    }
+    var elPV = document.getElementById('ap-primary-value');
+    if (elPV) elPV.textContent = apFormatCurrency(primaryVal);
+    var elPM = document.getElementById('ap-primary-mortgage');
+    if (elPM) elPM.textContent = apFormatCurrency(primaryMort);
+    var elSV = document.getElementById('ap-secondary-value');
+    if (elSV) elSV.textContent = apFormatCurrency(secondaryVal);
+    var elSM = document.getElementById('ap-secondary-mortgage');
+    if (elSM) elSM.textContent = apFormatCurrency(secondaryMort);
+    var elTR = document.getElementById('ap-total-real-estate');
+    if (elTR) elTR.textContent = apFormatCurrency(totalRealEstate);
+    var elTM = document.getElementById('ap-total-mortgage');
+    if (elTM) elTM.textContent = apFormatCurrency(totalMortgage);
 
     // ANNUITIES
     var annRowsBody = document.getElementById('ap-annuity-rows');
@@ -1796,9 +1773,8 @@
       }
 
       if (annRowCount === 0) {
-        var totalFieldAnn = apParseCurrency(apGetInputValue('annTotalBalance'));
-        if (totalFieldAnn) {
-          totalAnn = totalFieldAnn;
+        totalAnn = apParseCurrency(apGetInputValue('annTotalBalance'));
+        if (totalAnn) {
           var trAggAnn = document.createElement('tr');
           trAggAnn.innerHTML =
             '<td></td>' +
@@ -1820,35 +1796,33 @@
     var totalLiab = totalMortgage;
     var netWorth = totalAssets - totalLiab;
 
-    if (document.getElementById('ap-total-assets')) {
-      document.getElementById('ap-total-assets').textContent = apFormatCurrency(totalAssets);
-    }
-    if (document.getElementById('ap-total-liabilities')) {
-      document.getElementById('ap-total-liabilities').textContent = apFormatCurrency(totalLiab);
-    }
-    if (document.getElementById('ap-net-worth')) {
-      document.getElementById('ap-net-worth').textContent = apFormatCurrency(netWorth);
-    }
+    var elTotA = document.getElementById('ap-total-assets');
+    if (elTotA) elTotA.textContent = apFormatCurrency(totalAssets);
+    var elTotL = document.getElementById('ap-total-liabilities');
+    if (elTotL) elTotL.textContent = apFormatCurrency(totalLiab);
+    var elNW = document.getElementById('ap-net-worth');
+    if (elNW) elNW.textContent = apFormatCurrency(netWorth);
   }
 
-  // ---------- Inputs Page auto-calcs (UPDATED with Silver/Gold reallocations) ----------
+  // ---------- Inputs Page auto-calcs (death indexes + reallocations) ----------
   function apUpdateInputsDerived() {
-    // 1) Make sure Asset Summary and No-Plan buckets are up to date
+    // Keep summary + totals fresh
     apUpdateAssetSummary();
 
-    // 2) Auto-fill today's date on Inputs tab (only if blank)
+    // 1) Default today's date
     var todayEl = document.getElementById('inputsTodayDate');
     if (todayEl && !todayEl.value) {
       todayEl.value = new Date().toISOString().slice(0, 10);
     }
 
-    // 3) Default projection length to 30 years (if blank or 0)
+    // 2) Projection length default = 30 years
     var projEl = document.getElementById('projLength');
     if (projEl && (!projEl.value || projEl.value === '0')) {
       projEl.value = 30;
     }
+    var projLen = parseInt(apGetInputValue('projLength') || '0', 10);
 
-    // 4) Pull His/Her current age from Goals & Data (clientAge, spouseAge)
+    // 3) Pull His / Her current age from Goals page if blank
     var goalsAgeHis = apGetInputValue('clientAge');
     var goalsAgeHer = apGetInputValue('spouseAge');
     var inputsAgeHisEl = document.getElementById('ageHis');
@@ -1860,33 +1834,64 @@
       inputsAgeHerEl.value = goalsAgeHer;
     }
 
-    // 5) Living expenses on Inputs = Approx. Annual Living Expenses from Goals page
+    var ageHis = parseInt(apGetInputValue('ageHis') || '0', 10);
+    var ageHer = parseInt(apGetInputValue('ageHer') || '0', 10);
+
+    // 4) Living expenses = Annual Living Expenses from Goals page (if blank)
     var goalsExpenses = apGetInputValue('annualExpenses');
     var inputsExpensesEl = document.getElementById('livingExpensesAnnual');
     if (inputsExpensesEl && !inputsExpensesEl.value && goalsExpenses) {
       inputsExpensesEl.value = goalsExpenses;
     }
 
-    // 6) Current A/B/C buckets come from ASSET SUMMARY totals
-    var yellowTotalText = (document.getElementById('ap-total-cash') || {}).textContent || '';
-    var redTotalText    = (document.getElementById('ap-total-investments') || {}).textContent || '';
-    var greenTotalText  = (document.getElementById('ap-total-annuities') || {}).textContent || '';
+    // 5) Base A/B/C (Current / No-Plan) – auto-fill from Asset Summary only if empty
+    var yellowFromSummary = (document.getElementById('ap-total-cash') || {}).textContent || '';
+    var redFromSummary    = (document.getElementById('ap-total-investments') || {}).textContent || '';
+    var greenFromSummary  = (document.getElementById('ap-total-annuities') || {}).textContent || '';
 
-    apSetInputValue('currentAYellow', yellowTotalText);
-    apSetInputValue('currentCRed',    redTotalText);
-    apSetInputValue('currentBGreen',  greenTotalText);
-
-    var aCur = apParseCurrency(yellowTotalText);
-    var cCur = apParseCurrency(redTotalText);
-    var bCur = apParseCurrency(greenTotalText);
-
-    var totalCur = aCur + cCur + bCur;
-    var curTotEl = document.getElementById('currentTotalInvestable');
-    if (curTotEl) {
-      curTotEl.value = apFormatCurrency(totalCur);
+    if (!apGetInputValue('currentAYellow') && yellowFromSummary) {
+      apSetInputValue('currentAYellow', yellowFromSummary);
+    }
+    if (!apGetInputValue('currentCRed') && redFromSummary) {
+      apSetInputValue('currentCRed', redFromSummary);
+    }
+    if (!apGetInputValue('currentBGreen') && greenFromSummary) {
+      apSetInputValue('currentBGreen', greenFromSummary);
     }
 
-    // 7) Silver Plan – reallocate from No-Plan red to green
+    // Now read the base that is actually shown on screen
+    var aCur = apParseCurrency(apGetInputValue('currentAYellow'));
+    var cCur = apParseCurrency(apGetInputValue('currentCRed'));
+    var bCur = apParseCurrency(apGetInputValue('currentBGreen'));
+
+    var totalCur = aCur + cCur + bCur;
+    apSetInputValue('currentTotalInvestable', apFormatCurrency(totalCur));
+
+    // 6) Death ages defaults + indexes
+    var deathHis = parseInt(apGetInputValue('deathAgeHis') || '0', 10);
+    var deathHer = parseInt(apGetInputValue('deathAgeHer') || '0', 10);
+
+    if (projLen > 0) {
+      if (!deathHis && ageHis > 0) {
+        deathHis = ageHis + projLen;
+        apSetInputValue('deathAgeHis', deathHis);
+      }
+      if (!deathHer && ageHer > 0) {
+        deathHer = ageHer + projLen;
+        apSetInputValue('deathAgeHer', deathHer);
+      }
+    }
+
+    if (projLen > 0 && ageHis > 0 && deathHis > ageHis) {
+      var idxHis = Math.max(1, Math.min(projLen, deathHis - ageHis));
+      apSetInputValue('deathIndexHis', idxHis);
+    }
+    if (projLen > 0 && ageHer > 0 && deathHer > ageHer) {
+      var idxHer = Math.max(1, Math.min(projLen, deathHer - ageHer));
+      apSetInputValue('deathIndexHer', idxHer);
+    }
+
+    // 7) Silver Plan – reallocate from No-Plan RED to GREEN
     var silverRoll = 0;
     for (var s = 1; s <= 4; s++) {
       silverRoll += apParseCurrency(apGetInputValue('silver' + s + 'Amount'));
@@ -1898,11 +1903,7 @@
     apSetInputValue('silverAYellow', apFormatCurrency(silverA));
     apSetInputValue('silverCRed',    apFormatCurrency(silverC));
     apSetInputValue('silverBGreen',  apFormatCurrency(silverB));
-
-    var silTotEl = document.getElementById('silverTotalInvestable');
-    if (silTotEl) {
-      silTotEl.value = apFormatCurrency(silverA + silverC + silverB);
-    }
+    apSetInputValue('silverTotalInvestable', apFormatCurrency(silverA + silverC + silverB));
 
     // 8) Gold Plan – same logic, built off No-Plan A/B/C
     var goldRoll = 0;
@@ -1916,27 +1917,7 @@
     apSetInputValue('goldAYellow', apFormatCurrency(goldA));
     apSetInputValue('goldCRed',    apFormatCurrency(goldC));
     apSetInputValue('goldBGreen',  apFormatCurrency(goldB));
-
-    var golTotEl = document.getElementById('goldTotalInvestable');
-    if (golTotEl) {
-      golTotEl.value = apFormatCurrency(goldA + goldC + goldB);
-    }
-
-    // 9) Death-year indexes (approx)
-    var projLen = parseInt(apGetInputValue('projLength') || '0', 10);
-    var ageHis = parseInt(apGetInputValue('ageHis') || '0', 10);
-    var ageHer = parseInt(apGetInputValue('ageHer') || '0', 10);
-    var deathHis = parseInt(apGetInputValue('deathAgeHis') || '0', 10);
-    var deathHer = parseInt(apGetInputValue('deathAgeHer') || '0', 10);
-
-    if (projLen > 0 && ageHis > 0 && deathHis > ageHis) {
-      var idxHis = Math.max(1, Math.min(projLen, deathHis - ageHis));
-      apSetInputValue('deathIndexHis', idxHis);
-    }
-    if (projLen > 0 && ageHer > 0 && deathHer > ageHer) {
-      var idxHer = Math.max(1, Math.min(projLen, deathHer - ageHer));
-      apSetInputValue('deathIndexHer', idxHer);
-    }
+    apSetInputValue('goldTotalInvestable', apFormatCurrency(goldA + goldC + goldB));
   }
 
   // ---------- Tabs + Save wiring ----------
@@ -1962,10 +1943,8 @@
     }
 
     document.addEventListener('DOMContentLoaded', function () {
-      // Load previously saved data if present
+      // Load previously saved Goals & Data
       apLoadGoalsDataFromStorage();
-
-      // Compute totals from loaded data
       apUpdateDataFormTotals();
 
       // Wire tabs
@@ -1976,7 +1955,7 @@
         });
       });
 
-      // Wire Save button
+      // Save button on Goals & Data
       var saveBtn = document.getElementById('ap-save-data-btn');
       if (saveBtn) {
         saveBtn.addEventListener('click', function () {
@@ -1988,7 +1967,7 @@
         });
       }
 
-      // Live update Data Form totals whenever anything changes on the form
+      // Live totals on Goals & Data
       var form = document.getElementById('ap-goals-data-form');
       if (form) {
         form.addEventListener('input', function () {
@@ -1996,28 +1975,31 @@
         });
       }
 
-      // Live update Inputs Silver/Gold allocations when those dollar amounts change
+      // Live Silver / Gold reallocations & death indexes
       var inputsRoot = document.getElementById('ap-plan-inputs');
       if (inputsRoot) {
         inputsRoot.addEventListener('input', function (e) {
           var id = e.target.id || '';
-          if (id.indexOf('silver') === 0 ||
-              id.indexOf('gold') === 0 ||
-              id === 'projLength' ||
-              id === 'ageHis' ||
-              id === 'ageHer' ||
-              id === 'deathAgeHis' ||
-              id === 'deathAgeHer') {
+          if (
+            id.indexOf('silver') === 0 ||
+            id.indexOf('gold') === 0 ||
+            id === 'projLength' ||
+            id === 'ageHis' ||
+            id === 'ageHer' ||
+            id === 'deathAgeHis' ||
+            id === 'deathAgeHer' ||
+            id === 'currentAYellow' ||
+            id === 'currentCRed' ||
+            id === 'currentBGreen'
+          ) {
             apUpdateInputsDerived();
           }
         });
       }
 
-      // Default to Goals & Data
+      // Default view = Goals & Data
       showPanel('goals');
-
-      // Expose for console if needed
-      window.apShowIFLPanel = showPanel;
+      window.apShowIFLPanel = showPanel; // optional helper
     });
   })();
 </script>
