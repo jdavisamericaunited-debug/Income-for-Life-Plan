@@ -487,7 +487,7 @@
             </div>
           </div>
 
-          <div class="ap-grid-3" style="margin-top:10px;">
+          <div class="ap-grid-3" style="margin-top:10px%;">
             <div class="ap-field">
               <label for="hisCell">His Cell Number</label>
               <input id="hisCell" name="hisCell" type="text">
@@ -1357,19 +1357,19 @@
               <tbody>
                 <tr>
                   <td>Silver Add'l 1</td>
-                  <td><input name="silver1Amount" type="text" placeholder="$100,000.00"></td>
+                  <td><input id="silver1Amount" name="silver1Amount" type="text" placeholder="$100,000.00"></td>
                 </tr>
                 <tr>
                   <td>Silver Add'l 2</td>
-                  <td><input name="silver2Amount" type="text" placeholder="$150,000.00"></td>
+                  <td><input id="silver2Amount" name="silver2Amount" type="text" placeholder="$150,000.00"></td>
                 </tr>
                 <tr>
                   <td>Silver Add'l 3</td>
-                  <td><input name="silver3Amount" type="text" placeholder="$50,000.00"></td>
+                  <td><input id="silver3Amount" name="silver3Amount" type="text" placeholder="$50,000.00"></td>
                 </tr>
                 <tr>
                   <td>Silver Add'l 4</td>
-                  <td><input name="silver4Amount" type="text" placeholder="$25,000.00"></td>
+                  <td><input id="silver4Amount" name="silver4Amount" type="text" placeholder="$25,000.00"></td>
                 </tr>
               </tbody>
             </table>
@@ -1462,19 +1462,19 @@
               <tbody>
                 <tr>
                   <td>Gold Add'l 1</td>
-                  <td><input name="gold1Amount" type="text" placeholder="$400,000.00"></td>
+                  <td><input id="gold1Amount" name="gold1Amount" type="text" placeholder="$400,000.00"></td>
                 </tr>
                 <tr>
                   <td>Gold Add'l 2</td>
-                  <td><input name="gold2Amount" type="text" placeholder="$250,000.00"></td>
+                  <td><input id="gold2Amount" name="gold2Amount" type="text" placeholder="$250,000.00"></td>
                 </tr>
                 <tr>
                   <td>Gold Add'l 3</td>
-                  <td><input name="gold3Amount" type="text" placeholder="$220,000.00"></td>
+                  <td><input id="gold3Amount" name="gold3Amount" type="text" placeholder="$220,000.00"></td>
                 </tr>
                 <tr>
                   <td>Gold Add'l 4</td>
-                  <td><input name="gold4Amount" type="text" placeholder="$125,000.00"></td>
+                  <td><input id="gold4Amount" name="gold4Amount" type="text" placeholder="$125,000.00"></td>
                 </tr>
               </tbody>
             </table>
@@ -1575,56 +1575,47 @@
     });
   }
 
-  // ---------- Data Form totals (mimic Excel SUM formulas) ----------
+  // ---------- Data Form totals ----------
   function apUpdateDataFormTotals() {
-    // Investments total = SUM of inv1Balance..inv3Balance
+    // Investments total
     var invTotal = 0;
     for (var j = 1; j <= 3; j++) {
       var rawInv = apGetInputValue('inv' + j + 'Balance');
       invTotal += apParseCurrency(rawInv);
     }
     var invTotalField = document.querySelector('[name="invTotalBalance"]');
-    if (invTotalField) {
-      invTotalField.value = apFormatCurrency(invTotal);
-    }
+    if (invTotalField) invTotalField.value = apFormatCurrency(invTotal);
 
-    // Savings total = SUM of save1Balance..save4Balance
+    // Savings total
     var savTotal = 0;
     for (var i = 1; i <= 4; i++) {
       var rawSav = apGetInputValue('save' + i + 'Balance');
       savTotal += apParseCurrency(rawSav);
     }
     var savTotalField = document.querySelector('[name="saveTotalBalance"]');
-    if (savTotalField) {
-      savTotalField.value = apFormatCurrency(savTotal);
-    }
+    if (savTotalField) savTotalField.value = apFormatCurrency(savTotal);
 
-    // Annuities total = SUM of ann1Balance..ann2Balance
+    // Annuities total
     var annTotal = 0;
     for (var k = 1; k <= 2; k++) {
       var rawAnn = apGetInputValue('ann' + k + 'Balance');
       annTotal += apParseCurrency(rawAnn);
     }
     var annTotalField = document.querySelector('[name="annTotalBalance"]');
-    if (annTotalField) {
-      annTotalField.value = apFormatCurrency(annTotal);
-    }
+    if (annTotalField) annTotalField.value = apFormatCurrency(annTotal);
 
-    // Income total = SUM of inc1Amount..inc3Amount
+    // Income total
     var incTotal = 0;
     for (var r = 1; r <= 3; r++) {
       var rawInc = apGetInputValue('inc' + r + 'Amount');
       incTotal += apParseCurrency(rawInc);
     }
     var incTotalField = document.querySelector('[name="incTotalAmount"]');
-    if (incTotalField) {
-      incTotalField.value = apFormatCurrency(incTotal);
-    }
+    if (incTotalField) incTotalField.value = apFormatCurrency(incTotal);
   }
 
   // ---------- Asset Summary updater ----------
   function apUpdateAssetSummary() {
-    // Keep Data Form totals in sync whenever we refresh the summary
     apUpdateDataFormTotals();
 
     var now = new Date();
@@ -1656,12 +1647,12 @@
         (addressLine ? '<div>' + addressLine + '</div>' : '');
     }
 
-    // ----- CASH (Savings & Credit Union Accounts) -----
+    // CASH
     var cashRowsBody = document.getElementById('ap-cash-rows');
     var totalCash = 0;
     if (cashRowsBody) {
       cashRowsBody.innerHTML = '';
-      var maxCash = 4; // save1..save4
+      var maxCash = 4;
       var cashRowCount = 0;
 
       for (var i = 1; i <= maxCash; i++) {
@@ -1701,12 +1692,12 @@
       if (elTC) elTC.textContent = apFormatCurrency(totalCash);
     }
 
-    // ----- INVESTMENTS -----
+    // INVESTMENTS
     var invRowsBody = document.getElementById('ap-investment-rows');
     var totalInv = 0;
     if (invRowsBody) {
       invRowsBody.innerHTML = '';
-      var maxInv = 3; // inv1..inv3
+      var maxInv = 3;
       var invRowCount = 0;
 
       for (var j = 1; j <= maxInv; j++) {
@@ -1749,7 +1740,7 @@
       if (elTI) elTI.textContent = apFormatCurrency(totalInv);
     }
 
-    // ----- PROPERTY & MORTGAGES -----
+    // PROPERTY & MORTGAGES
     var primaryVal = apParseCurrency(apGetInputValue('primaryValue'));
     var primaryMort = apParseCurrency(apGetInputValue('primaryMortgage'));
     var secondaryVal = apParseCurrency(apGetInputValue('secondaryValue'));
@@ -1758,26 +1749,31 @@
     var totalRealEstate = primaryVal + secondaryVal;
     var totalMortgage = primaryMort + secondaryMort;
 
-    var elPrimVal = document.getElementById('ap-primary-value');
-    var elPrimMort = document.getElementById('ap-primary-mortgage');
-    var elSecVal = document.getElementById('ap-secondary-value');
-    var elSecMort = document.getElementById('ap-secondary-mortgage');
-    var elTotalRE = document.getElementById('ap-total-real-estate');
-    var elTotalMort = document.getElementById('ap-total-mortgage');
+    if (document.getElementById('ap-primary-value')) {
+      document.getElementById('ap-primary-value').textContent = apFormatCurrency(primaryVal);
+    }
+    if (document.getElementById('ap-primary-mortgage')) {
+      document.getElementById('ap-primary-mortgage').textContent = apFormatCurrency(primaryMort);
+    }
+    if (document.getElementById('ap-secondary-value')) {
+      document.getElementById('ap-secondary-value').textContent = apFormatCurrency(secondaryVal);
+    }
+    if (document.getElementById('ap-secondary-mortgage')) {
+      document.getElementById('ap-secondary-mortgage').textContent = apFormatCurrency(secondaryMort);
+    }
+    if (document.getElementById('ap-total-real-estate')) {
+      document.getElementById('ap-total-real-estate').textContent = apFormatCurrency(totalRealEstate);
+    }
+    if (document.getElementById('ap-total-mortgage')) {
+      document.getElementById('ap-total-mortgage').textContent = apFormatCurrency(totalMortgage);
+    }
 
-    if (elPrimVal) elPrimVal.textContent = apFormatCurrency(primaryVal);
-    if (elPrimMort) elPrimMort.textContent = apFormatCurrency(primaryMort);
-    if (elSecVal) elSecVal.textContent = apFormatCurrency(secondaryVal);
-    if (elSecMort) elSecMort.textContent = apFormatCurrency(secondaryMort);
-    if (elTotalRE) elTotalRE.textContent = apFormatCurrency(totalRealEstate);
-    if (elTotalMort) elTotalMort.textContent = apFormatCurrency(totalMortgage);
-
-    // ----- ANNUITIES -----
+    // ANNUITIES
     var annRowsBody = document.getElementById('ap-annuity-rows');
     var totalAnn = 0;
     if (annRowsBody) {
       annRowsBody.innerHTML = '';
-      var maxAnn = 2; // ann1..ann2
+      var maxAnn = 2;
       var annRowCount = 0;
 
       for (var k = 1; k <= maxAnn; k++) {
@@ -1819,23 +1815,25 @@
       if (elTA) elTA.textContent = apFormatCurrency(totalAnn);
     }
 
-    // ----- ROLL-UP TOTALS -----
+    // ROLL-UP TOTALS
     var totalAssets = totalCash + totalInv + totalRealEstate + totalAnn;
     var totalLiab = totalMortgage;
     var netWorth = totalAssets - totalLiab;
 
-    var elTotA = document.getElementById('ap-total-assets');
-    var elTotL = document.getElementById('ap-total-liabilities');
-    var elNW = document.getElementById('ap-net-worth');
-
-    if (elTotA) elTotA.textContent = apFormatCurrency(totalAssets);
-    if (elTotL) elTotL.textContent = apFormatCurrency(totalLiab);
-    if (elNW) elNW.textContent = apFormatCurrency(netWorth);
+    if (document.getElementById('ap-total-assets')) {
+      document.getElementById('ap-total-assets').textContent = apFormatCurrency(totalAssets);
+    }
+    if (document.getElementById('ap-total-liabilities')) {
+      document.getElementById('ap-total-liabilities').textContent = apFormatCurrency(totalLiab);
+    }
+    if (document.getElementById('ap-net-worth')) {
+      document.getElementById('ap-net-worth').textContent = apFormatCurrency(netWorth);
+    }
   }
 
-  // ---------- Inputs Page auto-calcs (UPDATED) ----------
+  // ---------- Inputs Page auto-calcs (UPDATED with Silver/Gold reallocations) ----------
   function apUpdateInputsDerived() {
-    // 1) Make sure Asset Summary is fully up to date
+    // 1) Make sure Asset Summary and No-Plan buckets are up to date
     apUpdateAssetSummary();
 
     // 2) Auto-fill today's date on Inputs tab (only if blank)
@@ -1878,37 +1876,53 @@
     apSetInputValue('currentCRed',    redTotalText);
     apSetInputValue('currentBGreen',  greenTotalText);
 
-    // 7) Current / No-Plan A+B+C total (auto)
-    var aCur = apParseCurrency(apGetInputValue('currentAYellow'));
-    var cCur = apParseCurrency(apGetInputValue('currentCRed'));
-    var bCur = apParseCurrency(apGetInputValue('currentBGreen'));
+    var aCur = apParseCurrency(yellowTotalText);
+    var cCur = apParseCurrency(redTotalText);
+    var bCur = apParseCurrency(greenTotalText);
+
     var totalCur = aCur + cCur + bCur;
     var curTotEl = document.getElementById('currentTotalInvestable');
     if (curTotEl) {
       curTotEl.value = apFormatCurrency(totalCur);
     }
 
-    // 8) Silver totals (Silver fields remain blank until you type them)
-    var aSil = apParseCurrency(apGetInputValue('silverAYellow'));
-    var cSil = apParseCurrency(apGetInputValue('silverCRed'));
-    var bSil = apParseCurrency(apGetInputValue('silverBGreen'));
-    var totalSil = aSil + cSil + bSil;
+    // 7) Silver Plan – reallocate from No-Plan red to green
+    var silverRoll = 0;
+    for (var s = 1; s <= 4; s++) {
+      silverRoll += apParseCurrency(apGetInputValue('silver' + s + 'Amount'));
+    }
+    var silverA = aCur;                 // Yellow unchanged
+    var silverC = cCur - silverRoll;    // Red reduced by rollover
+    var silverB = bCur + silverRoll;    // Green increased by rollover
+
+    apSetInputValue('silverAYellow', apFormatCurrency(silverA));
+    apSetInputValue('silverCRed',    apFormatCurrency(silverC));
+    apSetInputValue('silverBGreen',  apFormatCurrency(silverB));
+
     var silTotEl = document.getElementById('silverTotalInvestable');
     if (silTotEl) {
-      silTotEl.value = apFormatCurrency(totalSil);
+      silTotEl.value = apFormatCurrency(silverA + silverC + silverB);
     }
 
-    // 9) Gold totals
-    var aGol = apParseCurrency(apGetInputValue('goldAYellow'));
-    var cGol = apParseCurrency(apGetInputValue('goldCRed'));
-    var bGol = apParseCurrency(apGetInputValue('goldBGreen'));
-    var totalGol = aGol + cGol + bGol;
+    // 8) Gold Plan – same logic, built off No-Plan A/B/C
+    var goldRoll = 0;
+    for (var g = 1; g <= 4; g++) {
+      goldRoll += apParseCurrency(apGetInputValue('gold' + g + 'Amount'));
+    }
+    var goldA = aCur;
+    var goldC = cCur - goldRoll;
+    var goldB = bCur + goldRoll;
+
+    apSetInputValue('goldAYellow', apFormatCurrency(goldA));
+    apSetInputValue('goldCRed',    apFormatCurrency(goldC));
+    apSetInputValue('goldBGreen',  apFormatCurrency(goldB));
+
     var golTotEl = document.getElementById('goldTotalInvestable');
     if (golTotEl) {
-      golTotEl.value = apFormatCurrency(totalGol);
+      golTotEl.value = apFormatCurrency(goldA + goldC + goldB);
     }
 
-    // 10) Death-year indexes (approx)
+    // 9) Death-year indexes (approx)
     var projLen = parseInt(apGetInputValue('projLength') || '0', 10);
     var ageHis = parseInt(apGetInputValue('ageHis') || '0', 10);
     var ageHer = parseInt(apGetInputValue('ageHer') || '0', 10);
@@ -1982,10 +1996,27 @@
         });
       }
 
+      // Live update Inputs Silver/Gold allocations when those dollar amounts change
+      var inputsRoot = document.getElementById('ap-plan-inputs');
+      if (inputsRoot) {
+        inputsRoot.addEventListener('input', function (e) {
+          var id = e.target.id || '';
+          if (id.indexOf('silver') === 0 ||
+              id.indexOf('gold') === 0 ||
+              id === 'projLength' ||
+              id === 'ageHis' ||
+              id === 'ageHer' ||
+              id === 'deathAgeHis' ||
+              id === 'deathAgeHer') {
+            apUpdateInputsDerived();
+          }
+        });
+      }
+
       // Default to Goals & Data
       showPanel('goals');
 
-      // Expose for console
+      // Expose for console if needed
       window.apShowIFLPanel = showPanel;
     });
   })();
