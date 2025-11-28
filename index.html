@@ -1517,7 +1517,7 @@
   function apParseCurrency(val) {
     if (!val) return 0;
     if (typeof val !== 'string') val = String(val);
-    val = val.replace(/[^0-9.\\-]/g, '');
+    val = val.replace(/[^0-9.\-]/g, '');
     if (!val) return 0;
     var num = parseFloat(val);
     return isNaN(num) ? 0 : num;
@@ -1835,13 +1835,63 @@
 
   // ---------- Inputs Page auto-calcs ----------
   function apUpdateInputsDerived() {
+    // First, make sure Data Form totals are up to date
+    apUpdateDataFormTotals();
+
     // Auto-fill today's date on Inputs tab
     var todayEl = document.getElementById('inputsTodayDate');
     if (todayEl && !todayEl.value) {
       todayEl.value = new Date().toISOString().slice(0, 10);
     }
 
-    // Current / No-Plan A+B+C
+    // Default projection length to 30 years (if blank or 0)
+    var projEl = document.getElementById('projLength');
+    if (projEl && (!projEl.value || projEl.value === '0')) {
+      projEl.value = 30;
+    }
+
+    // Pull His/Her current age from Goals & Data (clientAge, spouseAge)
+    var goalsAgeHis = apGetInputValue('clientAge');
+    var goalsAgeHer = apGetInputValue('spouseAge');
+    var inputsAgeHisEl = document.getElementById('ageHis');
+    var inputsAgeHerEl = document.getElementById('ageHer');
+    if (inputsAgeHisEl && !inputsAgeHisEl.value && goalsAgeHis) {
+      inputsAgeHisEl.value = goalsAgeHis;
+    }
+    if (inputsAgeHerEl && !inputsAgeHerEl.value && goalsAgeHer) {
+      inputsAgeHerEl.value = goalsAgeHer;
+    }
+
+    // Living expenses on Inputs = Approx. Annual Living Expenses from Goals page
+    var goalsExpenses = apGetInputValue('annualExpenses');
+    var inputsExpensesEl = document.getElementById('livingExpensesAnnual');
+    if (inputsExpensesEl && !inputsExpensesEl.value && goalsExpenses) {
+      inputsExpensesEl.value = goalsExpenses;
+    }
+
+    // Current A/B/C buckets from Data Form totals:
+    // A (Yellow / Liquid) = TOTAL Savings/Checking/Credit Union
+    // C (Red / Invested)  = TOTAL Investments
+    // B (Green / Annuities)= TOTAL Annuities
+    var yellowTotal = apGetInputValue('saveTotalBalance');
+    var redTotal    = apGetInputValue('invTotalBalance');
+    var greenTotal  = apGetInputValue('annTotalBalance');
+
+    var curAYellowEl = document.getElementById('currentAYellow');
+    var curCRedEl    = document.getElementById('currentCRed');
+    var curBGreenEl  = document.getElementById('currentBGreen');
+
+    if (curAYellowEl && !curAYellowEl.value && yellowTotal) {
+      curAYellowEl.value = yellowTotal;
+    }
+    if (curCRedEl && !curCRedEl.value && redTotal) {
+      curCRedEl.value = redTotal;
+    }
+    if (curBGreenEl && !curBGreenEl.value && greenTotal) {
+      curBGreenEl.value = greenTotal;
+    }
+
+    // Current / No-Plan A+B+C total
     var aCur = apParseCurrency(apGetInputValue('currentAYellow'));
     var cCur = apParseCurrency(apGetInputValue('currentCRed'));
     var bCur = apParseCurrency(apGetInputValue('currentBGreen'));
@@ -1851,7 +1901,8 @@
       curTotEl.value = apFormatCurrency(totalCur);
     }
 
-    // Silver totals
+    // Silver totals (Silver fields remain blank until you type them;
+    // we only total whatever you've entered)
     var aSil = apParseCurrency(apGetInputValue('silverAYellow'));
     var cSil = apParseCurrency(apGetInputValue('silverCRed'));
     var bSil = apParseCurrency(apGetInputValue('silverBGreen'));
@@ -1861,7 +1912,7 @@
       silTotEl.value = apFormatCurrency(totalSil);
     }
 
-    // Gold totals
+    // Gold totals (same idea – we only total what you enter)
     var aGol = apParseCurrency(apGetInputValue('goldAYellow'));
     var cGol = apParseCurrency(apGetInputValue('goldCRed'));
     var bGol = apParseCurrency(apGetInputValue('goldBGreen'));
