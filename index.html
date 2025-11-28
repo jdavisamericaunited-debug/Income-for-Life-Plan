@@ -1,144 +1,774 @@
-<!-- Business Information Section -->
-<div class="ap-form-section">
-  <h2>Business Information (if self-employed)</h2>
-  <div class="ap-form-grid ap-form-grid-2">
-    <div>
-      <label for="businessName">Business Name</label>
-      <input id="businessName" type="text" value="Example Business" />
-    </div>
-    <div>
-      <label for="businessAddress">Business Address</label>
-      <input id="businessAddress" type="text" value="123 Business St." />
-    </div>
-    <div>
-      <label for="businessCity">City</label>
-      <input id="businessCity" type="text" value="Business City" />
-    </div>
-    <div>
-      <label for="businessState">State</label>
-      <input id="businessState" type="text" value="IL" />
-    </div>
-    <div>
-      <label for="businessZip">Zip Code</label>
-      <input id="businessZip" type="text" value="60007" />
-    </div>
-    <div>
-      <label for="yearsInBusiness">Years in Business</label>
-      <input id="yearsInBusiness" type="number" value="10" />
-    </div>
-  </div>
-</div>
+<!-- AmericaPlanning – Goals & Data Form (Desktop Layout) -->
+<div id="ap-goals-data">
+  <style>
+    #ap-goals-data,
+    #ap-goals-data * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    }
 
-<!-- Personal Information Section -->
-<div class="ap-form-section">
-  <h2>Personal Information</h2>
-  <div class="ap-form-grid ap-form-grid-2">
-    <div>
-      <label for="clientName">Client Name</label>
-      <input id="clientName" type="text" value="Mark Example" />
-    </div>
-    <div>
-      <label for="spouseName">Spouse Name</label>
-      <input id="spouseName" type="text" value="Mary Example" />
-    </div>
-    <div>
-      <label for="homeAddress">Home Address</label>
-      <input id="homeAddress" type="text" value="123 Roselle Road" />
-    </div>
-    <div>
-      <label for="city">City</label>
-      <input id="city" type="text" value="Roselle" />
-    </div>
-    <div>
-      <label for="hisCellNumber">His Cell Number</label>
-      <input id="hisCellNumber" type="tel" value="847-592-5405" />
-    </div>
-    <div>
-      <label for="bestEmail">Best Email Address</label>
-      <input id="bestEmail" type="email" value="john@AmericaPlanning.com" />
-    </div>
-    <div>
-      <label for="herCellNumber">Her Cell Number</label>
-      <input id="herCellNumber" type="tel" value="847592-5405" />
-    </div>
-  </div>
-</div>
+    #ap-goals-data {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 24px 32px;
+      background: #f9fafb;
+      color: #111827;
+    }
 
-<!-- Children (Estate Planning Purposes) Section -->
-<div class="ap-form-section">
-  <h2>Children (Estate Planning Purposes)</h2>
-  <div class="ap-form-grid ap-form-grid-2">
-    <div>
-      <label for="childrenName">Name</label>
-      <input id="childrenName" type="text" value="John Jr." />
-    </div>
-    <div>
-      <label for="childrenAge">Age</label>
-      <input id="childrenAge" type="number" value="5" />
-    </div>
-  </div>
-</div>
+    #ap-goals-data h1 {
+      font-size: 26px;
+      margin: 0 0 4px;
+      text-align: left;
+    }
 
-<!-- Current Advisors Section -->
-<div class="ap-form-section">
-  <h2>Current Advisors (Optional)</h2>
-  <div class="ap-form-grid ap-form-grid-2">
-    <div>
-      <label for="accountantName">Accountant – Advisor Name</label>
-      <input id="accountantName" type="text" value="Mr. Shmo" />
-    </div>
-    <div>
-      <label for="accountantFirm">Firm Name &amp; Telephone</label>
-      <input id="accountantFirm" type="text" value="Shmo & Associates, 847-123-4567" />
-    </div>
-    <div>
-      <label for="attorneyName">Attorney – Advisor Name</label>
-      <input id="attorneyName" type="text" value="Jane Doe" />
-    </div>
-    <div>
-      <label for="attorneyFirm">Firm Name &amp; Telephone</label>
-      <input id="attorneyFirm" type="text" value="Doe Law, 847-765-4321" />
-    </div>
-    <div>
-      <label for="financialAdvisorName">Financial Advisor – Advisor Name</label>
-      <input id="financialAdvisorName" type="text" value="John Smith" />
-    </div>
-    <div>
-      <label for="financialAdvisorFirm">Firm Name &amp; Telephone</label>
-      <input id="financialAdvisorFirm" type="text" value="Smith Wealth Management, 847-555-6789" />
-    </div>
-  </div>
-</div>
+    #ap-goals-data .ap-subtitle {
+      font-size: 13px;
+      color: #6b7280;
+      margin-bottom: 20px;
+    }
 
-<!-- Assets Section (Investments, Savings, etc.) -->
-<div class="ap-form-section">
-  <h2>Assets Section</h2>
-  <div class="ap-form-grid ap-form-grid-3">
-    <div>
-      <label for="investment1">Investment Account 1</label>
-      <input id="investment1" type="text" value="401(k) - Vanguard" />
-    </div>
-    <div>
-      <label for="investment1Balance">Balance ($)</label>
-      <input id="investment1Balance" type="number" value="100000" />
-    </div>
-    <div>
-      <label for="investment2">Investment Account 2</label>
-      <input id="investment2" type="text" value="IRA - Fidelity" />
-    </div>
-    <div>
-      <label for="investment2Balance">Balance ($)</label>
-      <input id="investment2Balance" type="number" value="50000" />
-    </div>
-    <div>
-      <label for="savings1">Savings Account 1</label>
-      <input id="savings1" type="text" value="Checking - Wells Fargo" />
-    </div>
-    <div>
-      <label for="savings1Balance">Balance ($)</label>
-      <input id="savings1Balance" type="number" value="12000" />
-    </div>
-  </div>
-</div>
+    #ap-goals-data form {
+      width: 100%;
+    }
 
-<!-- Additional sections like Annuities, Life Insurance, etc., would follow a similar structure. -->
+    #ap-goals-data .ap-section {
+      background: #ffffff;
+      border-radius: 10px;
+      border: 1px solid #e5e7eb;
+      padding: 16px 18px 14px;
+      margin-bottom: 18px;
+    }
+
+    #ap-goals-data .ap-section-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0b5aa2;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 6px;
+      margin-bottom: 12px;
+    }
+
+    #ap-goals-data .ap-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px 16px;
+    }
+
+    #ap-goals-data .ap-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px 16px;
+    }
+
+    #ap-goals-data .ap-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px 16px;
+    }
+
+    #ap-goals-data .ap-field {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      font-size: 13px;
+    }
+
+    #ap-goals-data label {
+      font-weight: 600;
+      color: #374151;
+    }
+
+    #ap-goals-data .ap-help {
+      font-size: 11px;
+      color: #9ca3af;
+    }
+
+    #ap-goals-data input[type="text"],
+    #ap-goals-data input[type="number"],
+    #ap-goals-data input[type="email"],
+    #ap-goals-data input[type="date"],
+    #ap-goals-data select,
+    #ap-goals-data textarea {
+      width: 100%;
+      border-radius: 6px;
+      border: 1px solid #d1d5db;
+      padding: 6px 8px;
+      font-size: 13px;
+      line-height: 1.4;
+      background: #ffffff;
+    }
+
+    #ap-goals-data textarea {
+      min-height: 60px;
+      resize: vertical;
+    }
+
+    #ap-goals-data .ap-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin-top: 6px;
+    }
+
+    #ap-goals-data .ap-table th,
+    #ap-goals-data .ap-table td {
+      border: 1px solid #e5e7eb;
+      padding: 4px 6px;
+      vertical-align: top;
+    }
+
+    #ap-goals-data .ap-table th {
+      background: #f3f4f6;
+      font-weight: 600;
+      text-align: left;
+    }
+
+    #ap-goals-data .ap-table input,
+    #ap-goals-data .ap-table select,
+    #ap-goals-data .ap-table textarea {
+      border-radius: 4px;
+      border: 1px solid #d1d5db;
+      width: 100%;
+      padding: 4px 5px;
+      font-size: 12px;
+    }
+
+    #ap-goals-data .ap-total-row {
+      background: #f9fafb;
+      font-weight: 600;
+    }
+
+    #ap-goals-data .ap-goal-row {
+      display: grid;
+      grid-template-columns: minmax(0, 2.8fr) minmax(0, 0.7fr) minmax(0, 1.5fr);
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    #ap-goals-data .ap-goal-row span {
+      font-size: 13px;
+      align-self: center;
+    }
+
+    #ap-goals-data .ap-goal-row select {
+      max-width: 80px;
+    }
+
+    #ap-goals-data .ap-pill-note {
+      font-size: 11px;
+      color: #6b7280;
+      margin-top: 2px;
+    }
+
+    /* Desktop emphasis – we don't optimize for tiny screens */
+    @media (max-width: 900px) {
+      #ap-goals-data {
+        padding: 16px;
+      }
+    }
+  </style>
+
+  <h1>Goals &amp; Data Form</h1>
+  <div class="ap-subtitle">
+    Income-for-Life Plan – AmericaPlanning.com
+  </div>
+
+  <form id="ap-goals-data-form">
+    <!-- 1. Business & Primary Contact -->
+    <div class="ap-section">
+      <div class="ap-section-title">Business &amp; Primary Contact</div>
+      <div class="ap-grid-3">
+        <div class="ap-field">
+          <label for="businessName">Business Name (if self-employed)</label>
+          <input id="businessName" name="businessName" type="text">
+        </div>
+        <div class="ap-field">
+          <label for="yearsInBusiness">Years in Business</label>
+          <input id="yearsInBusiness" name="yearsInBusiness" type="number" min="0" step="1">
+        </div>
+        <div class="ap-field">
+          <label for="dataDate">Form Date</label>
+          <input id="dataDate" name="dataDate" type="date">
+        </div>
+      </div>
+
+      <div class="ap-grid-3" style="margin-top:10px;">
+        <div class="ap-field">
+          <label for="businessAddress">Business Address</label>
+          <input id="businessAddress" name="businessAddress" type="text">
+        </div>
+        <div class="ap-field">
+          <label for="businessCity">City</label>
+          <input id="businessCity" name="businessCity" type="text">
+        </div>
+        <div class="ap-grid-2">
+          <div class="ap-field">
+            <label for="businessState">State</label>
+            <input id="businessState" name="businessState" type="text">
+          </div>
+          <div class="ap-field">
+            <label for="businessZip">Zip Code</label>
+            <input id="businessZip" name="businessZip" type="text">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Personal Information -->
+    <div class="ap-section">
+      <div class="ap-section-title">Personal Information</div>
+
+      <div class="ap-grid-3">
+        <div class="ap-field">
+          <label for="clientName">Name</label>
+          <input id="clientName" name="clientName" type="text">
+        </div>
+        <div class="ap-field">
+          <label for="clientBirthDate">Birth Date</label>
+          <input id="clientBirthDate" name="clientBirthDate" type="date">
+        </div>
+        <div class="ap-field">
+          <label for="clientAge">Age</label>
+          <input id="clientAge" name="clientAge" type="number" min="0" step="1">
+        </div>
+      </div>
+
+      <div class="ap-grid-3" style="margin-top:10px;">
+        <div class="ap-field">
+          <label for="spouseName">Spouse Name</label>
+          <input id="spouseName" name="spouseName" type="text">
+        </div>
+        <div class="ap-field">
+          <label for="spouseBirthDate">Spouse Birth Date</label>
+          <input id="spouseBirthDate" name="spouseBirthDate" type="date">
+        </div>
+        <div class="ap-field">
+          <label for="spouseAge">Spouse Age</label>
+          <input id="spouseAge" name="spouseAge" type="number" min="0" step="1">
+        </div>
+      </div>
+
+      <div class="ap-grid-3" style="margin-top:10px;">
+        <div class="ap-field">
+          <label for="homeAddress">Home Address</label>
+          <input id="homeAddress" name="homeAddress" type="text">
+        </div>
+        <div class="ap-field">
+          <label for="homeCity">City</label>
+          <input id="homeCity" name="homeCity" type="text">
+        </div>
+        <div class="ap-grid-2">
+          <div class="ap-field">
+            <label for="homeState">State</label>
+            <input id="homeState" name="homeState" type="text">
+          </div>
+          <div class="ap-field">
+            <label for="homeZip">Zip Code</label>
+            <input id="homeZip" name="homeZip" type="text">
+          </div>
+        </div>
+      </div>
+
+      <div class="ap-grid-3" style="margin-top:10px;">
+        <div class="ap-field">
+          <label for="hisCell">His Cell Number</label>
+          <input id="hisCell" name="hisCell" type="text">
+        </div>
+        <div class="ap-field">
+          <label for="herCell">Her Cell Number</label>
+          <input id="herCell" name="herCell" type="text">
+        </div>
+        <div class="ap-field">
+          <label for="bestEmail">Best Email Address</label>
+          <input id="bestEmail" name="bestEmail" type="email">
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Children (Estate Planning) -->
+    <div class="ap-section">
+      <div class="ap-section-title">Children (Estate Planning Purposes)</div>
+      <table class="ap-table">
+        <thead>
+          <tr>
+            <th style="width:40%;">Name</th>
+            <th style="width:10%;">Age</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input name="child1Name" type="text"></td>
+            <td><input name="child1Age" type="number" min="0" step="1"></td>
+            <td><input name="child1Notes" type="text"></td>
+          </tr>
+          <tr>
+            <td><input name="child2Name" type="text"></td>
+            <td><input name="child2Age" type="number" min="0" step="1"></td>
+            <td><input name="child2Notes" type="text"></td>
+          </tr>
+          <tr>
+            <td><input name="child3Name" type="text"></td>
+            <td><input name="child3Age" type="number" min="0" step="1"></td>
+            <td><input name="child3Notes" type="text"></td>
+          </tr>
+          <tr>
+            <td><input name="child4Name" type="text"></td>
+            <td><input name="child4Age" type="number" min="0" step="1"></td>
+            <td><input name="child4Notes" type="text"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 4. Current Advisors -->
+    <div class="ap-section">
+      <div class="ap-section-title">Current Advisors (Optional)</div>
+      <div class="ap-grid-2">
+        <div class="ap-field">
+          <label for="accountantName">Accountant – Advisor Name</label>
+          <input id="accountantName" name="accountantName" type="text">
+        </div>
+        <div class="ap-field">
+          <label for="accountantFirm">Firm Name &amp; Telephone</label>
+          <input id="accountantFirm" name="accountantFirm" type="text">
+        </div>
+      </div>
+      <div class="ap-grid-2" style="margin-top:8px;">
+        <div class="ap-field">
+          <label for="attorneyName">Attorney – Advisor Name</label>
+          <input id="attorneyName" name="attorneyName" type="text">
+        </div>
+        <div class="ap-field">
+          <label for="attorneyFirm">Firm Name &amp; Telephone</label>
+          <input id="attorneyFirm" name="attorneyFirm" type="text">
+        </div>
+      </div>
+      <div class="ap-grid-2" style="margin-top:8px;">
+        <div class="ap-field">
+          <label for="faName">Financial Advisor – Advisor Name</label>
+          <input id="faName" name="faName" type="text">
+        </div>
+        <div class="ap-field">
+          <label for="faFirm">Firm Name &amp; Telephone</label>
+          <input id="faFirm" name="faFirm" type="text">
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. Retirement Timing -->
+    <div class="ap-section">
+      <div class="ap-section-title">Retirement Timing</div>
+      <div class="ap-grid-4">
+        <div class="ap-field">
+          <label for="plannedRetAgeHis">Planned Retirement Age (His)</label>
+          <input id="plannedRetAgeHis" name="plannedRetAgeHis" type="number" min="0" step="1">
+        </div>
+        <div class="ap-field">
+          <label for="plannedRetAgeHer">Planned Retirement Age (Her)</label>
+          <input id="plannedRetAgeHer" name="plannedRetAgeHer" type="number" min="0" step="1">
+        </div>
+        <div class="ap-field">
+          <label for="alreadyRetiredHis">If Already Retired: His Year</label>
+          <input id="alreadyRetiredHis" name="alreadyRetiredHis" type="number" min="1900" step="1">
+        </div>
+        <div class="ap-field">
+          <label for="alreadyRetiredHer">If Already Retired: Her Year</label>
+          <input id="alreadyRetiredHer" name="alreadyRetiredHer" type="number" min="1900" step="1">
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. Estate Planning & Insurance -->
+    <div class="ap-section">
+      <div class="ap-section-title">Estate Planning &amp; Insurance</div>
+
+      <div class="ap-grid-3">
+        <div class="ap-field">
+          <label for="haveWill">Do You Have a Will?</label>
+          <select id="haveWill" name="haveWill">
+            <option value=""></option>
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+        </div>
+        <div class="ap-field">
+          <label for="willYear">Year Completed</label>
+          <input id="willYear" name="willYear" type="number" min="1900" step="1">
+        </div>
+        <div class="ap-field">
+          <label for="fPoa">Financial Power of Attorney</label>
+          <select id="fPoa" name="fPoa">
+            <option value=""></option>
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="ap-grid-3" style="margin-top:8px;">
+        <div class="ap-field">
+          <label for="mPoa">Medical Power of Attorney</label>
+          <select id="mPoa" name="mPoa">
+            <option value=""></option>
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+        </div>
+        <div class="ap-field">
+          <label for="mpoaFiled">Is MPOA Electronically Filed?</label>
+          <select id="mpoaFiled" name="mpoaFiled">
+            <option value=""></option>
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+        </div>
+        <div class="ap-field">
+          <label for="haveTrust">Do You Have a Trust?</label>
+          <select id="haveTrust" name="haveTrust">
+            <option value=""></option>
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="ap-grid-3" style="margin-top:8px;">
+        <div class="ap-field">
+          <label for="trustYear">Trust – Year Completed</label>
+          <input id="trustYear" name="trustYear" type="number" min="1900" step="1">
+        </div>
+        <div class="ap-field">
+          <label for="termLifeHis">Term Life Insurance (His)</label>
+          <input id="termLifeHis" name="termLifeHis" type="text" placeholder="Dollar amount">
+        </div>
+        <div class="ap-field">
+          <label for="termLifeHer">Term Life Insurance (Her)</label>
+          <input id="termLifeHer" name="termLifeHer" type="text" placeholder="Dollar amount">
+        </div>
+      </div>
+
+      <div class="ap-grid-3" style="margin-top:8px;">
+        <div class="ap-field">
+          <label for="termOrigYears">Original Term in Years</label>
+          <input id="termOrigYears" name="termOrigYears" type="number" min="0" step="1">
+        </div>
+        <div class="ap-field">
+          <label for="totalLifeInsurance">Total Life Insurance Him &amp; Her</label>
+          <input id="totalLifeInsurance" name="totalLifeInsurance" type="text">
+        </div>
+        <div class="ap-field">
+          <label for="estateNotes">Notes</label>
+          <input id="estateNotes" name="estateNotes" type="text">
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. Residences & Real Estate -->
+    <div class="ap-section">
+      <div class="ap-section-title">Residences and Real Estate Investments</div>
+      <table class="ap-table">
+        <thead>
+          <tr>
+            <th style="width:30%;">Property</th>
+            <th style="width:12%;">Owned / Rented</th>
+            <th>Approx. Value (if Owned)</th>
+            <th>Mortgage Amount</th>
+            <th>Monthly Payment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1. Primary Residence</td>
+            <td><input name="primaryOwnedRented" type="text" placeholder="Owned / Rented"></td>
+            <td><input name="primaryValue" type="text"></td>
+            <td><input name="primaryMortgage" type="text"></td>
+            <td><input name="primaryMonthly" type="text"></td>
+          </tr>
+          <tr>
+            <td>2. Secondary Residence</td>
+            <td><input name="secondaryOwnedRented" type="text" placeholder="Owned / Rented"></td>
+            <td><input name="secondaryValue" type="text"></td>
+            <td><input name="secondaryMortgage" type="text"></td>
+            <td><input name="secondaryMonthly" type="text"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 8. Current Portfolio (Qualified / Non-Qualified) -->
+    <div class="ap-section">
+      <div class="ap-section-title">Current Portfolio (Qualified = IRA / 401k / 403b / Brokerage, etc.)</div>
+      <table class="ap-table">
+        <thead>
+          <tr>
+            <th>Investment Account Name / Description</th>
+            <th style="width:12%;">His / Her / Both</th>
+            <th style="width:18%;">Qualified / Non-Qualified</th>
+            <th style="width:18%;">Balance ($)</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input name="inv1Name" type="text"></td>
+            <td><input name="inv1Owner" type="text"></td>
+            <td><input name="inv1Type" type="text"></td>
+            <td><input name="inv1Balance" type="text"></td>
+            <td><input name="inv1Notes" type="text"></td>
+          </tr>
+          <tr>
+            <td><input name="inv2Name" type="text"></td>
+            <td><input name="inv2Owner" type="text"></td>
+            <td><input name="inv2Type" type="text"></td>
+            <td><input name="inv2Balance" type="text"></td>
+            <td><input name="inv2Notes" type="text"></td>
+          </tr>
+          <tr>
+            <td><input name="inv3Name" type="text"></td>
+            <td><input name="inv3Owner" type="text"></td>
+            <td><input name="inv3Type" type="text"></td>
+            <td><input name="inv3Balance" type="text"></td>
+            <td><input name="inv3Notes" type="text"></td>
+          </tr>
+          <tr class="ap-total-row">
+            <td colspan="3">TOTALS</td>
+            <td><input name="invTotalBalance" type="text"></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 9. Savings & Credit Union Accounts -->
+    <div class="ap-section">
+      <div class="ap-section-title">Savings and Credit Union Accounts</div>
+      <table class="ap-table">
+        <thead>
+          <tr>
+            <th>Account Description (Savings / Checking / Credit Union)</th>
+            <th style="width:16%;">His / Her / Both</th>
+            <th style="width:18%;">Current Balance</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input name="save1Desc" type="text"></td>
+            <td><input name="save1Owner" type="text"></td>
+            <td><input name="save1Balance" type="text"></td>
+          </tr>
+          <tr>
+            <td><input name="save2Desc" type="text"></td>
+            <td><input name="save2Owner" type="text"></td>
+            <td><input name="save2Balance" type="text"></td>
+          </tr>
+          <tr>
+            <td><input name="save3Desc" type="text"></td>
+            <td><input name="save3Owner" type="text"></td>
+            <td><input name="save3Balance" type="text"></td>
+          </tr>
+          <tr>
+            <td><input name="save4Desc" type="text"></td>
+            <td><input name="save4Owner" type="text"></td>
+            <td><input name="save4Balance" type="text"></td>
+          </tr>
+          <tr class="ap-total-row">
+            <td>TOTAL</td>
+            <td></td>
+            <td><input name="saveTotalBalance" type="text"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 10. Annuities -->
+    <div class="ap-section">
+      <div class="ap-section-title">Annuities</div>
+      <table class="ap-table">
+        <thead>
+          <tr>
+            <th>Annuity (Insurance Company Name)</th>
+            <th style="width:16%;">His / Her / Both</th>
+            <th style="width:18%;">Current Balance</th>
+            <th style="width:18%;">Year Opened</th>
+            <th>Still in Surrender Period?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input name="ann1Name" type="text"></td>
+            <td><input name="ann1Owner" type="text"></td>
+            <td><input name="ann1Balance" type="text"></td>
+            <td><input name="ann1YearOpened" type="text"></td>
+            <td><input name="ann1Surrender" type="text" placeholder="Yes / No or details"></td>
+          </tr>
+          <tr>
+            <td><input name="ann2Name" type="text"></td>
+            <td><input name="ann2Owner" type="text"></td>
+            <td><input name="ann2Balance" type="text"></td>
+            <td><input name="ann2YearOpened" type="text"></td>
+            <td><input name="ann2Surrender" type="text"></td>
+          </tr>
+          <tr class="ap-total-row">
+            <td>TOTAL</td>
+            <td></td>
+            <td><input name="annTotalBalance" type="text"></td>
+            <td colspan="2"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 11. Income Sources -->
+    <div class="ap-section">
+      <div class="ap-section-title">Income Sources</div>
+      <table class="ap-table">
+        <thead>
+          <tr>
+            <th style="width:14%;">Who’s Income (His / Her / Both)</th>
+            <th style="width:18%;">What Type (Pension / SS / Wages / Other)</th>
+            <th>Describe Type (if Other)</th>
+            <th style="width:18%;">Dollar Amount of Annual Income ($)</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input name="inc1Who" type="text"></td>
+            <td><input name="inc1Type" type="text"></td>
+            <td><input name="inc1Desc" type="text"></td>
+            <td><input name="inc1Amount" type="text"></td>
+            <td><input name="inc1Notes" type="text"></td>
+          </tr>
+          <tr>
+            <td><input name="inc2Who" type="text"></td>
+            <td><input name="inc2Type" type="text"></td>
+            <td><input name="inc2Desc" type="text"></td>
+            <td><input name="inc2Amount" type="text"></td>
+            <td><input name="inc2Notes" type="text"></td>
+          </tr>
+          <tr>
+            <td><input name="inc3Who" type="text"></td>
+            <td><input name="inc3Type" type="text"></td>
+            <td><input name="inc3Desc" type="text"></td>
+            <td><input name="inc3Amount" type="text"></td>
+            <td><input name="inc3Notes" type="text"></td>
+          </tr>
+          <tr class="ap-total-row">
+            <td colspan="3">Approximate Total Annual Income ($)</td>
+            <td><input name="incTotalAmount" type="text"></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 12. Living Expenses & Desired Income -->
+    <div class="ap-section">
+      <div class="ap-section-title">Living Expenses &amp; Desired Retirement Income</div>
+      <div class="ap-grid-2">
+        <div class="ap-field">
+          <label for="annualExpenses">Approximate Annual Living Expenses ($)</label>
+          <input id="annualExpenses" name="annualExpenses" type="text">
+          <div class="ap-pill-note">Current lifestyle spending before retirement.</div>
+        </div>
+        <div class="ap-field">
+          <label for="desiredRetIncome">Desired Annual Income After Retirement ($)</label>
+          <input id="desiredRetIncome" name="desiredRetIncome" type="text">
+          <div class="ap-pill-note">Target income you’d like your plan to produce.</div>
+        </div>
+      </div>
+      <div class="ap-field" style="margin-top:8px;">
+        <label for="incomeNotes">Notes</label>
+        <textarea id="incomeNotes" name="incomeNotes"></textarea>
+      </div>
+    </div>
+
+    <!-- 13. Goals -->
+    <div class="ap-section">
+      <div class="ap-section-title">Goals</div>
+      <div class="ap-pill-note" style="margin-bottom:8px;">
+        Rate each in the dropdown list: 1 = Not Concerned &nbsp;…&nbsp; 5 = Most Concerned
+      </div>
+
+      <!-- Each goal -->
+      <div class="ap-goal-row">
+        <span>Have enough retirement income that lasts my lifetime</span>
+        <select name="goal1Rating">
+          <option value=""></option>
+          <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+        </select>
+        <input name="goal1Notes" type="text" placeholder="Notes">
+      </div>
+
+      <div class="ap-goal-row">
+        <span>Protect assets from losses</span>
+        <select name="goal2Rating">
+          <option value=""></option>
+          <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+        </select>
+        <input name="goal2Notes" type="text" placeholder="Notes">
+      </div>
+
+      <div class="ap-goal-row">
+        <span>Save more for retirement than current IRA limits allow</span>
+        <select name="goal3Rating">
+          <option value=""></option>
+          <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+        </select>
+        <input name="goal3Notes" type="text" placeholder="Notes">
+      </div>
+
+      <div class="ap-goal-row">
+        <span>Protect myself / family from catastrophic long-term care costs</span>
+        <select name="goal4Rating">
+          <option value=""></option>
+          <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+        </select>
+        <input name="goal4Notes" type="text" placeholder="Notes">
+      </div>
+
+      <div class="ap-goal-row">
+        <span>Grow a cash account accessible at any age (no 59½ restrictions)</span>
+        <select name="goal5Rating">
+          <option value=""></option>
+          <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+        </select>
+        <input name="goal5Notes" type="text" placeholder="Notes">
+      </div>
+
+      <div class="ap-goal-row">
+        <span>Pass retirement money to next generation tax-efficiently</span>
+        <select name="goal6Rating">
+          <option value=""></option>
+          <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+        </select>
+        <input name="goal6Notes" type="text" placeholder="Notes">
+      </div>
+
+      <div class="ap-goal-row">
+        <span>Implement a retirement program that reduces tax liability</span>
+        <select name="goal7Rating">
+          <option value=""></option>
+          <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+        </select>
+        <input name="goal7Notes" type="text" placeholder="Notes">
+      </div>
+    </div>
+
+    <!-- 14. Document Checklist & Additional Notes -->
+    <div class="ap-section">
+      <div class="ap-section-title">Document Checklist &amp; Additional Notes</div>
+      <div class="ap-field">
+        <label for="documentChecklist">
+          Document Checklist (list items and year established / completed)
+        </label>
+        <textarea id="documentChecklist" name="documentChecklist"></textarea>
+      </div>
+      <div class="ap-field" style="margin-top:8px;">
+        <label for="additionalNotes">Additional Notes</label>
+        <textarea id="additionalNotes" name="additionalNotes"></textarea>
+      </div>
+    </div>
+  </form>
+</div>
