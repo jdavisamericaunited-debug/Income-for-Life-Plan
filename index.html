@@ -10,15 +10,7 @@
       padding: 0;
       background: #e5e7eb;
     }
-  </style>
-</head>
-<body>
-<div id="ap-rotate-tip" style="display:none;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;">
-  Turn phone sideways for easy viewing.
-</div>
 
-<div id="ap-ifl-app">
-  <style>
     #ap-ifl-app,
     #ap-ifl-app * {
       box-sizing: border-box;
@@ -101,7 +93,10 @@
     /* Goal Data Form Styles */
     /* Additional styles omitted for brevity, but keep the same structure as the original */
   </style>
+</head>
+<body>
 
+<div id="ap-ifl-app">
   <h1>Income-for-Life Plan – Data, Asset Summary & Plan Inputs</h1>
   <div class="ap-page-caption">
     Internal planning tool – designed for desktop use.
@@ -248,7 +243,6 @@
   }
 
   // ---------- Event Listeners ----------
-
   document.addEventListener('DOMContentLoaded', function () {
     // Load saved data from localStorage
     apLoadGoalsDataFromStorage();
