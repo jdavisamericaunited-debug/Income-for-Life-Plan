@@ -1,4 +1,8 @@
-<!-- Income-for-Life Plan – Goals & Data + Asset Summary (Desktop) -->
+<!-- Mobile rotate tip (you can keep or remove) -->
+<div id="ap-rotate-tip" style="display:none;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;">
+  Turn phone sideways for easy viewing.
+</div>
+
 <div id="ap-ifl-app">
   <style>
     #ap-ifl-app,
@@ -121,7 +125,6 @@
       color: #374151;
     }
 
-    #ap-goals-data .ap-help,
     #ap-goals-data .ap-pill-note {
       font-size: 11px;
       color: #6b7280;
@@ -326,14 +329,13 @@
       #ap-asset-summary-layout {
         grid-template-columns: 1fr;
       }
-
       #ap-asset-summary-bottom {
         grid-template-columns: 1fr;
       }
     }
   </style>
 
-  <h1>Income-for-Life Plan – Data & Asset Summary</h1>
+  <h1>Income-for-Life Plan – Data &amp; Asset Summary</h1>
   <div class="ap-page-caption">
     Internal planning tool – designed for desktop use.
   </div>
@@ -1231,7 +1233,7 @@
       for (var k = 1; k <= maxAnn; k++) {
         var annName = apGetInputValue('ann' + k + 'Name');
         var annOwner = apGetInputValue('ann' + k + 'Owner');
-        var annType = apGetInputValue('ann' + k + 'Type'); // optional
+        var annType = apGetInputValue('ann' + k + 'Type'); // optional, will be blank unless you add
         var annBalStr = apGetInputValue('ann' + k + 'Balance');
         var annBal = apParseCurrency(annBalStr);
         if (!annName && !annOwner && !annBalStr) continue;
