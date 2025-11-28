@@ -237,33 +237,194 @@
       max-width: 80px;
     }
 
-    <!-- Save data automatically -->
-    <script>
-      document.addEventListener('input', function() {
-        const form = document.getElementById('ap-goals-data-form');
-        const formData = new FormData(form);
-        const data = {};
-        formData.forEach((value, key) => {
-          data[key] = value;
-        });
-        localStorage.setItem('formData', JSON.stringify(data));
-      });
+  </style>
 
-      window.addEventListener('load', function() {
-        const storedData = localStorage.getItem('formData');
-        if (storedData) {
-          const data = JSON.parse(storedData);
-          const form = document.getElementById('ap-goals-data-form');
-          for (const key in data) {
-            if (data.hasOwnProperty(key)) {
-              const input = form.querySelector(`[name="${key}"]`);
-              if (input) {
-                input.value = data[key];
-              }
-            }
-          }
-        }
-      });
-    </script>
+  <h1>Income-for-Life Plan – Data, Asset Summary & Plan Inputs</h1>
+  <div class="ap-page-caption">
+    Internal planning tool – designed for desktop use.
+  </div>
+
+  <!-- TABS -->
+  <div class="ap-ifl-tabs">
+    <button class="ap-ifl-tab-btn ap-ifl-tab-active" data-panel="goals">Goals &amp; Data</button>
+    <button class="ap-ifl-tab-btn" data-panel="assets">Asset Summary</button>
+    <button class="ap-ifl-tab-btn" data-panel="inputs">Inputs</button>
+    <button class="ap-ifl-tab-btn" data-panel="noplanJoint">No Plan – Joint Income</button>
+    <button class="ap-ifl-tab-btn" data-panel="noplanHer">No Plan – Her Survivor</button>
+    <button class="ap-ifl-tab-btn" data-panel="noplanHis">No Plan – His Survivor</button>
+    <button class="ap-ifl-tab-btn" data-panel="noplanAlloc">No Plan – Allocation &amp; Income</button>
+  </div>
+
+  <!-- PANEL: GOALS & DATA -->
+  <div id="ap-panel-goals" class="ap-ifl-panel">
+    <div id="ap-goals-data">
+      <h2>Goals &amp; Data Form</h2>
+      <div class="ap-subtitle">
+        Income-for-Life Plan – AmericaPlanning.com
+      </div>
+
+      <form id="ap-goals-data-form">
+        <!-- Business & Primary Contact -->
+        <div class="ap-section">
+          <div class="ap-section-title">Business &amp; Primary Contact</div>
+          <div class="ap-grid-3">
+            <div class="ap-field">
+              <label for="businessName">Business Name (if self-employed)</label>
+              <input id="businessName" name="businessName" type="text">
+            </div>
+            <div class="ap-field">
+              <label for="yearsInBusiness">Years in Business</label>
+              <input id="yearsInBusiness" name="yearsInBusiness" type="number" min="0" step="1">
+            </div>
+            <div class="ap-field">
+              <label for="dataDate">Form Date</label>
+              <input id="dataDate" name="dataDate" type="date">
+            </div>
+          </div>
+
+          <div class="ap-grid-3" style="margin-top:10px;">
+            <div class="ap-field">
+              <label for="businessAddress">Business Address</label>
+              <input id="businessAddress" name="businessAddress" type="text">
+            </div>
+            <div class="ap-field">
+              <label for="businessCity">City</label>
+              <input id="businessCity" name="businessCity" type="text">
+            </div>
+            <div class="ap-grid-2">
+              <div class="ap-field">
+                <label for="businessState">State</label>
+                <input id="businessState" name="businessState" type="text">
+              </div>
+              <div class="ap-field">
+                <label for="businessZip">Zip Code</label>
+                <input id="businessZip" name="businessZip" type="text">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Personal Information -->
+        <div class="ap-section">
+          <div class="ap-section-title">Personal Information</div>
+
+          <div class="ap-grid-3">
+            <div class="ap-field">
+              <label for="clientName">Name</label>
+              <input id="clientName" name="clientName" type="text">
+            </div>
+            <div class="ap-field">
+              <label for="clientBirthDate">Birth Date</label>
+              <input id="clientBirthDate" name="clientBirthDate" type="date">
+            </div>
+            <div class="ap-field">
+              <label for="clientAge">Age</label>
+              <input id="clientAge" name="clientAge" type="number" min="0" step="1">
+            </div>
+          </div>
+
+          <div class="ap-grid-3" style="margin-top:10px;">
+            <div class="ap-field">
+              <label for="spouseName">Spouse Name</label>
+              <input id="spouseName" name="spouseName" type="text">
+            </div>
+            <div class="ap-field">
+              <label for="spouseBirthDate">Spouse Birth Date</label>
+              <input id="spouseBirthDate" name="spouseBirthDate" type="date">
+            </div>
+            <div class="ap-field">
+              <label for="spouseAge">Spouse Age</label>
+              <input id="spouseAge" name="spouseAge" type="number" min="0" step="1">
+            </div>
+          </div>
+
+          <div class="ap-grid-3" style="margin-top:10px;">
+            <div class="ap-field">
+              <label for="homeAddress">Home Address</label>
+              <input id="homeAddress" name="homeAddress" type="text">
+            </div>
+            <div class="ap-field">
+              <label for="homeCity">City</label>
+              <input id="homeCity" name="homeCity" type="text">
+            </div>
+            <div class="ap-grid-2">
+              <div class="ap-field">
+                <label for="homeState">State</label>
+                <input id="homeState" name="homeState" type="text">
+              </div>
+              <div class="ap-field">
+                <label for="homeZip">Zip Code</label>
+                <input id="homeZip" name="homeZip" type="text">
+              </div>
+            </div>
+          </div>
+
+          <div class="ap-grid-3" style="margin-top:10px;">
+            <div class="ap-field">
+              <label for="hisCell">His Cell Number</label>
+              <input id="hisCell" name="hisCell" type="text">
+            </div>
+            <div class="ap-field">
+              <label for="herCell">Her Cell Number</label>
+              <input id="herCell" name="herCell" type="text">
+            </div>
+            <div class="ap-field">
+              <label for="bestEmail">Best Email Address</label>
+              <input id="bestEmail" name="bestEmail" type="email">
+            </div>
+          </div>
+        </div>
+
+        <div class="ap-save-row">
+          <button type="button" id="ap-save-data-btn" class="ap-primary-btn">
+            Save Data &amp; Jump to Asset Summary
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+<script>
+  // ---------- Save / load Goals & Data to localStorage ----------
+  function apSaveGoalsDataToStorage() {
+    if (!window.localStorage) return;
+    var form = document.getElementById('ap-goals-data-form');
+    if (!form) return;
+    var data = {};
+    Array.prototype.forEach.call(form.elements, function(el) {
+      if (!el.name) return;
+      if (['button','submit','reset'].indexOf(el.type) !== -1) return;
+      data[el.name] = el.value;
+    });
+    localStorage.setItem('apGoalsDataForm', JSON.stringify(data));
+  }
+
+  function apLoadGoalsDataFromStorage() {
+    if (!window.localStorage) return;
+    var raw = localStorage.getItem('apGoalsDataForm');
+    if (!raw) return;
+    var form = document.getElementById('ap-goals-data-form');
+    if (!form) return;
+    var data;
+    try { data = JSON.parse(raw); } catch(e) { return; }
+    Object.keys(data).forEach(function(name) {
+      var el = form.elements[name];
+      if (!el) return;
+      el.value = data[name];
+    });
+  }
+
+  // ---------- Save Button Event ----------
+  document.getElementById('ap-save-data-btn').addEventListener('click', function() {
+    apSaveGoalsDataToStorage();
+    alert('Data saved successfully.');
+  });
+
+  // Load the form data when the page loads
+  document.addEventListener('DOMContentLoaded', function() {
+    apLoadGoalsDataFromStorage();
+  });
+</script>
+
 </body>
 </html>
