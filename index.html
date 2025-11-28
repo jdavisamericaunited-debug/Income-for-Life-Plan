@@ -1,19 +1,210 @@
-<!-- AmericaPlanning – Asset Summary (Desktop, pulls from Data Form) -->
-<div id="ap-asset-summary">
+<!-- Income-for-Life Plan – Goals & Data + Asset Summary (Desktop) -->
+<div id="ap-ifl-app">
   <style>
-    #ap-asset-summary,
-    #ap-asset-summary * {
+    #ap-ifl-app,
+    #ap-ifl-app * {
       box-sizing: border-box;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
     }
 
-    #ap-asset-summary {
+    #ap-ifl-app {
       max-width: 1200px;
-      margin: 24px auto 32px;
-      padding: 20px 24px 26px;
+      margin: 0 auto;
+      padding: 24px 20px 32px;
+      background: #f3f4f6;
+      color: #111827;
+    }
+
+    #ap-ifl-app h1 {
+      font-size: 26px;
+      margin: 0 0 4px;
+    }
+
+    #ap-ifl-app .ap-page-caption {
+      font-size: 13px;
+      color: #6b7280;
+      margin-bottom: 16px;
+    }
+
+    /* Tabs */
+    .ap-ifl-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .ap-ifl-tab-btn {
+      border: 1px solid #d1d5db;
+      background: #e5e7eb;
+      color: #111827;
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .ap-ifl-tab-btn.ap-ifl-tab-active {
+      background: #0b5aa2;
+      border-color: #0b5aa2;
+      color: #ffffff;
+    }
+
+    .ap-ifl-panel {
+      background: #f9fafb;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      padding: 18px 18px 22px;
+    }
+
+    /* ---------- Goals & Data Form Styles ---------- */
+    #ap-goals-data h2 {
+      font-size: 20px;
+      margin: 0 0 4px;
+    }
+
+    #ap-goals-data .ap-subtitle {
+      font-size: 13px;
+      color: #6b7280;
+      margin-bottom: 16px;
+    }
+
+    #ap-goals-data form {
+      width: 100%;
+    }
+
+    #ap-goals-data .ap-section {
+      background: #ffffff;
+      border-radius: 10px;
+      border: 1px solid #e5e7eb;
+      padding: 16px 18px 14px;
+      margin-bottom: 18px;
+    }
+
+    #ap-goals-data .ap-section-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0b5aa2;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 6px;
+      margin-bottom: 12px;
+    }
+
+    #ap-goals-data .ap-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px 16px;
+    }
+
+    #ap-goals-data .ap-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px 16px;
+    }
+
+    #ap-goals-data .ap-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px 16px;
+    }
+
+    #ap-goals-data .ap-field {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      font-size: 13px;
+    }
+
+    #ap-goals-data label {
+      font-weight: 600;
+      color: #374151;
+    }
+
+    #ap-goals-data .ap-help,
+    #ap-goals-data .ap-pill-note {
+      font-size: 11px;
+      color: #6b7280;
+      margin-top: 2px;
+    }
+
+    #ap-goals-data input[type="text"],
+    #ap-goals-data input[type="number"],
+    #ap-goals-data input[type="email"],
+    #ap-goals-data input[type="date"],
+    #ap-goals-data select,
+    #ap-goals-data textarea {
+      width: 100%;
+      border-radius: 6px;
+      border: 1px solid #d1d5db;
+      padding: 6px 8px;
+      font-size: 13px;
+      line-height: 1.4;
+      background: #ffffff;
+    }
+
+    #ap-goals-data textarea {
+      min-height: 60px;
+      resize: vertical;
+    }
+
+    #ap-goals-data .ap-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin-top: 6px;
+    }
+
+    #ap-goals-data .ap-table th,
+    #ap-goals-data .ap-table td {
+      border: 1px solid #e5e7eb;
+      padding: 4px 6px;
+      vertical-align: top;
+    }
+
+    #ap-goals-data .ap-table th {
+      background: #f3f4f6;
+      font-weight: 600;
+      text-align: left;
+    }
+
+    #ap-goals-data .ap-table input,
+    #ap-goals-data .ap-table select,
+    #ap-goals-data .ap-table textarea {
+      border-radius: 4px;
+      border: 1px solid #d1d5db;
+      width: 100%;
+      padding: 4px 5px;
+      font-size: 12px;
+    }
+
+    #ap-goals-data .ap-total-row {
+      background: #f9fafb;
+      font-weight: 600;
+    }
+
+    #ap-goals-data .ap-goal-row {
+      display: grid;
+      grid-template-columns: minmax(0, 2.8fr) minmax(0, 0.7fr) minmax(0, 1.5fr);
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    #ap-goals-data .ap-goal-row span {
+      font-size: 13px;
+      align-self: center;
+    }
+
+    #ap-goals-data .ap-goal-row select {
+      max-width: 80px;
+    }
+
+    /* ---------- Asset Summary Styles ---------- */
+    #ap-asset-summary {
       background: #ffffff;
       border-radius: 12px;
       border: 1px solid #e5e7eb;
+      padding: 18px 18px 20px;
       color: #111827;
     }
 
@@ -27,7 +218,7 @@
     }
 
     #ap-asset-summary-header .ap-title {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 700;
       color: #0b5aa2;
     }
@@ -131,167 +322,789 @@
       color: #0b5aa2;
     }
 
-    /* Desktop emphasis – minor adjustment on smaller widths */
     @media (max-width: 1024px) {
       #ap-asset-summary-layout {
         grid-template-columns: 1fr;
       }
+
       #ap-asset-summary-bottom {
         grid-template-columns: 1fr;
       }
     }
   </style>
 
-  <!-- HEADER -->
-  <div id="ap-asset-summary-header">
-    <div>
-      <div class="ap-title">Asset Summary</div>
-      <div class="ap-subtitle">Income-for-Life Plan – AmericaPlanning.com</div>
-    </div>
-    <div class="ap-date" id="ap-asset-summary-date"></div>
+  <h1>Income-for-Life Plan – Data & Asset Summary</h1>
+  <div class="ap-page-caption">
+    Internal planning tool – designed for desktop use.
   </div>
 
-  <!-- CLIENT NAME & ADDRESS -->
-  <div class="ap-name-address" id="ap-asset-summary-name-address">
-    <!-- Filled by JS from Data form -->
+  <!-- TABS -->
+  <div class="ap-ifl-tabs">
+    <button class="ap-ifl-tab-btn ap-ifl-tab-active" data-panel="goals">Goals &amp; Data</button>
+    <button class="ap-ifl-tab-btn" data-panel="assets">Asset Summary</button>
+    <button class="ap-ifl-tab-btn" data-panel="inputs">Plan Inputs</button>
   </div>
 
-  <!-- MAIN LAYOUT: LEFT + RIGHT -->
-  <div id="ap-asset-summary-layout">
-    <!-- LEFT COLUMN: Cash + Investments -->
-    <div>
-      <!-- Cash Accounts -->
-      <div>
-        <div class="ap-block-title">Cash Accounts</div>
-        <table class="ap-table">
-          <thead>
-            <tr>
-              <th style="width:25%;">Owner</th>
-              <th>Account Type / Description</th>
-              <th style="width:25%;">Balance</th>
-            </tr>
-          </thead>
-          <tbody id="ap-cash-rows">
-            <!-- Rows injected by JS -->
-          </tbody>
-          <tfoot>
-            <tr class="ap-row-total">
-              <td colspan="2">Total Cash</td>
-              <td class="ap-num" id="ap-total-cash">$0</td>
-            </tr>
-          </tfoot>
-        </table>
+  <!-- PANEL: GOALS & DATA -->
+  <div id="ap-panel-goals" class="ap-ifl-panel">
+    <div id="ap-goals-data">
+      <h2>Goals &amp; Data Form</h2>
+      <div class="ap-subtitle">
+        Income-for-Life Plan – AmericaPlanning.com
       </div>
 
-      <!-- Investment Accounts -->
-      <div style="margin-top:18px;">
-        <div class="ap-block-title">Investment Accounts</div>
-        <table class="ap-table">
-          <thead>
-            <tr>
-              <th style="width:18%;">Owner</th>
-              <th>Account Name / Description</th>
-              <th style="width:18%;">Type</th>
-              <th style="width:25%;">Balance</th>
-            </tr>
-          </thead>
-          <tbody id="ap-investment-rows">
-            <!-- Rows injected by JS -->
-          </tbody>
-          <tfoot>
-            <tr class="ap-row-total">
-              <td colspan="3">Total Investments</td>
-              <td class="ap-num" id="ap-total-investments">$0</td>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
+      <form id="ap-goals-data-form">
+        <!-- 1. Business & Primary Contact -->
+        <div class="ap-section">
+          <div class="ap-section-title">Business &amp; Primary Contact</div>
+          <div class="ap-grid-3">
+            <div class="ap-field">
+              <label for="businessName">Business Name (if self-employed)</label>
+              <input id="businessName" name="businessName" type="text">
+            </div>
+            <div class="ap-field">
+              <label for="yearsInBusiness">Years in Business</label>
+              <input id="yearsInBusiness" name="yearsInBusiness" type="number" min="0" step="1">
+            </div>
+            <div class="ap-field">
+              <label for="dataDate">Form Date</label>
+              <input id="dataDate" name="dataDate" type="date">
+            </div>
+          </div>
+
+          <div class="ap-grid-3" style="margin-top:10px;">
+            <div class="ap-field">
+              <label for="businessAddress">Business Address</label>
+              <input id="businessAddress" name="businessAddress" type="text">
+            </div>
+            <div class="ap-field">
+              <label for="businessCity">City</label>
+              <input id="businessCity" name="businessCity" type="text">
+            </div>
+            <div class="ap-grid-2">
+              <div class="ap-field">
+                <label for="businessState">State</label>
+                <input id="businessState" name="businessState" type="text">
+              </div>
+              <div class="ap-field">
+                <label for="businessZip">Zip Code</label>
+                <input id="businessZip" name="businessZip" type="text">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Personal Information -->
+        <div class="ap-section">
+          <div class="ap-section-title">Personal Information</div>
+
+          <div class="ap-grid-3">
+            <div class="ap-field">
+              <label for="clientName">Name</label>
+              <input id="clientName" name="clientName" type="text">
+            </div>
+            <div class="ap-field">
+              <label for="clientBirthDate">Birth Date</label>
+              <input id="clientBirthDate" name="clientBirthDate" type="date">
+            </div>
+            <div class="ap-field">
+              <label for="clientAge">Age</label>
+              <input id="clientAge" name="clientAge" type="number" min="0" step="1">
+            </div>
+          </div>
+
+          <div class="ap-grid-3" style="margin-top:10px;">
+            <div class="ap-field">
+              <label for="spouseName">Spouse Name</label>
+              <input id="spouseName" name="spouseName" type="text">
+            </div>
+            <div class="ap-field">
+              <label for="spouseBirthDate">Spouse Birth Date</label>
+              <input id="spouseBirthDate" name="spouseBirthDate" type="date">
+            </div>
+            <div class="ap-field">
+              <label for="spouseAge">Spouse Age</label>
+              <input id="spouseAge" name="spouseAge" type="number" min="0" step="1">
+            </div>
+          </div>
+
+          <div class="ap-grid-3" style="margin-top:10px;">
+            <div class="ap-field">
+              <label for="homeAddress">Home Address</label>
+              <input id="homeAddress" name="homeAddress" type="text">
+            </div>
+            <div class="ap-field">
+              <label for="homeCity">City</label>
+              <input id="homeCity" name="homeCity" type="text">
+            </div>
+            <div class="ap-grid-2">
+              <div class="ap-field">
+                <label for="homeState">State</label>
+                <input id="homeState" name="homeState" type="text">
+              </div>
+              <div class="ap-field">
+                <label for="homeZip">Zip Code</label>
+                <input id="homeZip" name="homeZip" type="text">
+              </div>
+            </div>
+          </div>
+
+          <div class="ap-grid-3" style="margin-top:10px;">
+            <div class="ap-field">
+              <label for="hisCell">His Cell Number</label>
+              <input id="hisCell" name="hisCell" type="text">
+            </div>
+            <div class="ap-field">
+              <label for="herCell">Her Cell Number</label>
+              <input id="herCell" name="herCell" type="text">
+            </div>
+            <div class="ap-field">
+              <label for="bestEmail">Best Email Address</label>
+              <input id="bestEmail" name="bestEmail" type="email">
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Children -->
+        <div class="ap-section">
+          <div class="ap-section-title">Children (Estate Planning Purposes)</div>
+          <table class="ap-table">
+            <thead>
+              <tr>
+                <th style="width:40%;">Name</th>
+                <th style="width:10%;">Age</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input name="child1Name" type="text"></td>
+                <td><input name="child1Age" type="number" min="0" step="1"></td>
+                <td><input name="child1Notes" type="text"></td>
+              </tr>
+              <tr>
+                <td><input name="child2Name" type="text"></td>
+                <td><input name="child2Age" type="number" min="0" step="1"></td>
+                <td><input name="child2Notes" type="text"></td>
+              </tr>
+              <tr>
+                <td><input name="child3Name" type="text"></td>
+                <td><input name="child3Age" type="number" min="0" step="1"></td>
+                <td><input name="child3Notes" type="text"></td>
+              </tr>
+              <tr>
+                <td><input name="child4Name" type="text"></td>
+                <td><input name="child4Age" type="number" min="0" step="1"></td>
+                <td><input name="child4Notes" type="text"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- 4. Current Advisors -->
+        <div class="ap-section">
+          <div class="ap-section-title">Current Advisors (Optional)</div>
+          <div class="ap-grid-2">
+            <div class="ap-field">
+              <label for="accountantName">Accountant – Advisor Name</label>
+              <input id="accountantName" name="accountantName" type="text">
+            </div>
+            <div class="ap-field">
+              <label for="accountantFirm">Firm Name &amp; Telephone</label>
+              <input id="accountantFirm" name="accountantFirm" type="text">
+            </div>
+          </div>
+          <div class="ap-grid-2" style="margin-top:8px;">
+            <div class="ap-field">
+              <label for="attorneyName">Attorney – Advisor Name</label>
+              <input id="attorneyName" name="attorneyName" type="text">
+            </div>
+            <div class="ap-field">
+              <label for="attorneyFirm">Firm Name &amp; Telephone</label>
+              <input id="attorneyFirm" name="attorneyFirm" type="text">
+            </div>
+          </div>
+          <div class="ap-grid-2" style="margin-top:8px;">
+            <div class="ap-field">
+              <label for="faName">Financial Advisor – Advisor Name</label>
+              <input id="faName" name="faName" type="text">
+            </div>
+            <div class="ap-field">
+              <label for="faFirm">Firm Name &amp; Telephone</label>
+              <input id="faFirm" name="faFirm" type="text">
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. Retirement Timing -->
+        <div class="ap-section">
+          <div class="ap-section-title">Retirement Timing</div>
+          <div class="ap-grid-4">
+            <div class="ap-field">
+              <label for="plannedRetAgeHis">Planned Retirement Age (His)</label>
+              <input id="plannedRetAgeHis" name="plannedRetAgeHis" type="number" min="0" step="1">
+            </div>
+            <div class="ap-field">
+              <label for="plannedRetAgeHer">Planned Retirement Age (Her)</label>
+              <input id="plannedRetAgeHer" name="plannedRetAgeHer" type="number" min="0" step="1">
+            </div>
+            <div class="ap-field">
+              <label for="alreadyRetiredHis">If Already Retired: His Year</label>
+              <input id="alreadyRetiredHis" name="alreadyRetiredHis" type="number" min="1900" step="1">
+            </div>
+            <div class="ap-field">
+              <label for="alreadyRetiredHer">If Already Retired: Her Year</label>
+              <input id="alreadyRetiredHer" name="alreadyRetiredHer" type="number" min="1900" step="1">
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. Estate Planning & Insurance -->
+        <div class="ap-section">
+          <div class="ap-section-title">Estate Planning &amp; Insurance</div>
+
+          <div class="ap-grid-3">
+            <div class="ap-field">
+              <label for="haveWill">Do You Have a Will?</label>
+              <select id="haveWill" name="haveWill">
+                <option value=""></option>
+                <option>Yes</option>
+                <option>No</option>
+              </select>
+            </div>
+            <div class="ap-field">
+              <label for="willYear">Year Completed</label>
+              <input id="willYear" name="willYear" type="number" min="1900" step="1">
+            </div>
+            <div class="ap-field">
+              <label for="fPoa">Financial Power of Attorney</label>
+              <select id="fPoa" name="fPoa">
+                <option value=""></option>
+                <option>Yes</option>
+                <option>No</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="ap-grid-3" style="margin-top:8px;">
+            <div class="ap-field">
+              <label for="mPoa">Medical Power of Attorney</label>
+              <select id="mPoa" name="mPoa">
+                <option value=""></option>
+                <option>Yes</option>
+                <option>No</option>
+              </select>
+            </div>
+            <div class="ap-field">
+              <label for="mpoaFiled">Is MPOA Electronically Filed?</label>
+              <select id="mpoaFiled" name="mpoaFiled">
+                <option value=""></option>
+                <option>Yes</option>
+                <option>No</option>
+              </select>
+            </div>
+            <div class="ap-field">
+              <label for="haveTrust">Do You Have a Trust?</label>
+              <select id="haveTrust" name="haveTrust">
+                <option value=""></option>
+                <option>Yes</option>
+                <option>No</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="ap-grid-3" style="margin-top:8px;">
+            <div class="ap-field">
+              <label for="trustYear">Trust – Year Completed</label>
+              <input id="trustYear" name="trustYear" type="number" min="1900" step="1">
+            </div>
+            <div class="ap-field">
+              <label for="termLifeHis">Term Life Insurance (His)</label>
+              <input id="termLifeHis" name="termLifeHis" type="text" placeholder="Dollar amount">
+            </div>
+            <div class="ap-field">
+              <label for="termLifeHer">Term Life Insurance (Her)</label>
+              <input id="termLifeHer" name="termLifeHer" type="text" placeholder="Dollar amount">
+            </div>
+          </div>
+
+          <div class="ap-grid-3" style="margin-top:8px;">
+            <div class="ap-field">
+              <label for="termOrigYears">Original Term in Years</label>
+              <input id="termOrigYears" name="termOrigYears" type="number" min="0" step="1">
+            </div>
+            <div class="ap-field">
+              <label for="totalLifeInsurance">Total Life Insurance Him &amp; Her</label>
+              <input id="totalLifeInsurance" name="totalLifeInsurance" type="text">
+            </div>
+            <div class="ap-field">
+              <label for="estateNotes">Notes</label>
+              <input id="estateNotes" name="estateNotes" type="text">
+            </div>
+          </div>
+        </div>
+
+        <!-- 7. Residences & Real Estate -->
+        <div class="ap-section">
+          <div class="ap-section-title">Residences and Real Estate Investments</div>
+          <table class="ap-table">
+            <thead>
+              <tr>
+                <th style="width:30%;">Property</th>
+                <th style="width:12%;">Owned / Rented</th>
+                <th>Approx. Value (if Owned)</th>
+                <th>Mortgage Amount</th>
+                <th>Monthly Payment</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1. Primary Residence</td>
+                <td><input name="primaryOwnedRented" type="text" placeholder="Owned / Rented"></td>
+                <td><input name="primaryValue" type="text"></td>
+                <td><input name="primaryMortgage" type="text"></td>
+                <td><input name="primaryMonthly" type="text"></td>
+              </tr>
+              <tr>
+                <td>2. Secondary Residence</td>
+                <td><input name="secondaryOwnedRented" type="text" placeholder="Owned / Rented"></td>
+                <td><input name="secondaryValue" type="text"></td>
+                <td><input name="secondaryMortgage" type="text"></td>
+                <td><input name="secondaryMonthly" type="text"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- 8. Current Portfolio -->
+        <div class="ap-section">
+          <div class="ap-section-title">Current Portfolio (Qualified = IRA / 401k / 403b / Brokerage, etc.)</div>
+          <table class="ap-table">
+            <thead>
+              <tr>
+                <th>Investment Account Name / Description</th>
+                <th style="width:12%;">His / Her / Both</th>
+                <th style="width:18%;">Qualified / Non-Qualified</th>
+                <th style="width:18%;">Balance ($)</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input name="inv1Name" type="text"></td>
+                <td><input name="inv1Owner" type="text"></td>
+                <td><input name="inv1Type" type="text"></td>
+                <td><input name="inv1Balance" type="text"></td>
+                <td><input name="inv1Notes" type="text"></td>
+              </tr>
+              <tr>
+                <td><input name="inv2Name" type="text"></td>
+                <td><input name="inv2Owner" type="text"></td>
+                <td><input name="inv2Type" type="text"></td>
+                <td><input name="inv2Balance" type="text"></td>
+                <td><input name="inv2Notes" type="text"></td>
+              </tr>
+              <tr>
+                <td><input name="inv3Name" type="text"></td>
+                <td><input name="inv3Owner" type="text"></td>
+                <td><input name="inv3Type" type="text"></td>
+                <td><input name="inv3Balance" type="text"></td>
+                <td><input name="inv3Notes" type="text"></td>
+              </tr>
+              <tr class="ap-total-row">
+                <td colspan="3">TOTALS</td>
+                <td><input name="invTotalBalance" type="text"></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- 9. Savings & Credit Union Accounts -->
+        <div class="ap-section">
+          <div class="ap-section-title">Savings and Credit Union Accounts</div>
+          <table class="ap-table">
+            <thead>
+              <tr>
+                <th>Account Description (Savings / Checking / Credit Union)</th>
+                <th style="width:16%;">His / Her / Both</th>
+                <th style="width:18%;">Current Balance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input name="save1Desc" type="text"></td>
+                <td><input name="save1Owner" type="text"></td>
+                <td><input name="save1Balance" type="text"></td>
+              </tr>
+              <tr>
+                <td><input name="save2Desc" type="text"></td>
+                <td><input name="save2Owner" type="text"></td>
+                <td><input name="save2Balance" type="text"></td>
+              </tr>
+              <tr>
+                <td><input name="save3Desc" type="text"></td>
+                <td><input name="save3Owner" type="text"></td>
+                <td><input name="save3Balance" type="text"></td>
+              </tr>
+              <tr>
+                <td><input name="save4Desc" type="text"></td>
+                <td><input name="save4Owner" type="text"></td>
+                <td><input name="save4Balance" type="text"></td>
+              </tr>
+              <tr class="ap-total-row">
+                <td>TOTAL</td>
+                <td></td>
+                <td><input name="saveTotalBalance" type="text"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- 10. Annuities -->
+        <div class="ap-section">
+          <div class="ap-section-title">Annuities</div>
+          <table class="ap-table">
+            <thead>
+              <tr>
+                <th>Annuity (Insurance Company Name)</th>
+                <th style="width:16%;">His / Her / Both</th>
+                <th style="width:18%;">Current Balance</th>
+                <th style="width:18%;">Year Opened</th>
+                <th>Still in Surrender Period?</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input name="ann1Name" type="text"></td>
+                <td><input name="ann1Owner" type="text"></td>
+                <td><input name="ann1Balance" type="text"></td>
+                <td><input name="ann1YearOpened" type="text"></td>
+                <td><input name="ann1Surrender" type="text"></td>
+              </tr>
+              <tr>
+                <td><input name="ann2Name" type="text"></td>
+                <td><input name="ann2Owner" type="text"></td>
+                <td><input name="ann2Balance" type="text"></td>
+                <td><input name="ann2YearOpened" type="text"></td>
+                <td><input name="ann2Surrender" type="text"></td>
+              </tr>
+              <tr class="ap-total-row">
+                <td>TOTAL</td>
+                <td></td>
+                <td><input name="annTotalBalance" type="text"></td>
+                <td colspan="2"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- 11. Income Sources -->
+        <div class="ap-section">
+          <div class="ap-section-title">Income Sources</div>
+          <table class="ap-table">
+            <thead>
+              <tr>
+                <th style="width:14%;">Who’s Income (His / Her / Both)</th>
+                <th style="width:18%;">What Type (Pension / SS / Wages / Other)</th>
+                <th>Describe Type (if Other)</th>
+                <th style="width:18%;">Dollar Amount of Annual Income ($)</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input name="inc1Who" type="text"></td>
+                <td><input name="inc1Type" type="text"></td>
+                <td><input name="inc1Desc" type="text"></td>
+                <td><input name="inc1Amount" type="text"></td>
+                <td><input name="inc1Notes" type="text"></td>
+              </tr>
+              <tr>
+                <td><input name="inc2Who" type="text"></td>
+                <td><input name="inc2Type" type="text"></td>
+                <td><input name="inc2Desc" type="text"></td>
+                <td><input name="inc2Amount" type="text"></td>
+                <td><input name="inc2Notes" type="text"></td>
+              </tr>
+              <tr>
+                <td><input name="inc3Who" type="text"></td>
+                <td><input name="inc3Type" type="text"></td>
+                <td><input name="inc3Desc" type="text"></td>
+                <td><input name="inc3Amount" type="text"></td>
+                <td><input name="inc3Notes" type="text"></td>
+              </tr>
+              <tr class="ap-total-row">
+                <td colspan="3">Approximate Total Annual Income ($)</td>
+                <td><input name="incTotalAmount" type="text"></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- 12. Living Expenses & Desired Income -->
+        <div class="ap-section">
+          <div class="ap-section-title">Living Expenses &amp; Desired Retirement Income</div>
+          <div class="ap-grid-2">
+            <div class="ap-field">
+              <label for="annualExpenses">Approximate Annual Living Expenses ($)</label>
+              <input id="annualExpenses" name="annualExpenses" type="text">
+              <div class="ap-pill-note">Current lifestyle spending before retirement.</div>
+            </div>
+            <div class="ap-field">
+              <label for="desiredRetIncome">Desired Annual Income After Retirement ($)</label>
+              <input id="desiredRetIncome" name="desiredRetIncome" type="text">
+              <div class="ap-pill-note">Target income you’d like your plan to produce.</div>
+            </div>
+          </div>
+          <div class="ap-field" style="margin-top:8px;">
+            <label for="incomeNotes">Notes</label>
+            <textarea id="incomeNotes" name="incomeNotes"></textarea>
+          </div>
+        </div>
+
+        <!-- 13. Goals -->
+        <div class="ap-section">
+          <div class="ap-section-title">Goals</div>
+          <div class="ap-pill-note" style="margin-bottom:8px;">
+            Rate each in the dropdown list: 1 = Not Concerned … 5 = Most Concerned
+          </div>
+
+          <div class="ap-goal-row">
+            <span>Have enough retirement income that lasts my lifetime</span>
+            <select name="goal1Rating">
+              <option value=""></option>
+              <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+            </select>
+            <input name="goal1Notes" type="text" placeholder="Notes">
+          </div>
+
+          <div class="ap-goal-row">
+            <span>Protect assets from losses</span>
+            <select name="goal2Rating">
+              <option value=""></option>
+              <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+            </select>
+            <input name="goal2Notes" type="text" placeholder="Notes">
+          </div>
+
+          <div class="ap-goal-row">
+            <span>Save more for retirement than current IRA limits allow</span>
+            <select name="goal3Rating">
+              <option value=""></option>
+              <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+            </select>
+            <input name="goal3Notes" type="text" placeholder="Notes">
+          </div>
+
+          <div class="ap-goal-row">
+            <span>Protect myself / family from catastrophic long-term care costs</span>
+            <select name="goal4Rating">
+              <option value=""></option>
+              <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+            </select>
+            <input name="goal4Notes" type="text" placeholder="Notes">
+          </div>
+
+          <div class="ap-goal-row">
+            <span>Grow a cash account accessible at any age (no 59½ restrictions)</span>
+            <select name="goal5Rating">
+              <option value=""></option>
+              <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+            </select>
+            <input name="goal5Notes" type="text" placeholder="Notes">
+          </div>
+
+          <div class="ap-goal-row">
+            <span>Pass retirement money to next generation tax-efficiently</span>
+            <select name="goal6Rating">
+              <option value=""></option>
+              <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+            </select>
+            <input name="goal6Notes" type="text" placeholder="Notes">
+          </div>
+
+          <div class="ap-goal-row">
+            <span>Implement a retirement program that reduces tax liability</span>
+            <select name="goal7Rating">
+              <option value=""></option>
+              <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+            </select>
+            <input name="goal7Notes" type="text" placeholder="Notes">
+          </div>
+        </div>
+
+        <!-- 14. Document Checklist & Additional Notes -->
+        <div class="ap-section">
+          <div class="ap-section-title">Document Checklist &amp; Additional Notes</div>
+          <div class="ap-field">
+            <label for="documentChecklist">
+              Document Checklist (list items and year established / completed)
+            </label>
+            <textarea id="documentChecklist" name="documentChecklist"></textarea>
+          </div>
+          <div class="ap-field" style="margin-top:8px;">
+            <label for="additionalNotes">Additional Notes</label>
+            <textarea id="additionalNotes" name="additionalNotes"></textarea>
+          </div>
+        </div>
+      </form>
     </div>
+  </div>
 
-    <!-- RIGHT COLUMN: Property & Mortgages + Annuities -->
-    <div>
-      <!-- Property & Mortgages -->
-      <div>
-        <div class="ap-block-title">Property &amp; Mortgages</div>
-        <table class="ap-table">
-          <thead>
-            <tr>
-              <th>Property</th>
-              <th style="width:25%;">Mortgage (Liability)</th>
-              <th style="width:25%;">Market Value (Asset)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Primary Residence</td>
-              <td class="ap-num" id="ap-primary-mortgage">$0</td>
-              <td class="ap-num" id="ap-primary-value">$0</td>
-            </tr>
-            <tr>
-              <td>Secondary Residence</td>
-              <td class="ap-num" id="ap-secondary-mortgage">$0</td>
-              <td class="ap-num" id="ap-secondary-value">$0</td>
-            </tr>
-          </tbody>
-          <tfoot>
-            <tr class="ap-row-total">
-              <td>Total Mortgage</td>
-              <td class="ap-num" id="ap-total-mortgage">$0</td>
-              <td class="ap-num" id="ap-total-real-estate">$0</td>
-            </tr>
-          </tfoot>
-        </table>
+  <!-- PANEL: ASSET SUMMARY -->
+  <div id="ap-panel-assets" class="ap-ifl-panel" style="display:none;">
+    <div id="ap-asset-summary">
+      <div id="ap-asset-summary-header">
+        <div>
+          <div class="ap-title">Asset Summary</div>
+          <div class="ap-subtitle">Income-for-Life Plan – AmericaPlanning.com</div>
+        </div>
+        <div class="ap-date" id="ap-asset-summary-date"></div>
       </div>
 
-      <!-- Annuities -->
-      <div style="margin-top:18px;">
-        <div class="ap-block-title">Annuities</div>
-        <table class="ap-table">
-          <thead>
-            <tr>
-              <th>Owner</th>
-              <th>Insurance Company / Contract</th>
-              <th style="width:18%;">Type</th>
-              <th style="width:25%;">Balance</th>
-            </tr>
-          </thead>
-          <tbody id="ap-annuity-rows">
-            <!-- Rows injected by JS -->
-          </tbody>
-          <tfoot>
-            <tr class="ap-row-total">
-              <td colspan="3">Total Annuities</td>
-              <td class="ap-num" id="ap-total-annuities">$0</td>
-            </tr>
-          </tfoot>
-        </table>
+      <div class="ap-name-address" id="ap-asset-summary-name-address"></div>
+
+      <div id="ap-asset-summary-layout">
+        <!-- LEFT: Cash + Investments -->
+        <div>
+          <!-- Cash Accounts -->
+          <div>
+            <div class="ap-block-title">Cash Accounts</div>
+            <table class="ap-table">
+              <thead>
+                <tr>
+                  <th style="width:25%;">Owner</th>
+                  <th>Account Type / Description</th>
+                  <th style="width:25%;">Balance</th>
+                </tr>
+              </thead>
+              <tbody id="ap-cash-rows"></tbody>
+              <tfoot>
+                <tr class="ap-row-total">
+                  <td colspan="2">Total Cash</td>
+                  <td class="ap-num" id="ap-total-cash">$0</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+
+          <!-- Investment Accounts -->
+          <div style="margin-top:18px;">
+            <div class="ap-block-title">Investment Accounts</div>
+            <table class="ap-table">
+              <thead>
+                <tr>
+                  <th style="width:18%;">Owner</th>
+                  <th>Account Name / Description</th>
+                  <th style="width:18%;">Type</th>
+                  <th style="width:25%;">Balance</th>
+                </tr>
+              </thead>
+              <tbody id="ap-investment-rows"></tbody>
+              <tfoot>
+                <tr class="ap-row-total">
+                  <td colspan="3">Total Investments</td>
+                  <td class="ap-num" id="ap-total-investments">$0</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+
+        <!-- RIGHT: Real Estate + Annuities -->
+        <div>
+          <!-- Property & Mortgages -->
+          <div>
+            <div class="ap-block-title">Property &amp; Mortgages</div>
+            <table class="ap-table">
+              <thead>
+                <tr>
+                  <th>Property</th>
+                  <th style="width:25%;">Mortgage (Liability)</th>
+                  <th style="width:25%;">Market Value (Asset)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Primary Residence</td>
+                  <td class="ap-num" id="ap-primary-mortgage">$0</td>
+                  <td class="ap-num" id="ap-primary-value">$0</td>
+                </tr>
+                <tr>
+                  <td>Secondary Residence</td>
+                  <td class="ap-num" id="ap-secondary-mortgage">$0</td>
+                  <td class="ap-num" id="ap-secondary-value">$0</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr class="ap-row-total">
+                  <td>Total Mortgage</td>
+                  <td class="ap-num" id="ap-total-mortgage">$0</td>
+                  <td class="ap-num" id="ap-total-real-estate">$0</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+
+          <!-- Annuities -->
+          <div style="margin-top:18px;">
+            <div class="ap-block-title">Annuities</div>
+            <table class="ap-table">
+              <thead>
+                <tr>
+                  <th>Owner</th>
+                  <th>Insurance Company / Contract</th>
+                  <th style="width:18%;">Type</th>
+                  <th style="width:25%;">Balance</th>
+                </tr>
+              </thead>
+              <tbody id="ap-annuity-rows"></tbody>
+              <tfoot>
+                <tr class="ap-row-total">
+                  <td colspan="3">Total Annuities</td>
+                  <td class="ap-num" id="ap-total-annuities">$0</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOTALS -->
+      <div id="ap-asset-summary-bottom">
+        <div class="ap-summary-item">
+          <div class="ap-summary-label">TOTAL ASSETS</div>
+          <div class="ap-summary-value" id="ap-total-assets">$0</div>
+        </div>
+        <div class="ap-summary-item">
+          <div class="ap-summary-label">TOTAL LIABILITIES</div>
+          <div class="ap-summary-value" id="ap-total-liabilities">$0</div>
+        </div>
+        <div class="ap-summary-item net-worth">
+          <div class="ap-summary-label">NET WORTH</div>
+          <div class="ap-summary-value" id="ap-net-worth">$0</div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- BOTTOM TOTALS -->
-  <div id="ap-asset-summary-bottom">
-    <div class="ap-summary-item">
-      <div class="ap-summary-label">TOTAL ASSETS</div>
-      <div class="ap-summary-value" id="ap-total-assets">$0</div>
-    </div>
-    <div class="ap-summary-item">
-      <div class="ap-summary-label">TOTAL LIABILITIES</div>
-      <div class="ap-summary-value" id="ap-total-liabilities">$0</div>
-    </div>
-    <div class="ap-summary-item net-worth">
-      <div class="ap-summary-label">NET WORTH</div>
-      <div class="ap-summary-value" id="ap-net-worth">$0</div>
-    </div>
+  <!-- PANEL: PLAN INPUTS (placeholder for now) -->
+  <div id="ap-panel-inputs" class="ap-ifl-panel" style="display:none;">
+    <h2>Plan Inputs</h2>
+    <p style="font-size:13px;color:#6b7280;">
+      This panel is reserved for your future Plan Inputs section (Silver / Gold plan sliders, assumptions, etc.).
+      The tabs and framework are already wired – we just need to drop that content in later.
+    </p>
   </div>
 </div>
 
 <script>
-  // ---------- Helper: parse currency-like strings ----------
+  // ---- Helpers for Asset Summary ----
   function apParseCurrency(val) {
     if (!val) return 0;
     if (typeof val !== 'string') val = String(val);
-    // Remove $ , spaces
     val = val.replace(/[^0-9.\-]/g, '');
     if (!val) return 0;
     var num = parseFloat(val);
@@ -310,9 +1123,7 @@
     return el ? el.value || '' : '';
   }
 
-  // ---------- Main update function ----------
   function apUpdateAssetSummary() {
-    // DATE/TIME
     var now = new Date();
     var dateSpan = document.getElementById('ap-asset-summary-date');
     if (dateSpan) {
@@ -320,7 +1131,7 @@
       dateSpan.textContent = dateStr;
     }
 
-    // NAME & ADDRESS
+    // Name & address
     var nameAddressDiv = document.getElementById('ap-asset-summary-name-address');
     if (nameAddressDiv) {
       var clientName = apGetInputValue('clientName');
@@ -337,19 +1148,18 @@
         (addressLine ? '<div>' + addressLine + '</div>' : '');
     }
 
-    // ---------- CASH ACCOUNTS (Savings & Credit Union) ----------
+    // Cash accounts
     var cashRowsBody = document.getElementById('ap-cash-rows');
     var totalCash = 0;
     if (cashRowsBody) {
       cashRowsBody.innerHTML = '';
-      var maxCash = 4; // we defined 4 rows in the data form
+      var maxCash = 4;
       for (var i = 1; i <= maxCash; i++) {
         var desc = apGetInputValue('save' + i + 'Desc');
         var owner = apGetInputValue('save' + i + 'Owner');
         var balStr = apGetInputValue('save' + i + 'Balance');
         var bal = apParseCurrency(balStr);
         if (!desc && !owner && !balStr) continue;
-
         totalCash += bal;
         var tr = document.createElement('tr');
         tr.innerHTML =
@@ -358,15 +1168,16 @@
           '<td class="ap-num">' + apFormatCurrency(bal) + '</td>';
         cashRowsBody.appendChild(tr);
       }
-      document.getElementById('ap-total-cash').textContent = apFormatCurrency(totalCash);
+      var elTC = document.getElementById('ap-total-cash');
+      if (elTC) elTC.textContent = apFormatCurrency(totalCash);
     }
 
-    // ---------- INVESTMENT ACCOUNTS ----------
+    // Investment accounts
     var invRowsBody = document.getElementById('ap-investment-rows');
     var totalInv = 0;
     if (invRowsBody) {
       invRowsBody.innerHTML = '';
-      var maxInv = 6; // allow up to 6 records
+      var maxInv = 3;
       for (var j = 1; j <= maxInv; j++) {
         var name = apGetInputValue('inv' + j + 'Name');
         var ownerInv = apGetInputValue('inv' + j + 'Owner');
@@ -384,10 +1195,11 @@
           '<td class="ap-num">' + apFormatCurrency(balInv) + '</td>';
         invRowsBody.appendChild(tr2);
       }
-      document.getElementById('ap-total-investments').textContent = apFormatCurrency(totalInv);
+      var elTI = document.getElementById('ap-total-investments');
+      if (elTI) elTI.textContent = apFormatCurrency(totalInv);
     }
 
-    // ---------- PROPERTY & MORTGAGES ----------
+    // Property & mortgages
     var primaryVal = apParseCurrency(apGetInputValue('primaryValue'));
     var primaryMort = apParseCurrency(apGetInputValue('primaryMortgage'));
     var secondaryVal = apParseCurrency(apGetInputValue('secondaryValue'));
@@ -410,16 +1222,16 @@
     if (elTotalRE) elTotalRE.textContent = apFormatCurrency(totalRealEstate);
     if (elTotalMort) elTotalMort.textContent = apFormatCurrency(totalMortgage);
 
-    // ---------- ANNUITIES ----------
+    // Annuities
     var annRowsBody = document.getElementById('ap-annuity-rows');
     var totalAnn = 0;
     if (annRowsBody) {
       annRowsBody.innerHTML = '';
-      var maxAnn = 6;
+      var maxAnn = 2;
       for (var k = 1; k <= maxAnn; k++) {
         var annName = apGetInputValue('ann' + k + 'Name');
         var annOwner = apGetInputValue('ann' + k + 'Owner');
-        var annType = apGetInputValue('ann' + k + 'Type'); // optional if you add to data form
+        var annType = apGetInputValue('ann' + k + 'Type'); // optional
         var annBalStr = apGetInputValue('ann' + k + 'Balance');
         var annBal = apParseCurrency(annBalStr);
         if (!annName && !annOwner && !annBalStr) continue;
@@ -433,23 +1245,58 @@
           '<td class="ap-num">' + apFormatCurrency(annBal) + '</td>';
         annRowsBody.appendChild(tr3);
       }
-      document.getElementById('ap-total-annuities').textContent = apFormatCurrency(totalAnn);
+      var elTA = document.getElementById('ap-total-annuities');
+      if (elTA) elTA.textContent = apFormatCurrency(totalAnn);
     }
 
-    // ---------- ROLL-UP TOTALS ----------
+    // Roll-up totals
     var totalAssets = totalCash + totalInv + totalRealEstate + totalAnn;
-    var totalLiab = totalMortgage; // you can add other liabilities later if desired
+    var totalLiab = totalMortgage; // expand later if you add other liabilities
     var netWorth = totalAssets - totalLiab;
 
-    var elTA = document.getElementById('ap-total-assets');
-    var elTL = document.getElementById('ap-total-liabilities');
+    var elTotA = document.getElementById('ap-total-assets');
+    var elTotL = document.getElementById('ap-total-liabilities');
     var elNW = document.getElementById('ap-net-worth');
 
-    if (elTA) elTA.textContent = apFormatCurrency(totalAssets);
-    if (elTL) elTL.textContent = apFormatCurrency(totalLiab);
+    if (elTotA) elTotA.textContent = apFormatCurrency(totalAssets);
+    if (elTotL) elTotL.textContent = apFormatCurrency(totalLiab);
     if (elNW) elNW.textContent = apFormatCurrency(netWorth);
   }
 
-  // Run on load; you can also call apUpdateAssetSummary() from a button or tab change
-  document.addEventListener('DOMContentLoaded', apUpdateAssetSummary);
+  // ---- Tab logic + initial wiring ----
+  (function () {
+    function showPanel(name) {
+      var panels = ['goals', 'assets', 'inputs'];
+      panels.forEach(function (p) {
+        var pane = document.getElementById('ap-panel-' + p);
+        if (pane) pane.style.display = (p === name ? 'block' : 'none');
+      });
+
+      var buttons = document.querySelectorAll('#ap-ifl-app .ap-ifl-tab-btn');
+      buttons.forEach(function (btn) {
+        btn.classList.toggle('ap-ifl-tab-active', btn.getAttribute('data-panel') === name);
+      });
+
+      if (name === 'assets') {
+        if (typeof apUpdateAssetSummary === 'function') {
+          apUpdateAssetSummary();
+        }
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      var buttons = document.querySelectorAll('#ap-ifl-app .ap-ifl-tab-btn');
+      buttons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          showPanel(btn.getAttribute('data-panel'));
+        });
+      });
+
+      // Default to Goals & Data
+      showPanel('goals');
+    });
+
+    // Optional: expose to global if you ever want to jump to a tab via link
+    window.apShowIFLPanel = showPanel;
+  })();
 </script>
