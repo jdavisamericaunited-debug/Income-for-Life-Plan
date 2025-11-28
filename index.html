@@ -1,102 +1,622 @@
-<script>
-  // ---------- Tabs + wiring ----------
-  (function () {
-    function showPanel(name) {
-      // List of all panel IDs
-      var panels = ['goals', 'assets', 'inputs', 'noplanJoint', 'noplanHer', 'noplanHis', 'noplanAlloc'];
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Income-for-Life Plan – AmericaPlanning</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #e5e7eb;
+    }
+  </style>
+</head>
+<body>
+<div id="ap-rotate-tip" style="display:none;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;">
+  Turn phone sideways for easy viewing.
+</div>
 
-      // Hide all panels
-      panels.forEach(function (p) {
-        var pane = document.getElementById('ap-panel-' + p);
-        if (pane) {
-          pane.style.display = (p === name ? 'block' : 'none');
-        }
-      });
+<div id="ap-ifl-app">
+  <style>
+    #ap-ifl-app,
+    #ap-ifl-app * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    }
 
-      // Reset tab styles and mark active tab
-      var buttons = document.querySelectorAll('#ap-ifl-app .ap-ifl-tab-btn');
-      buttons.forEach(function (btn) {
-        btn.classList.toggle('ap-ifl-tab-active', btn.getAttribute('data-panel') === name);
-      });
+    #ap-ifl-app {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px 20px 32px;
+      background: #f3f4f6;
+      color: #111827;
+    }
 
-      // Update content based on selected panel
-      if (name === 'assets') {
-        apUpdateAssetSummary();
+    #ap-ifl-app h1 {
+      font-size: 26px;
+      margin: 0 0 4px;
+    }
+
+    #ap-ifl-app .ap-page-caption {
+      font-size: 13px;
+      color: #6b7280;
+      margin-bottom: 16px;
+    }
+
+    /* Tabs */
+    .ap-ifl-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .ap-ifl-tab-btn {
+      border: 1px solid #d1d5db;
+      background: #e5e7eb;
+      color: #111827;
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .ap-ifl-tab-btn.ap-ifl-tab-active {
+      background: #0b5aa2;
+      border-color: #0b5aa2;
+      color: #ffffff;
+    }
+
+    .ap-ifl-panel {
+      background: #f9fafb;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      padding: 18px 18px 22px;
+    }
+
+    .ap-primary-btn {
+      display: inline-block;
+      background: #0b5aa2;
+      color: #ffffff;
+      border: none;
+      border-radius: 999px;
+      padding: 8px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .ap-primary-btn:hover {
+      opacity: 0.95;
+    }
+
+    .ap-save-row {
+      text-align: right;
+      margin-top: 4px;
+    }
+
+    /* ---------- Goals & Data Styles ---------- */
+    #ap-goals-data h2 {
+      font-size: 20px;
+      margin: 0 0 4px;
+    }
+
+    #ap-goals-data .ap-subtitle {
+      font-size: 13px;
+      color: #6b7280;
+      margin-bottom: 16px;
+    }
+
+    #ap-goals-data form {
+      width: 100%;
+    }
+
+    #ap-goals-data .ap-section {
+      background: #ffffff;
+      border-radius: 10px;
+      border: 1px solid #e5e7eb;
+      padding: 16px 18px 14px;
+      margin-bottom: 18px;
+    }
+
+    #ap-goals-data .ap-section-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0b5aa2;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 6px;
+      margin-bottom: 12px;
+    }
+
+    #ap-goals-data .ap-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px 16px;
+    }
+
+    #ap-goals-data .ap-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px 16px;
+    }
+
+    #ap-goals-data .ap-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px 16px;
+    }
+
+    #ap-goals-data .ap-field {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      font-size: 13px;
+    }
+
+    #ap-goals-data label {
+      font-weight: 600;
+      color: #374151;
+    }
+
+    #ap-goals-data .ap-pill-note {
+      font-size: 11px;
+      color: #6b7280;
+      margin-top: 2px;
+    }
+
+    #ap-goals-data input[type="text"],
+    #ap-goals-data input[type="number"],
+    #ap-goals-data input[type="email"],
+    #ap-goals-data input[type="date"],
+    #ap-goals-data select,
+    #ap-goals-data textarea {
+      width: 100%;
+      border-radius: 6px;
+      border: 1px solid #d1d5db;
+      padding: 6px 8px;
+      font-size: 13px;
+      line-height: 1.4;
+      background: #ffffff;
+    }
+
+    #ap-goals-data textarea {
+      min-height: 60px;
+      resize: vertical;
+    }
+
+    #ap-goals-data .ap-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin-top: 6px;
+    }
+
+    #ap-goals-data .ap-table th,
+    #ap-goals-data .ap-table td {
+      border: 1px solid #e5e7eb;
+      padding: 4px 6px;
+      vertical-align: top;
+    }
+
+    #ap-goals-data .ap-table th {
+      background: #f3f4f6;
+      font-weight: 600;
+      text-align: left;
+    }
+
+    #ap-goals-data .ap-table input,
+    #ap-goals-data .ap-table select,
+    #ap-goals-data .ap-table textarea {
+      border-radius: 4px;
+      border: 1px solid #d1d5db;
+      width: 100%;
+      padding: 4px 5px;
+      font-size: 12px;
+    }
+
+    #ap-goals-data .ap-total-row {
+      background: #f9fafb;
+      font-weight: 600;
+    }
+
+    #ap-goals-data .ap-goal-row {
+      display: grid;
+      grid-template-columns: minmax(0, 2.8fr) minmax(0, 0.7fr) minmax(0, 1.5fr);
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    #ap-goals-data .ap-goal-row span {
+      font-size: 13px;
+      align-self: center;
+    }
+
+    #ap-goals-data .ap-goal-row select {
+      max-width: 80px;
+    }
+
+    /* ---------- Asset Summary Styles ---------- */
+    #ap-asset-summary {
+      background: #ffffff;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      padding: 18px 18px 20px;
+      color: #111827;
+    }
+
+    #ap-asset-summary-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 8px;
+    }
+
+    #ap-asset-summary-header .ap-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #0b5aa2;
+    }
+
+    #ap-asset-summary-header .ap-subtitle {
+      font-size: 13px;
+      color: #4b5563;
+      margin-top: 2px;
+    }
+
+    #ap-asset-summary-header .ap-date {
+      font-size: 12px;
+      color: #6b7280;
+      text-align: right;
+    }
+
+    #ap-asset-summary-layout {
+      display: grid;
+      grid-template-columns: 1.1fr 1.1fr;
+      gap: 18px 40px;
+      align-items: flex-start;
+    }
+
+    #ap-asset-summary .ap-block-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #0b5aa2;
+      margin-bottom: 4px;
+    }
+
+    #ap-asset-summary .ap-name-address {
+      font-size: 13px;
+      color: #111827;
+      margin-bottom: 14px;
+    }
+
+    #ap-asset-summary .ap-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    #ap-asset-summary .ap-table th,
+    #ap-asset-summary .ap-table td {
+      border: 1px solid #e5e7eb;
+      padding: 4px 6px;
+      vertical-align: top;
+      text-align: left;
+    }
+
+    #ap-asset-summary .ap-table th {
+      background: #f3f4f6;
+      font-weight: 600;
+    }
+
+    #ap-asset-summary .ap-table td.ap-num {
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    #ap-asset-summary .ap-row-total {
+      background: #f9fafb;
+      font-weight: 600;
+    }
+
+    #ap-asset-summary-bottom {
+      margin-top: 18px;
+      border-top: 1px solid #e5e7eb;
+      padding-top: 10px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    #ap-asset-summary-bottom .ap-summary-item {
+      padding: 8px 10px;
+      border-radius: 8px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+
+    #ap-asset-summary-bottom .ap-summary-label {
+      font-size: 13px;
+      color: #4b5563;
+      margin-bottom: 2px;
+    }
+
+    #ap-asset-summary-bottom .ap-summary-value {
+      font-size: 16px;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    #ap-asset-summary-bottom .ap-summary-item.net-worth {
+      background: #eff6ff;
+      border-color: #bfdbfe;
+    }
+
+    #ap-asset-summary-bottom .ap-summary-item.net-worth .ap-summary-value {
+      color: #0b5aa2;
+    }
+
+    @media (max-width: 1024px) {
+      #ap-asset-summary-layout {
+        grid-template-columns: 1fr;
       }
-      if (name === 'inputs') {
-        apUpdateInputsDerived();
-      }
-      if (name === 'noplanJoint' || name === 'noplanHer' || name === 'noplanHis' || name === 'noplanAlloc') {
-        apUpdateInputsDerived();
-        apRenderNoPlanProjections();
+      #ap-asset-summary-bottom {
+        grid-template-columns: 1fr;
       }
     }
 
-    document.addEventListener('DOMContentLoaded', function () {
-      apLoadGoalsDataFromStorage();
-      apUpdateDataFormTotals();
+    /* ---------- Inputs / Plan Inputs ---------- */
+    .ap-section-title-inline {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0b5aa2;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 6px;
+      margin-bottom: 8px;
+    }
 
-      // Add event listeners to tab buttons
-      var buttons = document.querySelectorAll('#ap-ifl-app .ap-ifl-tab-btn');
-      buttons.forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          showPanel(btn.getAttribute('data-panel'));
-        });
+    /* ---------- Plan tables (No Plan pages) ---------- */
+    .ap-plan-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      margin-top: 6px;
+    }
+    .ap-plan-table th,
+    .ap-plan-table td {
+      border: 1px solid #e5e7eb;
+      padding: 3px 5px;
+      vertical-align: top;
+    }
+    .ap-plan-table th {
+      background: #f3f4f6;
+      font-weight: 600;
+      text-align: left;
+    }
+    .ap-plan-table td.ap-num {
+      text-align: right;
+      white-space: nowrap;
+    }
+    .ap-plan-table tfoot td {
+      background: #f9fafb;
+      font-weight: 600;
+    }
+
+    .ap-plan-caption {
+      font-size: 13px;
+      color: #4b5563;
+      margin-bottom: 6px;
+    }
+
+    .ap-noplan-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 18px;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 1024px) {
+      .ap-noplan-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .ap-noplan-summary-box {
+      background: #ffffff;
+      border-radius: 10px;
+      border: 1px solid #e5e7eb;
+      padding: 12px 14px;
+      font-size: 13px;
+    }
+
+    .ap-noplan-summary-box h3 {
+      font-size: 15px;
+      margin: 0 0 8px;
+      color: #0b5aa2;
+    }
+
+    .ap-summary-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 4px;
+    }
+    .ap-summary-line-label {
+      font-size: 13px;
+      color: #4b5563;
+    }
+    .ap-summary-line-value {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .ap-legend-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 4px;
+      font-size: 13px;
+    }
+    .ap-legend-color {
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+      margin-right: 6px;
+    }
+  </style>
+
+  <h1>Income-for-Life Plan – Data, Asset Summary & Plan Inputs</h1>
+  <div class="ap-page-caption">
+    Internal planning tool – designed for desktop use.
+  </div>
+
+  <!-- TABS -->
+  <div class="ap-ifl-tabs">
+    <button class="ap-ifl-tab-btn ap-ifl-tab-active" data-panel="goals">Goals &amp; Data</button>
+    <button class="ap-ifl-tab-btn" data-panel="assets">Asset Summary</button>
+    <button class="ap-ifl-tab-btn" data-panel="inputs">Inputs</button>
+    <button class="ap-ifl-tab-btn" data-panel="noplanJoint">No Plan – Joint Income</button>
+    <button class="ap-ifl-tab-btn" data-panel="noplanHer">No Plan – Her Survivor</button>
+    <button class="ap-ifl-tab-btn" data-panel="noplanHis">No Plan – His Survivor</button>
+    <button class="ap-ifl-tab-btn" data-panel="noplanAlloc">No Plan – Allocation &amp; Income</button>
+  </div>
+
+  <!-- PANEL: GOALS & DATA (unchanged layout) -->
+  <div id="ap-panel-goals" class="ap-ifl-panel">
+    <div id="ap-goals-data">
+      <h2>Goals &amp; Data Form</h2>
+      <div class="ap-subtitle">
+        Income-for-Life Plan – AmericaPlanning.com
+      </div>
+
+      <form id="ap-goals-data-form">
+        <!-- Business & Primary Contact -->
+        <div class="ap-section">
+          <div class="ap-section-title">Business &amp; Primary Contact</div>
+          <div class="ap-grid-3">
+            <div class="ap-field">
+              <label for="businessName">Business Name (if self-employed)</label>
+              <input id="businessName" name="businessName" type="text">
+            </div>
+            <div class="ap-field">
+              <label for="yearsInBusiness">Years in Business</label>
+              <input id="yearsInBusiness" name="yearsInBusiness" type="number" min="0" step="1">
+            </div>
+            <div class="ap-field">
+              <label for="dataDate">Form Date</label>
+              <input id="dataDate" name="dataDate" type="date">
+            </div>
+          </div>
+
+          <div class="ap-grid-3" style="margin-top:10px;">
+            <div class="ap-field">
+              <label for="businessAddress">Business Address</label>
+              <input id="businessAddress" name="businessAddress" type="text">
+            </div>
+            <div class="ap-field">
+              <label for="businessCity">City</label>
+              <input id="businessCity" name="businessCity" type="text">
+            </div>
+            <div class="ap-grid-2">
+              <div class="ap-field">
+                <label for="businessState">State</label>
+                <input id="businessState" name="businessState" type="text">
+              </div>
+              <div class="ap-field">
+                <label for="businessZip">Zip Code</label>
+                <input id="businessZip" name="businessZip" type="text">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Personal Information -->
+        <div class="ap-section">
+          <div class="ap-section-title">Personal Information</div>
+
+          <div class="ap-grid-3">
+            <div class="ap-field">
+              <label for="clientName">Name</label>
+              <input id="clientName" name="clientName" type="text">
+            </div>
+            <div class="ap-field">
+              <label for="clientBirthDate">Birth Date</label>
+              <input id="clientBirthDate" name="clientBirthDate" type="date">
+            </div>
+            <div class="ap-field">
+              <label for="clientAge">Age</label>
+              <input id="clientAge" name="clientAge" type="number" min="0" step="1">
+            </div>
+          </div>
+
+          <div class="ap-grid-3" style="margin-top:10px;">
+            <div class="ap-field">
+              <label for="clientSpouseName">Spouse Name</label>
+              <input id="clientSpouseName" name="clientSpouseName" type="text">
+            </div>
+            <div class="ap-field">
+              <label for="clientSpouseBirthDate">Spouse Birth Date</label>
+              <input id="clientSpouseBirthDate" name="clientSpouseBirthDate" type="date">
+            </div>
+          </div>
+        </div>
+
+        <!-- Save Button -->
+        <div class="ap-save-row">
+          <button type="button" id="ap-save-data-btn" class="ap-primary-btn">Save Data</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // JavaScript code here...
+    // Implement the save/load functionality for the form
+    function apSaveGoalsDataToStorage() {
+      if (!window.localStorage) return;
+      var form = document.getElementById('ap-goals-data-form');
+      if (!form) return;
+
+      var data = {};
+      Array.prototype.forEach.call(form.elements, function(el) {
+        if (!el.name || ['button', 'submit', 'reset'].indexOf(el.type) !== -1) return;
+        data[el.name] = el.value;
       });
 
-      // Save button to save data and switch to asset summary
-      var saveBtn = document.getElementById('ap-save-data-btn');
-      if (saveBtn) {
-        saveBtn.addEventListener('click', function () {
-          apUpdateDataFormTotals();
-          apSaveGoalsDataToStorage();
-          apUpdateAssetSummary();
-          showPanel('assets');
-          alert('Client data saved in this browser and Asset Summary updated.');
-        });
-      }
+      localStorage.setItem('apGoalsDataForm', JSON.stringify(data));
+      alert("Data saved!");
+    }
 
-      // Form input events to update totals as user types
+    function apLoadGoalsDataFromStorage() {
+      if (!window.localStorage) return;
+      var raw = localStorage.getItem('apGoalsDataForm');
+      if (!raw) return;
+
       var form = document.getElementById('ap-goals-data-form');
-      if (form) {
-        form.addEventListener('input', function () {
-          apUpdateDataFormTotals();
-        });
-      }
+      if (!form) return;
 
-      // Inputs root listener to handle changes for Silver/Gold and other fields
-      var inputsRoot = document.getElementById('ap-plan-inputs');
-      if (inputsRoot) {
-        inputsRoot.addEventListener('input', function (e) {
-          var id = e.target.id || '';
-          if (
-            id.indexOf('silver') === 0 ||
-            id.indexOf('gold') === 0 ||
-            id === 'projLength' ||
-            id === 'ageHis' ||
-            id === 'ageHer' ||
-            id === 'deathAgeHis' ||
-            id === 'deathAgeHer' ||
-            id === 'currentAYellow' ||
-            id === 'currentCRed' ||
-            id === 'currentBGreen' ||
-            id === 'ssHisAnnual' || id === 'ssHerAnnual' ||
-            id === 'ssHisStartAge' || id === 'ssHerStartAge' ||
-            id === 'pension1Annual' || id === 'pension2Annual' ||
-            id === 'pension1StartAge' || id === 'pension2StartAge' ||
-            id === 'pension1SurvivorPct' || id === 'pension2SurvivorPct' ||
-            id === 'otherIncomeAnnual' || id === 'livingExpensesAnnual' ||
-            id === 'incomeGrowthPct' || id === 'expenseInflationPct'
-          ) {
-            apUpdateInputsDerived();
-            apRenderNoPlanProjections();
-          }
-        });
-      }
+      var data;
+      try {
+        data = JSON.parse(raw);
+      } catch (e) { return; }
 
-      // Show the initial panel (Goals)
-      showPanel('goals');
-      window.apShowIFLPanel = showPanel;
+      Object.keys(data).forEach(function(name) {
+        var el = form.elements[name];
+        if (el) el.value = data[name];
+      });
+    }
+
+    document.getElementById('ap-save-data-btn').addEventListener('click', function() {
+      apSaveGoalsDataToStorage();
     });
-  })();
-</script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+      apLoadGoalsDataFromStorage();
+    });
+  </script>
+</div>
+</body>
+</html>
