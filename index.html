@@ -164,6 +164,7 @@
 
     tabs.forEach(tab => {
       tab.addEventListener('click', function() {
+        // Get target section from data-tab attribute
         const targetTab = tab.getAttribute('data-tab');
 
         // Remove active class from all tabs and contents
