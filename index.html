@@ -10,6 +10,31 @@
       padding: 0;
       background: #e5e7eb;
     }
+
+    /* Light Blue for His Social Security */
+    #ssHisAnnual, #ssHisStartAge {
+      background-color: lightblue;
+    }
+
+    /* Light Pink for Her Social Security */
+    #ssHerAnnual, #ssHerStartAge {
+      background-color: lightpink;
+    }
+
+    /* Negative gap coloring */
+    .negative-gap {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+<div id="ap-rotate-tip" style="display:none;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;">
+  Turn phone sideways for easy viewing.
+</div>
+
+<div id="ap-ifl-app">
+  <style>
     #ap-ifl-app,
     #ap-ifl-app * {
       box-sizing: border-box;
@@ -35,72 +60,9 @@
       margin-bottom: 16px;
     }
 
-    /* Tabs */
-    .ap-ifl-tabs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-
-    .ap-ifl-tab-btn {
-      border: 1px solid #d1d5db;
-      background: #e5e7eb;
-      color: #111827;
-      border-radius: 999px;
-      padding: 6px 14px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
+    .ap-plan-table td {
+      text-align: right;
       white-space: nowrap;
-    }
-
-    .ap-ifl-tab-btn.ap-ifl-tab-active {
-      background: #0b5aa2;
-      border-color: #0b5aa2;
-      color: #ffffff;
-    }
-
-    .ap-ifl-panel {
-      background: #f9fafb;
-      border-radius: 12px;
-      border: 1px solid #e5e7eb;
-      padding: 18px 18px 22px;
-    }
-
-    .ap-primary-btn {
-      display: inline-block;
-      background: #0b5aa2;
-      color: #ffffff;
-      border: none;
-      border-radius: 999px;
-      padding: 8px 18px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    .ap-primary-btn:hover {
-      opacity: 0.95;
-    }
-
-    /* Social Security */
-    .ss-his {
-      background-color: #cce7ff;  /* Light blue */
-    }
-
-    .ss-her {
-      background-color: #f8c8d8;  /* Light pink */
-    }
-
-    /* Negative Gap Color */
-    .ap-num {
-      color: #111827;  /* Default color */
-    }
-
-    .ap-num.negative-gap {
-      color: red;
-      font-weight: bold;
     }
 
     .ap-save-row {
@@ -108,117 +70,43 @@
       margin-top: 4px;
     }
   </style>
-</head>
-<body>
-  <div id="ap-ifl-app">
-    <h1>Income-for-Life Plan – Data, Asset Summary & Plan Inputs</h1>
-    <div class="ap-page-caption">
-      Internal planning tool – designed for desktop use.
-    </div>
 
-    <!-- TABS -->
-    <div class="ap-ifl-tabs">
-      <button class="ap-ifl-tab-btn ap-ifl-tab-active" data-panel="goals">Goals &amp; Data</button>
-      <button class="ap-ifl-tab-btn" data-panel="assets">Asset Summary</button>
-      <button class="ap-ifl-tab-btn" data-panel="inputs">Inputs</button>
-      <button class="ap-ifl-tab-btn" data-panel="noplanJoint">No Plan – Joint Income</button>
-      <button class="ap-ifl-tab-btn" data-panel="noplanHer">No Plan – Her Survivor</button>
-      <button class="ap-ifl-tab-btn" data-panel="noplanHis">No Plan – His Survivor</button>
-      <button class="ap-ifl-tab-btn" data-panel="noplanAlloc">No Plan – Allocation & Income</button>
-    </div>
-
-    <!-- PANEL: GOALS & DATA -->
-    <div id="ap-panel-goals" class="ap-ifl-panel">
-      <div id="ap-goals-data">
-        <h2>Goals &amp; Data Form</h2>
-        <div class="ap-subtitle">
-          Income-for-Life Plan – AmericaPlanning.com
-        </div>
-
-        <form id="ap-goals-data-form">
-          <!-- Example Fields -->
-          <div class="ap-section">
-            <div class="ap-section-title">Business &amp; Primary Contact</div>
-            <input id="businessName" name="businessName" type="text">
-            <input id="yearsInBusiness" name="yearsInBusiness" type="number">
-            <input id="dataDate" name="dataDate" type="date">
-          </div>
-
-          <!-- More Form Fields Here -->
-
-          <div class="ap-save-row">
-            <button type="button" id="ap-save-data-btn" class="ap-primary-btn">
-              Save Data &amp; Jump to Asset Summary
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <!-- PANEL: ASSET SUMMARY -->
-    <div id="ap-panel-assets" class="ap-ifl-panel" style="display:none;">
-      <div id="ap-asset-summary">
-        <div id="ap-asset-summary-header">
-          <div class="ap-title">Asset Summary</div>
-          <div class="ap-subtitle">Income-for-Life Plan – AmericaPlanning.com</div>
-        </div>
-        <div class="ap-date" id="ap-asset-summary-date"></div>
-        <div class="ap-name-address" id="ap-asset-summary-name-address"></div>
-
-        <!-- Cash and Investment Tables -->
-        <div id="ap-asset-summary-layout">
-          <!-- Example Data Rows -->
-        </div>
-      </div>
-    </div>
-
-    <!-- PANEL: PLAN INPUTS -->
-    <div id="ap-panel-inputs" class="ap-ifl-panel" style="display:none;">
-      <div id="ap-plan-inputs">
-        <h2>Plan Inputs – Control Page</h2>
-
-        <div style="display:grid;grid-template-columns:1.2fr 0.8fr;gap:16px;align-items:flex-start;margin-bottom:18px;">
-          <div class="ap-section">
-            <div class="ap-section-title-inline">
-              Core Projection Inputs
-            </div>
-            <input id="inputsTodayDate" name="inputsTodayDate" type="date">
-            <input id="projLength" name="projLength" type="number" min="1" step="1">
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- PANEL: NO PLAN – JOINT INCOME -->
-    <div id="ap-panel-noplanJoint" class="ap-ifl-panel" style="display:none;">
-      <h2>No Plan – Joint Income</h2>
-      <div class="ap-plan-caption">
-        Shows projected income and gap over the projection period.
-      </div>
-      <table class="ap-plan-table">
-        <thead>
-          <tr>
-            <th>Year #</th>
-            <th>His Age</th>
-            <th>Her Age</th>
-            <th>His SS</th>
-            <th>Her SS</th>
-            <th>Pension 1</th>
-            <th>Pension 2</th>
-            <th>Other Income</th>
-            <th>Total Income</th>
-            <th>Living Expenses</th>
-            <th>Gap</th>
-            <th>Planner Notes</th>
-          </tr>
-        </thead>
-        <tbody id="ap-noplan-joint-body"></tbody>
-      </table>
-    </div>
+  <h1>Income-for-Life Plan – Data, Asset Summary & Plan Inputs</h1>
+  <div class="ap-page-caption">
+    Internal planning tool – designed for desktop use.
   </div>
 
+  <!-- Form Starts -->
+  <form id="ap-goals-data-form">
+    <!-- Inputs for Social Security -->
+    <div class="ap-section">
+      <div class="ap-section-title">Social Security Information</div>
+      <div class="ap-grid-2">
+        <div class="ap-field">
+          <label for="ssHisAnnual">His Social Security (annual)</label>
+          <input id="ssHisAnnual" name="ssHisAnnual" type="text" placeholder="$25,000">
+        </div>
+        <div class="ap-field">
+          <label for="ssHerAnnual">Her Social Security (annual)</label>
+          <input id="ssHerAnnual" name="ssHerAnnual" type="text" placeholder="$12,500">
+        </div>
+      </div>
+    </div>
+
+    <!-- Other Input Sections -->
+
+    <!-- Save Button -->
+    <div class="ap-save-row">
+      <button type="button" id="ap-save-data-btn" class="ap-primary-btn">
+        Save Data &amp; Jump to Asset Summary
+      </button>
+    </div>
+  </form>
+  <!-- Form Ends -->
+
+  <!-- JavaScript Starts -->
   <script>
-    // ---------- Auto-save for Goals & Data ----------
+    // Auto-save functionality
     function apSaveGoalsDataToStorage() {
       if (!window.localStorage) return;
       var form = document.getElementById('ap-goals-data-form');
@@ -247,38 +135,35 @@
       });
     }
 
-    // ---------- Apply styles to Social Security and Gap ----------
-    function apUpdateDataFormTotals() {
-      // Handle negative gap coloring
-      var gapElements = document.querySelectorAll('.ap-plan-table .ap-num');
-      gapElements.forEach(function(cell) {
-        var gapValue = parseFloat(cell.innerText.replace(/[^0-9.\-]/g, ''));
+    // Color Negative Gap values
+    function apColorNegativeGaps() {
+      var gapElements = document.querySelectorAll('.ap-plan-table .gap');
+      gapElements.forEach(function(gap) {
+        var gapValue = parseFloat(gap.innerText.replace(/[^0-9.-]+/g, ""));
         if (gapValue < 0) {
-          cell.classList.add('negative-gap');
+          gap.classList.add('negative-gap');
         }
-      });
-
-      // Update Social Security Colors
-      var ssHis = document.querySelectorAll('.ss-his');
-      var ssHer = document.querySelectorAll('.ss-her');
-      ssHis.forEach(function(el) {
-        el.style.backgroundColor = '#cce7ff';  // Light blue
-      });
-      ssHer.forEach(function(el) {
-        el.style.backgroundColor = '#f8c8d8';  // Light pink
       });
     }
 
-    // Event listener for auto-save
-    document.addEventListener('input', function () {
-      apSaveGoalsDataToStorage();
-    });
-
-    // Load data when the page is loaded
-    document.addEventListener('DOMContentLoaded', function () {
+    // Event listeners
+    document.addEventListener('DOMContentLoaded', function() {
       apLoadGoalsDataFromStorage();
-      apUpdateDataFormTotals();
+
+      var saveBtn = document.getElementById('ap-save-data-btn');
+      if (saveBtn) {
+        saveBtn.addEventListener('click', function() {
+          apSaveGoalsDataToStorage();
+          alert('Client data saved!');
+        });
+      }
+
+      // Apply negative gap coloring
+      apColorNegativeGaps();
     });
   </script>
+  <!-- JavaScript Ends -->
+
+</div>
 </body>
 </html>
