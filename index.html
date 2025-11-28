@@ -1,280 +1,216 @@
-<!-- AmericaPlanning – No-Plan Joint Income Page -->
-<div id="ap-no-plan-joint" style="max-width:1200px;margin:0 auto;padding:16px;box-sizing:border-box;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AmericaPlanning – Retirement Planner</title>
   <style>
-    #ap-no-plan-joint * {
-      box-sizing: border-box;
-      font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9fafb;
     }
-    #ap-no-plan-joint h2{
-      margin:0 0 8px;
-      font-size:24px;
-      color:#0b5aa2;
-      font-weight:700;
+    header {
+      background-color: #0b5aa2;
+      color: white;
+      padding: 16px;
+      text-align: center;
     }
-    #ap-no-plan-joint p.ap-intro{
-      margin:0 0 10px;
-      font-size:14px;
-      line-height:1.5;
-      color:#333;
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
     }
-    #ap-no-plan-joint .ap-note{
-      font-size:12px;
-      color:#555;
-      margin-bottom:14px;
+    .tab-button {
+      background: #ffffff;
+      color: #0b5aa2;
+      border: 1px solid #0b5aa2;
+      padding: 12px 20px;
+      margin: 0 5px;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 8px;
+      transition: background 0.2s ease-in-out;
     }
-    #ap-no-plan-joint .ap-table-wrapper{
-      overflow-x:auto;
-      border-radius:8px;
-      background:#f9fafb;
-      padding:8px;
-      border:1px solid #e5e7eb;
+    .tab-button:hover {
+      background-color: #0b5aa2;
+      color: white;
     }
-    #ap-no-plan-joint table.ap-income-table{
-      width:100%;
-      border-collapse:collapse;
-      min-width:900px;
-      background:#fff;
+    .tab-button.active {
+      background-color: #0b5aa2;
+      color: white;
     }
-    #ap-no-plan-joint table.ap-income-table thead th{
-      background:#0b5aa2;
-      color:#f9fafb;
-      padding:6px 4px;
-      font-size:13px;
-      text-align:center;
-      border:1px solid #d1d5db;
-      white-space:nowrap;
+    .tab-content {
+      display: none;
+      padding: 16px;
     }
-    #ap-no-plan-joint table.ap-income-table tbody td{
-      border:1px solid #e5e7eb;
-      padding:4px;
-      text-align:center;
-      font-size:13px;
+    .tab-content.active {
+      display: block;
     }
-    /* His SS (4th col) light blue */
-    #ap-no-plan-joint table.ap-income-table thead th:nth-child(4),
-    #ap-no-plan-joint table.ap-income-table tbody td:nth-child(4){
-      background:#e0f2ff;
+    .form-section {
+      margin-bottom: 20px;
     }
-    /* Her SS (5th col) light pink */
-    #ap-no-plan-joint table.ap-income-table thead th:nth-child(5),
-    #ap-no-plan-joint table.ap-income-table tbody td:nth-child(5){
-      background:#ffe0ef;
+    .form-section label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
     }
-    #ap-no-plan-joint input.ap-cell-input{
-      width:100%;
-      padding:2px 3px;
-      font-size:12px;
-      border:1px solid #d1d5db;
-      border-radius:4px;
-      text-align:right;
+    .form-section input {
+      padding: 8px;
+      width: 100%;
+      max-width: 400px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
     }
-    #ap-no-plan-joint input.ap-cell-input:focus{
-      outline:2px solid #0b5aa2;
-      outline-offset:0;
-    }
-    #ap-no-plan-joint input.ap-year-input,
-    #ap-no-plan-joint input.ap-age-input{
-      text-align:center;
-    }
-    #ap-no-plan-joint .ap-gap-negative{
-      color:red !important;
-      font-weight:700 !important;
-    }
-    #ap-no-plan-joint .ap-gap-nonnegative{
-      color:inherit;
-      font-weight:400;
-    }
-    #ap-no-plan-joint .ap-footer-note{
-      margin-top:8px;
-      font-size:12px;
-      color:#555;
-      font-style:italic;
+    .footer-note {
+      font-size: 12px;
+      color: #555;
+      text-align: center;
+      margin-top: 20px;
     }
   </style>
+</head>
+<body>
 
-  <h2>No-Plan Joint Income Projection</h2>
-  <p class="ap-intro">
-    Joint income if both spouses are living. Enter yearly amounts for His Social Security, Her Social Security,
-    pension income, other income, and your Target Income.
-  </p>
-  <p class="ap-note">
-    <strong>Auto-Save:</strong> Everything you type on this page is saved in this browser. When you return on the same
-    computer + browser, your entries reload automatically.
-  </p>
+  <!-- Header -->
+  <header>
+    <h1>Retirement Planning Tool</h1>
+  </header>
 
-  <div class="ap-table-wrapper">
-    <table class="ap-income-table" id="ap-table-joint">
-      <thead>
-        <tr>
-          <th>Year</th>
-          <th>Age (His)</th>
-          <th>Age (Her)</th>
-          <th>His Social Security</th>
-          <th>Her Social Security</th>
-          <th>Pension Income</th>
-          <th>Other Income</th>
-          <th>Total Income</th>
-          <th>Target Income</th>
-          <th>Gap</th>
-        </tr>
-      </thead>
-      <tbody id="ap-body-joint">
-        <!-- rows created by script -->
-      </tbody>
-    </table>
+  <!-- Tabs for switching between pages (Data, Assets, Inputs, No-Plan) -->
+  <div class="tabs">
+    <button class="tab-button active" data-tab="data-page">Data</button>
+    <button class="tab-button" data-tab="assets-page">Assets</button>
+    <button class="tab-button" data-tab="inputs-page">Inputs</button>
+    <button class="tab-button" data-tab="no-plan-page">No-Plan</button>
   </div>
 
-  <div class="ap-footer-note">
-    Any negative Gap is shown in <span style="color:red;font-weight:700;">bold red</span>.
+  <!-- Data Page Section -->
+  <div class="tab-content active" id="data-page">
+    <h2>Data Page</h2>
+    <div class="form-section">
+      <label for="annual-income">Annual Income</label>
+      <input type="text" id="annual-income" />
+    </div>
+    <div class="form-section">
+      <label for="retirement-age">Retirement Age</label>
+      <input type="text" id="retirement-age" />
+    </div>
+    <div class="form-section">
+      <label for="ss-start-age">Social Security Start Age</label>
+      <input type="text" id="ss-start-age" />
+    </div>
+    <div class="footer-note">Data saved automatically. Your information will reload when you return to this page.</div>
   </div>
-</div>
 
-<script>
-(function(){
-  var ROW_COUNT = 30;
-  var STORAGE_KEY = "IFL_NO_PLAN_JOINT_" + location.pathname;
+  <!-- Assets Page Section -->
+  <div class="tab-content" id="assets-page">
+    <h2>Assets Page</h2>
+    <div class="form-section">
+      <label for="cash-assets">Cash and Equivalents</label>
+      <input type="text" id="cash-assets" />
+    </div>
+    <div class="form-section">
+      <label for="stocks-bonds">Stocks and Bonds</label>
+      <input type="text" id="stocks-bonds" />
+    </div>
+    <div class="form-section">
+      <label for="real-estate">Real Estate</label>
+      <input type="text" id="real-estate" />
+    </div>
+    <div class="footer-note">Asset data saved automatically. Your information will reload when you return.</div>
+  </div>
 
-  function parseNum(v){
-    if(v==null) return 0;
-    var t = String(v).replace(/[,$\s]/g,"");
-    if(t==="") return 0;
-    var n = parseFloat(t);
-    return isNaN(n)?0:n;
-  }
-  function formatMoney(v){
-    if(isNaN(v)) return "";
-    var r = Math.round(v);
-    return r.toLocaleString("en-US");
-  }
+  <!-- Inputs Page Section -->
+  <div class="tab-content" id="inputs-page">
+    <h2>Inputs Page</h2>
+    <div class="form-section">
+      <label for="job-income">Income from Job</label>
+      <input type="text" id="job-income" />
+    </div>
+    <div class="form-section">
+      <label for="ss-benefit">Expected Social Security Benefit</label>
+      <input type="text" id="ss-benefit" />
+    </div>
+    <div class="form-section">
+      <label for="other-income">Other Income</label>
+      <input type="text" id="other-income" />
+    </div>
+    <div class="form-section">
+      <label for="inflation-rate">Inflation Rate Assumption</label>
+      <input type="text" id="inflation-rate" />
+    </div>
+    <div class="footer-note">Input data saved automatically. Your information will reload when you return.</div>
+  </div>
 
-  function createCell(row,id,extra){
-    var td=document.createElement("td");
-    var inp=document.createElement("input");
-    inp.type="text";
-    inp.id=id;
-    inp.name=id;
-    inp.className="ap-cell-input "+(extra||"");
-    td.appendChild(inp);
-    row.appendChild(td);
-  }
+  <!-- No-Plan Page Section -->
+  <div class="tab-content" id="no-plan-page">
+    <h2>No-Plan Projection</h2>
+    <div class="form-section">
+      <label for="no-plan-income">Expected Income</label>
+      <input type="text" id="no-plan-income" />
+    </div>
+    <div class="form-section">
+      <label for="no-plan-savings">Projected Savings</label>
+      <input type="text" id="no-plan-savings" />
+    </div>
+    <div class="footer-note">No-Plan projection data saved automatically. Your information will reload when you return.</div>
+  </div>
 
-  function buildRows(){
-    var body=document.getElementById("ap-body-joint");
-    if(!body) return;
-    body.innerHTML="";
-    for(var i=0;i<ROW_COUNT;i++){
-      var r=document.createElement("tr");
-      createCell(r,"joint_year_"+i,"ap-year-input");
-      createCell(r,"joint_age_his_"+i,"ap-age-input");
-      createCell(r,"joint_age_her_"+i,"ap-age-input");
-      createCell(r,"joint_his_ss_"+i,"ap-his-ss");
-      createCell(r,"joint_her_ss_"+i,"ap-her-ss");
-      createCell(r,"joint_pension_"+i,"ap-pension");
-      createCell(r,"joint_other_"+i,"ap-other");
+  <!-- Footer -->
+  <div class="footer-note">
+    <strong>Auto-Save:</strong> Your data is saved in the browser for this session. It will reload the next time you visit.
+  </div>
 
-      var tdTot=document.createElement("td");
-      var tot=document.createElement("input");
-      tot.type="text";
-      tot.id="joint_total_"+i;
-      tot.name="joint_total_"+i;
-      tot.className="ap-cell-input ap-total";
-      tot.readOnly=true;
-      tdTot.appendChild(tot);
-      r.appendChild(tdTot);
+  <script>
+    // Tab navigation functionality
+    const tabs = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
 
-      createCell(r,"joint_target_"+i,"ap-target");
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        const targetTab = tab.getAttribute('data-tab');
 
-      var tdGap=document.createElement("td");
-      var gap=document.createElement("input");
-      gap.type="text";
-      gap.id="joint_gap_"+i;
-      gap.name="joint_gap_"+i;
-      gap.className="ap-cell-input ap-gap";
-      gap.readOnly=true;
-      tdGap.appendChild(gap);
-      r.appendChild(tdGap);
+        // Remove active class from all tabs and contents
+        tabs.forEach(t => t.classList.remove('active'));
+        tabContents.forEach(content => content.classList.remove('active'));
 
-      body.appendChild(r);
-    }
-  }
-
-  function getFields(){
-    return Array.from(document.querySelectorAll("#ap-no-plan-joint input.ap-cell-input"));
-  }
-
-  function save(){
-    try{
-      var f=getFields(), data={};
-      f.forEach(function(el){
-        var k=el.id||el.name;
-        if(!k) return;
-        data[k]={v:el.value};
+        // Add active class to the clicked tab and corresponding content
+        tab.classList.add('active');
+        document.getElementById(targetTab).classList.add('active');
       });
-      localStorage.setItem(STORAGE_KEY,JSON.stringify(data));
-    }catch(e){ console && console.warn && console.warn(e); }
-  }
-
-  function load(){
-    try{
-      var raw=localStorage.getItem(STORAGE_KEY);
-      if(!raw) return;
-      var data=JSON.parse(raw);
-      var f=getFields();
-      f.forEach(function(el){
-        var k=el.id||el.name;
-        if(!k||!(k in data)) return;
-        el.value=data[k].v||"";
-      });
-    }catch(e){ console && console.warn && console.warn(e); }
-  }
-
-  function recalc(){
-    var rows=document.querySelectorAll("#ap-body-joint tr");
-    rows.forEach(function(r){
-      var his=r.querySelector("input[id^='joint_his_ss_']");
-      var her=r.querySelector("input[id^='joint_her_ss_']");
-      var pen=r.querySelector("input[id^='joint_pension_']");
-      var oth=r.querySelector("input[id^='joint_other_']");
-      var tot=r.querySelector("input[id^='joint_total_']");
-      var tgt=r.querySelector("input[id^='joint_target_']");
-      var gap=r.querySelector("input[id^='joint_gap_']");
-
-      var h=parseNum(his&&his.value);
-      var s=parseNum(her&&her.value);
-      var p=parseNum(pen&&pen.value);
-      var o=parseNum(oth&&oth.value);
-      var total=h+s+p+o;
-      if(tot) tot.value=(total===0 && tot.value==="")?"":formatMoney(total);
-
-      var tv=parseNum(tgt&&tgt.value);
-      var gv=total-tv;
-      if(gap){
-        gap.value=(gv===0 && gap.value==="")?"":formatMoney(gv);
-        if(gv<0){
-          gap.classList.add("ap-gap-negative");
-          gap.classList.remove("ap-gap-nonnegative");
-        }else{
-          gap.classList.remove("ap-gap-negative");
-          gap.classList.add("ap-gap-nonnegative");
-        }
-      }
     });
-  }
 
-  function onChange(){
-    save();
-    recalc();
-  }
-
-  document.addEventListener("DOMContentLoaded",function(){
-    buildRows();
-    load();
-    recalc();
-    var root=document.getElementById("ap-no-plan-joint");
-    if(root){
-      root.addEventListener("input",onChange,true);
-      root.addEventListener("change",onChange,true);
+    // Auto-save functionality
+    function saveData() {
+      const data = {};
+      document.querySelectorAll('input').forEach(input => {
+        data[input.id] = input.value;
+      });
+      localStorage.setItem('planner-data', JSON.stringify(data));
     }
-  });
-})();
-</script>
+
+    function loadData() {
+      const savedData = JSON.parse(localStorage.getItem('planner-data'));
+      if (savedData) {
+        Object.keys(savedData).forEach(id => {
+          const input = document.getElementById(id);
+          if (input) {
+            input.value = savedData[id];
+          }
+        });
+      }
+    }
+
+    // Load saved data when the page loads
+    document.addEventListener('DOMContentLoaded', loadData);
+
+    // Save data when inputs change
+    document.querySelectorAll('input').forEach(input => {
+      input.addEventListener('input', saveData);
+    });
+  </script>
+</body>
+</html>
