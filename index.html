@@ -85,11 +85,11 @@
     }
 
     /* Social Security */
-    #ssHisAnnual {
+    .ss-his {
       background-color: #cce7ff;  /* Light blue */
     }
 
-    #ssHerAnnual {
+    .ss-her {
       background-color: #f8c8d8;  /* Light pink */
     }
 
@@ -254,16 +254,19 @@
       gapElements.forEach(function(cell) {
         var gapValue = parseFloat(cell.innerText.replace(/[^0-9.\-]/g, ''));
         if (gapValue < 0) {
-          cell.style.color = 'red';
-          cell.style.fontWeight = 'bold';
+          cell.classList.add('negative-gap');
         }
       });
 
       // Update Social Security Colors
-      var ssHis = document.querySelector('#ssHisAnnual');
-      var ssHer = document.querySelector('#ssHerAnnual');
-      if (ssHis) ssHis.style.backgroundColor = '#cce7ff';  // Light blue
-      if (ssHer) ssHer.style.backgroundColor = '#f8c8d8';  // Light pink
+      var ssHis = document.querySelectorAll('.ss-his');
+      var ssHer = document.querySelectorAll('.ss-her');
+      ssHis.forEach(function(el) {
+        el.style.backgroundColor = '#cce7ff';  // Light blue
+      });
+      ssHer.forEach(function(el) {
+        el.style.backgroundColor = '#f8c8d8';  // Light pink
+      });
     }
 
     // Event listener for auto-save
