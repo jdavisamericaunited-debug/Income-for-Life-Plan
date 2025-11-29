@@ -554,69 +554,2002 @@
 
           <div class="ap-grid-3" style="margin-top:10px;">
             <div class="ap-field">
-              <label for="clientSpouseName">Spouse Name</label>
-              <input id="clientSpouseName" name="clientSpouseName" type="text">
+              <label for="spouseName">Spouse Name</label>
+              <input id="spouseName" name="spouseName" type="text">
             </div>
             <div class="ap-field">
-              <label for="clientSpouseBirthDate">Spouse Birth Date</label>
-              <input id="clientSpouseBirthDate" name="clientSpouseBirthDate" type="date">
+              <label for="spouseBirthDate">Spouse Birth Date</label>
+              <input id="spouseBirthDate" name="spouseBirthDate" type="date">
+            </div>
+            <div class="ap-field">
+              <label for="spouseAge">Spouse Age</label>
+              <input id="spouseAge" name="spouseAge" type="number" min="0" step="1">
+            </div>
+          </div>
+
+          <div class="ap-grid-3" style="margin-top:10px;">
+            <div class="ap-field">
+              <label for="homeAddress">Home Address</label>
+              <input id="homeAddress" name="homeAddress" type="text">
+            </div>
+            <div class="ap-field">
+              <label for="homeCity">City</label>
+              <input id="homeCity" name="homeCity" type="text">
+            </div>
+            <div class="ap-grid-2">
+              <div class="ap-field">
+                <label for="homeState">State</label>
+                <input id="homeState" name="homeState" type="text">
+              </div>
+              <div class="ap-field">
+                <label for="homeZip">Zip Code</label>
+                <input id="homeZip" name="homeZip" type="text">
+              </div>
+            </div>
+          </div>
+
+          <div class="ap-grid-3" style="margin-top:10px;">
+            <div class="ap-field">
+              <label for="hisCell">His Cell Number</label>
+              <input id="hisCell" name="hisCell" type="text">
+            </div>
+            <div class="ap-field">
+              <label for="herCell">Her Cell Number</label>
+              <input id="herCell" name="herCell" type="text">
+            </div>
+            <div class="ap-field">
+              <label for="bestEmail">Best Email Address</label>
+              <input id="bestEmail" name="bestEmail" type="email">
             </div>
           </div>
         </div>
 
-        <!-- Save Button -->
+        <!-- Children -->
+        <div class="ap-section">
+          <div class="ap-section-title">Children (Estate Planning Purposes)</div>
+          <table class="ap-table">
+            <thead>
+            <tr>
+              <th style="width:40%;">Name</th>
+              <th style="width:10%;">Age</th>
+              <th>Notes</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td><input name="child1Name" type="text"></td>
+              <td><input name="child1Age" type="number" min="0" step="1"></td>
+              <td><input name="child1Notes" type="text"></td>
+            </tr>
+            <tr>
+              <td><input name="child2Name" type="text"></td>
+              <td><input name="child2Age" type="number" min="0" step="1"></td>
+              <td><input name="child2Notes" type="text"></td>
+            </tr>
+            <tr>
+              <td><input name="child3Name" type="text"></td>
+              <td><input name="child3Age" type="number" min="0" step="1"></td>
+              <td><input name="child3Notes" type="text"></td>
+            </tr>
+            <tr>
+              <td><input name="child4Name" type="text"></td>
+              <td><input name="child4Age" type="number" min="0" step="1"></td>
+              <td><input name="child4Notes" type="text"></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Advisors -->
+        <div class="ap-section">
+          <div class="ap-section-title">Current Advisors (Optional)</div>
+          <div class="ap-grid-2">
+            <div class="ap-field">
+              <label for="accountantName">Accountant – Advisor Name</label>
+              <input id="accountantName" name="accountantName" type="text">
+            </div>
+            <div class="ap-field">
+              <label for="accountantFirm">Firm Name &amp; Telephone</label>
+              <input id="accountantFirm" name="accountantFirm" type="text">
+            </div>
+          </div>
+          <div class="ap-grid-2" style="margin-top:8px;">
+            <div class="ap-field">
+              <label for="attorneyName">Attorney – Advisor Name</label>
+              <input id="attorneyName" name="attorneyName" type="text">
+            </div>
+            <div class="ap-field">
+              <label for="attorneyFirm">Firm Name &amp; Telephone</label>
+              <input id="attorneyFirm" name="attorneyFirm" type="text">
+            </div>
+          </div>
+          <div class="ap-grid-2" style="margin-top:8px;">
+            <div class="ap-field">
+              <label for="faName">Financial Advisor – Advisor Name</label>
+              <input id="faName" name="faName" type="text">
+            </div>
+            <div class="ap-field">
+              <label for="faFirm">Firm Name &amp; Telephone</label>
+              <input id="faFirm" name="faFirm" type="text">
+            </div>
+          </div>
+        </div>
+
+        <!-- Retirement Timing -->
+        <div class="ap-section">
+          <div class="ap-section-title">Retirement Timing</div>
+          <div class="ap-grid-4">
+            <div class="ap-field">
+              <label for="plannedRetAgeHis">Planned Retirement Age (His)</label>
+              <input id="plannedRetAgeHis" name="plannedRetAgeHis" type="number" min="0" step="1">
+            </div>
+            <div class="ap-field">
+              <label for="plannedRetAgeHer">Planned Retirement Age (Her)</label>
+              <input id="plannedRetAgeHer" name="plannedRetAgeHer" type="number" min="0" step="1">
+            </div>
+            <div class="ap-field">
+              <label for="alreadyRetiredHis">If Already Retired: His Year</label>
+              <input id="alreadyRetiredHis" name="alreadyRetiredHis" type="number" min="1900" step="1">
+            </div>
+            <div class="ap-field">
+              <label for="alreadyRetiredHer">If Already Retired: Her Year</label>
+              <input id="alreadyRetiredHer" name="alreadyRetiredHer" type="number" min="1900" step="1">
+            </div>
+          </div>
+        </div>
+
+        <!-- Estate Planning & Insurance -->
+        <div class="ap-section">
+          <div class="ap-section-title">Estate Planning &amp; Insurance</div>
+
+          <div class="ap-grid-3">
+            <div class="ap-field">
+              <label for="haveWill">Do You Have a Will?</label>
+              <select id="haveWill" name="haveWill">
+                <option value=""></option><option>Yes</option><option>No</option>
+              </select>
+            </div>
+            <div class="ap-field">
+              <label for="willYear">Year Completed</label>
+              <input id="willYear" name="willYear" type="number" min="1900" step="1">
+            </div>
+            <div class="ap-field">
+              <label for="fPoa">Financial Power of Attorney</label>
+              <select id="fPoa" name="fPoa">
+                <option value=""></option><option>Yes</option><option>No</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="ap-grid-3" style="margin-top:8px;">
+            <div class="ap-field">
+              <label for="mPoa">Medical Power of Attorney</label>
+              <select id="mPoa" name="mPoa">
+                <option value=""></option><option>Yes</option><option>No</option>
+              </select>
+            </div>
+            <div class="ap-field">
+              <label for="mpoaFiled">Is MPOA Electronically Filed?</label>
+              <select id="mpoaFiled" name="mpoaFiled">
+                <option value=""></option><option>Yes</option><option>No</option>
+              </select>
+            </div>
+            <div class="ap-field">
+              <label for="haveTrust">Do You Have a Trust?</label>
+              <select id="haveTrust" name="haveTrust">
+                <option value=""></option><option>Yes</option><option>No</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="ap-grid-3" style="margin-top:8px;">
+            <div class="ap-field">
+              <label for="trustYear">Trust – Year Completed</label>
+              <input id="trustYear" name="trustYear" type="number" min="1900" step="1">
+            </div>
+            <div class="ap-field">
+              <label for="termLifeHis">Term Life Insurance (His)</label>
+              <input id="termLifeHis" name="termLifeHis" type="text" placeholder="Dollar amount">
+            </div>
+            <div class="ap-field">
+              <label for="termLifeHer">Term Life Insurance (Her)</label>
+              <input id="termLifeHer" name="termLifeHer" type="text" placeholder="Dollar amount">
+            </div>
+          </div>
+
+          <div class="ap-grid-3" style="margin-top:8px;">
+            <div class="ap-field">
+              <label for="termOrigYears">Original Term in Years</label>
+              <input id="termOrigYears" name="termOrigYears" type="number" min="0" step="1">
+            </div>
+            <div class="ap-field">
+              <label for="totalLifeInsurance">Total Life Insurance Him &amp; Her</label>
+              <input id="totalLifeInsurance" name="totalLifeInsurance" type="text">
+            </div>
+            <div class="ap-field">
+              <label for="estateNotes">Notes</label>
+              <input id="estateNotes" name="estateNotes" type="text">
+            </div>
+          </div>
+        </div>
+
+        <!-- Residences & Real Estate -->
+        <div class="ap-section">
+          <div class="ap-section-title">Residences and Real Estate Investments</div>
+          <table class="ap-table">
+            <thead>
+            <tr>
+              <th>Property</th>
+              <th style="width:12%;">Owned / Rented</th>
+              <th>Approx. Value (if Owned)</th>
+              <th>Mortgage Amount</th>
+              <th>Monthly Payment</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>1. Primary Residence</td>
+              <td><input name="primaryOwnedRented" type="text" placeholder="Owned / Rented"></td>
+              <td><input name="primaryValue" type="text"></td>
+              <td><input name="primaryMortgage" type="text"></td>
+              <td><input name="primaryMonthly" type="text"></td>
+            </tr>
+            <tr>
+              <td>2. Secondary Residence</td>
+              <td><input name="secondaryOwnedRented" type="text" placeholder="Owned / Rented"></td>
+              <td><input name="secondaryValue" type="text"></td>
+              <td><input name="secondaryMortgage" type="text"></td>
+              <td><input name="secondaryMonthly" type="text"></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Current Portfolio -->
+        <div class="ap-section">
+          <div class="ap-section-title">Current Portfolio (Qualified = IRA / 401k / 403b / Brokerage, etc.)</div>
+          <table class="ap-table">
+            <thead>
+            <tr>
+              <th>Investment Account Name / Description</th>
+              <th style="width:12%;">His / Her / Both</th>
+              <th style="width:18%;">Qualified / Non-Qualified</th>
+              <th style="width:18%;">Balance ($)</th>
+              <th>Notes</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td><input name="inv1Name" type="text"></td>
+              <td><input name="inv1Owner" type="text"></td>
+              <td><input name="inv1Type" type="text"></td>
+              <td><input name="inv1Balance" type="text"></td>
+              <td><input name="inv1Notes" type="text"></td>
+            </tr>
+            <tr>
+              <td><input name="inv2Name" type="text"></td>
+              <td><input name="inv2Owner" type="text"></td>
+              <td><input name="inv2Type" type="text"></td>
+              <td><input name="inv2Balance" type="text"></td>
+              <td><input name="inv2Notes" type="text"></td>
+            </tr>
+            <tr>
+              <td><input name="inv3Name" type="text"></td>
+              <td><input name="inv3Owner" type="text"></td>
+              <td><input name="inv3Type" type="text"></td>
+              <td><input name="inv3Balance" type="text"></td>
+              <td><input name="inv3Notes" type="text"></td>
+            </tr>
+            <tr class="ap-total-row">
+              <td colspan="3">TOTALS</td>
+              <td><input name="invTotalBalance" type="text"></td>
+              <td></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Savings & Credit Union -->
+        <div class="ap-section">
+          <div class="ap-section-title">Savings and Credit Union Accounts</div>
+          <table class="ap-table">
+            <thead>
+            <tr>
+              <th>Account Description (Savings / Checking / Credit Union)</th>
+              <th style="width:16%;">His / Her / Both</th>
+              <th style="width:18%;">Current Balance</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td><input name="save1Desc" type="text"></td>
+              <td><input name="save1Owner" type="text"></td>
+              <td><input name="save1Balance" type="text"></td>
+            </tr>
+            <tr>
+              <td><input name="save2Desc" type="text"></td>
+              <td><input name="save2Owner" type="text"></td>
+              <td><input name="save2Balance" type="text"></td>
+            </tr>
+            <tr>
+              <td><input name="save3Desc" type="text"></td>
+              <td><input name="save3Owner" type="text"></td>
+              <td><input name="save3Balance" type="text"></td>
+            </tr>
+            <tr>
+              <td><input name="save4Desc" type="text"></td>
+              <td><input name="save4Owner" type="text"></td>
+              <td><input name="save4Balance" type="text"></td>
+            </tr>
+            <tr class="ap-total-row">
+              <td>TOTAL</td>
+              <td></td>
+              <td><input name="saveTotalBalance" type="text"></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Annuities -->
+        <div class="ap-section">
+          <div class="ap-section-title">Annuities</div>
+          <table class="ap-table">
+            <thead>
+            <tr>
+              <th>Annuity (Insurance Company Name)</th>
+              <th style="width:16%;">His / Her / Both</th>
+              <th style="width:18%;">Current Balance</th>
+              <th style="width:18%;">Year Opened</th>
+              <th>Still in Surrender Period?</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td><input name="ann1Name" type="text"></td>
+              <td><input name="ann1Owner" type="text"></td>
+              <td><input name="ann1Balance" type="text"></td>
+              <td><input name="ann1YearOpened" type="text"></td>
+              <td><input name="ann1Surrender" type="text"></td>
+            </tr>
+            <tr>
+              <td><input name="ann2Name" type="text"></td>
+              <td><input name="ann2Owner" type="text"></td>
+              <td><input name="ann2Balance" type="text"></td>
+              <td><input name="ann2YearOpened" type="text"></td>
+              <td><input name="ann2Surrender" type="text"></td>
+            </tr>
+            <tr class="ap-total-row">
+              <td>TOTAL</td>
+              <td></td>
+              <td><input name="annTotalBalance" type="text"></td>
+              <td colspan="2"></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Income Sources -->
+        <div class="ap-section">
+          <div class="ap-section-title">Income Sources</div>
+          <table class="ap-table">
+            <thead>
+            <tr>
+              <th style="width:14%;">Who’s Income (His / Her / Both)</th>
+              <th style="width:18%;">What Type (Pension / SS / Wages / Other)</th>
+              <th>Describe Type (if Other)</th>
+              <th style="width:18%;">Dollar Amount of Annual Income ($)</th>
+              <th>Notes</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td><input name="inc1Who" type="text"></td>
+              <td><input name="inc1Type" type="text"></td>
+              <td><input name="inc1Desc" type="text"></td>
+              <td><input name="inc1Amount" type="text"></td>
+              <td><input name="inc1Notes" type="text"></td>
+            </tr>
+            <tr>
+              <td><input name="inc2Who" type="text"></td>
+              <td><input name="inc2Type" type="text"></td>
+              <td><input name="inc2Desc" type="text"></td>
+              <td><input name="inc2Amount" type="text"></td>
+              <td><input name="inc2Notes" type="text"></td>
+            </tr>
+            <tr>
+              <td><input name="inc3Who" type="text"></td>
+              <td><input name="inc3Type" type="text"></td>
+              <td><input name="inc3Desc" type="text"></td>
+              <td><input name="inc3Amount" type="text"></td>
+              <td><input name="inc3Notes" type="text"></td>
+            </tr>
+            <tr class="ap-total-row">
+              <td colspan="3">Approximate Total Annual Income ($)</td>
+              <td><input name="incTotalAmount" type="text"></td>
+              <td></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Living Expenses & Desired Income -->
+        <div class="ap-section">
+          <div class="ap-section-title">Living Expenses &amp; Desired Retirement Income</div>
+          <div class="ap-grid-2">
+            <div class="ap-field">
+              <label for="annualExpenses">Approximate Annual Living Expenses ($)</label>
+              <input id="annualExpenses" name="annualExpenses" type="text">
+              <div class="ap-pill-note">Current lifestyle spending before retirement.</div>
+            </div>
+            <div class="ap-field">
+              <label for="desiredRetIncome">Desired Annual Income After Retirement ($)</label>
+              <input id="desiredRetIncome" name="desiredRetIncome" type="text">
+              <div class="ap-pill-note">Target income you’d like your plan to produce.</div>
+            </div>
+          </div>
+          <div class="ap-field" style="margin-top:8px;">
+            <label for="incomeNotes">Notes</label>
+            <textarea id="incomeNotes" name="incomeNotes"></textarea>
+          </div>
+        </div>
+
+        <!-- Goals -->
+        <div class="ap-section">
+          <div class="ap-section-title">Goals</div>
+          <div class="ap-pill-note" style="margin-bottom:8px;">
+            Rate each in the dropdown list: 1 = Not Concerned … 5 = Most Concerned
+          </div>
+
+          <div class="ap-goal-row">
+            <span>Have enough retirement income that lasts my lifetime</span>
+            <select name="goal1Rating">
+              <option value=""></option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+            </select>
+            <input name="goal1Notes" type="text" placeholder="Notes">
+          </div>
+
+          <div class="ap-goal-row">
+            <span>Protect assets from losses</span>
+            <select name="goal2Rating">
+              <option value=""></option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+            </select>
+            <input name="goal2Notes" type="text" placeholder="Notes">
+          </div>
+
+          <div class="ap-goal-row">
+            <span>Save more for retirement than current IRA limits allow</span>
+            <select name="goal3Rating">
+              <option value=""></option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+            </select>
+            <input name="goal3Notes" type="text" placeholder="Notes">
+          </div>
+
+          <div class="ap-goal-row">
+            <span>Protect myself / family from catastrophic long-term care costs</span>
+            <select name="goal4Rating">
+              <option value=""></option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+            </select>
+            <input name="goal4Notes" type="text" placeholder="Notes">
+          </div>
+
+          <div class="ap-goal-row">
+            <span>Grow a cash account accessible at any age (no 59½ restrictions)</span>
+            <select name="goal5Rating">
+              <option value=""></option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+            </select>
+            <input name="goal5Notes" type="text" placeholder="Notes">
+          </div>
+
+          <div class="ap-goal-row">
+            <span>Pass retirement money to next generation tax-efficiently</span>
+            <select name="goal6Rating">
+              <option value=""></option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+            </select>
+            <input name="goal6Notes" type="text" placeholder="Notes">
+          </div>
+
+          <div class="ap-goal-row">
+            <span>Implement a retirement program that reduces tax liability</span>
+            <select name="goal7Rating">
+              <option value=""></option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+            </select>
+            <input name="goal7Notes" type="text" placeholder="Notes">
+          </div>
+        </div>
+
+        <!-- Document Checklist & Notes -->
+        <div class="ap-section">
+          <div class="ap-section-title">Document Checklist &amp; Additional Notes</div>
+          <div class="ap-field">
+            <label for="documentChecklist">
+              Document Checklist (list items and year established / completed)
+            </label>
+            <textarea id="documentChecklist" name="documentChecklist"></textarea>
+          </div>
+          <div class="ap-field" style="margin-top:8px;">
+            <label for="additionalNotes">Additional Notes</label>
+            <textarea id="additionalNotes" name="additionalNotes"></textarea>
+          </div>
+        </div>
+
+        <!-- SAVE BUTTON -->
         <div class="ap-save-row">
-          <button type="button" id="ap-save-data-btn" class="ap-primary-btn">Save Data</button>
+          <button type="button" id="ap-save-data-btn" class="ap-primary-btn">
+            Save Data &amp; Jump to Asset Summary
+          </button>
         </div>
       </form>
     </div>
   </div>
 
-  <script>
-    // JavaScript code here...
-    // Implement the save/load functionality for the form
-    function apSaveGoalsDataToStorage() {
-      if (!window.localStorage) return;
-      var form = document.getElementById('ap-goals-data-form');
-      if (!form) return;
+  <!-- PANEL: ASSET SUMMARY (unchanged layout) -->
+  <div id="ap-panel-assets" class="ap-ifl-panel" style="display:none;">
+    <div id="ap-asset-summary">
+      <div id="ap-asset-summary-header">
+        <div>
+          <div class="ap-title">Asset Summary</div>
+          <div class="ap-subtitle">Income-for-Life Plan – AmericaPlanning.com</div>
+        </div>
+        <div class="ap-date" id="ap-asset-summary-date"></div>
+      </div>
 
-      var data = {};
-      Array.prototype.forEach.call(form.elements, function(el) {
-        if (!el.name || ['button', 'submit', 'reset'].indexOf(el.type) !== -1) return;
-        data[el.name] = el.value;
-      });
+      <div class="ap-name-address" id="ap-asset-summary-name-address"></div>
 
-      localStorage.setItem('apGoalsDataForm', JSON.stringify(data));
-      alert("Data saved!");
-    }
+      <div id="ap-asset-summary-layout">
+        <!-- LEFT: Cash + Investments -->
+        <div>
+          <div>
+            <div class="ap-block-title">Cash Accounts</div>
+            <table class="ap-table">
+              <thead>
+              <tr>
+                <th style="width:25%;">Owner</th>
+                <th>Account Type / Description</th>
+                <th style="width:25%;">Balance</th>
+              </tr>
+              </thead>
+              <tbody id="ap-cash-rows"></tbody>
+              <tfoot>
+              <tr class="ap-row-total">
+                <td colspan="2">Total Cash</td>
+                <td class="ap-num" id="ap-total-cash">$0</td>
+              </tr>
+              </tfoot>
+            </table>
+          </div>
 
-    function apLoadGoalsDataFromStorage() {
-      if (!window.localStorage) return;
-      var raw = localStorage.getItem('apGoalsDataForm');
-      if (!raw) return;
+          <div style="margin-top:18px;">
+            <div class="ap-block-title">Investment Accounts</div>
+            <table class="ap-table">
+              <thead>
+              <tr>
+                <th style="width:18%;">Owner</th>
+                <th>Account Name / Description</th>
+                <th style="width:18%;">Type</th>
+                <th style="width:25%;">Balance</th>
+              </tr>
+              </thead>
+              <tbody id="ap-investment-rows"></tbody>
+              <tfoot>
+              <tr class="ap-row-total">
+                <td colspan="3">Total Investments</td>
+                <td class="ap-num" id="ap-total-investments">$0</td>
+              </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
 
-      var form = document.getElementById('ap-goals-data-form');
-      if (!form) return;
+        <!-- RIGHT: Real Estate + Annuities -->
+        <div>
+          <div>
+            <div class="ap-block-title">Property &amp; Mortgages</div>
+            <table class="ap-table">
+              <thead>
+              <tr>
+                <th>Property</th>
+                <th style="width:25%;">Mortgage (Liability)</th>
+                <th style="width:25%;">Market Value (Asset)</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>Primary Residence</td>
+                <td class="ap-num" id="ap-primary-mortgage">$0</td>
+                <td class="ap-num" id="ap-primary-value">$0</td>
+              </tr>
+              <tr>
+                <td>Secondary Residence</td>
+                <td class="ap-num" id="ap-secondary-mortgage">$0</td>
+                <td class="ap-num" id="ap-secondary-value">$0</td>
+              </tr>
+              </tbody>
+              <tfoot>
+              <tr class="ap-row-total">
+                <td>Total Mortgage</td>
+                <td class="ap-num" id="ap-total-mortgage">$0</td>
+                <td class="ap-num" id="ap-total-real-estate">$0</td>
+              </tr>
+              </tfoot>
+            </table>
+          </div>
 
-      var data;
-      try {
-        data = JSON.parse(raw);
-      } catch (e) { return; }
+          <div style="margin-top:18px;">
+            <div class="ap-block-title">Annuities</div>
+            <table class="ap-table">
+              <thead>
+              <tr>
+                <th>Owner</th>
+                <th>Insurance Company / Contract</th>
+                <th style="width:18%;">Type</th>
+                <th style="width:25%;">Balance</th>
+              </tr>
+              </thead>
+              <tbody id="ap-annuity-rows"></tbody>
+              <tfoot>
+              <tr class="ap-row-total">
+                <td colspan="3">Total Annuities</td>
+                <td class="ap-num" id="ap-total-annuities">$0</td>
+              </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
 
-      Object.keys(data).forEach(function(name) {
-        var el = form.elements[name];
-        if (el) el.value = data[name];
-      });
-    }
+      <div id="ap-asset-summary-bottom">
+        <div class="ap-summary-item">
+          <div class="ap-summary-label">TOTAL ASSETS</div>
+          <div class="ap-summary-value" id="ap-total-assets">$0</div>
+        </div>
+        <div class="ap-summary-item">
+          <div class="ap-summary-label">TOTAL LIABILITIES</div>
+          <div class="ap-summary-value" id="ap-total-liabilities">$0</div>
+        </div>
+        <div class="ap-summary-item net-worth">
+          <div class="ap-summary-label">NET WORTH</div>
+          <div class="ap-summary-value" id="ap-net-worth">$0</div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    document.getElementById('ap-save-data-btn').addEventListener('click', function() {
-      apSaveGoalsDataToStorage();
-    });
+  <!-- PANEL: PLAN INPUTS (unchanged from working version) -->
+  <div id="ap-panel-inputs" class="ap-ifl-panel" style="display:none;">
+    <div id="ap-plan-inputs">
+      <h2>Plan Inputs – Control Page</h2>
+      <p style="font-size:13px;color:#6b7280;margin:4px 0 12px;">
+        Comparing your current vs. additional income plan – this page drives the No-Plan, Silver Plan, and Gold Plan projections.
+      </p>
 
-    document.addEventListener('DOMContentLoaded', function() {
-      apLoadGoalsDataFromStorage();
-    });
-  </script>
+      <div style="display:grid;grid-template-columns:1.2fr 0.8fr;gap:16px;align-items:flex-start;margin-bottom:18px;">
+        <div class="ap-section" style="background:#ffffff;border-radius:10px;border:1px solid #e5e7eb;padding:14px 16px 12px;">
+          <div class="ap-section-title-inline">
+            Core Projection Inputs
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 14px;font-size:13px;">
+            <div class="ap-field">
+              <label for="inputsTodayDate">Today's Date</label>
+              <input id="inputsTodayDate" name="inputsTodayDate" type="date">
+            </div>
+            <div class="ap-field">
+              <label for="projLength">Projection Length (years)</label>
+              <input id="projLength" name="projLength" type="number" min="1" step="1">
+            </div>
+            <div></div>
+
+            <div class="ap-field">
+              <label for="ageHis">His Current Age</label>
+              <input id="ageHis" name="ageHis" type="number" min="0" step="1">
+            </div>
+            <div class="ap-field">
+              <label for="ageHer">Her Current Age</label>
+              <input id="ageHer" name="ageHer" type="number" min="0" step="1">
+            </div>
+            <div></div>
+
+            <div class="ap-field">
+              <label for="ssHisAnnual">His Social Security (annual)</label>
+              <input id="ssHisAnnual" name="ssHisAnnual" type="text" placeholder="$25,000">
+            </div>
+            <div class="ap-field">
+              <label for="ssHerAnnual">Her Social Security (annual)</label>
+              <input id="ssHerAnnual" name="ssHerAnnual" type="text" placeholder="$12,500">
+            </div>
+            <div></div>
+
+            <div class="ap-field">
+              <label for="pension1Annual">Pension 1 (annual)</label>
+              <input id="pension1Annual" name="pension1Annual" type="text" placeholder="$0">
+            </div>
+            <div class="ap-field">
+              <label for="pension2Annual">Pension 2 (annual)</label>
+              <input id="pension2Annual" name="pension2Annual" type="text" placeholder="$0">
+            </div>
+            <div class="ap-field">
+              <label for="otherIncomeAnnual">Other Income (annual)</label>
+              <input id="otherIncomeAnnual" name="otherIncomeAnnual" type="text" placeholder="$0">
+            </div>
+
+            <div class="ap-field">
+              <label for="livingExpensesAnnual">Living Expenses (annual)</label>
+              <input id="livingExpensesAnnual" name="livingExpensesAnnual" type="text" placeholder="$30,000">
+            </div>
+            <div class="ap-field">
+              <label for="incomeGrowthPct">Grow % for incomes</label>
+              <input id="incomeGrowthPct" name="incomeGrowthPct" type="number" step="0.01" placeholder="0.00">
+            </div>
+            <div class="ap-field">
+              <label for="expenseInflationPct">Inflation % for expenses</label>
+              <input id="expenseInflationPct" name="expenseInflationPct" type="number" step="0.01" placeholder="0.00">
+            </div>
+
+            <div class="ap-field">
+              <label for="ssHisStartAge">His SS Start Age</label>
+              <input id="ssHisStartAge" name="ssHisStartAge" type="number" min="0" step="1" placeholder="67">
+            </div>
+            <div class="ap-field">
+              <label for="ssHerStartAge">Her SS Start Age</label>
+              <input id="ssHerStartAge" name="ssHerStartAge" type="number" min="0" step="1" placeholder="67">
+            </div>
+            <div></div>
+
+            <div class="ap-field">
+              <label for="pension1StartAge">Pension 1 Start Age (assumed His)</label>
+              <input id="pension1StartAge" name="pension1StartAge" type="number" min="0" step="1" placeholder="0">
+            </div>
+            <div class="ap-field">
+              <label for="pension2StartAge">Pension 2 Start Age (assumed Her)</label>
+              <input id="pension2StartAge" name="pension2StartAge" type="number" min="0" step="1" placeholder="0">
+            </div>
+            <div></div>
+
+            <div class="ap-field">
+              <label for="pension1SurvivorPct">Pension 1 Survivor % (His → Her)</label>
+              <input id="pension1SurvivorPct" name="pension1SurvivorPct" type="number" step="0.01" placeholder="50">
+            </div>
+            <div class="ap-field">
+              <label for="pension2SurvivorPct">Pension 2 Survivor % (Her → His)</label>
+              <input id="pension2SurvivorPct" name="pension2SurvivorPct" type="number" step="0.01" placeholder="50">
+            </div>
+            <div></div>
+
+            <div class="ap-field">
+              <label for="deathAgeHis">His Death Age</label>
+              <input id="deathAgeHis" name="deathAgeHis" type="number" min="0" step="1" placeholder="85">
+            </div>
+            <div class="ap-field">
+              <label for="deathAgeHer">Her Death Age</label>
+              <input id="deathAgeHer" name="deathAgeHer" type="number" min="0" step="1" placeholder="89">
+            </div>
+            <div></div>
+          </div>
+        </div>
+
+        <div class="ap-section" style="background:#ffffff;border-radius:10px;border:1px solid #e5e7eb;padding:14px 16px 12px;">
+          <div class="ap-section-title-inline">
+            Description and Notes
+          </div>
+          <div class="ap-field" style="font-size:13px;">
+            <textarea id="inputsNotesMain" name="inputsNotesMain" style="min-height:210px;"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Current / No-Plan Buckets A/B/C -->
+      <div class="ap-section" style="background:#ffffff;border-radius:10px;border:1px solid #e5e7eb;padding:14px 16px 12px;margin-bottom:18px;">
+        <div class="ap-section-title-inline">
+          Current / No-Plan Asset Buckets (A/B/C)
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px 14px;font-size:13px;margin-bottom:10px;">
+          <div class="ap-field">
+            <label for="currentAYellow">A Total Yellow (Liquid)</label>
+            <input id="currentAYellow" name="currentAYellow" type="text" placeholder="$316,000.00">
+          </div>
+          <div class="ap-field">
+            <label for="currentCRed">C Total Red (Invested)</label>
+            <input id="currentCRed" name="currentCRed" type="text" placeholder="$450,000.00">
+          </div>
+          <div class="ap-field">
+            <label for="currentBGreen">B Total Green (Annuities)</label>
+            <input id="currentBGreen" name="currentBGreen" type="text" placeholder="$35,000.00">
+          </div>
+          <div class="ap-field">
+            <label for="currentTotalInvestable">Total Investable (auto)</label>
+            <input id="currentTotalInvestable" name="currentTotalInvestable" type="text" readonly>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px 14px;font-size:13px;">
+          <div class="ap-field">
+            <label for="deathIndexHis">His Death Year Index (auto)</label>
+            <input id="deathIndexHis" name="deathIndexHis" type="number" step="1" readonly>
+          </div>
+          <div class="ap-field">
+            <label for="deathIndexHer">Her Death Year Index (auto)</label>
+            <input id="deathIndexHer" name="deathIndexHer" type="number" step="1" readonly>
+          </div>
+          <div></div><div></div>
+        </div>
+      </div>
+
+      <!-- Silver & Gold sections stay as simple allocation controls (same as last version) -->
+      <div class="ap-section" style="background:#ffffff;border-radius:10px;border:1px solid #e5e7eb;padding:14px 16px 12px;margin-bottom:18px;">
+        <div class="ap-section-title-inline">
+          Silver Plan – Additional Income &amp; Reallocation
+        </div>
+
+        <div style="display:grid;grid-template-columns:1.2fr 0.8fr;gap:14px;align-items:flex-start;">
+          <div>
+            <div style="font-size:13px;font-weight:600;color:#374151;margin-bottom:4px;">Silver Plan Add'l Income (4 sources)</div>
+            <table class="ap-table" style="font-size:13px;">
+              <thead>
+              <tr>
+                <th>Description / Rollover Label</th>
+                <th style="width:18%;">Annual Income</th>
+                <th style="width:14%;">Start Age</th>
+                <th style="width:16%;">Owner (His/Her)</th>
+                <th>Notes</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td><input name="silver1Desc" type="text"></td>
+                <td><input name="silver1Income" type="text"></td>
+                <td><input name="silver1StartAge" type="number" min="0" step="1"></td>
+                <td><input name="silver1Owner" type="text"></td>
+                <td><input name="silver1Notes" type="text"></td>
+              </tr>
+              <tr>
+                <td><input name="silver2Desc" type="text"></td>
+                <td><input name="silver2Income" type="text"></td>
+                <td><input name="silver2StartAge" type="number" min="0" step="1"></td>
+                <td><input name="silver2Owner" type="text"></td>
+                <td><input name="silver2Notes" type="text"></td>
+              </tr>
+              <tr>
+                <td><input name="silver3Desc" type="text"></td>
+                <td><input name="silver3Income" type="text"></td>
+                <td><input name="silver3StartAge" type="number" min="0" step="1"></td>
+                <td><input name="silver3Owner" type="text"></td>
+                <td><input name="silver3Notes" type="text"></td>
+              </tr>
+              <tr>
+                <td><input name="silver4Desc" type="text"></td>
+                <td><input name="silver4Income" type="text"></td>
+                <td><input name="silver4StartAge" type="number" min="0" step="1"></td>
+                <td><input name="silver4Owner" type="text"></td>
+                <td><input name="silver4Notes" type="text"></td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div>
+            <div style="font-size:13px;font-weight:600;color:#374151;margin-bottom:4px;">Transferring Money – Silver Plan Dollar Amounts</div>
+            <table class="ap-table" style="font-size:13px;">
+              <thead>
+              <tr>
+                <th>Rollover Source</th>
+                <th style="width:40%;">Dollar Amount</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>Silver Add'l 1</td>
+                <td><input id="silver1Amount" name="silver1Amount" type="text"></td>
+              </tr>
+              <tr>
+                <td>Silver Add'l 2</td>
+                <td><input id="silver2Amount" name="silver2Amount" type="text"></td>
+              </tr>
+              <tr>
+                <td>Silver Add'l 3</td>
+                <td><input id="silver3Amount" name="silver3Amount" type="text"></td>
+              </tr>
+              <tr>
+                <td>Silver Add'l 4</td>
+                <td><input id="silver4Amount" name="silver4Amount" type="text"></td>
+              </tr>
+              </tbody>
+            </table>
+
+            <div style="margin-top:10px;font-size:13px;">
+              <div class="ap-field" style="margin-bottom:6px;">
+                <label for="silverAYellow">A Total Yellow (Liquid)</label>
+                <input id="silverAYellow" name="silverAYellow" type="text">
+              </div>
+              <div class="ap-field" style="margin-bottom:6px;">
+                <label for="silverCRed">C Total Red (Invested)</label>
+                <input id="silverCRed" name="silverCRed" type="text">
+              </div>
+              <div class="ap-field" style="margin-bottom:6px;">
+                <label for="silverBGreen">B Total Green (Annuities)</label>
+                <input id="silverBGreen" name="silverBGreen" type="text">
+              </div>
+              <div class="ap-field">
+                <label for="silverTotalInvestable">Total Investable (auto)</label>
+                <input id="silverTotalInvestable" name="silverTotalInvestable" type="text" readonly>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ap-section" style="background:#ffffff;border-radius:10px;border:1px solid #e5e7eb;padding:14px 16px 12px;margin-bottom:18px;">
+        <div class="ap-section-title-inline" style="color:#b45309;">
+          Gold Plan – Additional Income &amp; Reallocation
+        </div>
+
+        <div style="display:grid;grid-template-columns:1.2fr 0.8fr;gap:14px;align-items:flex-start;">
+          <div>
+            <div style="font-size:13px;font-weight:600;color:#374151;margin-bottom:4px;">Gold Plan Add'l Income (4 sources)</div>
+            <table class="ap-table" style="font-size:13px;">
+              <thead>
+              <tr>
+                <th>Description / Rollover Label</th>
+                <th style="width:18%;">Annual Income</th>
+                <th style="width:14%;">Start Age</th>
+                <th style="width:16%;">Owner (His/Her)</th>
+                <th>Notes</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td><input name="gold1Desc" type="text"></td>
+                <td><input name="gold1Income" type="text"></td>
+                <td><input name="gold1StartAge" type="number" min="0" step="1"></td>
+                <td><input name="gold1Owner" type="text"></td>
+                <td><input name="gold1Notes" type="text"></td>
+              </tr>
+              <tr>
+                <td><input name="gold2Desc" type="text"></td>
+                <td><input name="gold2Income" type="text"></td>
+                <td><input name="gold2StartAge" type="number" min="0" step="1"></td>
+                <td><input name="gold2Owner" type="text"></td>
+                <td><input name="gold2Notes" type="text"></td>
+              </tr>
+              <tr>
+                <td><input name="gold3Desc" type="text"></td>
+                <td><input name="gold3Income" type="text"></td>
+                <td><input name="gold3StartAge" type="number" min="0" step="1"></td>
+                <td><input name="gold3Owner" type="text"></td>
+                <td><input name="gold3Notes" type="text"></td>
+              </tr>
+              <tr>
+                <td><input name="gold4Desc" type="text"></td>
+                <td><input name="gold4Income" type="text"></td>
+                <td><input name="gold4StartAge" type="number" min="0" step="1"></td>
+                <td><input name="gold4Owner" type="text"></td>
+                <td><input name="gold4Notes" type="text"></td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div>
+            <div style="font-size:13px;font-weight:600;color:#374151;margin-bottom:4px;">Transferring Money – Gold Plan Dollar Amounts</div>
+            <table class="ap-table" style="font-size:13px;">
+              <thead>
+              <tr>
+                <th>Rollover Source</th>
+                <th style="width:40%;">Dollar Amount</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>Gold Add'l 1</td>
+                <td><input id="gold1Amount" name="gold1Amount" type="text"></td>
+              </tr>
+              <tr>
+                <td>Gold Add'l 2</td>
+                <td><input id="gold2Amount" name="gold2Amount" type="text"></td>
+              </tr>
+              <tr>
+                <td>Gold Add'l 3</td>
+                <td><input id="gold3Amount" name="gold3Amount" type="text"></td>
+              </tr>
+              <tr>
+                <td>Gold Add'l 4</td>
+                <td><input id="gold4Amount" name="gold4Amount" type="text"></td>
+              </tr>
+              </tbody>
+            </table>
+
+            <div style="margin-top:10px;font-size:13px;">
+              <div class="ap-field" style="margin-bottom:6px;">
+                <label for="goldAYellow">A Total Yellow (Liquid)</label>
+                <input id="goldAYellow" name="goldAYellow" type="text">
+              </div>
+              <div class="ap-field" style="margin-bottom:6px;">
+                <label for="goldCRed">C Total Red (Invested)</label>
+                <input id="goldCRed" name="goldCRed" type="text">
+              </div>
+              <div class="ap-field" style="margin-bottom:6px;">
+                <label for="goldBGreen">B Total Green (Annuities)</label>
+                <input id="goldBGreen" name="goldBGreen" type="text">
+              </div>
+              <div class="ap-field">
+                <label for="goldTotalInvestable">Total Investable (auto)</label>
+                <input id="goldTotalInvestable" name="goldTotalInvestable" type="text" readonly>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="font-size:12px;color:#4b5563;">
+        External calculator for annuity income illustrations:
+        <a href="https://www.delawarelife.com/static/html/tp-calculator.html" target="_blank" rel="noopener noreferrer">
+          Delaware Life Income Calculator
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL: NO PLAN – JOINT INCOME -->
+  <div id="ap-panel-noplanJoint" class="ap-ifl-panel" style="display:none;">
+    <h2>No Plan – Joint Income</h2>
+    <div class="ap-plan-caption">
+      Shows projected income and gap over the projection period, assuming both spouses are alive for all years.
+    </div>
+    <table class="ap-plan-table">
+      <thead>
+      <tr>
+        <th>Year #</th>
+        <th>His Age</th>
+        <th>Her Age</th>
+        <th>His SS</th>
+        <th>Her SS</th>
+        <th>Pension 1</th>
+        <th>Pension 2</th>
+        <th>Other Income</th>
+        <th>Total Income</th>
+        <th>Living Expenses</th>
+        <th>Gap</th>
+        <th>Planner Notes</th>
+      </tr>
+      </thead>
+      <tbody id="ap-noplan-joint-body"></tbody>
+      <tfoot>
+      <tr>
+        <td colspan="8">Totals (all years)</td>
+        <td class="ap-num" id="ap-noplan-joint-total-income">$0</td>
+        <td class="ap-num" id="ap-noplan-joint-total-expenses">$0</td>
+        <td class="ap-num" id="ap-noplan-joint-total-gap">$0</td>
+        <td></td>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <!-- PANEL: NO PLAN – HER SURVIVOR -->
+  <div id="ap-panel-noplanHer" class="ap-ifl-panel" style="display:none;">
+    <h2>No Plan – Her Survival Income</h2>
+    <div class="ap-plan-caption">
+      Scenario where he passes first at his death age; after his death the lower Social Security check stops and the higher benefit continues in her column, with survivor options applied to pensions.
+    </div>
+    <table class="ap-plan-table">
+      <thead>
+      <tr>
+        <th>Year #</th>
+        <th>His Age</th>
+        <th>Her Age</th>
+        <th>His SS</th>
+        <th>Her SS</th>
+        <th>Pension 1</th>
+        <th>Pension 2</th>
+        <th>Other Income</th>
+        <th>Total Income</th>
+        <th>Living Expenses</th>
+        <th>Gap</th>
+        <th>Event / Notes</th>
+      </tr>
+      </thead>
+      <tbody id="ap-noplan-her-body"></tbody>
+      <tfoot>
+      <tr>
+        <td colspan="8">Totals (all years)</td>
+        <td class="ap-num" id="ap-noplan-her-total-income">$0</td>
+        <td class="ap-num" id="ap-noplan-her-total-expenses">$0</td>
+        <td class="ap-num" id="ap-noplan-her-total-gap">$0</td>
+        <td></td>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <!-- PANEL: NO PLAN – HIS SURVIVOR -->
+  <div id="ap-panel-noplanHis" class="ap-ifl-panel" style="display:none;">
+    <h2>No Plan – His Survival Income</h2>
+    <div class="ap-plan-caption">
+      Scenario where she passes first at her death age; after her death the lower Social Security check stops and the higher benefit continues in his column, with survivor options applied to pensions.
+    </div>
+    <table class="ap-plan-table">
+      <thead>
+      <tr>
+        <th>Year #</th>
+        <th>His Age</th>
+        <th>Her Age</th>
+        <th>His SS</th>
+        <th>Her SS</th>
+        <th>Pension 1</th>
+        <th>Pension 2</th>
+        <th>Other Income</th>
+        <th>Total Income</th>
+        <th>Living Expenses</th>
+        <th>Gap</th>
+        <th>Event / Notes</th>
+      </tr>
+      </thead>
+      <tbody id="ap-noplan-his-body"></tbody>
+      <tfoot>
+      <tr>
+        <td colspan="8">Totals (all years)</td>
+        <td class="ap-num" id="ap-noplan-his-total-income">$0</td>
+        <td class="ap-num" id="ap-noplan-his-total-expenses">$0</td>
+        <td class="ap-num" id="ap-noplan-his-total-gap">$0</td>
+        <td></td>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <!-- PANEL: NO PLAN – ALLOCATION & INCOME SUMMARY -->
+  <div id="ap-panel-noplanAlloc" class="ap-ifl-panel" style="display:none;">
+    <h2>No Plan – Allocation &amp; Income Summary</h2>
+    <div class="ap-plan-caption">
+      Asset buckets (A/B/C) from the Inputs page, plus key income points from the No Plan projections.
+    </div>
+
+    <div class="ap-noplan-layout">
+      <!-- Left: numbers -->
+      <div class="ap-noplan-summary-box">
+        <h3>Allocation &amp; Income Snapshot</h3>
+
+        <div style="margin-bottom:10px;">
+          <div class="ap-legend-item">
+            <div class="ap-legend-color" style="background:#fde047;"></div>
+            <span>A – Total Yellow (Liquid)</span>
+            <span style="margin-left:auto;font-weight:600;" id="ap-noplan-A-val">$0</span>
+          </div>
+          <div class="ap-legend-item">
+            <div class="ap-legend-color" style="background:#9ca3af;"></div>
+            <span>B – Total Green (Annuities)</span>
+            <span style="margin-left:auto;font-weight:600;" id="ap-noplan-B-val">$0</span>
+          </div>
+          <div class="ap-legend-item">
+            <div class="ap-legend-color" style="background:#dc2626;"></div>
+            <span>C – Total Red (Invested)</span>
+            <span style="margin-left:auto;font-weight:600;" id="ap-noplan-C-val">$0</span>
+          </div>
+        </div>
+
+        <div style="border-top:1px solid #e5e7eb;margin:8px 0 10px;"></div>
+
+        <div class="ap-summary-line">
+          <div class="ap-summary-line-label">Living Expenses (today)</div>
+          <div class="ap-summary-line-value" id="ap-noplan-living-today">$0</div>
+        </div>
+        <div class="ap-summary-line">
+          <div class="ap-summary-line-label">Cash Flow Retirement Income (joint, when SS starts)</div>
+          <div class="ap-summary-line-value" id="ap-noplan-cashflow">$0</div>
+        </div>
+        <div class="ap-summary-line">
+          <div class="ap-summary-line-label">Her Survivor Income (first year after his death)</div>
+          <div class="ap-summary-line-value" id="ap-noplan-her-surv">$0</div>
+        </div>
+        <div class="ap-summary-line">
+          <div class="ap-summary-line-label">His Survivor Income (first year after her death)</div>
+          <div class="ap-summary-line-value" id="ap-noplan-his-surv">$0</div>
+        </div>
+      </div>
+
+      <!-- Right: simple pie / donut -->
+      <div class="ap-noplan-summary-box">
+        <h3>Asset Allocation – No Plan in Place</h3>
+        <canvas id="ap-noplan-pie" width="260" height="260" style="display:block;margin:6px auto 4px;"></canvas>
+        <div style="display:flex;justify-content:space-around;font-size:13px;margin-top:4px;">
+          <div>Yellow: <span id="ap-noplan-A-pct">0%</span></div>
+          <div>Green: <span id="ap-noplan-B-pct">0%</span></div>
+          <div>Red: <span id="ap-noplan-C-pct">0%</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
+<script>
+  // ---------- Shared helpers ----------
+  function apParseCurrency(val) {
+    if (!val) return 0;
+    if (typeof val !== 'string') val = String(val);
+    val = val.replace(/[^0-9.\-]/g, '');
+    if (!val) return 0;
+    var num = parseFloat(val);
+    return isNaN(num) ? 0 : num;
+  }
+
+  function apFormatCurrency(num) {
+    return '$' + (num || 0).toLocaleString(undefined, {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2
+    });
+  }
+
+  function apGetInputValue(nameOrId) {
+    var el = document.querySelector('[name="' + nameOrId + '"]') ||
+             document.getElementById(nameOrId);
+    return el ? el.value || '' : '';
+  }
+
+  function apSetInputValue(idOrName, val) {
+    var byId = document.getElementById(idOrName);
+    if (byId) {
+      byId.value = val;
+      return;
+    }
+    var byName = document.querySelector('[name="' + idOrName + '"]');
+    if (byName) byName.value = val;
+  }
+
+  // ---------- Save / load Goals & Data to localStorage ----------
+  function apSaveGoalsDataToStorage() {
+    if (!window.localStorage) return;
+    var form = document.getElementById('ap-goals-data-form');
+    if (!form) return;
+    var data = {};
+    Array.prototype.forEach.call(form.elements, function(el) {
+      if (!el.name) return;
+      if (['button','submit','reset'].indexOf(el.type) !== -1) return;
+      data[el.name] = el.value;
+    });
+    localStorage.setItem('apGoalsDataForm', JSON.stringify(data));
+  }
+
+  function apLoadGoalsDataFromStorage() {
+    if (!window.localStorage) return;
+    var raw = localStorage.getItem('apGoalsDataForm');
+    if (!raw) return;
+    var form = document.getElementById('ap-goals-data-form');
+    if (!form) return;
+    var data;
+    try { data = JSON.parse(raw); } catch(e) { return; }
+    Object.keys(data).forEach(function(name) {
+      var el = form.elements[name];
+      if (!el) return;
+      el.value = data[name];
+    });
+  }
+
+  // ---------- Goals & Data totals ----------
+  function apUpdateDataFormTotals() {
+    // Investments total
+    var invTotal = 0;
+    for (var j = 1; j <= 3; j++) {
+      invTotal += apParseCurrency(apGetInputValue('inv' + j + 'Balance'));
+    }
+    apSetInputValue('invTotalBalance', apFormatCurrency(invTotal));
+
+    // Savings total
+    var savTotal = 0;
+    for (var i = 1; i <= 4; i++) {
+      savTotal += apParseCurrency(apGetInputValue('save' + i + 'Balance'));
+    }
+    apSetInputValue('saveTotalBalance', apFormatCurrency(savTotal));
+
+    // Annuities total
+    var annTotal = 0;
+    for (var k = 1; k <= 2; k++) {
+      annTotal += apParseCurrency(apGetInputValue('ann' + k + 'Balance'));
+    }
+    apSetInputValue('annTotalBalance', apFormatCurrency(annTotal));
+
+    // Income total
+    var incTotal = 0;
+    for (var r = 1; r <= 3; r++) {
+      incTotal += apParseCurrency(apGetInputValue('inc' + r + 'Amount'));
+    }
+    apSetInputValue('incTotalAmount', apFormatCurrency(incTotal));
+  }
+
+  // ---------- Asset Summary updater ----------
+  function apUpdateAssetSummary() {
+    apUpdateDataFormTotals();
+
+    var now = new Date();
+    var dateSpan = document.getElementById('ap-asset-summary-date');
+    if (dateSpan) {
+      var dateStr = now.toLocaleDateString() + ' ' +
+        now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      dateSpan.textContent = dateStr;
+    }
+
+    var nameAddressDiv = document.getElementById('ap-asset-summary-name-address');
+    if (nameAddressDiv) {
+      var clientName = apGetInputValue('clientName');
+      var spouseName = apGetInputValue('spouseName');
+      var homeAddress = apGetInputValue('homeAddress');
+      var homeCity = apGetInputValue('homeCity');
+      var homeState = apGetInputValue('homeState');
+      var homeZip = apGetInputValue('homeZip');
+
+      var fullName = (clientName || '') +
+        (spouseName ? (clientName ? ' and ' : '') + spouseName : '');
+      var addressLine = [homeAddress, homeCity, homeState, homeZip]
+        .filter(Boolean)
+        .join(' ');
+
+      nameAddressDiv.innerHTML =
+        (fullName ? '<div>' + fullName + '</div>' : '') +
+        (addressLine ? '<div>' + addressLine + '</div>' : '');
+    }
+
+    // CASH
+    var cashRowsBody = document.getElementById('ap-cash-rows');
+    var totalCash = 0;
+    if (cashRowsBody) {
+      cashRowsBody.innerHTML = '';
+      var maxCash = 4;
+      var cashRowCount = 0;
+
+      for (var i = 1; i <= maxCash; i++) {
+        var desc = apGetInputValue('save' + i + 'Desc');
+        var owner = apGetInputValue('save' + i + 'Owner');
+        var balStr = apGetInputValue('save' + i + 'Balance');
+        var bal = apParseCurrency(balStr);
+        if (!desc && !owner && !balStr) continue;
+
+        cashRowCount++;
+        totalCash += bal;
+
+        var tr = document.createElement('tr');
+        tr.innerHTML =
+          '<td>' + (owner || '') + '</td>' +
+          '<td>' + (desc || '') + '</td>' +
+          '<td class="ap-num">' + apFormatCurrency(bal) + '</td>';
+        cashRowsBody.appendChild(tr);
+      }
+
+      if (cashRowCount === 0) {
+        totalCash = apParseCurrency(apGetInputValue('saveTotalBalance'));
+        if (totalCash) {
+          var trAgg = document.createElement('tr');
+          trAgg.innerHTML =
+            '<td></td>' +
+            '<td>Aggregate cash (from total)</td>' +
+            '<td class="ap-num">' + apFormatCurrency(totalCash) + '</td>';
+          cashRowsBody.appendChild(trAgg);
+        }
+      } else {
+        apSetInputValue('saveTotalBalance', apFormatCurrency(totalCash));
+      }
+
+      var elTC = document.getElementById('ap-total-cash');
+      if (elTC) elTC.textContent = apFormatCurrency(totalCash);
+    }
+
+    // INVESTMENTS
+    var invRowsBody = document.getElementById('ap-investment-rows');
+    var totalInv = 0;
+    if (invRowsBody) {
+      invRowsBody.innerHTML = '';
+      var maxInv = 3;
+      var invRowCount = 0;
+
+      for (var j = 1; j <= maxInv; j++) {
+        var name = apGetInputValue('inv' + j + 'Name');
+        var ownerInv = apGetInputValue('inv' + j + 'Owner');
+        var typeInv = apGetInputValue('inv' + j + 'Type');
+        var balInvStr = apGetInputValue('inv' + j + 'Balance');
+        var balInv = apParseCurrency(balInvStr);
+        if (!name && !ownerInv && !balInvStr) continue;
+
+        invRowCount++;
+        totalInv += balInv;
+
+        var tr2 = document.createElement('tr');
+        tr2.innerHTML =
+          '<td>' + (ownerInv || '') + '</td>' +
+          '<td>' + (name || '') + '</td>' +
+          '<td>' + (typeInv || '') + '</td>' +
+          '<td class="ap-num">' + apFormatCurrency(balInv) + '</td>';
+        invRowsBody.appendChild(tr2);
+      }
+
+      if (invRowCount === 0) {
+        totalInv = apParseCurrency(apGetInputValue('invTotalBalance'));
+        if (totalInv) {
+          var trAggInv = document.createElement('tr');
+          trAggInv.innerHTML =
+            '<td></td>' +
+            '<td>Aggregate investments (from total)</td>' +
+            '<td></td>' +
+            '<td class="ap-num">' + apFormatCurrency(totalInv) + '</td>';
+          invRowsBody.appendChild(trAggInv);
+        }
+      } else {
+        apSetInputValue('invTotalBalance', apFormatCurrency(totalInv));
+      }
+
+      var elTI = document.getElementById('ap-total-investments');
+      if (elTI) elTI.textContent = apFormatCurrency(totalInv);
+    }
+
+    // PROPERTY & MORTGAGES
+    var primaryVal = apParseCurrency(apGetInputValue('primaryValue'));
+    var primaryMort = apParseCurrency(apGetInputValue('primaryMortgage'));
+    var secondaryVal = apParseCurrency(apGetInputValue('secondaryValue'));
+    var secondaryMort = apParseCurrency(apGetInputValue('secondaryMortgage'));
+
+    var totalRealEstate = primaryVal + secondaryVal;
+    var totalMortgage = primaryMort + secondaryMort;
+
+    var elPV = document.getElementById('ap-primary-value');
+    if (elPV) elPV.textContent = apFormatCurrency(primaryVal);
+    var elPM = document.getElementById('ap-primary-mortgage');
+    if (elPM) elPM.textContent = apFormatCurrency(primaryMort);
+    var elSV = document.getElementById('ap-secondary-value');
+    if (elSV) elSV.textContent = apFormatCurrency(secondaryVal);
+    var elSM = document.getElementById('ap-secondary-mortgage');
+    if (elSM) elSM.textContent = apFormatCurrency(secondaryMort);
+    var elTR = document.getElementById('ap-total-real-estate');
+    if (elTR) elTR.textContent = apFormatCurrency(totalRealEstate);
+    var elTM = document.getElementById('ap-total-mortgage');
+    if (elTM) elTM.textContent = apFormatCurrency(totalMortgage);
+
+    // ANNUITIES
+    var annRowsBody = document.getElementById('ap-annuity-rows');
+    var totalAnn = 0;
+    if (annRowsBody) {
+      annRowsBody.innerHTML = '';
+      var maxAnn = 2;
+      var annRowCount = 0;
+
+      for (var k = 1; k <= maxAnn; k++) {
+        var annName = apGetInputValue('ann' + k + 'Name');
+        var annOwner = apGetInputValue('ann' + k + 'Owner');
+        var annType = apGetInputValue('ann' + k + 'Type');
+        var annBalStr = apGetInputValue('ann' + k + 'Balance');
+        var annBal = apParseCurrency(annBalStr);
+        if (!annName && !annOwner && !annBalStr) continue;
+
+        annRowCount++;
+        totalAnn += annBal;
+        var tr3 = document.createElement('tr');
+        tr3.innerHTML =
+          '<td>' + (annOwner || '') + '</td>' +
+          '<td>' + (annName || '') + '</td>' +
+          '<td>' + (annType || '') + '</td>' +
+          '<td class="ap-num">' + apFormatCurrency(annBal) + '</td>';
+        annRowsBody.appendChild(tr3);
+      }
+
+      if (annRowCount === 0) {
+        totalAnn = apParseCurrency(apGetInputValue('annTotalBalance'));
+        if (totalAnn) {
+          var trAggAnn = document.createElement('tr');
+          trAggAnn.innerHTML =
+            '<td></td>' +
+            '<td>Aggregate annuities (from total)</td>' +
+            '<td></td>' +
+            '<td class="ap-num">' + apFormatCurrency(totalAnn) + '</td>';
+          annRowsBody.appendChild(trAggAnn);
+        }
+      } else {
+        apSetInputValue('annTotalBalance', apFormatCurrency(totalAnn));
+      }
+
+      var elTA = document.getElementById('ap-total-annuities');
+      if (elTA) elTA.textContent = apFormatCurrency(totalAnn);
+    }
+
+    var totalAssets = totalCash + totalInv + totalRealEstate + totalAnn;
+    var totalLiab = totalMortgage;
+    var netWorth = totalAssets - totalLiab;
+
+    var elTotA = document.getElementById('ap-total-assets');
+    if (elTotA) elTotA.textContent = apFormatCurrency(totalAssets);
+    var elTotL = document.getElementById('ap-total-liabilities');
+    if (elTotL) elTotL.textContent = apFormatCurrency(totalLiab);
+    var elNW = document.getElementById('ap-net-worth');
+    if (elNW) elNW.textContent = apFormatCurrency(netWorth);
+  }
+
+  // ---------- Inputs auto-calcs (death indexes + Silver/Gold reallocation) ----------
+  function apUpdateInputsDerived() {
+    apUpdateAssetSummary();
+
+    var todayEl = document.getElementById('inputsTodayDate');
+    if (todayEl && !todayEl.value) {
+      todayEl.value = new Date().toISOString().slice(0, 10);
+    }
+
+    var projEl = document.getElementById('projLength');
+    if (projEl && (!projEl.value || projEl.value === '0')) {
+      projEl.value = 30;
+    }
+    var projLen = parseInt(apGetInputValue('projLength') || '0', 10);
+
+    var goalsAgeHis = apGetInputValue('clientAge');
+    var goalsAgeHer = apGetInputValue('spouseAge');
+    var inputsAgeHisEl = document.getElementById('ageHis');
+    var inputsAgeHerEl = document.getElementById('ageHer');
+    if (inputsAgeHisEl && !inputsAgeHisEl.value && goalsAgeHis) {
+      inputsAgeHisEl.value = goalsAgeHis;
+    }
+    if (inputsAgeHerEl && !inputsAgeHerEl.value && goalsAgeHer) {
+      inputsAgeHerEl.value = goalsAgeHer;
+    }
+
+    var ageHis = parseInt(apGetInputValue('ageHis') || '0', 10);
+    var ageHer = parseInt(apGetInputValue('ageHer') || '0', 10);
+
+    var goalsExpenses = apGetInputValue('annualExpenses');
+    var inputsExpensesEl = document.getElementById('livingExpensesAnnual');
+    if (inputsExpensesEl && !inputsExpensesEl.value && goalsExpenses) {
+      inputsExpensesEl.value = goalsExpenses;
+    }
+
+    var yellowFromSummary = (document.getElementById('ap-total-cash') || {}).textContent || '';
+    var redFromSummary    = (document.getElementById('ap-total-investments') || {}).textContent || '';
+    var greenFromSummary  = (document.getElementById('ap-total-annuities') || {}).textContent || '';
+
+    if (!apGetInputValue('currentAYellow') && yellowFromSummary) {
+      apSetInputValue('currentAYellow', yellowFromSummary);
+    }
+    if (!apGetInputValue('currentCRed') && redFromSummary) {
+      apSetInputValue('currentCRed', redFromSummary);
+    }
+    if (!apGetInputValue('currentBGreen') && greenFromSummary) {
+      apSetInputValue('currentBGreen', greenFromSummary);
+    }
+
+    var aCur = apParseCurrency(apGetInputValue('currentAYellow'));
+    var cCur = apParseCurrency(apGetInputValue('currentCRed'));
+    var bCur = apParseCurrency(apGetInputValue('currentBGreen'));
+
+    var totalCur = aCur + cCur + bCur;
+    apSetInputValue('currentTotalInvestable', apFormatCurrency(totalCur));
+
+    var deathHis = parseInt(apGetInputValue('deathAgeHis') || '0', 10);
+    var deathHer = parseInt(apGetInputValue('deathAgeHer') || '0', 10);
+
+    if (projLen > 0) {
+      if (!deathHis && ageHis > 0) {
+        deathHis = ageHis + projLen;
+        apSetInputValue('deathAgeHis', deathHis);
+      }
+      if (!deathHer && ageHer > 0) {
+        deathHer = ageHer + projLen;
+        apSetInputValue('deathAgeHer', deathHer);
+      }
+    }
+
+    if (projLen > 0 && ageHis > 0 && deathHis > ageHis) {
+      var idxHis = Math.max(1, Math.min(projLen, deathHis - ageHis));
+      apSetInputValue('deathIndexHis', idxHis);
+    }
+    if (projLen > 0 && ageHer > 0 && deathHer > ageHer) {
+      var idxHer = Math.max(1, Math.min(projLen, deathHer - ageHer));
+      apSetInputValue('deathIndexHer', idxHer);
+    }
+
+    // Silver reallocations (from No Plan)
+    var silverRoll = 0;
+    for (var s = 1; s <= 4; s++) {
+      silverRoll += apParseCurrency(apGetInputValue('silver' + s + 'Amount'));
+    }
+    var silverA = aCur;
+    var silverC = cCur - silverRoll;
+    var silverB = bCur + silverRoll;
+
+    apSetInputValue('silverAYellow', apFormatCurrency(silverA));
+    apSetInputValue('silverCRed',    apFormatCurrency(silverC));
+    apSetInputValue('silverBGreen',  apFormatCurrency(silverB));
+    apSetInputValue('silverTotalInvestable', apFormatCurrency(silverA + silverC + silverB));
+
+    // Gold reallocations
+    var goldRoll = 0;
+    for (var g = 1; g <= 4; g++) {
+      goldRoll += apParseCurrency(apGetInputValue('gold' + g + 'Amount'));
+    }
+    var goldA = aCur;
+    var goldC = cCur - goldRoll;
+    var goldB = bCur + goldRoll;
+
+    apSetInputValue('goldAYellow', apFormatCurrency(goldA));
+    apSetInputValue('goldCRed',    apFormatCurrency(goldC));
+    apSetInputValue('goldBGreen',  apFormatCurrency(goldB));
+    apSetInputValue('goldTotalInvestable', apFormatCurrency(goldA + goldC + goldB));
+  }
+
+  // ---------- Compute No Plan projections (Joint / Her / His) ----------
+  function apComputeNoPlanProjections() {
+    var projLen = parseInt(apGetInputValue('projLength') || '0', 10);
+    var ageHis = parseInt(apGetInputValue('ageHis') || '0', 10);
+    var ageHer = parseInt(apGetInputValue('ageHer') || '0', 10);
+    if (!projLen || !ageHis || !ageHer) {
+      return null;
+    }
+
+    var ssHisBase = apParseCurrency(apGetInputValue('ssHisAnnual'));
+    var ssHerBase = apParseCurrency(apGetInputValue('ssHerAnnual'));
+    var p1Base = apParseCurrency(apGetInputValue('pension1Annual'));
+    var p2Base = apParseCurrency(apGetInputValue('pension2Annual'));
+    var otherBase = apParseCurrency(apGetInputValue('otherIncomeAnnual'));
+    var expBase = apParseCurrency(apGetInputValue('livingExpensesAnnual'));
+
+    var incGrowth = parseFloat(apGetInputValue('incomeGrowthPct') || '0') / 100;
+    var expInfl = parseFloat(apGetInputValue('expenseInflationPct') || '0') / 100;
+
+    var ssHisStartAge = parseInt(apGetInputValue('ssHisStartAge') || '0', 10);
+    var ssHerStartAge = parseInt(apGetInputValue('ssHerStartAge') || '0', 10);
+    var p1StartAge = parseInt(apGetInputValue('pension1StartAge') || '0', 10);
+    var p2StartAge = parseInt(apGetInputValue('pension2StartAge') || '0', 10);
+
+    var deathAgeHis = parseInt(apGetInputValue('deathAgeHis') || '0', 10);
+    var deathAgeHer = parseInt(apGetInputValue('deathAgeHer') || '0', 10);
+
+    var p1SurvPct = parseFloat(apGetInputValue('pension1SurvivorPct') || '0');
+    var p2SurvPct = parseFloat(apGetInputValue('pension2SurvivorPct') || '0');
+    if (p1SurvPct > 1) p1SurvPct = p1SurvPct / 100;
+    if (p2SurvPct > 1) p2SurvPct = p2SurvPct / 100;
+
+    var jointRows = [];
+    var herRows = [];
+    var hisRows = [];
+
+    var jointFirstPositiveIncome = 0;
+    var herSurvivorIncome = 0;
+    var hisSurvivorIncome = 0;
+
+    var deathIndexHis = (deathAgeHis > ageHis) ? (deathAgeHis - ageHis) : null; // 0-based
+    var deathIndexHer = (deathAgeHer > ageHer) ? (deathAgeHer - ageHer) : null;
+
+    for (var year = 0; year < projLen; year++) {
+      var hisAge = ageHis + year;
+      var herAge = ageHer + year;
+      var growthFactor = Math.pow(1 + incGrowth, year);
+      var inflFactor = Math.pow(1 + expInfl, year);
+
+      // ---- JOINT (ignores deaths) ----
+      var hisSS_joint = (hisAge >= ssHisStartAge ? ssHisBase * growthFactor : 0);
+      var herSS_joint = (herAge >= ssHerStartAge ? ssHerBase * growthFactor : 0);
+      var p1_joint = (hisAge >= p1StartAge ? p1Base * growthFactor : 0);
+      var p2_joint = (herAge >= p2StartAge ? p2Base * growthFactor : 0);
+      var other_joint = otherBase * growthFactor;
+      var total_joint = hisSS_joint + herSS_joint + p1_joint + p2_joint + other_joint;
+      var exp_joint = expBase * inflFactor;
+      var gap_joint = total_joint - exp_joint;
+
+      jointRows.push({
+        year: year + 1,
+        hisAge: hisAge,
+        herAge: herAge,
+        hisSS: hisSS_joint,
+        herSS: herSS_joint,
+        p1: p1_joint,
+        p2: p2_joint,
+        other: other_joint,
+        total: total_joint,
+        expenses: exp_joint,
+        gap: gap_joint,
+        event: ''
+      });
+
+      if (!jointFirstPositiveIncome && total_joint > 0) {
+        jointFirstPositiveIncome = total_joint;
+      }
+
+      // ---- HER SURVIVOR (he dies first at deathAgeHis) ----
+      var hisSS_her = hisSS_joint;
+      var herSS_her = herSS_joint;
+      var p1_her = p1_joint;
+      var p2_her = p2_joint;
+      var other_her = other_joint;
+      var eventHer = '';
+
+      if (deathIndexHis != null && year > deathIndexHis) {
+        // He is gone this year; she may still be alive
+        var herAlive = (!deathIndexHer || year <= deathIndexHer);
+        if (herAlive) {
+          var higherSSBase = 0;
+          if (herAge >= ssHisStartAge) higherSSBase = Math.max(higherSSBase, ssHisBase);
+          if (herAge >= ssHerStartAge) higherSSBase = Math.max(higherSSBase, ssHerBase);
+          herSS_her = higherSSBase * growthFactor;
+          hisSS_her = 0;
+
+          p1_her = (herAge >= p1StartAge ? p1Base * p1SurvPct * growthFactor : 0);
+          p2_her = (herAge >= p2StartAge ? p2Base * growthFactor : 0);
+        } else {
+          hisSS_her = 0; herSS_her = 0;
+          p1_her = 0; p2_her = 0;
+          other_her = 0;
+        }
+      }
+
+      if (deathIndexHis != null && year === deathIndexHis) {
+        eventHer = 'He dies (Age ' + hisAge + ')';
+      }
+
+      var total_her = hisSS_her + herSS_her + p1_her + p2_her + other_her;
+      var exp_her = exp_joint;
+      var gap_her = total_her - exp_her;
+
+      herRows.push({
+        year: year + 1,
+        hisAge: hisAge,
+        herAge: herAge,
+        hisSS: hisSS_her,
+        herSS: herSS_her,
+        p1: p1_her,
+        p2: p2_her,
+        other: other_her,
+        total: total_her,
+        expenses: exp_her,
+        gap: gap_her,
+        event: eventHer
+      });
+
+      if (deathIndexHis != null && year === (deathIndexHis + 1) && !herSurvivorIncome) {
+        herSurvivorIncome = total_her;
+      }
+
+      // ---- HIS SURVIVOR (she dies first at deathAgeHer) ----
+      var hisSS_his = hisSS_joint;
+      var herSS_his = herSS_joint;
+      var p1_his = p1_joint;
+      var p2_his = p2_joint;
+      var other_his = other_joint;
+      var eventHis = '';
+
+      if (deathIndexHer != null && year > deathIndexHer) {
+        var hisAlive2 = (!deathIndexHis || year <= deathIndexHis);
+        if (hisAlive2) {
+          var higherSSBase2 = 0;
+          if (hisAge >= ssHisStartAge) higherSSBase2 = Math.max(higherSSBase2, ssHisBase);
+          if (hisAge >= ssHerStartAge) higherSSBase2 = Math.max(higherSSBase2, ssHerBase);
+          hisSS_his = higherSSBase2 * growthFactor;
+          herSS_his = 0;
+
+          p2_his = (hisAge >= p2StartAge ? p2Base * p2SurvPct * growthFactor : 0);
+          p1_his = (hisAge >= p1StartAge ? p1Base * growthFactor : 0);
+        } else {
+          hisSS_his = 0; herSS_his = 0;
+          p1_his = 0; p2_his = 0;
+          other_his = 0;
+        }
+      }
+
+      if (deathIndexHer != null && year === deathIndexHer) {
+        eventHis = 'She dies (Age ' + herAge + ')';
+      }
+
+      var total_his = hisSS_his + herSS_his + p1_his + p2_his + other_his;
+      var exp_his = exp_joint;
+      var gap_his = total_his - exp_his;
+
+      hisRows.push({
+        year: year + 1,
+        hisAge: hisAge,
+        herAge: herAge,
+        hisSS: hisSS_his,
+        herSS: herSS_his,
+        p1: p1_his,
+        p2: p2_his,
+        other: other_his,
+        total: total_his,
+        expenses: exp_his,
+        gap: gap_his,
+        event: eventHis
+      });
+
+      if (deathIndexHer != null && year === (deathIndexHer + 1) && !hisSurvivorIncome) {
+        hisSurvivorIncome = total_his;
+      }
+    }
+
+    return {
+      jointRows: jointRows,
+      herRows: herRows,
+      hisRows: hisRows,
+      firstJointIncome: jointFirstPositiveIncome,
+      herSurvivorIncome: herSurvivorIncome,
+      hisSurvivorIncome: hisSurvivorIncome,
+      aCur: apParseCurrency(apGetInputValue('currentAYellow')),
+      bCur: apParseCurrency(apGetInputValue('currentBGreen')),
+      cCur: apParseCurrency(apGetInputValue('currentCRed')),
+      livingToday: apParseCurrency(apGetInputValue('livingExpensesAnnual'))
+    };
+  }
+
+  // ---------- Render No Plan tables & summary ----------
+  function apRenderNoPlanProjections() {
+    var proj = apComputeNoPlanProjections();
+    if (!proj) return;
+
+    function renderTable(rows, bodyId, totalIncomeId, totalExpId, totalGapId) {
+      var tbody = document.getElementById(bodyId);
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      var sumIncome = 0, sumExp = 0, sumGap = 0;
+
+      rows.forEach(function(row) {
+        var tr = document.createElement('tr');
+        tr.innerHTML =
+          '<td>' + row.year + '</td>' +
+          '<td>' + row.hisAge + '</td>' +
+          '<td>' + row.herAge + '</td>' +
+          '<td class="ap-num">' + (row.hisSS ? apFormatCurrency(row.hisSS) : '$0') + '</td>' +
+          '<td class="ap-num">' + (row.herSS ? apFormatCurrency(row.herSS) : '$0') + '</td>' +
+          '<td class="ap-num">' + (row.p1 ? apFormatCurrency(row.p1) : '$0') + '</td>' +
+          '<td class="ap-num">' + (row.p2 ? apFormatCurrency(row.p2) : '$0') + '</td>' +
+          '<td class="ap-num">' + (row.other ? apFormatCurrency(row.other) : '$0') + '</td>' +
+          '<td class="ap-num">' + (row.total ? apFormatCurrency(row.total) : '$0') + '</td>' +
+          '<td class="ap-num">' + (row.expenses ? apFormatCurrency(row.expenses) : '$0') + '</td>' +
+          '<td class="ap-num">' + (row.gap ? apFormatCurrency(row.gap) : '$0') + '</td>' +
+          '<td>' + (row.event || '') + '</td>';
+        tbody.appendChild(tr);
+
+        sumIncome += row.total;
+        sumExp += row.expenses;
+        sumGap += row.gap;
+      });
+
+      if (totalIncomeId) document.getElementById(totalIncomeId).textContent = apFormatCurrency(sumIncome);
+      if (totalExpId) document.getElementById(totalExpId).textContent = apFormatCurrency(sumExp);
+      if (totalGapId) document.getElementById(totalGapId).textContent = apFormatCurrency(sumGap);
+    }
+
+    renderTable(proj.jointRows, 'ap-noplan-joint-body',
+      'ap-noplan-joint-total-income', 'ap-noplan-joint-total-expenses', 'ap-noplan-joint-total-gap');
+
+    renderTable(proj.herRows, 'ap-noplan-her-body',
+      'ap-noplan-her-total-income', 'ap-noplan-her-total-expenses', 'ap-noplan-her-total-gap');
+
+    renderTable(proj.hisRows, 'ap-noplan-his-body',
+      'ap-noplan-his-total-income', 'ap-noplan-his-total-expenses', 'ap-noplan-his-total-gap');
+
+    // Summary numbers for Allocation page
+    document.getElementById('ap-noplan-A-val').textContent = apFormatCurrency(proj.aCur);
+    document.getElementById('ap-noplan-B-val').textContent = apFormatCurrency(proj.bCur);
+    document.getElementById('ap-noplan-C-val').textContent = apFormatCurrency(proj.cCur);
+    document.getElementById('ap-noplan-living-today').textContent = apFormatCurrency(proj.livingToday || 0);
+    document.getElementById('ap-noplan-cashflow').textContent = apFormatCurrency(proj.firstJointIncome || 0);
+    document.getElementById('ap-noplan-her-surv').textContent = apFormatCurrency(proj.herSurvivorIncome || 0);
+    document.getElementById('ap-noplan-his-surv').textContent = apFormatCurrency(proj.hisSurvivorIncome || 0);
+
+    // Pie percentages
+    var totalABC = proj.aCur + proj.bCur + proj.cCur;
+    var aPct = totalABC ? (proj.aCur / totalABC * 100) : 0;
+    var bPct = totalABC ? (proj.bCur / totalABC * 100) : 0;
+    var cPct = totalABC ? (proj.cCur / totalABC * 100) : 0;
+    document.getElementById('ap-noplan-A-pct').textContent = aPct.toFixed(0) + '%';
+    document.getElementById('ap-noplan-B-pct').textContent = bPct.toFixed(0) + '%';
+    document.getElementById('ap-noplan-C-pct').textContent = cPct.toFixed(0) + '%';
+
+    apDrawNoPlanPie(aPct, bPct, cPct);
+  }
+
+  function apDrawNoPlanPie(aPct, bPct, cPct) {
+    var canvas = document.getElementById('ap-noplan-pie');
+    if (!canvas || !canvas.getContext) return;
+    var ctx = canvas.getContext('2d');
+    var cx = canvas.width / 2;
+    var cy = canvas.height / 2;
+    var r = Math.min(cx, cy) - 8;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    var startAngle = -Math.PI / 2;
+
+    function drawSlice(percent, color) {
+      if (!percent || percent <= 0) return;
+      var angle = (percent / 100) * Math.PI * 2;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.arc(cx, cy, r, startAngle, startAngle + angle);
+      ctx.closePath();
+      ctx.fillStyle = color;
+      ctx.fill();
+      startAngle += angle;
+    }
+
+    drawSlice(aPct, '#fde047'); // Yellow
+    drawSlice(bPct, '#9ca3af'); // Grey/Green bucket
+    drawSlice(cPct, '#dc2626'); // Red
+  }
+
+  // ---------- Tabs + wiring ----------
+  (function () {
+    function showPanel(name) {
+      var panels = ['goals','assets','inputs','noplanJoint','noplanHer','noplanHis','noplanAlloc'];
+      panels.forEach(function (p) {
+        var pane = document.getElementById('ap-panel-' + p);
+        if (pane) pane.style.display = (p === name ? 'block' : 'none');
+      });
+
+      var buttons = document.querySelectorAll('#ap-ifl-app .ap-ifl-tab-btn');
+      buttons.forEach(function (btn) {
+        btn.classList.toggle('ap-ifl-tab-active', btn.getAttribute('data-panel') === name);
+      });
+
+      if (name === 'assets') {
+        apUpdateAssetSummary();
+      }
+      if (name === 'inputs') {
+        apUpdateInputsDerived();
+      }
+      if (name === 'noplanJoint' || name === 'noplanHer' || name === 'noplanHis' || name === 'noplanAlloc') {
+        apUpdateInputsDerived();
+        apRenderNoPlanProjections();
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      apLoadGoalsDataFromStorage();
+      apUpdateDataFormTotals();
+
+      var buttons = document.querySelectorAll('#ap-ifl-app .ap-ifl-tab-btn');
+      buttons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          showPanel(btn.getAttribute('data-panel'));
+        });
+      });
+
+      var saveBtn = document.getElementById('ap-save-data-btn');
+      if (saveBtn) {
+        saveBtn.addEventListener('click', function () {
+          apUpdateDataFormTotals();
+          apSaveGoalsDataToStorage();
+          apUpdateAssetSummary();
+          showPanel('assets');
+          alert('Client data saved in this browser and Asset Summary updated.');
+        });
+      }
+
+      var form = document.getElementById('ap-goals-data-form');
+      if (form) {
+        form.addEventListener('input', function () {
+          apUpdateDataFormTotals();
+        });
+      }
+
+      var inputsRoot = document.getElementById('ap-plan-inputs');
+      if (inputsRoot) {
+        inputsRoot.addEventListener('input', function (e) {
+          var id = e.target.id || '';
+          if (
+            id.indexOf('silver') === 0 ||
+            id.indexOf('gold') === 0 ||
+            id === 'projLength' ||
+            id === 'ageHis' ||
+            id === 'ageHer' ||
+            id === 'deathAgeHis' ||
+            id === 'deathAgeHer' ||
+            id === 'currentAYellow' ||
+            id === 'currentCRed' ||
+            id === 'currentBGreen' ||
+            id === 'ssHisAnnual' || id === 'ssHerAnnual' ||
+            id === 'ssHisStartAge' || id === 'ssHerStartAge' ||
+            id === 'pension1Annual' || id === 'pension2Annual' ||
+            id === 'pension1StartAge' || id === 'pension2StartAge' ||
+            id === 'pension1SurvivorPct' || id === 'pension2SurvivorPct' ||
+            id === 'otherIncomeAnnual' || id === 'livingExpensesAnnual' ||
+            id === 'incomeGrowthPct' || id === 'expenseInflationPct'
+          ) {
+            apUpdateInputsDerived();
+            apRenderNoPlanProjections();
+          }
+        });
+      }
+
+      showPanel('goals');
+      window.apShowIFLPanel = showPanel;
+    });
+  })();
+</script>
 </body>
 </html>
