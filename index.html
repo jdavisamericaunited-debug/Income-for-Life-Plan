@@ -1640,6 +1640,36 @@ window.onload = () => {
       </div>
     </div>
   </div>
+<!-- Existing content of Inputs page -->
+
+</div> <!-- Closing div for Inputs page content -->
+
+<script>
+// Auto-Save Function (runs every 60 seconds)
+function autoSave() {
+  const formData = {
+    goal: document.getElementById("goal-input").value,  // Replace with correct ID for inputs on this page
+    assetSummary: document.getElementById("asset-summary-input").value,  // Replace with correct ID
+    // Add other input fields on the Inputs page as needed
+  };
+  localStorage.setItem("inputsData", JSON.stringify(formData)); // Save data to localStorage
+}
+
+// Auto-save every 60 seconds
+setInterval(autoSave, 60000);
+
+// Load saved data when the page is loaded
+window.onload = () => {
+  const savedData = JSON.parse(localStorage.getItem("inputsData"));
+  if (savedData) {
+    document.getElementById("goal-input").value = savedData.goal || '';
+    document.getElementById("asset-summary-input").value = savedData.assetSummary || '';
+    // Populate other fields as needed
+  }
+};
+</script>
+
+</body> <!-- Closing body tag -->
 
   <!-- PANEL: NO PLAN – JOINT INCOME -->
   <div id="ap-panel-noplanJoint" class="ap-ifl-panel" style="display:none;">
