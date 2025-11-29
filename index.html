@@ -1074,7 +1074,31 @@
 
         <!-- SAVE BUTTON -->
         <div class="ap-save-row">
-          <button type="button" id="ap-save-data-btn" class="ap-primary-btn">
+       <script>
+// Auto-Save Function
+function autoSave() {
+  const formData = {
+    goal: document.getElementById("goal").value,
+    assetSummary: document.getElementById("assetSummary").value,
+    // Add other inputs as needed
+  };
+  localStorage.setItem("planData", JSON.stringify(formData));
+}
+
+// Auto-save every 60 seconds
+setInterval(autoSave, 60000);
+
+// Load saved data when the page is loaded
+window.onload = () => {
+  const savedData = JSON.parse(localStorage.getItem("planData"));
+  if (savedData) {
+    document.getElementById("goal").value = savedData.goal || '';
+    document.getElementById("assetSummary").value = savedData.assetSummary || '';
+    // Populate other fields as needed
+  }
+};
+</script>
+   <button type="button" id="ap-save-data-btn" class="ap-primary-btn">
             Save Data &amp; Jump to Asset Summary
           </button>
         </div>
