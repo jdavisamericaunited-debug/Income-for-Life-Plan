@@ -129,5 +129,87 @@
       showPanel('goals');
     });
   </script>
+<script>
+  function logData(message) {
+    console.log(message);
+  }
+
+  // ---------- Save / load Goals & Data to localStorage ----------
+  function apSaveGoalsDataToStorage() {
+    if (!window.localStorage) {
+      logData('localStorage is not available.');
+      return;
+    }
+    var form = document.getElementById('ap-goals-data-form');
+    if (!form) return;
+    var data = {};
+    Array.prototype.forEach.call(form.elements, function(el) {
+      if (!el.name || ['button', 'submit', 'reset'].includes(el.type)) return;
+      data[el.name] = el.value;
+    });
+    localStorage.setItem('apGoalsDataForm', JSON.stringify(data));
+    logData('Data saved to localStorage:', data);
+  }
+
+  function apLoadGoalsDataFromStorage() {
+    if (!window.localStorage) return;
+    var raw = localStorage.getItem('apGoalsDataForm');
+    if (!raw) {
+      logData('No saved data found in localStorage.');
+      return;
+    }
+    var form = document.getElementById('ap-goals-data-form');
+    if (!form) return;
+    var data;
+    try {
+      data = JSON.parse(raw);
+      logData('Loaded data from localStorage:', data);
+    } catch (e) {
+      logData('Error loading data from localStorage:', e);
+      return;
+    }
+    Object.keys(data).forEach(function(name) {
+      var el = form.elements[name];
+      if (!el) return;
+      el.value = data[name];
+    });
+  }
+
+  // ---------- Tab switching ----------
+  function showPanel(name) {
+    const panels = ['goals', 'assets', 'inputs', 'noplanJoint', 'noplanHer', 'noplanHis', 'noplanAlloc'];
+    panels.forEach(function(p) {
+      const pane = document.getElementById('ap-panel-' + p);
+      if (pane) {
+        pane.style.display = (p === name ? 'block' : 'none');
+      }
+    });
+
+    const buttons = document.querySelectorAll('#ap-ifl-app .ap-ifl-tab-btn');
+    buttons.forEach(function(btn) {
+      btn.classList.toggle('ap-ifl-tab-active', btn.getAttribute('data-panel') === name);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    apLoadGoalsDataFromStorage();
+    var buttons = document.querySelectorAll('#ap-ifl-app .ap-ifl-tab-btn');
+    buttons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        showPanel(btn.getAttribute('data-panel'));
+      });
+    });
+
+    var saveBtn = document.getElementById('ap-save-data-btn');
+    if (saveBtn) {
+      saveBtn.addEventListener('click', function () {
+        apSaveGoalsDataToStorage();
+        alert('Client data saved and Asset Summary updated.');
+      });
+    }
+
+    showPanel('goals');
+  });
+</script>
 </body>
 </html>
